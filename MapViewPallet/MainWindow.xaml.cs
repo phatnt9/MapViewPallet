@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapViewPallet.Shape;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,22 @@ namespace MapViewPallet
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var mouseWasDownOn = e.Source as FrameworkElement;
+            Point pp = e.GetPosition(map);
+            PalletShape rect0 = null;
+            rect0 = new PalletShape(this);
+            rect0.Move(pp.X, pp.Y);
+            map.Children.Add(rect0);
+            Console.WriteLine(rect0.GetPosition().ToString());
+        }
+
+        private void btn_AddRect_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
