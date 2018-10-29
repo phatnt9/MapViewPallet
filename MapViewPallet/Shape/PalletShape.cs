@@ -28,6 +28,11 @@ namespace MapViewPallet.Shape
             BorderThickness = new Thickness(3);
         }
 
+        public void AddChildPallet ()
+        {
+                       
+        }
+
         public void Move (double X, double Y)
         {
             TranslateTransform a = new TranslateTransform(X-15, Y-15);
@@ -35,7 +40,7 @@ namespace MapViewPallet.Shape
 
             TransformGroup myTransformGroup = new TransformGroup();
             myTransformGroup.Children.Add(a);
-            myTransformGroup.Children.Add(b);
+            //myTransformGroup.Children.Add(b);
 
             RenderTransform = myTransformGroup;
 
