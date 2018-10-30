@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Shape\PalletShape.cs" />
+    <Compile Include="Shape\StationShape.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -94,6 +96,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pallet4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PalletError.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PalletEmpty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mapbackground.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

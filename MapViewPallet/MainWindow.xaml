@@ -7,52 +7,45 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="MintCream">
+        <Grid Grid.Row="0" Background="LightGray">
             <Border Name="clipBorder" ClipToBounds="True" BorderBrush="DarkGray" 
-                    BorderThickness="1">
-                <Canvas RenderTransformOrigin="0.5,0.5" Name="map" 
-                        MouseLeftButtonDown="map_MouseLeftButtonDown">
+                    BorderThickness="1" MouseWheel="clipBorder_MouseWheel">
+                <Canvas Width="1598" Height="773" RenderTransformOrigin="0.5,0.5" 
+                        Name="map" MouseLeftButtonDown="map_MouseLeftButtonDown"
+                        MouseMove="map_MouseMove" MouseLeftButtonUp="map_MouseLeftButtonUp"
+                        Margin="-1500,-1000,-1500,-1000">
                     <Canvas.Children>
-                        <Border Width="50" Height="50" BorderBrush="Blue" BorderThickness="1">
+                        <Border Padding="2" Name="MIX0" BorderBrush="Blue" BorderThickness="1">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"></RowDefinition>
-                                    <RowDefinition Height="1*"></RowDefinition>
-                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
+                                    <RowDefinition ></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Border Grid.Column ="0" Grid.Row="0" BorderBrush="Black" 
-                                        BorderThickness="1"/>
+                                        BorderThickness="1" Width="8" Height="8"/>
                                 <Border Grid.Column ="1" Grid.Row="0" BorderBrush="Black" 
-                                        BorderThickness="1"/>
+                                        BorderThickness="1" Width="8" Height="8"/>
                                 <Border Grid.Column ="2" Grid.Row="0" BorderBrush="Black" 
-                                        BorderThickness="1"/>
+                                        BorderThickness="1" Width="8" Height="8"/>
                                 
                                 <Border Grid.Column ="0" Grid.Row="1" BorderBrush="Black" 
-                                        BorderThickness="1"/>
+                                        BorderThickness="1" Width="8" Height="8"/>
                                 <Border Grid.Column ="1" Grid.Row="1" BorderBrush="Black" 
-                                        BorderThickness="1"/>
+                                        BorderThickness="1" Width="8" Height="8"/>
                                 <Border Grid.Column ="2" Grid.Row="1" BorderBrush="Black" 
-                                        BorderThickness="1"/>
-                                
-                                <Border Grid.Column ="0" Grid.Row="2" BorderBrush="Black" 
-                                        BorderThickness="1"/>
-                                <Border Grid.Column ="1" Grid.Row="2" BorderBrush="Black" 
-                                        BorderThickness="1"/>
-                                <Border Grid.Column ="2" Grid.Row="2" BorderBrush="Black" 
-                                        BorderThickness="1"/>
-                                
+                                        BorderThickness="1" Width="8" Height="8"/>
+
                             </Grid>
                         </Border>
                     </Canvas.Children>
