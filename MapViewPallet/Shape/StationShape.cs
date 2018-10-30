@@ -19,12 +19,16 @@ namespace MapViewPallet.Shape
     {
         Grid stationGrid;
 
+        public StationShape ()
+        {
+        }
+
         public StationShape (string stationName, int lines, int pallets_per_line, string typePallet)
         {
             Padding = new Thickness(0);
             Name = stationName;
-            BorderBrush = new SolidColorBrush(Colors.Gray);
-            BorderThickness = new Thickness(0.4);
+            BorderBrush = new SolidColorBrush(Colors.Red);
+            BorderThickness = new Thickness(0.1);
             stationGrid = new Grid();
             for (int lineIndex=0; lineIndex<lines; lineIndex++)
             {
@@ -54,7 +58,7 @@ namespace MapViewPallet.Shape
 
         public void Move(double X, double Y)
         {
-            TranslateTransform a = new TranslateTransform(X - 15, Y - 15);
+            TranslateTransform a = new TranslateTransform(X, Y);
             RotateTransform b = new RotateTransform(45);
             TransformGroup myTransformGroup = new TransformGroup();
             myTransformGroup.Children.Add(a);

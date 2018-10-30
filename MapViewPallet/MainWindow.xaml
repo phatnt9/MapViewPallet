@@ -11,10 +11,11 @@
             <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="LightGray">
+        <Grid Grid.Row="0" Background="MintCream">
+            
             <Border Name="clipBorder" ClipToBounds="True" BorderBrush="DarkGray" 
                     BorderThickness="1" MouseWheel="clipBorder_MouseWheel">
-                <Canvas Width="1598" Height="773" RenderTransformOrigin="0.5,0.5" 
+                <Canvas RenderTransformOrigin="0.5,0.5" Width="790" Height="379"
                         Name="map" MouseLeftButtonDown="map_MouseLeftButtonDown"
                         MouseMove="map_MouseMove" MouseLeftButtonUp="map_MouseLeftButtonUp"
                         Margin="-1500,-1000,-1500,-1000">
@@ -38,88 +39,16 @@
                                         BorderThickness="1" Width="8" Height="8"/>
                                 <Border Grid.Column ="2" Grid.Row="0" BorderBrush="Black" 
                                         BorderThickness="1" Width="8" Height="8"/>
-                                
+
                                 <Border Grid.Column ="0" Grid.Row="1" BorderBrush="Black" 
                                         BorderThickness="1" Width="8" Height="8"/>
                                 <Border Grid.Column ="1" Grid.Row="1" BorderBrush="Black" 
                                         BorderThickness="1" Width="8" Height="8"/>
                                 <Border Grid.Column ="2" Grid.Row="1" BorderBrush="Black" 
                                         BorderThickness="1" Width="8" Height="8"/>
-
                             </Grid>
                         </Border>
                     </Canvas.Children>
-                    <Canvas.Background>
-                        <DrawingBrush Viewport="0,0,50,50" ViewportUnits="Absolute" 
-                                      TileMode="Tile" >
-                            <DrawingBrush.Drawing>
-                                <DrawingGroup>
-                                    <DrawingGroup.Children>
-                                        <GeometryDrawing Geometry="M0,0 L50,0">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="2" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,10 L50,10">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,20 L50,20">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,30 L50,30">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,40 L50,40">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,0 L0,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="2" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M10,0 L10,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M20,0 L20,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M30,0 L30,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M40,0 L40,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" 
-                                                     Brush="LightBlue" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                    </DrawingGroup.Children>
-                                </DrawingGroup>
-                            </DrawingBrush.Drawing>
-                        </DrawingBrush>
-                    </Canvas.Background>
                     <Canvas.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform x:Name="canvasScaleTransform"/>
@@ -130,8 +59,21 @@
             </Border>
         </Grid>
         <Grid Grid.Row="1">
-            <Button Name="btn_AddRect" Width="30" Height="20" 
-                    Click="btn_AddRect_Click"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"  Name="btn_AddRect" Width="50" Height="20" 
+                    Click="btn_AddRect_Click" Content="Add"/>
+            <Button Grid.Column="1" Name="btn_moverect" Width="50" Height="20" 
+                    Click="btn_moverect_Click" Content="Move"/>
+            <Button Grid.Column="2" Name="btn_normal" Width="50" Height="20" 
+                    Click="btn_normal_Click" Content="Normal"/>
         </Grid>
         <GridSplitter Background="DarkGray" Grid.Row="0" Grid.ColumnSpan="2" 
                       Height="5" HorizontalAlignment="Stretch" 

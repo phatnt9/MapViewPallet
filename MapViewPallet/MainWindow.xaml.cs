@@ -24,16 +24,25 @@ namespace MapViewPallet
     public partial class MainWindow : Window
     {
         private double slidingScale;
+
         private System.Windows.Point startPoint;
         private System.Windows.Point originalPoint;
         private bool mouseMove = true;
         public enum STATECTRL_MOUSEDOWN
         {
-            STATECTRL_NORMAL,
-            STATECTRL_ADD_STATION
+            STATECTRL_MOUSEDOWN_NORMAL,
+            STATECTRL_ADD_STATION,
+            STATECTRL_KEEP_IN_OBJECT,
+            STATECTRL_GET_OUT_OBJECT
         }
-        public STATECTRL_MOUSEDOWN valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_NORMAL;
 
+        public enum STATECTRL_MOUSEMOVE
+        {
+            STATECTRL_MOVE_STATION,
+            STATECTRL_SLIDE_OBJECT
+        }
+        public STATECTRL_MOUSEDOWN valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_MOUSEDOWN_NORMAL;
+        public STATECTRL_MOUSEMOVE valstatectrl_mm;
         public MainWindow()
         {
             InitializeComponent();
@@ -41,6 +50,9 @@ namespace MapViewPallet
             ImageBrush img = new ImageBrush();
             img.ImageSource = ImageSourceForBitmap(bmp);
             map.Background = img;
+            map.Width = img.ImageSource.Width;
+            map.Height = img.ImageSource.Height;
+
         }
 
         private void clipBorder_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -67,35 +79,90 @@ namespace MapViewPallet
 
         private void map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            string elementName = (e.OriginalSource as FrameworkElement).Name;
+            Console.WriteLine(elementName);
             if (e.Source.ToString() == "System.Windows.Controls.Canvas")
             {
                 map.CaptureMouse();
                 startPoint = e.GetPosition(clipBorder);
                 originalPoint = new System.Windows.Point(canvasTranslateTransform.X, canvasTranslateTransform.Y);
             }
+
+            Statectrl_md(e);
             if (valstatectrl_md == STATECTRL_MOUSEDOWN.STATECTRL_ADD_STATION)
             {
                 var mouseWasDownOn = e.Source as FrameworkElement;
                 System.Windows.Point pp = e.GetPosition(map);
                 StationShape sts = null;
-                sts = new StationShape("MIX0", 3, 6, "Pallet2");
+                sts = new StationShape("MIX0", 2, 7, "Pallet2");
                 sts.Move(pp.X, pp.Y);
                 map.Children.Add(sts);
             }
+
+        }
+
+        void Statectrl_md(MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                //EditObject();
+            }
+            System.Windows.Point pp = e.GetPosition(map);
+            var mouseWasDownOn = e.Source as FrameworkElement;
+            switch (valstatectrl_md)
+            {
+                case STATECTRL_MOUSEDOWN.STATECTRL_KEEP_IN_OBJECT:
+                    if (mouseWasDownOn != null)
+                    {
+                        string elementName = mouseWasDownOn.Name;
+                        if (elementName != "")
+                        {
+
+                            valstatectrl_mm = STATECTRL_MOUSEMOVE.STATECTRL_MOVE_STATION;
+                            valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_GET_OUT_OBJECT;
+
+
+                        }
+                    }
+                    break;
+                default:
+                    {
+                        break;
+                    }
+            }
+        }
+
+        void Statectrl_mm(MouseEventArgs e)
+        {
+            System.Windows.Point pp = e.GetPosition(map);
+            var mouseWasDownOn = e.Source as FrameworkElement;
+            
+                switch (valstatectrl_mm)
+                {
+                    case STATECTRL_MOUSEMOVE.STATECTRL_MOVE_STATION:
+                        {
+                            StationShape x = new StationShape();
+                            x = (StationShape)map.Children[0];
+                            x.Move(pp.X, pp.Y);
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
         }
 
         private void btn_AddRect_Click(object sender, RoutedEventArgs e)
         {
-            if (valstatectrl_md == STATECTRL_MOUSEDOWN.STATECTRL_NORMAL)
+            if (valstatectrl_md == STATECTRL_MOUSEDOWN.STATECTRL_MOUSEDOWN_NORMAL)
             {
                 mouseMove = false;
                 valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_ADD_STATION;
+                return;
             }
-            else
-            {
-                mouseMove = true;
-                valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_NORMAL;
-            }
+            mouseMove = true;
+            valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_MOUSEDOWN_NORMAL;
 
         }
 
@@ -109,55 +176,72 @@ namespace MapViewPallet
                 Vector moveVector = startPoint - e.GetPosition(clipBorder);
                 double xCoor = originalPoint.X - moveVector.X;
                 double yCoor = originalPoint.Y - moveVector.Y;
-                canvasTranslateTransform.X = originalPoint.X - moveVector.X;
-                canvasTranslateTransform.Y = originalPoint.Y - moveVector.Y;
-                Console.WriteLine(canvasTranslateTransform.X);
-                Console.WriteLine(canvasTranslateTransform.Y);
-                Console.WriteLine(canvasScaleTransform.ScaleX);
-                Console.WriteLine(canvasScaleTransform.ScaleY);
-                Console.WriteLine("/////////////////////////");
-                //double verticalLimimit = (((map.Height - clipBorder.ActualHeight) / 2) + 20)* (canvasScaleTransform.ScaleX*3);
-                //double horizontalLimit = (((map.Width - clipBorder.ActualWidth) / 2) + 20)* (canvasScaleTransform.ScaleY*3);
-                ////Console.WriteLine(verticalLimimit);
-                //if (((xCoor < horizontalLimit) && (xCoor > -horizontalLimit)))
-                //{
-                //    canvasTranslateTransform.X = originalPoint.X - moveVector.X;
-                //}
-                //else
-                //{
-                //    if (originalPoint.X > horizontalLimit)
-                //    {
-                //        canvasTranslateTransform.X = horizontalLimit;
-                //    }
-                //    if (originalPoint.X < -horizontalLimit)
-                //    {
-                //        canvasTranslateTransform.X = horizontalLimit;
-                //    }
-                //}
-                //if (((yCoor < verticalLimimit) && (yCoor > -verticalLimimit)))
-                //{
-                //    canvasTranslateTransform.Y = originalPoint.Y - moveVector.Y;
-                //}
-                //else
-                //{
-                //    if (originalPoint.Y > verticalLimimit)
-                //    {
-                //        canvasTranslateTransform.Y = verticalLimimit;
-                //    }
-                //    if (originalPoint.Y < -verticalLimimit)
-                //    {
-                //        canvasTranslateTransform.Y = verticalLimimit;
-                //    }
-                //}
 
 
+                //canvasTranslateTransform.X = originalPoint.X - moveVector.X;
+                //canvasTranslateTransform.Y = originalPoint.Y - moveVector.Y;
+                //Console.WriteLine(canvasTranslateTransform.X + ":" + canvasTranslateTransform.Y);
+                //Console.WriteLine(canvasScaleTransform.ScaleX);
+                //Console.WriteLine(clipBorder.ActualWidth + "-" + clipBorder.ActualHeight);
+                //Console.WriteLine("/////////////////////////");
 
+
+                double verticalLimimit = (((map.Height * canvasScaleTransform.ScaleX - clipBorder.ActualHeight) / 2) + 20);
+                double horizontalLimit = (((map.Width * canvasScaleTransform.ScaleX - clipBorder.ActualWidth) / 2) + 20);
+                //Console.WriteLine(verticalLimimit);
+                if (((xCoor < horizontalLimit) && (xCoor > -horizontalLimit)))
+                {
+                    canvasTranslateTransform.X = originalPoint.X - moveVector.X;
+                }
+                else
+                {
+                    if (originalPoint.X > horizontalLimit)
+                    {
+                        canvasTranslateTransform.X = horizontalLimit;
+                    }
+                    if (originalPoint.X < -horizontalLimit)
+                    {
+                        canvasTranslateTransform.X = horizontalLimit;
+                    }
+                }
+                if (((yCoor < verticalLimimit) && (yCoor > -verticalLimimit)))
+                {
+                    canvasTranslateTransform.Y = originalPoint.Y - moveVector.Y;
+                }
+                else
+                {
+                    if (originalPoint.Y > verticalLimimit)
+                    {
+                        canvasTranslateTransform.Y = verticalLimimit;
+                    }
+                    if (originalPoint.Y < -verticalLimimit)
+                    {
+                        canvasTranslateTransform.Y = verticalLimimit;
+                    }
+                }
+            }
+            if (!mouseMove)
+            {
+                Statectrl_mm(e);
             }
         }
 
         private void map_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             map.ReleaseMouseCapture();
+        }
+
+        private void btn_moverect_Click(object sender, RoutedEventArgs e)
+        {
+            valstatectrl_mm = STATECTRL_MOUSEMOVE.STATECTRL_SLIDE_OBJECT;
+            valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_KEEP_IN_OBJECT;
+        }
+
+        private void btn_normal_Click(object sender, RoutedEventArgs e)
+        {
+
+            mouseMove = false;
+            valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_MOUSEDOWN_NORMAL;
         }
     }
 }

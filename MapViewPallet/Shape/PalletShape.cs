@@ -16,10 +16,11 @@ namespace MapViewPallet.Shape
     {
         public PalletShape(string typePallet)
         {
-            Width = 9.3;
-            Height = 10.8;
-            BorderBrush = new SolidColorBrush(Colors.Transparent);
-            BorderThickness = new Thickness(0.5);
+            Width = 13;
+            Height = 15;
+            Margin = new Thickness(2);
+            BorderBrush = new SolidColorBrush(Colors.Green);
+            BorderThickness = new Thickness(0);
             Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject(typePallet);
             ImageBrush img = new ImageBrush();
             img.ImageSource = ImageSourceForBitmap(bmp);
@@ -54,7 +55,7 @@ namespace MapViewPallet.Shape
 
         public void Move (double X, double Y)
         {
-            TranslateTransform a = new TranslateTransform(X-15, Y-15);
+            TranslateTransform a = new TranslateTransform(X, Y);
             RotateTransform b = new RotateTransform(45);
             TransformGroup myTransformGroup = new TransformGroup();
             myTransformGroup.Children.Add(a);
