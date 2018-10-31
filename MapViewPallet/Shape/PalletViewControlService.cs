@@ -17,13 +17,14 @@ namespace MapViewPallet.Shape
         private Canvas map;
         private ScaleTransform scaleTransform;
         private TranslateTransform translateTransform;
-        private System.Windows.Point startPoint;
-        private System.Windows.Point originalPoint;
+        private Point startPoint;
+        private Point originalPoint;
         private double zoomInLitmit = 7;
         private double zoomOutLimit;
         private double slidingScale;
         private double verticalLimimit;
         private double horizontalLimit;
+        private bool scaleAnchor; //Width = true, Height = false
         public PalletViewControlService(MainWindow mainWinDowIn)
         {
             mainWindow = mainWinDowIn;
@@ -36,12 +37,19 @@ namespace MapViewPallet.Shape
             map.MouseLeftButtonDown += Map_MouseLeftButtonDown;
             map.MouseLeftButtonUp += Map_MouseLeftButtonUp;
             mainWindow.clipBorder.SizeChanged += ClipBorder_SizeChanged;
+            zoomOutLimit = mainWindow.clipBorder.ActualHeight / map.Height;
+
         }
 
         private void ClipBorder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             zoomOutLimit = mainWindow.clipBorder.ActualHeight / map.Height;
-
+            scaleTransform.ScaleX = scaleTransform.ScaleY = zoomOutLimit;
+            if (map.Width < mainWindow.clipBorder.ActualWidth)
+            {
+                translateTransform.X = 0;
+                translateTransform.Y = 0;
+            }
         }
 
         private void Map_MouseMove(object sender, MouseEventArgs e)
@@ -52,44 +60,8 @@ namespace MapViewPallet.Shape
                 Vector moveVector = startPoint - e.GetPosition(mainWindow.clipBorder);
                 double xCoor = originalPoint.X - moveVector.X;
                 double yCoor = originalPoint.Y - moveVector.Y;
-                double ScaleX = scaleTransform.ScaleX;
-                double ScaleY = scaleTransform.ScaleY;
-                double ActualHeight = mainWindow.clipBorder.ActualHeight;
-                double ActualWidth = mainWindow.clipBorder.ActualWidth;
-                //verticalLimimit = ((map.Height * ScaleX - ActualHeight) / 2) + 10;
-                //horizontalLimit = ((map.Width * ScaleY - ActualWidth) / 2) + 10;
                 translateTransform.X = xCoor;
                 translateTransform.Y = yCoor;
-                //if (((xCoor < horizontalLimit) && (xCoor > -horizontalLimit)))
-                //{
-                //    translateTransform.X = xCoor;
-                //}
-                //else
-                //{
-                //    if (originalPoint.X > horizontalLimit)
-                //    {
-                //        translateTransform.X = horizontalLimit;
-                //    }
-                //    if (originalPoint.X < -horizontalLimit)
-                //    {
-                //        translateTransform.X = -horizontalLimit;
-                //    }
-                //}
-                //if (((yCoor < verticalLimimit) && (yCoor > -verticalLimimit)))
-                //{
-                //    translateTransform.Y = yCoor;
-                //}
-                //else
-                //{
-                //    if (originalPoint.Y > verticalLimimit)
-                //    {
-                //        translateTransform.Y = verticalLimimit;
-                //    }
-                //    if (originalPoint.Y < -verticalLimimit)
-                //    {
-                //        translateTransform.Y = -verticalLimimit;
-                //    }
-                //}
                 int ySign = (Math.Sign(translateTransform.Y));
                 int xSign = (Math.Sign(translateTransform.X));
                 double yDistance = ((mainWindow.clipBorder.ActualHeight / 2 + Math.Abs(translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
@@ -145,11 +117,11 @@ namespace MapViewPallet.Shape
             Point mousePos = e.GetPosition(map);
             double zoomDirection = e.Delta > 0 ? 1 : -1;
             
-            slidingScale = 0.2 * zoomDirection;
-            if (((mainWindow.canvasScaleTransform.ScaleY + slidingScale) >= zoomOutLimit) && 
-                ((mainWindow.canvasScaleTransform.ScaleY + slidingScale) <= zoomInLitmit))
+            slidingScale = 0.1 * zoomDirection;
+            if (((scaleTransform.ScaleY + slidingScale) >= zoomOutLimit) && 
+                ((scaleTransform.ScaleY + slidingScale) <= zoomInLitmit))
             {
-                mainWindow.canvasScaleTransform.ScaleX = mainWindow.canvasScaleTransform.ScaleY += slidingScale;
+                scaleTransform.ScaleX = scaleTransform.ScaleY += slidingScale;
             }
             //startPoint = e.GetPosition(mainWindow.clipBorder);
             //originalPoint = new Point(translateTransform.X, translateTransform.Y);
