@@ -5,20 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="500">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="18"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="MintCream">
-            
+
+        <Grid Grid.Row="0" Background="Transparent">
+            <DockPanel>
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_File">
+                        <MenuItem Header="_New" />
+                        <MenuItem Header="_Open" />
+                        <MenuItem Header="_Save" />
+                        <Separator />
+                        <MenuItem Header="_Exit" />
+                    </MenuItem>
+                    <MenuItem Header="_Help">
+                        <MenuItem Header="_New" />
+                        <MenuItem Header="_Open" />
+                        <MenuItem Header="_Save" />
+                        <Separator />
+                        <MenuItem Header="_Exit" />
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+        </Grid>
+        <Grid Grid.Row="1" Background="AliceBlue">
+            <ToolBar>
+                <Button Command="Cut" Content="Cut" ToolBar.OverflowMode="Always" />
+                <Button Command="Copy" Content="Copy" ToolBar.OverflowMode="AsNeeded" />
+                <Button Command="Paste" Content="Paste" ToolBar.OverflowMode="Never" />
+            </ToolBar>
+        </Grid>
+        <Grid Grid.Row="2" Background="MintCream" >
+
             <Border Name="clipBorder" ClipToBounds="True" BorderBrush="DarkGray" 
-                    BorderThickness="1" MouseWheel="clipBorder_MouseWheel">
-                <Canvas RenderTransformOrigin="0.5,0.5" Width="790" Height="379"
-                        Name="map" MouseLeftButtonDown="map_MouseLeftButtonDown"
-                        MouseMove="map_MouseMove" MouseLeftButtonUp="map_MouseLeftButtonUp"
-                        Margin="-1500,-1000,-1500,-1000">
+                    BorderThickness="1">
+                <Canvas RenderTransformOrigin="0.5,0.5" Width="490" Height="335"
+                        Name="map" Margin="-1500,-1000,-1500,-1000">
                     <Canvas.Children>
                         <Border Padding="2" Name="MIX0" BorderBrush="Blue" BorderThickness="1">
                             <Grid>
@@ -58,15 +86,12 @@
                 </Canvas>
             </Border>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
-                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition Width="60" ></ColumnDefinition>
+                <ColumnDefinition Width="60"  ></ColumnDefinition>
+                <ColumnDefinition Width="60"  ></ColumnDefinition>
+                <ColumnDefinition Width="*"  ></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0"  Name="btn_AddRect" Width="50" Height="20" 
                     Click="btn_AddRect_Click" Content="Add"/>
@@ -74,10 +99,13 @@
                     Click="btn_moverect_Click" Content="Move"/>
             <Button Grid.Column="2" Name="btn_normal" Width="50" Height="20" 
                     Click="btn_normal_Click" Content="Normal"/>
+            <DataGrid Grid.Column="3" AutoGenerateColumns="False" >
+                
+            </DataGrid>
         </Grid>
-        <GridSplitter Background="DarkGray" Grid.Row="0" Grid.ColumnSpan="2" 
+        <GridSplitter Background="DarkGray" Grid.Row="2"
                       Height="5" HorizontalAlignment="Stretch" 
                       VerticalAlignment="Bottom"/>
-        
+
     </Grid>
 </Window>

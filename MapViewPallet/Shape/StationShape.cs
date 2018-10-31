@@ -15,7 +15,7 @@ using System.Windows.Controls;
 
 namespace MapViewPallet.Shape
 {
-    class StationShape:Border
+    public class StationShape:Border
     {
         Grid stationGrid;
 

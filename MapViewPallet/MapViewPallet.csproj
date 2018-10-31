@@ -56,7 +56,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Global_Mouse.cs" />
+    <Compile Include="Global_Object.cs" />
     <Compile Include="Shape\PalletShape.cs" />
+    <Compile Include="Shape\PalletViewControlService.cs" />
     <Compile Include="Shape\StationShape.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

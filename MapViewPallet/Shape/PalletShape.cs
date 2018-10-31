@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Resources;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -25,35 +26,18 @@ namespace MapViewPallet.Shape
             ImageBrush img = new ImageBrush();
             img.ImageSource = ImageSourceForBitmap(bmp);
             Background = img;
+            this.MouseDown += PalletMouseDown;
         }
 
-        public void ChangeSize (int size)
+        private void PalletMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Width = size;
-            Height = size;
         }
 
-        public ImageSource ImageSourceForBitmap(Bitmap bmp)
-        {
-            var handle = bmp.GetHbitmap();
-            try
-            {
-                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            }
-            finally {}
-        }
-
-        public void Move(System.Drawing.Point p)
-        {
-            Canvas.SetLeft(this, p.X);
-            Canvas.SetTop(this, p.Y);
-        }
-        public void Setcol ()
-        {
-
-        }
-
-        public void Move (double X, double Y)
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+        //\\\\\\\\\\\\Action\\\\\\\\\\\\\\\\\\
+        public void Move(double X, double Y)
         {
             TranslateTransform a = new TranslateTransform(X, Y);
             RotateTransform b = new RotateTransform(45);
@@ -61,17 +45,23 @@ namespace MapViewPallet.Shape
             myTransformGroup.Children.Add(a);
             //myTransformGroup.Children.Add(b);
             RenderTransform = myTransformGroup;
-
-
-
         }
-       /* public Point GetPosition ()
+        public void ChangeSize(int size)
         {
-            Point position = new Point();
-            TranslateTransform x = new TranslateTransform();
-            position = this.TransformToAncestor(mainWindow).Transform(position);
-            return position;
-        }*/
-        
+            Width = size;
+            Height = size;
+        }
+        //\\\\\\\\\\\\Others\\\\\\\\\\\\\\\
+        private ImageSource ImageSourceForBitmap(Bitmap bmp)
+        {
+            var handle = bmp.GetHbitmap();
+            try
+            {
+                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
+            finally { }
+        }
+        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
     }
 }
