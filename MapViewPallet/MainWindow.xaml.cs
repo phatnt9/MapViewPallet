@@ -32,14 +32,25 @@ namespace MapViewPallet
         public MainWindow()
         {
             InitializeComponent();
-            Bitmap bmp = Properties.Resources.mapbackground;
-            ImageBrush img = new ImageBrush();
-            img.ImageSource = ImageSourceForBitmap(bmp);
+            ImageBrush img = LoadImage("mapbackground");
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
             palletViewEventControl = new PalletViewControlService(this);
+
+            btn_AddRect.Background = LoadImage("Pallet0");
+            btn_moverect.Background = LoadImage("Pallet1");
+            btn_normal.Background = LoadImage("Pallet2");
         }
+
+        public ImageBrush LoadImage (string name)
+        {
+            Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject(name);
+            ImageBrush img = new ImageBrush();
+            img.ImageSource = ImageSourceForBitmap(bmp);
+            return img;
+        }
+
         public ImageSource ImageSourceForBitmap(Bitmap bmp)
         {
             var handle = bmp.GetHbitmap();

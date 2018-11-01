@@ -36,12 +36,12 @@
         </Grid>
         <Grid Grid.Row="1" Background="AliceBlue">
             <ToolBar>
-                <Button Name="btn_AddRect" Width="50"
-                    Click="btn_AddRect_Click" Content="Add"/>
-                <Button Name="btn_moverect" Width="50"
-                    Click="btn_moverect_Click" Content="Move"/>
-                <Button Name="btn_normal" Width="50" 
-                    Click="btn_normal_Click" Content="Normal"/>
+                <Button Name="btn_AddRect" Width="30" Height="30"
+                    Click="btn_AddRect_Click" ToolTip="Add"/>
+                <Button Name="btn_moverect" Width="30" Height="30"
+                    Click="btn_moverect_Click" ToolTip="Move"/>
+                <Button Name="btn_normal" Width="30" Height="30"
+                    Click="btn_normal_Click" ToolTip="Normal"/>
             </ToolBar>
         </Grid>
         <Grid Grid.Row="2" Background="MintCream" >
