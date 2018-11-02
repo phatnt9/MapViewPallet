@@ -17,8 +17,8 @@ namespace MapViewPallet.Shape
     {
         public PalletShape(string typePallet)
         {
-            Width = 13;
-            Height = 15;
+            Width = Global_Object.palletWidth;
+            Height = Global_Object.palletHeight;
             Margin = new Thickness(2);
             BorderBrush = new SolidColorBrush(Colors.Green);
             BorderThickness = new Thickness(0);

@@ -12,12 +12,15 @@ namespace MapViewPallet
         {
             _NORMAL,
             _ADD_STATION,
+            _DRAW_STRAIGHT,
+            _DRAW_CURVE,
             _KEEP_IN_OBJECT,
             _GET_OUT_OBJECT
         }
         public enum STATE_MOUSEMOVE
         {
             _NORMAL,
+            _DRAWING,
             _MOVE_STATION,
             _SLIDE_OBJECT
         }

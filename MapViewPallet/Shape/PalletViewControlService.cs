@@ -53,8 +53,8 @@ namespace MapViewPallet.Shape
 
         private void Map_MouseMove(object sender, MouseEventArgs e)
         {
-            //Point mousePos = e.GetPosition(map);
-            //Console.WriteLine(mousePos.X.ToString("0.") + "   " + mousePos.Y.ToString("0."));
+            Point mousePos = e.GetPosition(map);
+            mainWindow.MouseCoor.Content = mousePos.X.ToString("0.") + " " + mousePos.Y.ToString("0.");
             yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
             xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
             yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));

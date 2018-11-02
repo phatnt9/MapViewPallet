@@ -42,14 +42,104 @@
                     Click="btn_moverect_Click" ToolTip="Move"/>
                 <Button Name="btn_normal" Width="30" Height="30"
                     Click="btn_normal_Click" ToolTip="Normal"/>
+                <Button Name="btn_DrawStraght" BorderBrush="Black"
+                        BorderThickness="2" Click="btn_DrawStraght_Click" 
+                        ToolTip="DrawStraght" Content="Straight"/>
+                <Button Name="btn_DrawCurve" BorderBrush="Black"
+                        BorderThickness="2" Click="btn_DrawCurve_Click" 
+                        ToolTip="Draw Curve" Content="Curve"/>
             </ToolBar>
         </Grid>
-        <Grid Grid.Row="2" Background="MintCream" >
-            <Border Name="clipBorder" ClipToBounds="True" BorderBrush="DarkGray" 
-                    BorderThickness="1">
+        <Grid Grid.Row="2" Background="#E7E7E7" >
+            
+            <Border Name="clipBorder" ClipToBounds="True">
+                
                 <Canvas RenderTransformOrigin="0.5,0.5" Width="490" Height="335"
                         Name="map" Margin="-1500,-1000,-1500,-1000">
+                    <Canvas.Background>
+                        <DrawingBrush Viewport="0,0,50,50" ViewportUnits="Absolute" TileMode="Tile" >
+                            <DrawingBrush.Drawing>
+                                <DrawingGroup>
+                                    <DrawingGroup.Children>
+                                        <GeometryDrawing Geometry="M0,0 L50,0">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="2" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M0,10 L50,10">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="1" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M0,20 L50,20">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="1" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M0,30 L50,30">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="1" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M0,40 L50,40">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="1" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M0,0 L0,50">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="2" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M10,0 L10,50">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="1" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M20,0 L20,50">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="1" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M30,0 L30,50">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="1" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M40,0 L40,50">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="1" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
+                                    </DrawingGroup.Children>
+                                </DrawingGroup>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </Canvas.Background>
                     <Canvas.Children>
+                        
+                        <!--<Path Stroke="Black" StrokeThickness="1"  
+  Data="M 0,0 C 20,50 20,50 300,100" />-->
+                        <Line Stroke="Black" StrokeThickness="1" X1="50" X2="50" Y1="50" Y2="100"></Line>
+                        <Path Stroke="Black" StrokeThickness="1">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathGeometry.Figures>
+                                        <PathFigureCollection>
+                                            <PathFigure StartPoint="300,50">
+                                                <PathFigure.Segments>
+                                                    <PathSegmentCollection>
+                                                        <BezierSegment Point1="300,50" Point2="350,50" Point3="350,100" />
+                                                    </PathSegmentCollection>
+                                                </PathFigure.Segments>
+                                            </PathFigure>
+                                        </PathFigureCollection>
+                                    </PathGeometry.Figures>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                        
+
                     </Canvas.Children>
                     <Canvas.RenderTransform>
                         <TransformGroup>
@@ -60,6 +150,9 @@
                 </Canvas>
                 
             </Border>
+            <Grid VerticalAlignment="Bottom">
+                <Label   Name="MouseCoor" Foreground="Red" Content="X:Y" FontSize="20"></Label>
+            </Grid>
         </Grid>
         <Grid Grid.Row="3">
             <DataGrid Name="mainDataGrid"  AutoGenerateColumns="False" >
