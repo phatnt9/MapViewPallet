@@ -90,7 +90,7 @@ namespace MapViewPallet
 
 
             //=================DRAW TEST====================
-            System.Windows.Point[] pointArray = new System.Windows.Point[14];
+            System.Windows.Point[] pointArray = new System.Windows.Point[16];
             pointArray[0] = new System.Windows.Point(100, 100);
             pointArray[1] = new System.Windows.Point(150, 50);
             pointArray[2] = new System.Windows.Point(200, 50);
@@ -105,6 +105,14 @@ namespace MapViewPallet
             pointArray[11] = new System.Windows.Point(150, 250);
             pointArray[12] = new System.Windows.Point(100, 200);
             pointArray[13] = new System.Windows.Point(100, 150);
+
+            pointArray[14] = new System.Windows.Point(450, 50);
+            pointArray[15] = new System.Windows.Point(400, 50);
+            
+
+            CurvePath b0 = new CurvePath(map);
+            b0.Draw(pointArray[0], pointArray[1],"up");
+
             StraightPath a0 = new StraightPath(map);
             a0.Draw(pointArray[1], pointArray[2]);
             StraightPath a1 = new StraightPath(map);
@@ -112,12 +120,16 @@ namespace MapViewPallet
             StraightPath a2 = new StraightPath(map);
             a2.Draw(pointArray[3], pointArray[4]);
 
+            CurvePath b1 = new CurvePath(map);
+            b1.Draw(pointArray[4], pointArray[5], "up");
 
             StraightPath a3 = new StraightPath(map);
             a3.Draw(pointArray[5], pointArray[6]);
             StraightPath a4 = new StraightPath(map);
             a4.Draw(pointArray[6], pointArray[7]);
 
+            CurvePath b2 = new CurvePath(map);
+            b2.Draw(pointArray[7], pointArray[8], "ups");
 
             StraightPath a5 = new StraightPath(map);
             a5.Draw(pointArray[8], pointArray[9]);
@@ -126,6 +138,8 @@ namespace MapViewPallet
             StraightPath a7 = new StraightPath(map);
             a7.Draw(pointArray[10], pointArray[11]);
 
+            CurvePath b3 = new CurvePath(map);
+            b3.Draw(pointArray[11], pointArray[12], "ups");
 
             StraightPath a8 = new StraightPath(map);
             a8.Draw(pointArray[12], pointArray[13]);
@@ -133,8 +147,32 @@ namespace MapViewPallet
             a9.Draw(pointArray[13], pointArray[0]);
 
 
-            Path path = new Path();
-            path.Stroke = new SolidColorBrush(Colors.Black);
+            StraightPath ax = new StraightPath(map);
+            ax.Draw(pointArray[14], pointArray[15]);
+            //Arrow show direction
+            System.Windows.Point middle = new System.Windows.Point();
+            middle.X = (pointArray[14].X + pointArray[15].X) / 2;
+            middle.Y = (pointArray[14].Y + pointArray[15].Y) / 2;
+            Polygon arrow = new Polygon();
+            arrow.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+            arrow.Fill = new SolidColorBrush(Colors.Green);
+            arrow.Stroke = new SolidColorBrush(Colors.Black);
+            RotateTransform myRotateTransform = new RotateTransform();
+            myRotateTransform.Angle = 20;
+            TranslateTransform myTranslate = new TranslateTransform(0, 0);
+            TransformGroup myTransformGroup = new TransformGroup();
+            //myTransformGroup.Children.Add(myRotateTransform);
+            myTransformGroup.Children.Add(myTranslate);
+            
+            PointCollection points = new PointCollection(3)
+            {
+                new System.Windows.Point(middle.X - 2, middle.Y - 2),
+                new System.Windows.Point(middle.X - 2, middle.Y + 2),
+                new System.Windows.Point(middle.X + 2, middle.Y)
+            };
+            arrow.Points = points;
+            arrow.RenderTransform = myTransformGroup;
+            map.Children.Add(arrow);
         }
 
         private void btn_DrawCurve_Click(object sender, RoutedEventArgs e)

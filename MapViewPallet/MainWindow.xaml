@@ -51,11 +51,11 @@
             </ToolBar>
         </Grid>
         <Grid Grid.Row="2" Background="#E7E7E7" >
-            
-            <Border Name="clipBorder" ClipToBounds="True">
+
+            <Border Name="clipBorder" ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
                 
                 <Canvas RenderTransformOrigin="0.5,0.5" Width="490" Height="335"
-                        Name="map" Margin="-1500,-1000,-1500,-1000">
+                        Name="map" >
                     <Canvas.Background>
                         <DrawingBrush Viewport="0,0,50,50" ViewportUnits="Absolute" TileMode="Tile" >
                             <DrawingBrush.Drawing>
@@ -117,29 +117,6 @@
                         </DrawingBrush>
                     </Canvas.Background>
                     <Canvas.Children>
-                        
-                        <!--<Path Stroke="Black" StrokeThickness="1"  
-  Data="M 0,0 C 20,50 20,50 300,100" />-->
-                        <Line Stroke="Black" StrokeThickness="1" X1="50" X2="50" Y1="50" Y2="100"></Line>
-                        <Path Stroke="Black" StrokeThickness="1">
-                            <Path.Data>
-                                <PathGeometry>
-                                    <PathGeometry.Figures>
-                                        <PathFigureCollection>
-                                            <PathFigure StartPoint="300,50">
-                                                <PathFigure.Segments>
-                                                    <PathSegmentCollection>
-                                                        <BezierSegment Point1="300,50" Point2="350,50" Point3="350,100" />
-                                                    </PathSegmentCollection>
-                                                </PathFigure.Segments>
-                                            </PathFigure>
-                                        </PathFigureCollection>
-                                    </PathGeometry.Figures>
-                                </PathGeometry>
-                            </Path.Data>
-                        </Path>
-                        
-
                     </Canvas.Children>
                     <Canvas.RenderTransform>
                         <TransformGroup>
