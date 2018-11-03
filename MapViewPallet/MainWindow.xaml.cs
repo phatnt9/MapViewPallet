@@ -108,7 +108,11 @@ namespace MapViewPallet
 
             pointArray[14] = new System.Windows.Point(450, 50);
             pointArray[15] = new System.Windows.Point(400, 50);
-            
+
+            double xDiff = pointArray[8].X - pointArray[7].X;
+            double yDiff = pointArray[8].Y - pointArray[7].Y;
+            Console.WriteLine(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+            Console.WriteLine(Math.Atan2(yDiff, xDiff));
 
             CurvePath b0 = new CurvePath(map);
             b0.Draw(pointArray[0], pointArray[1],"up");
@@ -147,32 +151,32 @@ namespace MapViewPallet
             a9.Draw(pointArray[13], pointArray[0]);
 
 
-            StraightPath ax = new StraightPath(map);
-            ax.Draw(pointArray[14], pointArray[15]);
-            //Arrow show direction
-            System.Windows.Point middle = new System.Windows.Point();
-            middle.X = (pointArray[14].X + pointArray[15].X) / 2;
-            middle.Y = (pointArray[14].Y + pointArray[15].Y) / 2;
-            Polygon arrow = new Polygon();
-            arrow.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
-            arrow.Fill = new SolidColorBrush(Colors.Green);
-            arrow.Stroke = new SolidColorBrush(Colors.Black);
-            RotateTransform myRotateTransform = new RotateTransform();
-            myRotateTransform.Angle = 20;
-            TranslateTransform myTranslate = new TranslateTransform(0, 0);
-            TransformGroup myTransformGroup = new TransformGroup();
-            //myTransformGroup.Children.Add(myRotateTransform);
-            myTransformGroup.Children.Add(myTranslate);
+            //StraightPath ax = new StraightPath(map);
+            //ax.Draw(pointArray[14], pointArray[15]);
+            ////Arrow show direction
+            //System.Windows.Point middle = new System.Windows.Point();
+            //middle.X = (pointArray[14].X + pointArray[15].X) / 2;
+            //middle.Y = (pointArray[14].Y + pointArray[15].Y) / 2;
+            //Polygon arrow = new Polygon();
+            ////arrow.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+            //arrow.Fill = new SolidColorBrush(Colors.Green);
+            //arrow.Stroke = new SolidColorBrush(Colors.Black);
+            //RotateTransform myRotateTransform = new RotateTransform();
+            //myRotateTransform.Angle = 20;
+            //TranslateTransform myTranslate = new TranslateTransform(0, 0);
+            //TransformGroup myTransformGroup = new TransformGroup();
+            ////myTransformGroup.Children.Add(myRotateTransform);
+            //myTransformGroup.Children.Add(myTranslate);
             
-            PointCollection points = new PointCollection(3)
-            {
-                new System.Windows.Point(middle.X - 2, middle.Y - 2),
-                new System.Windows.Point(middle.X - 2, middle.Y + 2),
-                new System.Windows.Point(middle.X + 2, middle.Y)
-            };
-            arrow.Points = points;
-            arrow.RenderTransform = myTransformGroup;
-            map.Children.Add(arrow);
+            //PointCollection points = new PointCollection(3)
+            //{
+            //    new System.Windows.Point(middle.X - 2, middle.Y - 2),
+            //    new System.Windows.Point(middle.X - 2, middle.Y + 2),
+            //    new System.Windows.Point(middle.X + 2, middle.Y)
+            //};
+            //arrow.Points = points;
+            //arrow.RenderTransform = myTransformGroup;
+            //map.Children.Add(arrow);
         }
 
         private void btn_DrawCurve_Click(object sender, RoutedEventArgs e)

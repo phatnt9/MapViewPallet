@@ -12,6 +12,8 @@ namespace MapViewPallet.Shape
 {
    public class StraightPath:PathShape
     {
+        
+
         public Line shape;
         Ellipse point_Start;
         Ellipse point_End;
@@ -23,8 +25,10 @@ namespace MapViewPallet.Shape
         }
         public void Draw (Point Start, Point End)
         {
+            //Middle point of straight path
             middle.X = (Start.X + End.X) / 2;
             middle.Y = (Start.Y + End.Y) / 2;
+            
             // Point at Start and End
             point_Start = new Ellipse();
             point_End = new Ellipse();
@@ -37,19 +41,23 @@ namespace MapViewPallet.Shape
 
             //Arrow show direction
             arrow = new Polygon();
-            arrow.Fill = Stroke;
+            arrow.Fill = new SolidColorBrush(Colors.Green);
             arrow.Stroke = Stroke;
-            RotateTransform myRotateTransform = new RotateTransform();
-            myRotateTransform.Angle = 0;
-            TranslateTransform myTranslate = new TranslateTransform(middle.X, middle.Y);
+            double xDiff = End.X - Start.X;
+            double yDiff = End.Y - Start.Y;
+            double rotate = (Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+            RotateTransform myRotateTransform = new RotateTransform(rotate, middle.X, middle.Y);
+            TranslateTransform myTranslate = new TranslateTransform(0,0);
             TransformGroup myTransformGroup = new TransformGroup();
             myTransformGroup.Children.Add(myRotateTransform);
             myTransformGroup.Children.Add(myTranslate);
             arrow.RenderTransform = myTransformGroup;
+            
+            //3 Point of Triangle
             PointCollection points = new PointCollection(3);
-            points.Add(new Point(middle.X-2, middle.Y-2));
-            points.Add(new Point(middle.X-2, middle.Y+2));
-            points.Add(new Point(middle.X+2, middle.Y));
+            points.Add(new Point(middle.X-3, middle.Y-3));
+            points.Add(new Point(middle.X-3, middle.Y+3));
+            points.Add(new Point(middle.X+4, middle.Y));
             arrow.Points = points;
 
 
@@ -63,9 +71,11 @@ namespace MapViewPallet.Shape
 
             //Draw to Canvas
             canvas.Children.Add(shape);
-            //canvas.Children.Add(point_Start);
-            //canvas.Children.Add(point_End);
-            //canvas.Children.Add(arrow);
+            canvas.Children.Add(point_Start);
+            canvas.Children.Add(point_End);
+            canvas.Children.Add(arrow);
+
+            //MessageBox.Show(middle.X + "  " + middle.Y);
         }
     }
 }
