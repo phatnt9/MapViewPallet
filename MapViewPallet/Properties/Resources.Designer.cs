@@ -149,5 +149,23 @@ namespace MapViewPallet.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream tennessee_whiskey {
+            get {
+                return ResourceManager.GetStream("tennessee_whiskey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream xx {
+            get {
+                return ResourceManager.GetStream("xx", resourceCulture);
+            }
+        }
     }
 }

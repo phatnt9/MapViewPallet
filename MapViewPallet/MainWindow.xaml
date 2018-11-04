@@ -54,6 +54,9 @@
                 <Button Name="btn_HandDrawCurve" BorderBrush="Black"
                         BorderThickness="2" Click="btn_HandDrawCurve_Click" 
                         ToolTip="Draw Curve" Content="Hand Draw Curve"/>
+                <Button Name="btn_Warning" BorderBrush="Black"
+                        BorderThickness="2" Click="btn_Warning_Click" 
+                        ToolTip="Warning" Content="Warning"/>
             </ToolBar>
         </Grid>
         <Grid Grid.Row="2" Background="#E7E7E7" >

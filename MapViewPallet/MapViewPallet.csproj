@@ -130,5 +130,14 @@
   <ItemGroup>
     <None Include="Resources\mapbackground.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tennessee_whiskey.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Xót Xa.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tennessee_whiskey.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

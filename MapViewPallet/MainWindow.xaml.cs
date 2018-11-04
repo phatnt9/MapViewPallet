@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,9 @@ namespace MapViewPallet
     {
         //=================VARIABLE==================
         public bool drag = true;
+        bool play = false;
         private PalletViewControlService palletViewEventControl;
+        System.Media.SoundPlayer snd;
         //=================METHOD==================
 
 
@@ -41,6 +44,8 @@ namespace MapViewPallet
             btn_AddRect.Background = LoadImage("Pallet0");
             btn_moverect.Background = LoadImage("Pallet1");
             btn_normal.Background = LoadImage("Pallet2");
+
+            snd = new System.Media.SoundPlayer();
         }
 
         public ImageBrush LoadImage (string name)
@@ -167,6 +172,23 @@ namespace MapViewPallet
 
         private void btn_HandDrawCurve_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void btn_Warning_Click(object sender, RoutedEventArgs e)
+        {
+            if (!play)
+            {
+                Stream str = Properties.Resources.tennessee_whiskey;
+                snd.Stream = str;
+                snd.PlayLooping();
+                play = true;
+            }
+            else
+            {
+                snd.Stop();
+                play = false;
+            }
 
         }
     }
