@@ -149,37 +149,23 @@ namespace MapViewPallet
             a8.Draw(pointArray[12], pointArray[13]);
             StraightPath a9 = new StraightPath(map);
             a9.Draw(pointArray[13], pointArray[0]);
-
-
-            //StraightPath ax = new StraightPath(map);
-            //ax.Draw(pointArray[14], pointArray[15]);
-            ////Arrow show direction
-            //System.Windows.Point middle = new System.Windows.Point();
-            //middle.X = (pointArray[14].X + pointArray[15].X) / 2;
-            //middle.Y = (pointArray[14].Y + pointArray[15].Y) / 2;
-            //Polygon arrow = new Polygon();
-            ////arrow.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
-            //arrow.Fill = new SolidColorBrush(Colors.Green);
-            //arrow.Stroke = new SolidColorBrush(Colors.Black);
-            //RotateTransform myRotateTransform = new RotateTransform();
-            //myRotateTransform.Angle = 20;
-            //TranslateTransform myTranslate = new TranslateTransform(0, 0);
-            //TransformGroup myTransformGroup = new TransformGroup();
-            ////myTransformGroup.Children.Add(myRotateTransform);
-            //myTransformGroup.Children.Add(myTranslate);
-            
-            //PointCollection points = new PointCollection(3)
-            //{
-            //    new System.Windows.Point(middle.X - 2, middle.Y - 2),
-            //    new System.Windows.Point(middle.X - 2, middle.Y + 2),
-            //    new System.Windows.Point(middle.X + 2, middle.Y)
-            //};
-            //arrow.Points = points;
-            //arrow.RenderTransform = myTransformGroup;
-            //map.Children.Add(arrow);
+            MessageBox.Show("ss");
+            a9.remove();
         }
 
         private void btn_DrawCurve_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_HandDrawStraight_Click(object sender, RoutedEventArgs e)
+        {
+            drag = false;
+            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
+            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
+        }
+
+        private void btn_HandDrawCurve_Click(object sender, RoutedEventArgs e)
         {
 
         }

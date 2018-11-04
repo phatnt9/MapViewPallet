@@ -10,25 +10,38 @@ using System.Windows.Shapes;
 
 namespace MapViewPallet.Shape
 {
-   public class StraightPath:PathShape
+    public class StraightPath : PathShape
     {
-        
-
         public Line shape;
-        Ellipse point_Start;
-        Ellipse point_End;
-        Polygon arrow;
-        Point middle;
-        public StraightPath(Canvas canvas):base(canvas)
+        public Ellipse point_Start;
+        public Ellipse point_End;
+        public Polygon arrow;
+        public Point middle;
+        public StraightPath(Canvas canvas) : base(canvas)
         {
             shape = new Line();
         }
-        public void Draw (Point Start, Point End)
+
+        public void Copy (StraightPath copy)
         {
+            Name = copy.Name;
+            shape = copy.shape;
+            point_Start = copy.point_Start;
+            point_End = copy.point_End;
+            arrow = copy.arrow;
+            middle = copy.middle;
+        }
+        public void Draw(Point Start, Point End)
+        {
+            Console.WriteLine("Draw");
+            canvas.Children.Remove(shape);
+            canvas.Children.Remove(point_Start);
+            canvas.Children.Remove(point_End);
+            canvas.Children.Remove(arrow);
             //Middle point of straight path
             middle.X = (Start.X + End.X) / 2;
             middle.Y = (Start.Y + End.Y) / 2;
-            
+
             // Point at Start and End
             point_Start = new Ellipse();
             point_End = new Ellipse();
@@ -36,8 +49,8 @@ namespace MapViewPallet.Shape
             point_End.Fill = new SolidColorBrush(Colors.Red);
             point_Start.Width = point_End.Width = 6;
             point_Start.Height = point_End.Height = 6;
-            point_End.RenderTransform = new TranslateTransform(End.X-3, End.Y-3);
-            point_Start.RenderTransform = new TranslateTransform(Start.X-3, Start.Y-3);
+            point_End.RenderTransform = new TranslateTransform(End.X - 3, End.Y - 3);
+            point_Start.RenderTransform = new TranslateTransform(Start.X - 3, Start.Y - 3);
 
             //Arrow show direction
             arrow = new Polygon();
@@ -47,17 +60,17 @@ namespace MapViewPallet.Shape
             double yDiff = End.Y - Start.Y;
             double rotate = (Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
             RotateTransform myRotateTransform = new RotateTransform(rotate, middle.X, middle.Y);
-            TranslateTransform myTranslate = new TranslateTransform(0,0);
+            TranslateTransform myTranslate = new TranslateTransform(0, 0);
             TransformGroup myTransformGroup = new TransformGroup();
             myTransformGroup.Children.Add(myRotateTransform);
             myTransformGroup.Children.Add(myTranslate);
             arrow.RenderTransform = myTransformGroup;
-            
+
             //3 Point of Triangle
             PointCollection points = new PointCollection(3);
-            points.Add(new Point(middle.X-3, middle.Y-3));
-            points.Add(new Point(middle.X-3, middle.Y+3));
-            points.Add(new Point(middle.X+4, middle.Y));
+            points.Add(new Point(middle.X - 3, middle.Y - 3));
+            points.Add(new Point(middle.X - 3, middle.Y + 3));
+            points.Add(new Point(middle.X + 4, middle.Y));
             arrow.Points = points;
 
 
@@ -77,5 +90,15 @@ namespace MapViewPallet.Shape
 
             //MessageBox.Show(middle.X + "  " + middle.Y);
         }
+
+        public void remove()
+        {
+            canvas.Children.Remove(shape);
+            canvas.Children.Remove(point_Start);
+            canvas.Children.Remove(point_End);
+            canvas.Children.Remove(arrow);
+        }
+
+       
     }
 }

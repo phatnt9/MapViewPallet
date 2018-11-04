@@ -18,10 +18,13 @@ namespace MapViewPallet.Shape
         private ScaleTransform scaleTransform;
         private TranslateTransform translateTransform;
         private Point startPoint;
+        private Point draw_StartPoint;
         private Point originalPoint;
+        StraightPath straightPathTemp;
         private double zoomInLitmit = 7;
         private double zoomOutLimit;
         private double slidingScale;
+        SortedDictionary<string, StraightPath> list_StraightPath;
         double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
         
         public PalletViewControlService(MainWindow mainWinDowIn)
@@ -30,6 +33,8 @@ namespace MapViewPallet.Shape
             map = mainWindow.map;
             scaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
+            straightPathTemp = new StraightPath(map);
+            list_StraightPath = new SortedDictionary<string, StraightPath>();
             //==========EVENT==========
             map.MouseWheel += Map_Zoom;
             map.MouseMove += Map_MouseMove;
@@ -53,6 +58,7 @@ namespace MapViewPallet.Shape
 
         private void Map_MouseMove(object sender, MouseEventArgs e)
         {
+            //Console.WriteLine("Move");
             Point mousePos = e.GetPosition(map);
             mainWindow.MouseCoor.Content = mousePos.X.ToString("0.") + " " + mousePos.Y.ToString("0.");
             yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
@@ -116,22 +122,39 @@ namespace MapViewPallet.Shape
 
         private void Map_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            //Console.WriteLine("Up");
             map.ReleaseMouseCapture();
+            //if (Global_Mouse.ctrl_MouseMove == Global_Mouse.STATE_MOUSEMOVE.__HAND_DRAW_STRAIGHT)
+            //{
+            //    StraightPath straightPath = new StraightPath(map);
+            //    straightPath.Copy(straightPathTemp);
+            //    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
+            //    //Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE.__HAND_DRAW_STRAIGHT; //still draw straight
+
+            //    list_StraightPath.Add(straightPath.Name, straightPath);
+            //}
         }
 
         private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+           // Console.WriteLine("Down");
             //Console.WriteLine(translateTransform.X+"  "+ translateTransform.Y);
             //Console.WriteLine(mainWindow.clipBorder.ActualWidth + "  "+ mainWindow.clipBorder.ActualHeight);
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             //Console.WriteLine(elementName);
-            if (e.Source.ToString() == "System.Windows.Controls.Canvas")
+            if ((mainWindow.drag))
             {
-                map.CaptureMouse();
-                startPoint = e.GetPosition(mainWindow.clipBorder);
-                originalPoint = new Point(translateTransform.X, translateTransform.Y);
+                if (e.Source.ToString() == "System.Windows.Controls.Canvas")
+                {
+                    map.CaptureMouse();
+                    startPoint = e.GetPosition(mainWindow.clipBorder);
+                    originalPoint = new Point(translateTransform.X, translateTransform.Y);
+                }
             }
-            Statectrl_MouseDown(e);
+            if (!mainWindow.drag)
+            {
+                Statectrl_MouseDown(e);
+            }
         }
 
         private void Map_Zoom(object sender, MouseWheelEventArgs e)
@@ -212,6 +235,35 @@ namespace MapViewPallet.Shape
                         }
                     }
                     break;
+                case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1:
+                    straightPathTemp.Name = Global_Mouse.EncodeTransmissionTimestamp();
+                    
+                    if (mouseWasDownOn != null)
+                    {
+                        string elementName = mouseWasDownOn.Name;
+                        if (elementName != "")
+                        {
+                            draw_StartPoint = mousePos;
+                            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH;
+                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE.__HAND_DRAW_STRAIGHT;
+                        }
+                    }
+                    break;
+                case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH:
+                    if (mouseWasDownOn != null)
+                    {
+                        string elementName = mouseWasDownOn.Name;
+                        if (elementName != "")
+                        {
+                            StraightPath straightPath = new StraightPath(map);
+                            straightPath.Copy(straightPathTemp);
+                            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
+                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //still draw straight
+
+                            list_StraightPath.Add(straightPath.Name, straightPath);
+                        }
+                    }
+                    break;
                 default:
                     {
                         break;
@@ -233,6 +285,14 @@ namespace MapViewPallet.Shape
                         //StationShape x = new StationShape();
                         //x = (StationShape)map.Children[0];
                         //x.Move(pp.X, pp.Y);
+                        break;
+                    }
+                case Global_Mouse.STATE_MOUSEMOVE.__HAND_DRAW_STRAIGHT:
+                    {
+                        if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH)
+                        {
+                            straightPathTemp.Draw(draw_StartPoint, mousePos);
+                        }
                         break;
                     }
                 default:

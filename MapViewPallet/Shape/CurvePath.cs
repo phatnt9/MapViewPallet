@@ -33,9 +33,9 @@ namespace MapViewPallet.Shape
             {
                 Control = new Point((Direction == "up") ? End.X : Start.X, (Direction == "up") ? Start.Y : End.Y);
             }
-            //Middle point of straight path
+            //Middle point of curve path
             //-----------Middle point-------------
-            double t = 0.6; // given example value
+            double t = 0.65; // given example value
             //middle.X = (1 - t) * (1 - t) * Start.X + 2 * (1 - t) * t * Control.X + t * t * End.X;
             //middle.Y = (1 - t) * (1 - t) * Start.Y + 2 * (1 - t) * t * Control.Y + t * t * End.Y;
 

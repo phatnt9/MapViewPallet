@@ -22,5 +22,8 @@ namespace MapViewPallet.Shape
         {
             this.canvas = canvas;
         }
+        public PathShape()
+        {
+        }
     }
 }

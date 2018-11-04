@@ -48,6 +48,12 @@
                 <Button Name="btn_DrawCurve" BorderBrush="Black"
                         BorderThickness="2" Click="btn_DrawCurve_Click" 
                         ToolTip="Draw Curve" Content="Curve"/>
+                <Button Name="btn_HandDrawStraight" BorderBrush="Black"
+                        BorderThickness="2" Click="btn_HandDrawStraight_Click" 
+                        ToolTip="Draw Straight" Content="Hand Draw Straight"/>
+                <Button Name="btn_HandDrawCurve" BorderBrush="Black"
+                        BorderThickness="2" Click="btn_HandDrawCurve_Click" 
+                        ToolTip="Draw Curve" Content="Hand Draw Curve"/>
             </ToolBar>
         </Grid>
         <Grid Grid.Row="2" Background="#E7E7E7" >
