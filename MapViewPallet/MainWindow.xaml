@@ -43,20 +43,20 @@
                 <Button Name="btn_normal" Width="30" Height="30"
                     Click="btn_normal_Click" ToolTip="Normal"/>
                 <Button Name="btn_DrawStraght" BorderBrush="Black"
-                        BorderThickness="2" Click="btn_DrawStraght_Click" 
-                        ToolTip="DrawStraght" Content="Straight"/>
-                <Button Name="btn_DrawCurve" BorderBrush="Black"
-                        BorderThickness="2" Click="btn_DrawCurve_Click" 
-                        ToolTip="Draw Curve" Content="Curve"/>
+                        BorderThickness="2" Click="btn_DrawStraight_Click" 
+                        ToolTip="DrawStraght" Content="Test"/>
                 <Button Name="btn_HandDrawStraight" BorderBrush="Black"
                         BorderThickness="2" Click="btn_HandDrawStraight_Click" 
-                        ToolTip="Draw Straight" Content="Hand Draw Straight"/>
-                <Button Name="btn_HandDrawCurve" BorderBrush="Black"
-                        BorderThickness="2" Click="btn_HandDrawCurve_Click" 
-                        ToolTip="Draw Curve" Content="Hand Draw Curve"/>
+                        ToolTip="Draw Straight" Content="Draw Straight"/>
+                <Button Name="btn_HandDrawCurveUp" BorderBrush="Black"
+                        BorderThickness="2" Click="btn_HandDrawCurveUp_Click" 
+                        ToolTip="Draw Curve Up" Content="Draw Curve Up"/>
+                <Button Name="btn_HandDrawCurveDown" BorderBrush="Black"
+                        BorderThickness="2" Click="btn_HandDrawCurveDown_Click" 
+                        ToolTip="Draw Curve Down" Content="Draw Curve Down"/>
                 <Button Name="btn_Warning" BorderBrush="Black"
                         BorderThickness="2" Click="btn_Warning_Click" 
-                        ToolTip="Warning" Content="Warning"/>
+                        ToolTip="Warning" Content="Music"/>
             </ToolBar>
         </Grid>
         <Grid Grid.Row="2" Background="#E7E7E7" >

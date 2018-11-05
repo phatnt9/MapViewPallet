@@ -33,7 +33,7 @@ namespace MapViewPallet.Shape
             map = mainWindow.map;
             scaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
-            straightPathTemp = new StraightPath(map);
+            //straightPathTemp = new StraightPath(map);
             list_StraightPath = new SortedDictionary<string, StraightPath>();
             //==========EVENT==========
             map.MouseWheel += Map_Zoom;
@@ -236,6 +236,7 @@ namespace MapViewPallet.Shape
                     }
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1:
+                    straightPathTemp = new StraightPath(map);
                     straightPathTemp.Name = Global_Mouse.EncodeTransmissionTimestamp();
                     
                     if (mouseWasDownOn != null)
@@ -253,15 +254,12 @@ namespace MapViewPallet.Shape
                     if (mouseWasDownOn != null)
                     {
                         string elementName = mouseWasDownOn.Name;
-                        if (elementName != "")
-                        {
-                            StraightPath straightPath = new StraightPath(map);
-                            straightPath.Copy(straightPathTemp);
-                            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
-                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //still draw straight
-
-                            list_StraightPath.Add(straightPath.Name, straightPath);
-                        }
+                        StraightPath straightPath = new StraightPath(map);
+                        straightPath.Copy(straightPathTemp);
+                        Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
+                        Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //still draw straight
+                        list_StraightPath.Add(straightPath.Name, straightPath);
+                        Console.WriteLine(list_StraightPath.Count());
                     }
                     break;
                 default:
