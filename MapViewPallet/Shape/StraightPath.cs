@@ -10,24 +10,16 @@ namespace MapViewPallet.Shape
     {
         public StraightPath(Canvas canvas, Point Start, Point End) : base(canvas, Start, End)
         {
-            //_start = ;
-            //_end = ;
+            
+            _start.X = 0;
+            _start.Y = Height / 2;
+            _end.X = Width;
+            _end.Y = Height / 2;
             _name = "StraightPath-" + Global_Mouse.EncodeTransmissionTimestamp();
-            Height = 20;
-            //Draw(Start, End);
+            Draw();
         }
 
-        public void Copy (StraightPath copy)
-        {
-            _name = copy._name;
-            _shape = copy._shape;
-            _pointHead = copy._pointHead;
-            _pointTail = copy._pointTail;
-            _arrow = copy._arrow;
-            _middle = copy._middle;
-        }
-
-
+        
 
         public void DrawAxis(Point Start, Point End, Color color)
         {
@@ -74,21 +66,21 @@ namespace MapViewPallet.Shape
             _shape.StrokeThickness = _strokeThickness;
         }
 
-        public void Draw(Point Start, Point End)
+        public override void Draw()
         {
-            //_start = Start;
-            //_end = End;
+
             //Middle point of straight path
             _middle.X = (_start.X + _end.X) / 2;
             _middle.Y = (_start.Y + _end.Y) / 2;
 
             // Point at _start and _end
-            _pointHead.Fill = new SolidColorBrush(Colors.Red);
-            _pointTail.Fill = new SolidColorBrush(Colors.Red);
             _pointHead.Width = _pointTail.Width = 6;
             _pointHead.Height = _pointTail.Height = 6;
-            _pointTail.RenderTransform = new TranslateTransform(_end.X - 3, _end.Y - 3);
-            _pointHead.RenderTransform = new TranslateTransform(_start.X - 3, _start.Y - 3);
+            _pointHead.Fill = new SolidColorBrush(Colors.Red);
+            _pointTail.Fill = new SolidColorBrush(Colors.Red);
+            _pointHead.RenderTransform = new TranslateTransform(-(Width/2), 1);
+            _pointTail.RenderTransform = new TranslateTransform((Width / 2), 1);
+
 
             //Arrow show direction
             _arrow.Fill = new SolidColorBrush(Colors.Green);
@@ -115,12 +107,74 @@ namespace MapViewPallet.Shape
             LineSegment lineSegment = new LineSegment(_end, true);
             PathSegmentCollection pathSegments = new PathSegmentCollection();
             pathSegments.Add(lineSegment);
-            PathFigure pathFigure = new PathFigure(new Point(0,0), pathSegments, false);
+            PathFigure pathFigure = new PathFigure(_start, pathSegments, false);
             PathGeometry pathGeometry = new PathGeometry();
             pathGeometry.Figures.Add(pathFigure);
             _shape.Data = pathGeometry;
             _shape.Stroke = _stroke;
             _shape.StrokeThickness = _strokeThickness;
+
+            //Render Path
+            double xxDiff = _desMouse.X - _oriMouse.X;
+            double yxDiff = _desMouse.Y - _oriMouse.Y;
+            double rotatex = (Math.Atan2(yxDiff, xxDiff) * 180.0 / Math.PI);
+            double xmargin =0;
+            double ymargin =0;
+
+            switch (rotatex)
+            {
+                case 0:
+                    {
+                        xmargin = 0;
+                        ymargin = -25;
+                        break;
+                    }
+                case 45:
+                    {
+                        xmargin = 0;
+                        ymargin = 0;
+                        break;
+                    }
+                case 90:
+                    {
+                        xmargin = -25;
+                        ymargin = 0;
+                        break;
+                    }
+                case 135:
+                    {
+                        xmargin = 0;
+                        ymargin = 0;
+                        break;
+                    }
+                case 180:
+                    {
+                        xmargin = -50;
+                        ymargin = -25;
+                        break;
+                    }
+                case -135:
+                    {
+                        xmargin = 0;
+                        ymargin = 0;
+                        break;
+                    }
+                case -90:
+                    {
+                        xmargin = -25;
+                        ymargin = -50;
+                        break;
+                    }
+
+            }
+            Console.WriteLine(rotatex + "   " + Math.Atan2(yxDiff, xxDiff));
+            RenderTransformOrigin = new Point(0.5, 0.5);
+            RotateTransform myRotateTransformx = new RotateTransform(rotatex, 0, 0);
+            TranslateTransform myTranslatex = new TranslateTransform(_oriMouse.X + xmargin, _oriMouse.Y + ymargin);
+            TransformGroup myTransformGroupx = new TransformGroup();
+            myTransformGroupx.Children.Add(myRotateTransformx);
+            myTransformGroupx.Children.Add(myTranslatex);
+            RenderTransform = myTransformGroupx;
         }
 
         public void remove()

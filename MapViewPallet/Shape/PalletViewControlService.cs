@@ -277,7 +277,7 @@ namespace MapViewPallet.Shape
                     {
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH)
                         {
-                            straightPathTemp.Draw(draw_StartPoint, mousePos);
+                            //straightPathTemp.Draw(draw_StartPoint, mousePos);
                         }
                         break;
                     }

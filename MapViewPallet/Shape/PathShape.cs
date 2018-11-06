@@ -15,9 +15,11 @@ namespace MapViewPallet.Shape
         public string _name;
         public Properties pathProperties;
         public Grid pathGrid;
-        public Point _start { get; set; }
-        public Point _end { get; set; }
-        public double _strokeThickness = 10;
+        public Point _oriMouse;
+        public Point _desMouse;
+        public Point _start;
+        public Point _end;
+        public double _strokeThickness = 1;
         public SolidColorBrush _stroke = new SolidColorBrush(Colors.Black);
         public Path _shape;
         public Ellipse _pointHead;
@@ -27,50 +29,62 @@ namespace MapViewPallet.Shape
         public Canvas canvas;
         public PathShape(Canvas canvas, Point Start, Point End)
         {
+
+
+            Ellipse xxx = new Ellipse();
+            xxx.Width = 5;
+            xxx.Height = 5;
+
+
+
+            _oriMouse = new Point(Start.X, Start.Y);
+            _desMouse = new Point(End.X,End.Y);
+
+            double x1 = Math.Min(_oriMouse.X, _desMouse.X);
+            double y1 = Math.Min(_oriMouse.Y, _desMouse.Y);
+            //Move(new Point(x1, y1));
+            Width = 50;// Math.Max(_start.X, _end.X) - Math.Min(_start.X, _end.X);
+            Height = 50;// Math.Max(_start.Y, _end.Y) - Math.Min(_start.Y, _end.Y);
+
+            BorderBrush = new SolidColorBrush(Colors.Green);
+            BorderThickness = new Thickness(1);
+            
             pathGrid = new Grid();
             _shape = new Path();
             _pointHead = new Ellipse();
             _pointTail = new Ellipse();
             _arrow = new Polygon();
 
+            double xDiff = _desMouse.X - _oriMouse.X;
+            double yDiff = _desMouse.Y - _oriMouse.Y;
+            double rotate = (Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+            switch(rotate)
+            {
 
-            double x1 = Math.Min(Start.X, End.X);
-            double y1 = Math.Min(Start.Y, End.Y);
-            Width = 50;// Math.Max(_start.X, _end.X) - Math.Min(_start.X, _end.X);
-            Height = 50;// Math.Max(_start.Y, _end.Y) - Math.Min(_start.Y, _end.Y);
-            BorderBrush = new SolidColorBrush(Colors.Green);
-            BorderThickness = new Thickness(2);
-            
+            }
+            Console.WriteLine(rotate+"   "+ Math.Atan2(yDiff, xDiff));
+            RotateTransform myRotateTransform = new RotateTransform(rotate, _middle.X, _middle.Y);
+            TranslateTransform myTranslate = new TranslateTransform(_oriMouse.X, _oriMouse.Y);
+            TransformGroup myTransformGroup = new TransformGroup();
+            //myTransformGroup.Children.Add(myRotateTransform);
+            myTransformGroup.Children.Add(myTranslate);
+            RenderTransform = myTransformGroup;
+
             this.canvas = canvas;
             pathGrid.Children.Add(_shape);
             pathGrid.Children.Add(_pointHead);
             pathGrid.Children.Add(_pointTail);
             pathGrid.Children.Add(_arrow);
             Child = pathGrid;
-            Move(new Point(x1, y1));
             this.canvas.Children.Add(this);
             pathProperties = new Properties(this);
         }
-
-        private void Path_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var mouseWasDownOn = e.Source as FrameworkElement;
-            Console.WriteLine("chuot phai"+ Global_Object.Foo(sender));
-        }
+        
 
         public virtual void Draw()
         {
         }
-
-        public void Move(Point pos)
-        {
-            TranslateTransform a = new TranslateTransform(pos.X, pos.Y);
-            RotateTransform b = new RotateTransform(45);
-            TransformGroup myTransformGroup = new TransformGroup();
-            myTransformGroup.Children.Add(a);
-            //myTransformGroup.Children.Add(b);
-            RenderTransform = myTransformGroup;
-        }
+        
 
         public void ShowPropertiesGrid ()
         {

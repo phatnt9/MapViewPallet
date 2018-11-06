@@ -36,16 +36,16 @@ namespace MapViewPallet
             btn_normal.Background = LoadImage("Pallet2");
             snd = new System.Media.SoundPlayer();
 
-            double axisLenght = 30;
-            Point X1 = new Point(0, 0);
-            Point X2 = new Point(X1.X+ axisLenght, X1.Y);
-            Point Y1 = new Point(0, 0);
-            Point Y2 = new Point(Y1.X, Y1.Y + axisLenght);
-            StraightPath xAxis = new StraightPath(map, Transformations(X1, transform, angle), Transformations(X2, transform, angle));
-            xAxis.DrawAxis(Transformations(X1, transform, angle), Transformations(X2, transform, angle),Colors.Red);
+            //double axisLenght = 30;
+            //Point X1 = new Point(0, 0);
+            //Point X2 = new Point(X1.X+ axisLenght, X1.Y);
+            //Point Y1 = new Point(0, 0);
+            //Point Y2 = new Point(Y1.X, Y1.Y + axisLenght);
+            //StraightPath xAxis = new StraightPath(map, Transformations(X1, transform, angle), Transformations(X2, transform, angle));
+            //xAxis.DrawAxis(Transformations(X1, transform, angle), Transformations(X2, transform, angle),Colors.Red);
             
-            StraightPath yAxis = new StraightPath(map, Transformations(Y1, transform, angle), Transformations(Y2, transform, angle));
-            yAxis.DrawAxis(Transformations(Y1, transform, angle), Transformations(Y2, transform, angle), Colors.Blue);
+            //StraightPath yAxis = new StraightPath(map, Transformations(Y1, transform, angle), Transformations(Y2, transform, angle));
+            //yAxis.DrawAxis(Transformations(Y1, transform, angle), Transformations(Y2, transform, angle), Colors.Blue);
 
         }
 
@@ -90,11 +90,11 @@ namespace MapViewPallet
 
         public Point Transformations(Point origin, Point transform, double degrees)
         {
-            double angle = Math.PI * degrees / 180.0;
-            origin.X += transform.X;
-            origin.Y += transform.Y;
-            origin.X = origin.X * Math.Cos(angle) - origin.Y * Math.Sin(angle);
-            origin.Y = origin.X * Math.Sin(angle) + origin.Y * Math.Cos(angle);
+            //double angle = Math.PI * degrees / 180.0;
+            //origin.X += transform.X;
+            //origin.Y += transform.Y;
+            //origin.X = origin.X * Math.Cos(angle) - origin.Y * Math.Sin(angle);
+            //origin.Y = origin.X * Math.Sin(angle) + origin.Y * Math.Cos(angle);
             return origin;
         }
 

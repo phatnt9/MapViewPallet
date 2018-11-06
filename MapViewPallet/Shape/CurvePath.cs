@@ -12,14 +12,16 @@ namespace MapViewPallet.Shape
         bool direction; // true= Up, false = Down
         public CurvePath(Canvas canvas, Point Start, Point End, bool direction) : base(canvas, Start, End)
         {
+            _start.X = Math.Min(_oriMouse.X, _desMouse.X);
+            _start.Y = Math.Min(_oriMouse.Y, _desMouse.Y);
+            _end.X = Math.Max(_oriMouse.X, _desMouse.X);
+            _end.Y = Math.Max(_oriMouse.Y, _desMouse.Y);
             this.direction = direction;
             _name = "CurvePath-" + Global_Mouse.EncodeTransmissionTimestamp();
-            //Draw(Start, End);
+            Draw();
         }
-        public void Draw(Point Start, Point End)
+        public override void Draw()
         {
-            _start = Start;
-            _end = End;
             //Control point of Path
             if (_start.Y > _end.Y)
             {
@@ -42,8 +44,10 @@ namespace MapViewPallet.Shape
             _pointTail.Fill = new SolidColorBrush(Colors.Red);
             _pointHead.Width = _pointTail.Width = 6;
             _pointHead.Height = _pointTail.Height = 6;
-            _pointTail.RenderTransform = new TranslateTransform(_end.X - 3, _end.Y - 3);
-            _pointHead.RenderTransform = new TranslateTransform(_start.X - 3, _start.Y - 3);
+            //_pointTail.RenderTransform = new TranslateTransform(_end.X, _end.Y);
+            _pointTail.RenderTransform = new TranslateTransform(0,0);
+            //_pointHead.RenderTransform = new TranslateTransform(_start.X, _start.Y);
+            _pointHead.RenderTransform = new TranslateTransform(0,0);
 
             //Arrow show direction
             _arrow.Fill = new SolidColorBrush(Colors.Green);
