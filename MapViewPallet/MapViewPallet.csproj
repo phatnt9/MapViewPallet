@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,6 +62,13 @@
     <Compile Include="Shape\CurvePath.cs" />
     <Compile Include="Shape\PalletShape.cs" />
     <Compile Include="Shape\PalletViewControlService.cs" />
+    <Compile Include="Shape\PathShapeEvent.cs" />
+    <Compile Include="Shape\Properties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shape\Properties.Designer.cs">
+      <DependentUpon>Properties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Shape\PathShape.cs" />
     <Compile Include="Shape\StationShape.cs" />
     <Compile Include="Shape\StraightPath.cs" />
@@ -94,6 +102,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shape\Properties.resx">
+      <DependentUpon>Properties.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

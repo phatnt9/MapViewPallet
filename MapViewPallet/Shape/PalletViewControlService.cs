@@ -13,6 +13,7 @@ namespace MapViewPallet.Shape
     class PalletViewControlService
     {
         //=================VARIABLE==================
+        private int stationCount=0;
         private MainWindow mainWindow;
         private Canvas map;
         private ScaleTransform scaleTransform;
@@ -24,7 +25,7 @@ namespace MapViewPallet.Shape
         private double zoomInLitmit = 7;
         private double zoomOutLimit;
         private double slidingScale;
-        SortedDictionary<string, StraightPath> list_StraightPath;
+        SortedDictionary<string, PathShape> list_Path;
         double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
         
         public PalletViewControlService(MainWindow mainWinDowIn)
@@ -33,8 +34,7 @@ namespace MapViewPallet.Shape
             map = mainWindow.map;
             scaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
-            //straightPathTemp = new StraightPath(map);
-            list_StraightPath = new SortedDictionary<string, StraightPath>();
+            list_Path = new SortedDictionary<string, PathShape>();
             //==========EVENT==========
             map.MouseWheel += Map_Zoom;
             map.MouseMove += Map_MouseMove;
@@ -122,17 +122,7 @@ namespace MapViewPallet.Shape
 
         private void Map_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //Console.WriteLine("Up");
             map.ReleaseMouseCapture();
-            //if (Global_Mouse.ctrl_MouseMove == Global_Mouse.STATE_MOUSEMOVE.__HAND_DRAW_STRAIGHT)
-            //{
-            //    StraightPath straightPath = new StraightPath(map);
-            //    straightPath.Copy(straightPathTemp);
-            //    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
-            //    //Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE.__HAND_DRAW_STRAIGHT; //still draw straight
-
-            //    list_StraightPath.Add(straightPath.Name, straightPath);
-            //}
         }
 
         private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -141,7 +131,7 @@ namespace MapViewPallet.Shape
             //Console.WriteLine(translateTransform.X+"  "+ translateTransform.Y);
             //Console.WriteLine(mainWindow.clipBorder.ActualWidth + "  "+ mainWindow.clipBorder.ActualHeight);
             string elementName = (e.OriginalSource as FrameworkElement).Name;
-            //Console.WriteLine(elementName);
+            Console.WriteLine(elementName);
             if ((mainWindow.drag))
             {
                 if (e.Source.ToString() == "System.Windows.Controls.Canvas")
@@ -218,8 +208,8 @@ namespace MapViewPallet.Shape
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
                         {
                             StationShape stationTemp = null;
-                            stationTemp = new StationShape("MIX0", 2, 7, "Pallet2");
-                            stationTemp.Move(mousePos.X, mousePos.Y);
+                            stationTemp = new StationShape("MIX"+ stationCount, 2, 7, "Pallet2");
+                            stationTemp.Move(mousePos);
                             map.Children.Add(stationTemp);
                         }
                         break;
@@ -236,8 +226,7 @@ namespace MapViewPallet.Shape
                     }
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1:
-                    straightPathTemp = new StraightPath(map);
-                    straightPathTemp.Name = Global_Mouse.EncodeTransmissionTimestamp();
+                    straightPathTemp = new StraightPath(map,new Point(0,0), new Point(0, 0));
                     
                     if (mouseWasDownOn != null)
                     {
@@ -254,12 +243,11 @@ namespace MapViewPallet.Shape
                     if (mouseWasDownOn != null)
                     {
                         string elementName = mouseWasDownOn.Name;
-                        StraightPath straightPath = new StraightPath(map);
-                        straightPath.Copy(straightPathTemp);
+                        //StraightPath straightPath = new StraightPath(map);
+                        //straightPath.Copy(straightPathTemp);
                         Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
-                        Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //still draw straight
-                        list_StraightPath.Add(straightPath.Name, straightPath);
-                        Console.WriteLine(list_StraightPath.Count());
+                        Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
+                        list_Path.Add(straightPathTemp.Name, straightPathTemp);
                     }
                     break;
                 default:

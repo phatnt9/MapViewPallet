@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Controls;
 
 namespace MapViewPallet.Shape
@@ -33,13 +22,13 @@ namespace MapViewPallet.Shape
             for (int lineIndex=0; lineIndex<lines; lineIndex++)
             {
                 ColumnDefinition colTemp = new ColumnDefinition();
-                colTemp.Name = Name + "xCol" + lineIndex;
+                colTemp.Name = Name + "x" + lineIndex;
                 stationGrid.ColumnDefinitions.Add(colTemp);
             }
             for (int palletIndex = 0; palletIndex < pallets_per_line; palletIndex++)
             {
                 RowDefinition rowTemp = new RowDefinition();
-                rowTemp.Name = Name + "xRow" + palletIndex;
+                rowTemp.Name = Name + "x" + palletIndex;
                 stationGrid.RowDefinitions.Add(rowTemp);
             }
             for (int lineIndex = 0; lineIndex < lines; lineIndex++)
@@ -53,12 +42,12 @@ namespace MapViewPallet.Shape
                     stationGrid.Children.Add(borderTemp);
                 }
             }
-            this.Child = stationGrid;
+            Child = stationGrid;
         }
 
-        public void Move(double X, double Y)
+        public void Move(Point pos)
         {
-            TranslateTransform a = new TranslateTransform(X, Y);
+            TranslateTransform a = new TranslateTransform(pos.X, pos.Y);
             RotateTransform b = new RotateTransform(45);
             TransformGroup myTransformGroup = new TransformGroup();
             myTransformGroup.Children.Add(a);

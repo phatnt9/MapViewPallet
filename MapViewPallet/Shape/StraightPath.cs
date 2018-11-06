@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,48 +8,42 @@ namespace MapViewPallet.Shape
 {
     public class StraightPath : PathShape
     {
-        public Line shape;
-        public Ellipse point_Start;
-        public Ellipse point_End;
-        public Polygon arrow;
-        public Point middle;
-        public StraightPath(Canvas canvas) : base(canvas)
+        public StraightPath(Canvas canvas, Point Start, Point End) : base(canvas, Start, End)
         {
-            shape = new Line();
-            point_Start = new Ellipse();
-            point_End = new Ellipse();
-            arrow = new Polygon();
-            canvas.Children.Add(shape);
-            canvas.Children.Add(point_Start);
-            canvas.Children.Add(point_End);
-            canvas.Children.Add(arrow);
+            //_start = ;
+            //_end = ;
+            _name = "StraightPath-" + Global_Mouse.EncodeTransmissionTimestamp();
+            Height = 20;
+            //Draw(Start, End);
         }
 
         public void Copy (StraightPath copy)
         {
-            Name = copy.Name;
-            shape = copy.shape;
-            point_Start = copy.point_Start;
-            point_End = copy.point_End;
-            arrow = copy.arrow;
-            middle = copy.middle;
+            _name = copy._name;
+            _shape = copy._shape;
+            _pointHead = copy._pointHead;
+            _pointTail = copy._pointTail;
+            _arrow = copy._arrow;
+            _middle = copy._middle;
         }
+
+
 
         public void DrawAxis(Point Start, Point End, Color color)
         {
-            canvas.Children.Remove(point_End);
+            canvas.Children.Remove(_pointTail);
             //Middle point of straight path
-            StartPoint = Start;
-            EndPoint = End;
+            _start = Start;
+            _end = End;
             // Point at Start and End
 
-            point_End.Fill = new SolidColorBrush(color);
-            point_End.Width = 6;
-            point_End.Height = 6;
-            point_End.RenderTransform = new TranslateTransform(End.X - 3, End.Y - 3);
+            _pointTail.Fill = new SolidColorBrush(color);
+            _pointTail.Width = 5;
+            _pointTail.Height = 5;
+            _pointTail.RenderTransform = new TranslateTransform(End.X - 3, End.Y - 3);
             //Arrow
-            arrow.Fill = new SolidColorBrush(color);
-            arrow.Stroke = new SolidColorBrush(color);
+            _arrow.Fill = new SolidColorBrush(color);
+            _arrow.Stroke = new SolidColorBrush(color);
             double xDiff = End.X - Start.X;
             double yDiff = End.Y - Start.Y;
             double rotate = (Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
@@ -62,84 +52,80 @@ namespace MapViewPallet.Shape
             TransformGroup myTransformGroup = new TransformGroup();
             myTransformGroup.Children.Add(myRotateTransform);
             myTransformGroup.Children.Add(myTranslate);
-            arrow.RenderTransform = myTransformGroup;
+            _arrow.RenderTransform = myTransformGroup;
 
             //3 Point of Triangle
             PointCollection points = new PointCollection(3);
             points.Add(new Point(End.X - 3, End.Y - 3));
             points.Add(new Point(End.X - 3, End.Y + 3));
             points.Add(new Point(End.X + 4, End.Y));
-            arrow.Points = points;
+            _arrow.Points = points;
 
 
             //Position the Path
-            shape.X1 = Start.X;
-            shape.Y1 = Start.Y;
-            shape.X2 = End.X;
-            shape.Y2 = End.Y;
-            shape.Stroke = new SolidColorBrush(color); ;
-            shape.StrokeThickness = StrokeThickness;
+            LineSegment lineSegment = new LineSegment(End, true);
+            PathSegmentCollection pathSegments = new PathSegmentCollection();
+            pathSegments.Add(lineSegment);
+            PathFigure pathFigure = new PathFigure(Start, pathSegments, false);
+            PathGeometry pathGeometry = new PathGeometry();
+            pathGeometry.Figures.Add(pathFigure);
+            _shape.Data = pathGeometry;
+            _shape.Stroke = new SolidColorBrush(color); ;
+            _shape.StrokeThickness = _strokeThickness;
         }
 
         public void Draw(Point Start, Point End)
         {
+            //_start = Start;
+            //_end = End;
             //Middle point of straight path
-            StartPoint = Start;
-            EndPoint = End;
-            middle.X = (Start.X + End.X) / 2;
-            middle.Y = (Start.Y + End.Y) / 2;
+            _middle.X = (_start.X + _end.X) / 2;
+            _middle.Y = (_start.Y + _end.Y) / 2;
 
-            // Point at Start and End
-
-            point_Start.Fill = new SolidColorBrush(Colors.Red);
-            point_End.Fill = new SolidColorBrush(Colors.Red);
-            point_Start.Width = point_End.Width = 6;
-            point_Start.Height = point_End.Height = 6;
-            point_End.RenderTransform = new TranslateTransform(End.X - 3, End.Y - 3);
-            point_Start.RenderTransform = new TranslateTransform(Start.X - 3, Start.Y - 3);
+            // Point at _start and _end
+            _pointHead.Fill = new SolidColorBrush(Colors.Red);
+            _pointTail.Fill = new SolidColorBrush(Colors.Red);
+            _pointHead.Width = _pointTail.Width = 6;
+            _pointHead.Height = _pointTail.Height = 6;
+            _pointTail.RenderTransform = new TranslateTransform(_end.X - 3, _end.Y - 3);
+            _pointHead.RenderTransform = new TranslateTransform(_start.X - 3, _start.Y - 3);
 
             //Arrow show direction
-           
-            arrow.Fill = new SolidColorBrush(Colors.Green);
-            arrow.Stroke = Stroke;
-            double xDiff = End.X - Start.X;
-            double yDiff = End.Y - Start.Y;
+            _arrow.Fill = new SolidColorBrush(Colors.Green);
+            _arrow.Stroke = _stroke;
+            double xDiff = _end.X - _start.X;
+            double yDiff = _end.Y - _start.Y;
             double rotate = (Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
-            RotateTransform myRotateTransform = new RotateTransform(rotate, middle.X, middle.Y);
+            RotateTransform myRotateTransform = new RotateTransform(rotate, _middle.X, _middle.Y);
             TranslateTransform myTranslate = new TranslateTransform(0, 0);
             TransformGroup myTransformGroup = new TransformGroup();
             myTransformGroup.Children.Add(myRotateTransform);
             myTransformGroup.Children.Add(myTranslate);
-            arrow.RenderTransform = myTransformGroup;
+            _arrow.RenderTransform = myTransformGroup;
 
             //3 Point of Triangle
             PointCollection points = new PointCollection(3);
-            points.Add(new Point(middle.X - 3, middle.Y - 3));
-            points.Add(new Point(middle.X - 3, middle.Y + 3));
-            points.Add(new Point(middle.X + 4, middle.Y));
-            arrow.Points = points;
+            points.Add(new Point(_middle.X - 3, _middle.Y - 3));
+            points.Add(new Point(_middle.X - 3, _middle.Y + 3));
+            points.Add(new Point(_middle.X + 4, _middle.Y));
+            _arrow.Points = points;
 
 
             //Position the Path
-            shape.X1 = Start.X;
-            shape.Y1 = Start.Y;
-            shape.X2 = End.X;
-            shape.Y2 = End.Y;
-            shape.Stroke = Stroke;
-            shape.StrokeThickness = StrokeThickness;
-
-            //Draw to Canvas
-            
-
-            //MessageBox.Show(middle.X + "  " + middle.Y);
+            LineSegment lineSegment = new LineSegment(_end, true);
+            PathSegmentCollection pathSegments = new PathSegmentCollection();
+            pathSegments.Add(lineSegment);
+            PathFigure pathFigure = new PathFigure(new Point(0,0), pathSegments, false);
+            PathGeometry pathGeometry = new PathGeometry();
+            pathGeometry.Figures.Add(pathFigure);
+            _shape.Data = pathGeometry;
+            _shape.Stroke = _stroke;
+            _shape.StrokeThickness = _strokeThickness;
         }
 
         public void remove()
         {
-            canvas.Children.Remove(shape);
-            canvas.Children.Remove(point_Start);
-            canvas.Children.Remove(point_End);
-            canvas.Children.Remove(arrow);
+            canvas.Children.Remove(this);
         }
 
        

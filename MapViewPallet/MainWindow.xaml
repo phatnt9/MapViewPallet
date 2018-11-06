@@ -6,6 +6,12 @@
         xmlns:local="clr-namespace:MapViewPallet"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="500">
+    <Window.Resources >
+        <ContextMenu x:Key="PATH-MENU" Name="pathMenu" >
+            <MenuItem Header="Edit" Name="pathEdit" Click="pathEdit_Click"/>
+            <MenuItem Header="Remove" Name="pathRemove" Click="pathRemove_Click"/>
+        </ContextMenu>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"></RowDefinition>
@@ -126,6 +132,22 @@
                         </DrawingBrush>
                     </Canvas.Background>
                     <Canvas.Children>
+                        <!--<Border Canvas.Left="40" Canvas.Top="40" Width="200" Height="200">
+                            <Grid >
+                                <Path Stroke="#C0000000" StrokeThickness="3">
+                                    <Path.Data>
+                                        <PathGeometry>
+                                            <PathGeometry.Figures>
+                                                <PathFigure StartPoint="0,0" IsClosed="False">
+                                                    <QuadraticBezierSegment Point1="10,150" Point2="200,20"/>
+                                                </PathFigure>
+                                            </PathGeometry.Figures>
+                                        </PathGeometry>
+                                    </Path.Data>
+                                </Path>
+                                <Ellipse Fill="Blue" Height="10" Width="10" Canvas.Left="0" Canvas.Top="0" RenderTransformOrigin="-7.267,-8.367"/>
+                            </Grid>
+                        </Border>-->
                     </Canvas.Children>
                     <Canvas.RenderTransform>
                         <TransformGroup>

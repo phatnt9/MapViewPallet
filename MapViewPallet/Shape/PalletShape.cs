@@ -22,7 +22,7 @@ namespace MapViewPallet.Shape
             Margin = new Thickness(2);
             BorderBrush = new SolidColorBrush(Colors.Green);
             BorderThickness = new Thickness(0);
-            Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject(typePallet);
+            Bitmap bmp = (Bitmap)MapViewPallet.Properties.Resources.ResourceManager.GetObject(typePallet);
             ImageBrush img = new ImageBrush();
             img.ImageSource = ImageSourceForBitmap(bmp);
             Background = img;
