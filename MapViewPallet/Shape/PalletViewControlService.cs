@@ -21,7 +21,7 @@ namespace MapViewPallet.Shape
         private Point startPoint;
         private Point draw_StartPoint;
         private Point originalPoint;
-        StraightPath straightPathTemp;
+        PathShape pathTemp;
         private double zoomInLitmit = 7;
         private double zoomOutLimit;
         private double slidingScale;
@@ -226,7 +226,7 @@ namespace MapViewPallet.Shape
                     }
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1:
-                    straightPathTemp = new StraightPath(map,new Point(0,0), new Point(0, 0));
+                    pathTemp = new StraightPath(map,new Point(0,0), new Point(0, 0));
                     
                     if (mouseWasDownOn != null)
                     {
@@ -235,7 +235,33 @@ namespace MapViewPallet.Shape
                         {
                             draw_StartPoint = mousePos;
                             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH;
-                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE.__HAND_DRAW_STRAIGHT;
+                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_STRAIGHT;
+                        }
+                    }
+                    break;
+                case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_P1:
+                    pathTemp = new CurvePath(map, new Point(0, 0), new Point(0, 0),true);
+                    if (mouseWasDownOn != null)
+                    {
+                        string elementName = mouseWasDownOn.Name;
+                        if (elementName != "")
+                        {
+                            draw_StartPoint = mousePos;
+                            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_FINISH;
+                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_CURVE;
+                        }
+                    }
+                    break;
+                case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_P1:
+                    pathTemp = new CurvePath(map, new Point(0, 0), new Point(0, 0), false);
+                    if (mouseWasDownOn != null)
+                    {
+                        string elementName = mouseWasDownOn.Name;
+                        if (elementName != "")
+                        {
+                            draw_StartPoint = mousePos;
+                            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_FINISH;
+                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_CURVE;
                         }
                     }
                     break;
@@ -243,11 +269,27 @@ namespace MapViewPallet.Shape
                     if (mouseWasDownOn != null)
                     {
                         string elementName = mouseWasDownOn.Name;
-                        //StraightPath straightPath = new StraightPath(map);
-                        //straightPath.Copy(straightPathTemp);
                         Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
                         Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
-                        list_Path.Add(straightPathTemp.Name, straightPathTemp);
+                        list_Path.Add(pathTemp.Name, pathTemp);
+                    }
+                    break;
+                case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_FINISH:
+                    if (mouseWasDownOn != null)
+                    {
+                        string elementName = mouseWasDownOn.Name;
+                        Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_P1;
+                        Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
+                        list_Path.Add(pathTemp.Name, pathTemp);
+                    }
+                    break;
+                case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_FINISH:
+                    if (mouseWasDownOn != null)
+                    {
+                        string elementName = mouseWasDownOn.Name;
+                        Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_P1;
+                        Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
+                        list_Path.Add(pathTemp.Name, pathTemp);
                     }
                     break;
                 default:
@@ -273,11 +315,20 @@ namespace MapViewPallet.Shape
                         //x.Move(pp.X, pp.Y);
                         break;
                     }
-                case Global_Mouse.STATE_MOUSEMOVE.__HAND_DRAW_STRAIGHT:
+                case Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_STRAIGHT:
                     {
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH)
                         {
-                            //straightPathTemp.Draw(draw_StartPoint, mousePos);
+                            pathTemp.ReDraw(draw_StartPoint, mousePos);
+                        }
+                        break;
+                    }
+                case Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_CURVE:
+                    {
+                        if ((Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_FINISH) ||
+                            (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_FINISH))
+                        {
+                            pathTemp.ReDraw(draw_StartPoint, mousePos);
                         }
                         break;
                     }

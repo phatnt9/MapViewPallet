@@ -8,80 +8,74 @@ namespace MapViewPallet.Shape
 {
     public class CurvePath: PathShape
     {
+
+        double rate = 0.3;
+        double t = 0.65;
         Point Control;
+        BezierSegment bezierSegment;
         bool direction; // true= Up, false = Down
         public CurvePath(Canvas canvas, Point Start, Point End, bool direction) : base(canvas, Start, End)
         {
-            _start.X = Math.Min(_oriMouse.X, _desMouse.X);
-            _start.Y = Math.Min(_oriMouse.Y, _desMouse.Y);
-            _end.X = Math.Max(_oriMouse.X, _desMouse.X);
-            _end.Y = Math.Max(_oriMouse.Y, _desMouse.Y);
+            bezierSegment = new BezierSegment();
+            Name = "CurvePathx" + Global_Mouse.EncodeTransmissionTimestamp();
             this.direction = direction;
-            _name = "CurvePath-" + Global_Mouse.EncodeTransmissionTimestamp();
+            RenderTransformOrigin = new Point(0, 1);
+            Control = new Point();
             Draw();
         }
+        
         public override void Draw()
         {
+            Width = Global_Object.LengthBetweenPoints(_oriMousePos, _desMousePos);
+            Height = Width* rate;
+            if(Height > 20)
+            {
+                Height = 20;
+            }
+            _start.X = 0;
+            _start.Y = Height-2;
+            _end.X = Width;
+            _end.Y = Height;
             //Control point of Path
-            if (_start.Y > _end.Y)
-            {
-                Control = new Point(direction ? _start.X : _end.X, direction ? _end.Y : _start.Y);
-            }
-            else
-            {
-                Control = new Point(direction ? _end.X : _start.X, direction ? _start.Y : _end.Y);
-            }
+            xDiff = _desMousePos.X - _oriMousePos.X;
+            yDiff = _desMousePos.Y - _oriMousePos.Y;
+            Control.X = Width / 2;
+            Control.Y = -Height / 1.5;
             //Middle point of curve path
             //-----------Middle point-------------
-            double t = 0.65;
             _middle.X = (1 - t) * (1 - t) * (1 - t) * _start.X + 3 * (1 - t) * (1 - t) * t * _start.X + 3 * (1 - t) * t * t * Control.X + t * t * t * _end.X;
             _middle.Y = (1 - t) * (1 - t) * (1 - t) * _start.Y + 3 * (1 - t) * (1 - t) * t * _start.Y + 3 * (1 - t) * t * t * Control.Y + t * t * t * _end.Y;
             //--------------------------------
-
-
             // Point at _start and _end
-            _pointHead.Fill = new SolidColorBrush(Colors.Red);
-            _pointTail.Fill = new SolidColorBrush(Colors.Red);
-            _pointHead.Width = _pointTail.Width = 6;
-            _pointHead.Height = _pointTail.Height = 6;
-            //_pointTail.RenderTransform = new TranslateTransform(_end.X, _end.Y);
-            _pointTail.RenderTransform = new TranslateTransform(0,0);
-            //_pointHead.RenderTransform = new TranslateTransform(_start.X, _start.Y);
-            _pointHead.RenderTransform = new TranslateTransform(0,0);
-
+            _pointTail.RenderTransform = new TranslateTransform(Width / 2, Height / 2);
+            _pointHead.RenderTransform = new TranslateTransform(-Width / 2, Height / 2);
             //Arrow show direction
-            _arrow.Fill = new SolidColorBrush(Colors.Green);
-            _arrow.Stroke = _stroke;
-            double xDiff = _end.X - _start.X;
-            double yDiff = _end.Y - _start.Y;
-            double rotate = (Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
-            RotateTransform myRotateTransform = new RotateTransform(rotate, _middle.X, _middle.Y);
-            TranslateTransform myTranslate = new TranslateTransform(0, 0);
-            TransformGroup myTransformGroup = new TransformGroup();
-            myTransformGroup.Children.Add(myRotateTransform);
-            myTransformGroup.Children.Add(myTranslate);
-            _arrow.RenderTransform = myTransformGroup;
-
             //3 Point of Triangle
             PointCollection points = new PointCollection(3);
-            points.Add(new Point(_middle.X - 3, _middle.Y - 3));
-            points.Add(new Point(_middle.X - 3, _middle.Y + 3));
-            points.Add(new Point(_middle.X + 4, _middle.Y));
+            points.Add(new Point(_middle.X - sizeArrow, _middle.Y - sizeArrow));
+            points.Add(new Point(_middle.X - sizeArrow, _middle.Y + sizeArrow));
+            points.Add(new Point(_middle.X + sizeArrow + 1, _middle.Y));
             _arrow.Points = points;
-
-
-            
-            BezierSegment bezierSegment = new BezierSegment(_start, Control, _end, true);
-            PathSegmentCollection pathSegments = new PathSegmentCollection();
-            pathSegments.Add(bezierSegment);
-            PathFigure pathFigure = new PathFigure(_start, pathSegments,false);
-            PathGeometry pathGeometry = new PathGeometry();
-            pathGeometry.Figures.Add(pathFigure);
-            _shape.Data = pathGeometry;
-            _shape.Stroke = _stroke;
-            _shape.StrokeThickness = _strokeThickness;
-
-            
+            //Position the Path
+            bezierSegment.Point1 = _start;
+            bezierSegment.Point2 = Control;
+            bezierSegment.Point3 = _end;
+            bezierSegment.IsStroked = true;
+            if(pathSegments.Count>0)
+            {
+                pathSegments[0] = bezierSegment;
+            }
+            else
+            {
+                Console.WriteLine("curve add");
+                pathSegments.Add(bezierSegment);
+            }
+            pathFigure.StartPoint = _start;
+            //Render Path
+            rotate = (Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+            myRotateTransform.Angle = rotate;
+            myTranslate = new TranslateTransform(_oriMousePos.X, _oriMousePos.Y - (Height));
+            myTransformGroup.Children[1] = myTranslate;
         }
     }
 }

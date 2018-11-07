@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -36,19 +37,27 @@ namespace MapViewPallet
             btn_normal.Background = LoadImage("Pallet2");
             snd = new System.Media.SoundPlayer();
 
-            //double axisLenght = 30;
-            //Point X1 = new Point(0, 0);
-            //Point X2 = new Point(X1.X+ axisLenght, X1.Y);
-            //Point Y1 = new Point(0, 0);
-            //Point Y2 = new Point(Y1.X, Y1.Y + axisLenght);
-            //StraightPath xAxis = new StraightPath(map, Transformations(X1, transform, angle), Transformations(X2, transform, angle));
-            //xAxis.DrawAxis(Transformations(X1, transform, angle), Transformations(X2, transform, angle),Colors.Red);
-            
-            //StraightPath yAxis = new StraightPath(map, Transformations(Y1, transform, angle), Transformations(Y2, transform, angle));
-            //yAxis.DrawAxis(Transformations(Y1, transform, angle), Transformations(Y2, transform, angle), Colors.Blue);
+            PreviewKeyDown += new KeyEventHandler(HandleEsc);
 
         }
 
+        private void HandleEsc(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Normal_mode();
+            }
+        }
+        public void Normal_mode()
+        {
+            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
+            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._NORMAL;
+        }
+        public void Select_mode()
+        {
+            //valstatectrl_mm = STATECTRL_MOUSEMOVE.STATECTRL_SLIDE_OBJECT;
+            //valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_KEEP_IN_OBJECT;
+        }
         public ImageBrush LoadImage (string name)
         {
             System.Drawing.Bitmap bmp = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject(name);
@@ -126,8 +135,6 @@ namespace MapViewPallet
 
             double xDiff = pointArray[8].X - pointArray[7].X;
             double yDiff = pointArray[8].Y - pointArray[7].Y;
-            Console.WriteLine(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
-            Console.WriteLine(Math.Atan2(yDiff, xDiff));
 
             CurvePath b0 = new CurvePath(map, Transformations(pointArray[0], transform, angle), Transformations(pointArray[1], transform, angle),true);
             StraightPath a0 = new StraightPath(map, Transformations(pointArray[1], transform, angle), Transformations(pointArray[2], transform, angle));
@@ -143,8 +150,7 @@ namespace MapViewPallet
             CurvePath b3 = new CurvePath(map, Transformations(pointArray[11], transform, angle), Transformations(pointArray[12], transform, angle), false);
             StraightPath a8 = new StraightPath(map, Transformations(pointArray[12], transform, angle), Transformations(pointArray[13], transform, angle));
             StraightPath a9 = new StraightPath(map, Transformations(pointArray[13], transform, angle), Transformations(pointArray[0], transform, angle));
-            //MessageBox.Show("ss");
-            //a9.remove();
+            
         }
         
 
@@ -175,12 +181,16 @@ namespace MapViewPallet
 
         private void btn_HandDrawCurveUp_Click(object sender, RoutedEventArgs e)
         {
-
+            drag = false;
+            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_P1;
+            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
 
         private void btn_HandDrawCurveDown_Click(object sender, RoutedEventArgs e)
         {
-
+            drag = false;
+            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_P1;
+            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
 
         private void pathEdit_Click(object sender, RoutedEventArgs e)

@@ -132,33 +132,32 @@
                         </DrawingBrush>
                     </Canvas.Background>
                     <Canvas.Children>
-                        <Border Canvas.Left="50" Canvas.Top="50" Width="50" Height="50">
+                        <!--<Border Canvas.Left="50" Canvas.Top="50" Width="50" Height="50">
                             <Grid >
                                 <Grid.Children>
                                     <Ellipse Fill="Blue" Height="10" Width="10" RenderTransformOrigin="1,0">
                                         <Ellipse.RenderTransform>
                                             <TransformGroup>
                                             <RotateTransform Angle="0"></RotateTransform>
-                                            <TranslateTransform X="0" Y="0"></TranslateTransform>
+                                            <TranslateTransform X="10" Y="10"></TranslateTransform>
                                             </TransformGroup>
                                         </Ellipse.RenderTransform>
                                     </Ellipse>
+                                    <Path Stroke="#C0000000" StrokeThickness="3">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="0,25" IsClosed="False">
+                                                        <QuadraticBezierSegment Point1="10,150" Point2="200,20"/>
+                                                        <LineSegment Point="50,25"></LineSegment>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
                                 </Grid.Children>
-                                <!--<Path Stroke="#C0000000" StrokeThickness="3">
-                                    <Path.Data>
-                                        <PathGeometry>
-                                            <PathGeometry.Figures>
-                                                <PathFigure StartPoint="0,25" IsClosed="False">
-                                                    <QuadraticBezierSegment Point1="10,150" Point2="200,20"/>
-                                                    <LineSegment Point="50,25"></LineSegment>
-                                                </PathFigure>
-                                            </PathGeometry.Figures>
-                                        </PathGeometry>
-                                    </Path.Data>
-                                </Path>-->
-                                
                             </Grid>
-                        </Border>
+                        </Border>-->
                     </Canvas.Children>
                     <Canvas.RenderTransform>
                         <TransformGroup>
