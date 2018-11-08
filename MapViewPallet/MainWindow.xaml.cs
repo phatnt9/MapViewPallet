@@ -37,27 +37,11 @@ namespace MapViewPallet
             btn_normal.Background = LoadImage("Pallet2");
             snd = new System.Media.SoundPlayer();
 
-            PreviewKeyDown += new KeyEventHandler(HandleEsc);
+            
 
         }
 
-        private void HandleEsc(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                Normal_mode();
-            }
-        }
-        public void Normal_mode()
-        {
-            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
-            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._NORMAL;
-        }
-        public void Select_mode()
-        {
-            //valstatectrl_mm = STATECTRL_MOUSEMOVE.STATECTRL_SLIDE_OBJECT;
-            //valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_KEEP_IN_OBJECT;
-        }
+        
         public ImageBrush LoadImage (string name)
         {
             System.Drawing.Bitmap bmp = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject(name);
@@ -216,6 +200,13 @@ namespace MapViewPallet
         private void pathRemove_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btn_JoinPath_Click(object sender, RoutedEventArgs e)
+        {
+            drag = false;
+            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_P1;
+            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
     }
 }

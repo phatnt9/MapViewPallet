@@ -25,6 +25,7 @@ namespace MapViewPallet.Shape
         private double zoomInLitmit = 7;
         private double zoomOutLimit;
         private string selectedItemName = "";
+        private string hoveringItemName = "";
         private double slidingScale;
         public SortedDictionary<string, PathShape> list_Path;
         public SortedDictionary<string, StationShape> list_Station;
@@ -45,6 +46,7 @@ namespace MapViewPallet.Shape
             map.MouseLeftButtonDown += Map_MouseLeftButtonDown;
             map.MouseRightButtonDown += Map_MouseRightButtonDown;
             map.MouseLeftButtonUp += Map_MouseLeftButtonUp;
+            mainWindow.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             mainWindow.clipBorder.SizeChanged += ClipBorder_SizeChanged;
             zoomOutLimit = mainWindow.clipBorder.ActualHeight / map.Height;
 
@@ -78,7 +80,7 @@ namespace MapViewPallet.Shape
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             ToggleSelectedPath(selectedItemName);
             selectedItemName = elementName;
-            Console.WriteLine(elementName);
+            //Console.WriteLine(elementName);
             if ((mainWindow.drag))
             {
                 if (e.Source.ToString() == "System.Windows.Controls.Canvas")
@@ -155,6 +157,11 @@ namespace MapViewPallet.Shape
         private void Map_MouseMove(object sender, MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(map);
+            var mouseWasDownOn = (e.Source as FrameworkElement);
+            hoveringItemName = mouseWasDownOn.Name;
+
+
+
             mainWindow.MouseCoor.Content = mousePos.X.ToString("0.") + " " + mousePos.Y.ToString("0.");
             yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
             xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
@@ -218,8 +225,48 @@ namespace MapViewPallet.Shape
 
 
         //////////////////////////////////////////////////////
-        //PROCESS=====PROCESS=====PROCESS=====PROCESS=====PROCESS=====
+        //PROCESS=====PROCESS=====PROCESS=====PROCESS=========
         //////////////////////////////////////////////////////
+        private void HandleEsc(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    {
+                        Normal_mode();
+                        break;
+                    }
+                case Key.Delete:
+                    {
+                        try
+                        {
+                            list_Path[selectedItemName].Remove();
+                            list_Path.Remove(selectedItemName);
+                            Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Nothing to remove");
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+        }
+        public void Normal_mode()
+        {
+            mainWindow.drag = true;
+            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
+            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._NORMAL;
+        }
+        public void Select_mode()
+        {
+            //valstatectrl_mm = STATECTRL_MOUSEMOVE.STATECTRL_SLIDE_OBJECT;
+            //valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_KEEP_IN_OBJECT;
+        }
         void Statectrl_MouseDown(MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
@@ -292,6 +339,20 @@ namespace MapViewPallet.Shape
                         }
                     }
                     break;
+                case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_P1:
+                    pathTemp = new CurvePath(map, new Point(0, 0), new Point(0, 0), false);
+                    if (mouseWasDownOn != null)
+                    {
+                        string elementName = mouseWasDownOn.Name;
+                        string type = (e.Source.GetType().Name);
+                        if ((elementName != "")&&(type == "StraightPath"))
+                        {
+                            draw_StartPoint = list_Path[elementName].props._desMousePos;
+                            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_FINISH;
+                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_JOINPATHS;
+                        }
+                    }
+                    break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH:
                     if (mouseWasDownOn != null)
                     {
@@ -317,6 +378,23 @@ namespace MapViewPallet.Shape
                         Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_P1;
                         Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
                         list_Path.Add(pathTemp.Name, pathTemp);
+                    }
+                    break;
+                case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_FINISH:
+                    if (mouseWasDownOn != null)
+                    {
+                        string elementName = mouseWasDownOn.Name;
+                        string type = (e.Source.GetType().Name);
+                        if ((elementName != "") && ((type == "StraightPath")||(elementName.Split('x')[0] == "StraightPath")) )
+                        {
+                            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_P1;
+                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
+                            list_Path.Add(pathTemp.Name, pathTemp);
+                        }
+                        else
+                        {
+                            MessageBox.Show("JoinPaths is only accept between two StraightPath! \n And only link Tail-Head");
+                        }
                     }
                     break;
                 default:
@@ -356,6 +434,23 @@ namespace MapViewPallet.Shape
                             (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_FINISH))
                         {
                             pathTemp.ReDraw(draw_StartPoint, mousePos);
+                        }
+                        break;
+                    }
+                case Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_JOINPATHS:
+                    {
+                        if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_FINISH)
+                        {
+                            string elementName = mouseWasDownOn.Name;
+                            string type = (e.Source.GetType().Name);
+                            if ((elementName != "") && ((type == "StraightPath") || (elementName.Split('x')[0] == "StraightPath")))
+                            {
+                                pathTemp.ReDraw(draw_StartPoint, list_Path[elementName].props._oriMousePos);
+                            }
+                            else if (elementName != pathTemp.Name)
+                            {
+                                pathTemp.ReDraw(draw_StartPoint, draw_StartPoint);
+                            }
                         }
                         break;
                     }

@@ -54,9 +54,9 @@
                 <Button Name="btn_HandDrawStraight" BorderBrush="Black"
                         BorderThickness="2" Click="btn_HandDrawStraight_Click" 
                         ToolTip="Draw Straight" Content="Draw Straight"/>
-                <Button Name="btn_HandDrawCurveUp" BorderBrush="Black"
-                        BorderThickness="2" Click="btn_HandDrawCurveUp_Click" 
-                        ToolTip="Draw Curve Up" Content="Draw Curve Up"/>
+                <Button Name="btn_JoinPath" BorderBrush="Black"
+                        BorderThickness="2" Click="btn_JoinPath_Click" 
+                        ToolTip="Draw JoinPath" Content="Draw JoinPath"/>
                 <Button Name="btn_HandDrawCurveDown" BorderBrush="Black"
                         BorderThickness="2" Click="btn_HandDrawCurveDown_Click" 
                         ToolTip="Draw Curve Down" Content="Draw Curve Down"/>

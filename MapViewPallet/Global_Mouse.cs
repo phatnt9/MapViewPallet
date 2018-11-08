@@ -25,9 +25,11 @@ namespace MapViewPallet
             _HAND_DRAW_STRAIGHT_P1,
             _HAND_DRAW_CURVEUP_P1,
             _HAND_DRAW_CURVEDOWN_P1,
+            _HAND_DRAW_JOINPATHS_P1,
             _HAND_DRAW_STRAIGHT_FINISH,
             _HAND_DRAW_CURVEUP_FINISH,
             _HAND_DRAW_CURVEDOWN_FINISH,
+            _HAND_DRAW_JOINPATHS_FINISH,
         }
         public enum STATE_MOUSEMOVE
         {
@@ -37,6 +39,7 @@ namespace MapViewPallet
             _SLIDE_OBJECT,
             _HAND_DRAW_STRAIGHT,
             _HAND_DRAW_CURVE,
+            _HAND_DRAW_JOINPATHS,
 
         }
         public static STATE_MOUSEDOWN ctrl_MouseDown;

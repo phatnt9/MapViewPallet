@@ -64,7 +64,10 @@ namespace MapViewPallet.Shape
 
             //Render Path
             props.rotate = (Math.Atan2(props.yDiff, props.xDiff) * 180.0 / Math.PI);
-            props.myRotateTransform.Angle = props.rotate;
+            if (Math.Abs(props.rotate) == 0 || Math.Abs(props.rotate) == 90 || Math.Abs(props.rotate) == 180)
+            {
+                props.myRotateTransform.Angle = props.rotate;
+            }
             props.myTranslate = new TranslateTransform(props._oriMousePos.X, props._oriMousePos.Y - (Height/2));
             props.myTransformGroup.Children[1] = props.myTranslate;
         }
