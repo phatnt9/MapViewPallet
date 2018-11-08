@@ -8,64 +8,70 @@ namespace MapViewPallet.Shape
 {
     public class StraightPath : PathShape
     {
+
+
         LineSegment lineSegment;
         public StraightPath(Canvas canvas, Point Start, Point End) : base(canvas, Start, End)
         {
             lineSegment = new LineSegment();
             Name = "StraightPathx" + Global_Mouse.EncodeTransmissionTimestamp();
+            props.name = Name;
+            props._shape.Name = Name;
+            props._pointHead.Name = Name;
+            props._pointTail.Name = Name;
+            props._arrow.Name = Name;
             RenderTransformOrigin = new Point(0, 0.5);
             Draw();
         }
         
         public override void Draw()
         {
-            Width = Global_Object.LengthBetweenPoints(_oriMousePos, _desMousePos);
+            Width = Global_Object.LengthBetweenPoints(props._oriMousePos, props._desMousePos);
             Height = 20;
-            _start.X = -5;
-            _start.Y = (Height / 2) - 1;
-            _end.X = Width;
-            _end.Y = (Height / 2) - 1;
+            props._start.X = -5;
+            props._start.Y = (Height / 2) ;
+            props._end.X = Width;
+            props._end.Y = (Height / 2) ;
             //Rotate param
-            xDiff = _desMousePos.X - _oriMousePos.X;
-            yDiff = _desMousePos.Y - _oriMousePos.Y;
+            props.xDiff = props._desMousePos.X - props._oriMousePos.X;
+            props.yDiff = props._desMousePos.Y - props._oriMousePos.Y;
             //Middle point of straight path
-            _middle.X = (_start.X + _end.X) / 2;
-            _middle.Y = (_start.Y + _end.Y) / 2;
+            props._middle.X = (props._start.X + props._end.X) / 2;
+            props._middle.Y = (props._start.Y + props._end.Y) / 2;
             // Point at _start and _end
-            _pointHead.RenderTransform = new TranslateTransform(-(Width / 2), 0);
-            _pointTail.RenderTransform = new TranslateTransform((Width / 2), 0);
+            props._pointHead.RenderTransform = new TranslateTransform(-(Width / 2), 0);
+            props._pointTail.RenderTransform = new TranslateTransform((Width / 2), 0);
             //Arrow show direction
             //3 Point of Triangle
             PointCollection points = new PointCollection(3);
-            points.Add(new Point(_middle.X - sizeArrow, _middle.Y - sizeArrow));
-            points.Add(new Point(_middle.X - sizeArrow, _middle.Y + sizeArrow));
-            points.Add(new Point(_middle.X + sizeArrow + 1, _middle.Y));
-            _arrow.Points = points;
+            points.Add(new Point(props._middle.X - props.sizeArrow, props._middle.Y - props.sizeArrow));
+            points.Add(new Point(props._middle.X - props.sizeArrow, props._middle.Y + props.sizeArrow));
+            points.Add(new Point(props._middle.X + props.sizeArrow + 1, props._middle.Y));
+            props._arrow.Points = points;
             //Position the Path
-            lineSegment.Point = _end;
+            lineSegment.Point = props._end;
             lineSegment.IsStroked = true;
-            if(pathSegments.Count>0)
+            if(props.pathSegments.Count>0)
             {
 
-                pathSegments[0] = lineSegment;
+                props.pathSegments[0] = lineSegment;
             }
             else
             {
-                Console.WriteLine("straight add");
-                pathSegments.Add(lineSegment);
+                props.pathSegments.Add(lineSegment);
             }
-            pathFigure.StartPoint = _start;
+            props.pathFigure.StartPoint = props._start;
 
             //Render Path
-            rotate = (Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
-            myRotateTransform.Angle = rotate;
-            myTranslate = new TranslateTransform(_oriMousePos.X, _oriMousePos.Y - (Height/2));
-            myTransformGroup.Children[1] = myTranslate;
+            props.rotate = (Math.Atan2(props.yDiff, props.xDiff) * 180.0 / Math.PI);
+            props.myRotateTransform.Angle = props.rotate;
+            props.myTranslate = new TranslateTransform(props._oriMousePos.X, props._oriMousePos.Y - (Height/2));
+            props.myTransformGroup.Children[1] = props.myTranslate;
         }
 
         public void remove()
         {
-            canvas.Children.Remove(this);
+            props.canvas.Children.Remove(this);
         }
         //public void DrawAxis(Point Start, Point End, Color color)
         //{

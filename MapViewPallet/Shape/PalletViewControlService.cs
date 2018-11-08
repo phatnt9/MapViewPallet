@@ -13,7 +13,7 @@ namespace MapViewPallet.Shape
     class PalletViewControlService
     {
         //=================VARIABLE==================
-        private int stationCount=0;
+        private int stationCount = 0;
         private MainWindow mainWindow;
         private Canvas map;
         private ScaleTransform scaleTransform;
@@ -24,10 +24,12 @@ namespace MapViewPallet.Shape
         PathShape pathTemp;
         private double zoomInLitmit = 7;
         private double zoomOutLimit;
+        private string selectedItemName = "";
         private double slidingScale;
-        SortedDictionary<string, PathShape> list_Path;
+        public SortedDictionary<string, PathShape> list_Path;
+        public SortedDictionary<string, StationShape> list_Station;
         double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
-        
+
         public PalletViewControlService(MainWindow mainWinDowIn)
         {
             mainWindow = mainWinDowIn;
@@ -35,16 +37,111 @@ namespace MapViewPallet.Shape
             scaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
             list_Path = new SortedDictionary<string, PathShape>();
+            list_Station = new SortedDictionary<string, StationShape>();
             //==========EVENT==========
+            map.MouseDown += Map_MouseDown;
             map.MouseWheel += Map_Zoom;
             map.MouseMove += Map_MouseMove;
             map.MouseLeftButtonDown += Map_MouseLeftButtonDown;
+            map.MouseRightButtonDown += Map_MouseRightButtonDown;
             map.MouseLeftButtonUp += Map_MouseLeftButtonUp;
             mainWindow.clipBorder.SizeChanged += ClipBorder_SizeChanged;
             zoomOutLimit = mainWindow.clipBorder.ActualHeight / map.Height;
 
         }
 
+
+        //////////////////////////////////////////////////////
+        //METHOD======METHOD======METHOD======METHOD======METHOD======
+        //////////////////////////////////////////////////////
+        private void ToggleSelectedPath(string currentPath)
+        {
+            if (list_Path.ContainsKey(currentPath))
+            {
+                list_Path[currentPath].props.isSelected = false;
+                list_Path[currentPath].ToggleStyle();
+
+            }
+        }
+
+
+        //////////////////////////////////////////////////////
+        //EVENT========EVENT========EVENT========EVENT========
+        //////////////////////////////////////////////////////
+
+        private void Map_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            string elementName = (e.OriginalSource as FrameworkElement).Name;
+        }
+        private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            string elementName = (e.OriginalSource as FrameworkElement).Name;
+            ToggleSelectedPath(selectedItemName);
+            selectedItemName = elementName;
+            Console.WriteLine(elementName);
+            if ((mainWindow.drag))
+            {
+                if (e.Source.ToString() == "System.Windows.Controls.Canvas")
+                {
+                    map.CaptureMouse();
+                    startPoint = e.GetPosition(mainWindow.clipBorder);
+                    originalPoint = new Point(translateTransform.X, translateTransform.Y);
+                }
+            }
+            if (!mainWindow.drag)
+            {
+                Statectrl_MouseDown(e);
+            }
+        }
+        private void Map_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            string elementName = (e.OriginalSource as FrameworkElement).Name;
+            //selectedItemName = elementName;
+        }
+        private void Map_Zoom(object sender, MouseWheelEventArgs e)
+        {
+            Point mousePos = e.GetPosition(map);
+            double zoomDirection = e.Delta > 0 ? 1 : -1;
+
+            slidingScale = 0.1 * zoomDirection;
+            if (((scaleTransform.ScaleY + slidingScale) >= zoomOutLimit) &&
+                ((scaleTransform.ScaleY + slidingScale) <= zoomInLitmit))
+            {
+                scaleTransform.ScaleX = scaleTransform.ScaleY += slidingScale;
+            }
+
+            yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
+            xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
+            yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
+            xDistanceLeft = ((mainWindow.clipBorder.ActualWidth / 2 + (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
+            //YCoor
+            if (yDistanceTop > 0)
+            {
+                translateTransform.Y = translateTransform.Y - yDistanceTop;
+            }
+            if (yDistanceBottom > 0)
+            {
+                translateTransform.Y = translateTransform.Y + yDistanceBottom;
+            }
+            //XCoor
+            if ((map.Width * scaleTransform.ScaleX) < mainWindow.clipBorder.ActualWidth)
+            {
+                translateTransform.X = 0;
+            }
+            else
+            {
+                if (xDistanceLeft > 0)
+                {
+                    translateTransform.X = translateTransform.X - xDistanceLeft;
+                }
+
+                if (xDistanceRight > 0)
+                {
+                    translateTransform.X = translateTransform.X + xDistanceRight;
+                }
+            }
+
+        }
         private void ClipBorder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             zoomOutLimit = mainWindow.clipBorder.ActualHeight / map.Height;
@@ -55,10 +152,8 @@ namespace MapViewPallet.Shape
                 translateTransform.Y = 0;
             }
         }
-
         private void Map_MouseMove(object sender, MouseEventArgs e)
         {
-            //Console.WriteLine("Move");
             Point mousePos = e.GetPosition(map);
             mainWindow.MouseCoor.Content = mousePos.X.ToString("0.") + " " + mousePos.Y.ToString("0.");
             yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
@@ -98,7 +193,7 @@ namespace MapViewPallet.Shape
                     translateTransform.X = 0;
                 }
                 else
-                { 
+                {
                     if (xDistanceLeft > 0)
                     {
                         translateTransform.X = translateTransform.X - xDistanceLeft;
@@ -115,84 +210,16 @@ namespace MapViewPallet.Shape
                 Statectrl_MouseMove(e);
             }
 
-            //Console.WriteLine(startPoint);
-            //Console.WriteLine(originalPoint);
-            //Console.WriteLine("//////////////");
         }
-
         private void Map_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             map.ReleaseMouseCapture();
         }
 
-        private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-           // Console.WriteLine("Down");
-            //Console.WriteLine(translateTransform.X+"  "+ translateTransform.Y);
-            //Console.WriteLine(mainWindow.clipBorder.ActualWidth + "  "+ mainWindow.clipBorder.ActualHeight);
-            string elementName = (e.OriginalSource as FrameworkElement).Name;
-            Console.WriteLine(elementName);
-            if ((mainWindow.drag))
-            {
-                if (e.Source.ToString() == "System.Windows.Controls.Canvas")
-                {
-                    map.CaptureMouse();
-                    startPoint = e.GetPosition(mainWindow.clipBorder);
-                    originalPoint = new Point(translateTransform.X, translateTransform.Y);
-                }
-            }
-            if (!mainWindow.drag)
-            {
-                Statectrl_MouseDown(e);
-            }
-        }
 
-        private void Map_Zoom(object sender, MouseWheelEventArgs e)
-        {
-            Point mousePos = e.GetPosition(map);
-            double zoomDirection = e.Delta > 0 ? 1 : -1;
-            
-            slidingScale = 0.1 * zoomDirection;
-            if (((scaleTransform.ScaleY + slidingScale) >= zoomOutLimit) && 
-                ((scaleTransform.ScaleY + slidingScale) <= zoomInLitmit))
-            {
-                scaleTransform.ScaleX = scaleTransform.ScaleY += slidingScale;
-            }
-
-            yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
-            xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
-            yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
-            xDistanceLeft = ((mainWindow.clipBorder.ActualWidth / 2 + (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
-            //YCoor
-            if (yDistanceTop > 0)
-            {
-                translateTransform.Y = translateTransform.Y - yDistanceTop;
-            }
-            if (yDistanceBottom > 0)
-            {
-                translateTransform.Y = translateTransform.Y + yDistanceBottom;
-            }
-            //XCoor
-            if ((map.Width * scaleTransform.ScaleX) < mainWindow.clipBorder.ActualWidth)
-            {
-                translateTransform.X = 0;
-            }
-            else
-            {
-                if (xDistanceLeft > 0)
-                {
-                    translateTransform.X = translateTransform.X - xDistanceLeft;
-                }
-
-                if (xDistanceRight > 0)
-                {
-                    translateTransform.X = translateTransform.X + xDistanceRight;
-                }
-            }
-
-        }
-
-        //=================PROCESS===============
+        //////////////////////////////////////////////////////
+        //PROCESS=====PROCESS=====PROCESS=====PROCESS=====PROCESS=====
+        //////////////////////////////////////////////////////
         void Statectrl_MouseDown(MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
@@ -208,7 +235,7 @@ namespace MapViewPallet.Shape
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
                         {
                             StationShape stationTemp = null;
-                            stationTemp = new StationShape("MIX"+ stationCount, 2, 7, "Pallet2");
+                            stationTemp = new StationShape("MIX" + stationCount, 2, 7, "Pallet2");
                             stationTemp.Move(mousePos);
                             map.Children.Add(stationTemp);
                         }
@@ -226,8 +253,8 @@ namespace MapViewPallet.Shape
                     }
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1:
-                    pathTemp = new StraightPath(map,new Point(0,0), new Point(0, 0));
-                    
+                    pathTemp = new StraightPath(map, new Point(0, 0), new Point(0, 0));
+
                     if (mouseWasDownOn != null)
                     {
                         string elementName = mouseWasDownOn.Name;
@@ -240,7 +267,7 @@ namespace MapViewPallet.Shape
                     }
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_P1:
-                    pathTemp = new CurvePath(map, new Point(0, 0), new Point(0, 0),true);
+                    pathTemp = new CurvePath(map, new Point(0, 0), new Point(0, 0), true);
                     if (mouseWasDownOn != null)
                     {
                         string elementName = mouseWasDownOn.Name;

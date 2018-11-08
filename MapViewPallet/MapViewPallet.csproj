@@ -62,7 +62,6 @@
     <Compile Include="Shape\CurvePath.cs" />
     <Compile Include="Shape\PalletShape.cs" />
     <Compile Include="Shape\PalletViewControlService.cs" />
-    <Compile Include="Shape\PathShapeEvent.cs" />
     <Compile Include="Shape\Properties.cs">
       <SubType>Form</SubType>
     </Compile>

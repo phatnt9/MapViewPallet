@@ -150,7 +150,22 @@ namespace MapViewPallet
             CurvePath b3 = new CurvePath(map, Transformations(pointArray[11], transform, angle), Transformations(pointArray[12], transform, angle), false);
             StraightPath a8 = new StraightPath(map, Transformations(pointArray[12], transform, angle), Transformations(pointArray[13], transform, angle));
             StraightPath a9 = new StraightPath(map, Transformations(pointArray[13], transform, angle), Transformations(pointArray[0], transform, angle));
-            
+
+            palletViewEventControl.list_Path.Add(b0.Name, b0);
+            palletViewEventControl.list_Path.Add(b1.Name, b1);
+            palletViewEventControl.list_Path.Add(b2.Name, b2);
+            palletViewEventControl.list_Path.Add(b3.Name, b3);
+            palletViewEventControl.list_Path.Add(a0.Name, a0);
+            palletViewEventControl.list_Path.Add(a1.Name, a1);
+            palletViewEventControl.list_Path.Add(a2.Name, a2);
+            palletViewEventControl.list_Path.Add(a3.Name, a3);
+            palletViewEventControl.list_Path.Add(a4.Name, a4);
+            palletViewEventControl.list_Path.Add(a5.Name, a5);
+            palletViewEventControl.list_Path.Add(a6.Name, a6);
+            palletViewEventControl.list_Path.Add(a7.Name, a7);
+            palletViewEventControl.list_Path.Add(a8.Name, a8);
+            palletViewEventControl.list_Path.Add(a9.Name, a9);
+
         }
         
 

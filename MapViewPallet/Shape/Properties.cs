@@ -17,14 +17,13 @@ namespace MapViewPallet.Shape
         {
             InitializeComponent();
             myObject = Path;
-            Console.WriteLine("This is : "+Global_Object.Foo(myObject));
         }
         
         
 
         private void PathProperties_Load(object sender, EventArgs e)
         {
-            propertyGrid1.SelectedObject = myObject;
+            propertyGrid1.SelectedObject = myObject.props;
         }
     }
 }
