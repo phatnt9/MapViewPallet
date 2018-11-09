@@ -118,59 +118,31 @@ namespace MapViewPallet.Shape
             props.myTranslate = new TranslateTransform(props._oriMousePos.X, props._oriMousePos.Y - (Height/2));
             //Console.WriteLine(props._oriMousePos.X.ToString("0.") + "-" + (props._oriMousePos.Y - (Height / 2)).ToString("0."));
             props.myTransformGroup.Children[1] = props.myTranslate;
-            LeftTop();
-            LeftBot();
-            MidTop();
+            
+            props.eightCorner[0].RenderTransform = RenderPointAtBorder(new Point((0),(Height/2)));          //mid-left
+            props.eightCorner[1].RenderTransform = RenderPointAtBorder(new Point((0),(0)));                 //top-left
+            props.eightCorner[2].RenderTransform = RenderPointAtBorder(new Point((Width/2),(0)));           //top-mid
+            props.eightCorner[3].RenderTransform = RenderPointAtBorder(new Point((Width),(0)));             //top-right
+            props.eightCorner[4].RenderTransform = RenderPointAtBorder(new Point((Width),(Height/2)));      //mid-right
+            props.eightCorner[5].RenderTransform = RenderPointAtBorder(new Point((Width),(Height)));        //bot-right
+            props.eightCorner[6].RenderTransform = RenderPointAtBorder(new Point((Width/2),(Height)));      //bot-mid
+            props.eightCorner[7].RenderTransform = RenderPointAtBorder(new Point((0),(Height)));            //bot-left
+            
         }
 
-        public void LeftTop ()
+        public TranslateTransform RenderPointAtBorder (Point pointOnBorder)
         {
-            double xDiff = 0-0;
-            double yDiff = 0-(Height/2);
-            double rad = (props.rotate * Math.PI) / 180;
-            double angle = (Math.Atan2(yDiff, xDiff));
-            double L1 = Global_Object.LengthBetweenPoints(props._start, new Point(0, 0));
-            //double x1 = (props._oriMousePos.X * Math.Cos(rad + (Math.PI / 2)));
-            //double x2 = (props._oriMousePos.Y * Math.Sin(rad + (Math.PI / 2)));
-            //double x3 = (L1 * Math.Cos(rad + (Math.PI / 2)));
-            //double X = x1+x2+x3;
-            //double Y = (props._oriMousePos.X * Math.Sin(rad + (Math.PI / 2))) - (props._oriMousePos.Y * Math.Cos(rad + (Math.PI / 2))) + (L1 * Math.Sin(rad + (Math.PI / 2)));
-            //Console.WriteLine("L1:"+L1+"-"+X+"  "+Y+"-Rotate: "+ props.rotate);
-            //Console.WriteLine(x1+","+x2+","+x3);
-            double x1 = props._oriMousePos.X + (L1 * Math.Cos(angle)) + (L1 * (Math.Sin(rad)));
-            double y1 = props._oriMousePos.Y + (L1 * Math.Sin(angle)) + (L1 - (L1 * Math.Cos(rad)));
-            //Console.WriteLine("X1=" + x1 + "=" + props._oriMousePos.X + "+" + (L1 * (Math.Sin(rad))));
-            //Console.WriteLine("Y1=" + y1 + "=" + props._oriMousePos.Y + "-" + (L1) + "+" + (L1 - (L1 * Math.Cos(rad))));
-            props.leftTop.RenderTransform = new TranslateTransform(x1, y1);
-        }
-        public void LeftBot()
-        {
-            double xDiff = (0) - 0;
-            double yDiff = Height - (Height / 2);
-            double rad = (props.rotate * Math.PI) / 180;
-            double angle = (Math.Atan2(yDiff, xDiff));
-            double L2 = Global_Object.LengthBetweenPoints(props._start, new Point(0, Height));
-            double x1 = props._oriMousePos.X + (L2 * Math.Cos(angle)) - (L2 * (Math.Sin(rad)));
-            double y1 = props._oriMousePos.Y + (L2 * Math.Sin(angle)) + ((L2 * Math.Cos(rad))-(L2));
-            //Console.WriteLine("X1=" + x1 + "=" + props._oriMousePos.X + "+" + (L2 * (Math.Sin(rad))));
-            //Console.WriteLine("Y1=" + y1 + "=" + props._oriMousePos.Y + "-" + (L2) + "+" + (L2 - (L2 * Math.Cos(rad))));
-            props.leftBot.RenderTransform = new TranslateTransform(x1, y1);
+            double xDiff = (pointOnBorder.X) - (props._start.X);
+            double yDiff = (pointOnBorder.Y) - (props._start.Y);
+            double rad1 = (props.rotate * Math.PI) / 180;
+            double rad2 = (Math.Atan2(yDiff, xDiff));
+            double L = Global_Object.LengthBetweenPoints(props._start, pointOnBorder);
+            double x1 = props._oriMousePos.X + ((L * Math.Cos(rad1 + rad2)));
+            double y1 = props._oriMousePos.Y + ((L * Math.Sin(rad1 + rad2)));
+            return new TranslateTransform(x1, y1);
         }
 
-        public void MidTop()
-        {
-            double xDiff = (Width/2) - 0;
-            double yDiff = 0 - (Height / 2);
-            double rad = (props.rotate * Math.PI) / 180;
-            double angle = (Math.Atan2(yDiff, xDiff));
-            double L2 = Global_Object.LengthBetweenPoints(props._start, new Point((Width / 2), 0));
-            double x1 = props._oriMousePos.X + (L2 * Math.Cos(angle));
-            double y1 = props._oriMousePos.Y + (L2 * Math.Sin(angle) * Math.Cos(angle));
-            //Console.WriteLine("X1=" + x1 + "=" + props._oriMousePos.X + "+" + (L2 * (Math.Sin(rad))));
-            //Console.WriteLine("Y1=" + y1 + "=" + props._oriMousePos.Y + "-" + (L2) + "+" + (L2 - (L2 * Math.Cos(rad))));
-            props.midTop.RenderTransform = new TranslateTransform(x1, y1);
-        }
-
+        
 
 
 
