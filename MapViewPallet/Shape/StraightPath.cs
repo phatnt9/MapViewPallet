@@ -28,7 +28,7 @@ namespace MapViewPallet.Shape
         {
             Width = Global_Object.LengthBetweenPoints(props._oriMousePos, props._desMousePos);
             Height = 20;
-            props._start.X = -5;
+            props._start.X = 0;
             props._start.Y = (Height / 2) ;
             props._end.X = Width;
             props._end.Y = (Height / 2) ;
@@ -63,14 +63,116 @@ namespace MapViewPallet.Shape
             props.pathFigure.StartPoint = props._start;
 
             //Render Path
-            props.rotate = (Math.Atan2(props.yDiff, props.xDiff) * 180.0 / Math.PI);
-            if (Math.Abs(props.rotate) == 0 || Math.Abs(props.rotate) == 90 || Math.Abs(props.rotate) == 180)
+            double angle = (Math.Atan2(props.yDiff, props.xDiff) * 180.0 / Math.PI);
+            switch (angle)
             {
-                props.myRotateTransform.Angle = props.rotate;
+                case double n when (n >= -22.5 && n < 22.5):
+                    {
+                        props.rotate = 0;
+                        //Console.WriteLine(angle + "-" + props.rotate);
+                        break;
+                    }
+                case double n when (n >= 22.5 && n < 67.5):
+                    {
+                        props.rotate = 45;
+                        break;
+                    }
+                case double n when (n >= 67.5 && n < 112.5):
+                    {
+                        props.rotate = 90;
+                        break;
+                    }
+                case double n when (n >= 112.5 && n < 157.5):
+                    {
+                        props.rotate = 135;
+                        break;
+                    }
+                case double n when ((n >= 157.5 && n < 180)|| (n <= -157.5 && n > -179.9)):
+                    {
+                        props.rotate = 180;
+                        break;
+                    }
+                case double n when (n >= -157.5 && n < -112.5):
+                    {
+                        props.rotate = -135;
+                        break;
+                    }
+                case double n when (n >= -112.5 && n < -67.5):
+                    {
+                        props.rotate = -90;
+                        break;
+                    }
+                case double n when (n >= -67.5 && n < -22.5):
+                    {
+                        props.rotate = -45;
+                        break;
+                    }
+                default:
+                    {
+                        props.rotate = 45;
+                        break;
+                    }
             }
+            props.myRotateTransform.Angle = props.rotate;
+            
             props.myTranslate = new TranslateTransform(props._oriMousePos.X, props._oriMousePos.Y - (Height/2));
+            //Console.WriteLine(props._oriMousePos.X.ToString("0.") + "-" + (props._oriMousePos.Y - (Height / 2)).ToString("0."));
             props.myTransformGroup.Children[1] = props.myTranslate;
+            LeftTop();
+            LeftBot();
+            MidTop();
         }
+
+        public void LeftTop ()
+        {
+            double xDiff = 0-0;
+            double yDiff = 0-(Height/2);
+            double rad = (props.rotate * Math.PI) / 180;
+            double angle = (Math.Atan2(yDiff, xDiff));
+            double L1 = Global_Object.LengthBetweenPoints(props._start, new Point(0, 0));
+            //double x1 = (props._oriMousePos.X * Math.Cos(rad + (Math.PI / 2)));
+            //double x2 = (props._oriMousePos.Y * Math.Sin(rad + (Math.PI / 2)));
+            //double x3 = (L1 * Math.Cos(rad + (Math.PI / 2)));
+            //double X = x1+x2+x3;
+            //double Y = (props._oriMousePos.X * Math.Sin(rad + (Math.PI / 2))) - (props._oriMousePos.Y * Math.Cos(rad + (Math.PI / 2))) + (L1 * Math.Sin(rad + (Math.PI / 2)));
+            //Console.WriteLine("L1:"+L1+"-"+X+"  "+Y+"-Rotate: "+ props.rotate);
+            //Console.WriteLine(x1+","+x2+","+x3);
+            double x1 = props._oriMousePos.X + (L1 * Math.Cos(angle)) + (L1 * (Math.Sin(rad)));
+            double y1 = props._oriMousePos.Y + (L1 * Math.Sin(angle)) + (L1 - (L1 * Math.Cos(rad)));
+            //Console.WriteLine("X1=" + x1 + "=" + props._oriMousePos.X + "+" + (L1 * (Math.Sin(rad))));
+            //Console.WriteLine("Y1=" + y1 + "=" + props._oriMousePos.Y + "-" + (L1) + "+" + (L1 - (L1 * Math.Cos(rad))));
+            props.leftTop.RenderTransform = new TranslateTransform(x1, y1);
+        }
+        public void LeftBot()
+        {
+            double xDiff = (0) - 0;
+            double yDiff = Height - (Height / 2);
+            double rad = (props.rotate * Math.PI) / 180;
+            double angle = (Math.Atan2(yDiff, xDiff));
+            double L2 = Global_Object.LengthBetweenPoints(props._start, new Point(0, Height));
+            double x1 = props._oriMousePos.X + (L2 * Math.Cos(angle)) - (L2 * (Math.Sin(rad)));
+            double y1 = props._oriMousePos.Y + (L2 * Math.Sin(angle)) + ((L2 * Math.Cos(rad))-(L2));
+            //Console.WriteLine("X1=" + x1 + "=" + props._oriMousePos.X + "+" + (L2 * (Math.Sin(rad))));
+            //Console.WriteLine("Y1=" + y1 + "=" + props._oriMousePos.Y + "-" + (L2) + "+" + (L2 - (L2 * Math.Cos(rad))));
+            props.leftBot.RenderTransform = new TranslateTransform(x1, y1);
+        }
+
+        public void MidTop()
+        {
+            double xDiff = (Width/2) - 0;
+            double yDiff = 0 - (Height / 2);
+            double rad = (props.rotate * Math.PI) / 180;
+            double angle = (Math.Atan2(yDiff, xDiff));
+            double L2 = Global_Object.LengthBetweenPoints(props._start, new Point((Width / 2), 0));
+            double x1 = props._oriMousePos.X + (L2 * Math.Cos(angle));
+            double y1 = props._oriMousePos.Y + (L2 * Math.Sin(angle) * Math.Cos(angle));
+            //Console.WriteLine("X1=" + x1 + "=" + props._oriMousePos.X + "+" + (L2 * (Math.Sin(rad))));
+            //Console.WriteLine("Y1=" + y1 + "=" + props._oriMousePos.Y + "-" + (L2) + "+" + (L2 - (L2 * Math.Cos(rad))));
+            props.midTop.RenderTransform = new TranslateTransform(x1, y1);
+        }
+
+
+
 
         public void remove()
         {

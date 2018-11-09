@@ -81,32 +81,32 @@
                                                 <Pen Thickness="2" Brush="#D8D8D8" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
-                                        <!--<GeometryDrawing Geometry="M0,10 L50,10">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" Brush="#FFFFFF" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>-->
-                                        <!--<GeometryDrawing Geometry="M0,20 L50,20">
+                                        <GeometryDrawing Geometry="M0,10 L50,10">
                                             <GeometryDrawing.Pen>
                                                 <Pen Thickness="1" Brush="#D9D9D9" />
                                             </GeometryDrawing.Pen>
-                                        </GeometryDrawing>-->
-                                        <!--<GeometryDrawing Geometry="M0,30 L50,30">
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M0,20 L50,20">
                                             <GeometryDrawing.Pen>
                                                 <Pen Thickness="1" Brush="#D9D9D9" />
                                             </GeometryDrawing.Pen>
-                                        </GeometryDrawing>-->
-                                        <!--<GeometryDrawing Geometry="M0,40 L50,40">
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M0,30 L50,30">
                                             <GeometryDrawing.Pen>
                                                 <Pen Thickness="1" Brush="#D9D9D9" />
                                             </GeometryDrawing.Pen>
-                                        </GeometryDrawing>-->
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M0,40 L50,40">
+                                            <GeometryDrawing.Pen>
+                                                <Pen Thickness="1" Brush="#D9D9D9" />
+                                            </GeometryDrawing.Pen>
+                                        </GeometryDrawing>
                                         <GeometryDrawing Geometry="M0,0 L0,50">
                                             <GeometryDrawing.Pen>
                                                 <Pen Thickness="2" Brush="#D8D8D8" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
-                                        <!--<GeometryDrawing Geometry="M10,0 L10,50">
+                                        <GeometryDrawing Geometry="M10,0 L10,50">
                                             <GeometryDrawing.Pen>
                                                 <Pen Thickness="1" Brush="#D9D9D9" />
                                             </GeometryDrawing.Pen>
@@ -120,12 +120,12 @@
                                             <GeometryDrawing.Pen>
                                                 <Pen Thickness="1" Brush="#D9D9D9" />
                                             </GeometryDrawing.Pen>
-                                        </GeometryDrawing>-->
-                                        <!--<GeometryDrawing Geometry="M40,0 L40,50">
+                                        </GeometryDrawing>
+                                        <GeometryDrawing Geometry="M40,0 L40,50">
                                             <GeometryDrawing.Pen>
                                                 <Pen Thickness="1" Brush="#D9D9D9" />
                                             </GeometryDrawing.Pen>
-                                        </GeometryDrawing>-->
+                                        </GeometryDrawing>
                                     </DrawingGroup.Children>
                                 </DrawingGroup>
                             </DrawingBrush.Drawing>

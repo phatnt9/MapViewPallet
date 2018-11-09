@@ -161,8 +161,9 @@ namespace MapViewPallet.Shape
             hoveringItemName = mouseWasDownOn.Name;
 
 
-
-            mainWindow.MouseCoor.Content = mousePos.X.ToString("0.") + " " + mousePos.Y.ToString("0.");
+            int x = ((int)mousePos.X / 10) * 10;
+            int y = ((int)mousePos.Y / 10) * 10;
+            mainWindow.MouseCoor.Content = x + " " + y;
             yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
             xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
             yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));

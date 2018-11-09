@@ -13,6 +13,7 @@ namespace MapViewPallet.Shape
         public struct Props
         {
             public string name;
+            public int coorStep;
             public bool isSelected;
             public bool isHovering;
             public Canvas canvas;
@@ -36,7 +37,13 @@ namespace MapViewPallet.Shape
             public TranslateTransform myTranslate;
             public TransformGroup myTransformGroup;
             public RotateTransform myRotateTransform;
-
+            public Ellipse leftTop;
+            public Ellipse midTop;
+            public Ellipse rightTop;
+            public Ellipse rightMid;
+            public Ellipse rightBot;
+            public Ellipse midBot;
+            public Ellipse leftBot;
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID
             {
@@ -83,7 +90,36 @@ namespace MapViewPallet.Shape
         //====================METHOD=============================
         public PathShape(Canvas pCanvas, Point Start, Point End)
         {
+            props.leftTop = new Ellipse();
+            props.leftTop.Width = props.leftTop.Height = 2;
+            props.leftTop.Fill = new SolidColorBrush(Colors.Red);
+
+            props.midTop = new Ellipse();
+            props.midTop.Width = props.midTop.Height = 2;
+            props.midTop.Fill = new SolidColorBrush(Colors.Red);
+
+            props.rightTop = new Ellipse();
+            props.rightTop.Width = props.rightTop.Height = 2;
+            props.rightTop.Fill = new SolidColorBrush(Colors.Red);
+
+            props.rightMid = new Ellipse();
+            props.rightMid.Width = props.rightMid.Height = 2;
+            props.rightMid.Fill = new SolidColorBrush(Colors.Red);
+
+            props.rightBot = new Ellipse();
+            props.rightBot.Width = props.rightBot.Height = 2;
+            props.rightBot.Fill = new SolidColorBrush(Colors.Red);
+
+            props.midBot = new Ellipse();
+            props.midBot.Width = props.midBot.Height = 2;
+            props.midBot.Fill = new SolidColorBrush(Colors.Red);
+
+            props.leftBot = new Ellipse();
+            props.leftBot.Width = props.leftBot.Height = 2;
+            props.leftBot.Fill = new SolidColorBrush(Colors.Red);
+
             props.sizeArrow = 3;
+            props.coorStep = 10;
             props.isSelected = false;
             props.isHovering = false;
             ContextMenu = new ContextMenu();
@@ -144,6 +180,13 @@ namespace MapViewPallet.Shape
             props.myTransformGroup.Children.Add(props.myTranslate);
             RenderTransform = props.myTransformGroup;
             props.canvas = pCanvas;
+            props.canvas.Children.Add(props.leftTop);
+            props.canvas.Children.Add(props.leftBot);
+            props.canvas.Children.Add(props.midTop);
+            props.canvas.Children.Add(props.rightTop);
+            props.canvas.Children.Add(props.rightMid);
+            props.canvas.Children.Add(props.rightBot);
+            props.canvas.Children.Add(props.midBot);
             props.pathGrid.Children.Add(props._shape);
             props.pathGrid.Children.Add(props._pointHead);
             props.pathGrid.Children.Add(props._pointTail);
@@ -166,7 +209,7 @@ namespace MapViewPallet.Shape
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             Point mousePos = e.GetPosition(props.canvas);
-            Console.WriteLine("MouseRightButtonDownPath:  "+elementName);
+            //Console.WriteLine("MouseRightButtonDownPath:  "+elementName);
             //props.isSelected = true;
         }
 
@@ -174,7 +217,7 @@ namespace MapViewPallet.Shape
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             Point mousePos = e.GetPosition(props.canvas);
-            Console.WriteLine("MouseLeftButtonDownPath:  " + elementName);
+            //Console.WriteLine("MouseLeftButtonDownPath:  " + elementName);
             if (!props.isSelected)
             {
                 props.isSelected = true;
@@ -226,11 +269,19 @@ namespace MapViewPallet.Shape
             props.isHovering = false;
             ToggleStyle();
         }
-        
+
+        public Point Vector2(Point start, float angle)
+        {
+            start.X = (float)Math.Sin(angle);
+            start.Y = (float)Math.Cos(angle);
+            return start;
+        }
 
         public void ReDraw(Point Start, Point End)
         {
-            props._oriMousePos = new Point(Start.X, Start.Y);
+            int xStart = ((int)Start.X / props.coorStep) * props.coorStep;
+            int yStart = ((int)Start.Y / props.coorStep) * props.coorStep;
+            props._oriMousePos = new Point(xStart, yStart);
             props._desMousePos = new Point(End.X, End.Y);
             Draw();
         }
