@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace MapViewPallet.Shape
 {
@@ -14,27 +15,38 @@ namespace MapViewPallet.Shape
     {
         //=================VARIABLE==================
         private int stationCount = 0;
+        //---------------MAP-------------------
         private MainWindow mainWindow;
         private Canvas map;
         private ScaleTransform scaleTransform;
         private TranslateTransform translateTransform;
+        //---------------DRAW-------------------
+        private Point roundedMousePos = new Point();
         private Point startPoint;
         private Point draw_StartPoint;
         private Point originalPoint;
         PathShape pathTemp;
+        //---------------POINT OF VIEW-------------------
         private double zoomInLitmit = 7;
         private double zoomOutLimit;
         private string selectedItemName = "";
         private string hoveringItemName = "";
         private double slidingScale;
+        //---------------OBJECT-------------------
         public SortedDictionary<string, PathShape> list_Path;
         public SortedDictionary<string, StationShape> list_Station;
         double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
-
+        //---------------MICS-------------------
+        private Ellipse cursorPoint = new Ellipse();
+        //======================MAP======================
         public PalletViewControlService(MainWindow mainWinDowIn)
         {
+
+            cursorPoint.Fill = new SolidColorBrush(Colors.Black);
+            cursorPoint.Width = cursorPoint.Height = 2;
             mainWindow = mainWinDowIn;
             map = mainWindow.map;
+            map.Children.Add(cursorPoint);
             scaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
             list_Path = new SortedDictionary<string, PathShape>();
@@ -156,24 +168,22 @@ namespace MapViewPallet.Shape
         }
         private void Map_MouseMove(object sender, MouseEventArgs e)
         {
+            //Get mouse props
             Point mousePos = e.GetPosition(map);
             var mouseWasDownOn = (e.Source as FrameworkElement);
             hoveringItemName = mouseWasDownOn.Name;
-
-
+            //Set Mouse Point
             int x = ((int)mousePos.X / 10) * 10;
             int y = ((int)mousePos.Y / 10) * 10;
-            mainWindow.MouseCoor.Content = x + " " + y;
+            roundedMousePos.X = x;
+            roundedMousePos.Y = y;
+            cursorPoint.RenderTransform = new TranslateTransform(x, y);
+            mainWindow.MouseCoor.Content = mousePos.X.ToString("0.0") + " " + mousePos.Y.ToString("0.0");
+            // POINT OF VIEW
             yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
             xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
             yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
             xDistanceLeft = ((mainWindow.clipBorder.ActualWidth / 2 + (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
-
-            //Console.WriteLine("===========" + yDistanceTop.ToString("0.") + "===========");
-            //Console.WriteLine("===========================");
-            //Console.WriteLine("" + xDistanceLeft.ToString("0.") + "=================" + xDistanceRight.ToString("0.") + "");
-            //Console.WriteLine("===========================");
-            //Console.WriteLine("===========" + yDistanceBottom.ToString("0.") + "===========");
             if ((mainWindow.drag))
             {
                 if (!map.IsMouseCaptured) return;
@@ -284,7 +294,7 @@ namespace MapViewPallet.Shape
                         {
                             StationShape stationTemp = null;
                             stationTemp = new StationShape("MIX" + stationCount, 2, 7, "Pallet2");
-                            stationTemp.Move(mousePos);
+                            stationTemp.Move(roundedMousePos);
                             map.Children.Add(stationTemp);
                         }
                         break;
@@ -308,7 +318,7 @@ namespace MapViewPallet.Shape
                         string elementName = mouseWasDownOn.Name;
                         if (elementName != "")
                         {
-                            draw_StartPoint = mousePos;
+                            draw_StartPoint = roundedMousePos;
                             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH;
                             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_STRAIGHT;
                         }
@@ -321,7 +331,7 @@ namespace MapViewPallet.Shape
                         string elementName = mouseWasDownOn.Name;
                         if (elementName != "")
                         {
-                            draw_StartPoint = mousePos;
+                            draw_StartPoint = roundedMousePos;
                             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_FINISH;
                             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_CURVE;
                         }
@@ -334,7 +344,7 @@ namespace MapViewPallet.Shape
                         string elementName = mouseWasDownOn.Name;
                         if (elementName != "")
                         {
-                            draw_StartPoint = mousePos;
+                            draw_StartPoint = roundedMousePos;
                             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_FINISH;
                             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_CURVE;
                         }
@@ -360,6 +370,7 @@ namespace MapViewPallet.Shape
                         string elementName = mouseWasDownOn.Name;
                         Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
                         Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
+                        pathTemp.props._desMousePos = pathTemp.props.eightCorner[4];
                         list_Path.Add(pathTemp.Name, pathTemp);
                     }
                     break;
@@ -369,6 +380,7 @@ namespace MapViewPallet.Shape
                         string elementName = mouseWasDownOn.Name;
                         Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_P1;
                         Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
+                        pathTemp.props._desMousePos = pathTemp.props.eightCorner[4];
                         list_Path.Add(pathTemp.Name, pathTemp);
                     }
                     break;
@@ -378,6 +390,7 @@ namespace MapViewPallet.Shape
                         string elementName = mouseWasDownOn.Name;
                         Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_P1;
                         Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
+                        pathTemp.props._desMousePos = pathTemp.props.eightCorner[4];
                         list_Path.Add(pathTemp.Name, pathTemp);
                     }
                     break;
@@ -390,6 +403,7 @@ namespace MapViewPallet.Shape
                         {
                             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_P1;
                             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
+                            pathTemp.props._desMousePos = pathTemp.props.eightCorner[4];
                             list_Path.Add(pathTemp.Name, pathTemp);
                         }
                         else
@@ -408,6 +422,8 @@ namespace MapViewPallet.Shape
         {
             Point mousePos = e.GetPosition(map);
             var mouseWasDownOn = e.Source as FrameworkElement;
+            
+
             switch (Global_Mouse.ctrl_MouseMove)
             {
                 case Global_Mouse.STATE_MOUSEMOVE._NORMAL:

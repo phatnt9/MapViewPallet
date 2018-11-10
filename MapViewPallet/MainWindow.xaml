@@ -57,9 +57,6 @@
                 <Button Name="btn_JoinPath" BorderBrush="Black"
                         BorderThickness="2" Click="btn_JoinPath_Click" 
                         ToolTip="Draw JoinPath" Content="Draw JoinPath"/>
-                <Button Name="btn_HandDrawCurveDown" BorderBrush="Black"
-                        BorderThickness="2" Click="btn_HandDrawCurveDown_Click" 
-                        ToolTip="Draw Curve Down" Content="Draw Curve Down"/>
                 <Button Name="btn_Warning" BorderBrush="Black"
                         BorderThickness="2" Click="btn_Warning_Click" 
                         ToolTip="Warning" Content="Music"/>

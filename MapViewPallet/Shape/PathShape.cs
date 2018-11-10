@@ -38,7 +38,7 @@ namespace MapViewPallet.Shape
             public TranslateTransform myTranslate;
             public TransformGroup myTransformGroup;
             public RotateTransform myRotateTransform;
-            public List<Ellipse> eightCorner;
+            public List<Point> eightCorner;
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID
             {
@@ -76,7 +76,46 @@ namespace MapViewPallet.Shape
                     _arrow.StrokeThickness = value;
                 }
             }
-            
+
+            [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
+            public Point OriMousePos
+            {
+                get
+                {
+                    return _oriMousePos;
+                }
+                set
+                {
+                    _oriMousePos = value;
+                }
+            }
+
+            [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
+            public Point DesMousePos
+            {
+                get
+                {
+                    return _desMousePos;
+                }
+                set
+                {
+                    _desMousePos = value;
+                }
+            }
+
+            [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
+            public Point SpecialPoint4
+            {
+                get
+                {
+                    return eightCorner[4];
+                }
+                set
+                {
+                    eightCorner[4] = value;
+                }
+            }
+
 
 
         }
@@ -148,14 +187,11 @@ namespace MapViewPallet.Shape
             props.myTransformGroup.Children.Add(props.myTranslate);
             RenderTransform = props.myTransformGroup;
             props.canvas = pCanvas;
-            props.eightCorner = new List<Ellipse>();
+            props.eightCorner = new List<Point>();
             for (int i = 0; i < 8; i++)
             {
-                Ellipse temp = new Ellipse();
-                temp.Width = temp.Height = 2;
-                temp.Fill = new SolidColorBrush(Colors.Red);
+                Point temp = new Point();
                 props.eightCorner.Add(temp);
-                props.canvas.Children.Add(temp);
             }
             props.pathGrid.Children.Add(props._shape);
             props.pathGrid.Children.Add(props._pointHead);
@@ -179,15 +215,12 @@ namespace MapViewPallet.Shape
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             Point mousePos = e.GetPosition(props.canvas);
-            //Console.WriteLine("MouseRightButtonDownPath:  "+elementName);
-            //props.isSelected = true;
         }
 
         private void MouseLeftButtonDownPath(object sender, MouseButtonEventArgs e)
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             Point mousePos = e.GetPosition(props.canvas);
-            //Console.WriteLine("MouseLeftButtonDownPath:  " + elementName);
             if (!props.isSelected)
             {
                 props.isSelected = true;
@@ -249,9 +282,11 @@ namespace MapViewPallet.Shape
 
         public void ReDraw(Point Start, Point End)
         {
-            int xStart = ((int)Start.X / props.coorStep) * props.coorStep;
-            int yStart = ((int)Start.Y / props.coorStep) * props.coorStep;
-            props._oriMousePos = new Point(xStart, yStart);
+            //int xStart = ((int)Start.X / props.coorStep) * props.coorStep;
+            //int yStart = ((int)Start.Y / props.coorStep) * props.coorStep;
+            //int xEnd = ((int)End.X / props.coorStep) * props.coorStep;
+            //int yEnd = ((int)End.Y / props.coorStep) * props.coorStep;
+            props._oriMousePos = new Point(Start.X, Start.Y);
             props._desMousePos = new Point(End.X, End.Y);
             Draw();
         }
@@ -270,25 +305,5 @@ namespace MapViewPallet.Shape
         {
 
         }
-
-        
-
-        [CategoryAttribute("Shape Settings"), DescriptionAttribute("Change stroke color.")]
-        public Brush Stroke
-        {
-            get
-            {
-                return props._shape.Stroke;
-            }
-            set
-            {
-                props._shape.Stroke = value;
-            }
-        }
-
-
-
-
-
     }
 }
