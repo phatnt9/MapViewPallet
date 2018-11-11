@@ -39,6 +39,7 @@ namespace MapViewPallet.Shape
             public TransformGroup myTransformGroup;
             public RotateTransform myRotateTransform;
             public List<Point> eightCorner;
+
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID
             {
@@ -51,6 +52,7 @@ namespace MapViewPallet.Shape
                     name = value;
                 }
             }
+
             [CategoryAttribute("Arrow Settings"), DescriptionAttribute(""), ReadOnlyAttribute(false)]
             public Visibility Visible
             {
@@ -63,6 +65,7 @@ namespace MapViewPallet.Shape
                     _arrow.Visibility = value;
                 }
             }
+
             [CategoryAttribute("Shape Settings"), DescriptionAttribute(""), ReadOnlyAttribute(false)]
             public double Thickness
             {
@@ -104,6 +107,19 @@ namespace MapViewPallet.Shape
             }
 
             [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
+            public Point SpecialPoint0
+            {
+                get
+                {
+                    return eightCorner[0];
+                }
+                set
+                {
+                    eightCorner[0] = value;
+                }
+            }
+
+            [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public Point SpecialPoint4
             {
                 get
@@ -126,7 +142,7 @@ namespace MapViewPallet.Shape
         {
             
             props.sizeArrow = 3;
-            props.coorStep = 10;
+            //props.coorStep = 10;
             props.isSelected = false;
             props.isHovering = false;
             ContextMenu = new ContextMenu();
@@ -256,9 +272,7 @@ namespace MapViewPallet.Shape
 
             }
         }
-
         
-
 
         private void MouseHoverPath(object sender, MouseEventArgs e)
         {
@@ -272,20 +286,10 @@ namespace MapViewPallet.Shape
             props.isHovering = false;
             ToggleStyle();
         }
-
-        public Point Vector2(Point start, float angle)
-        {
-            start.X = (float)Math.Sin(angle);
-            start.Y = (float)Math.Cos(angle);
-            return start;
-        }
+        
 
         public void ReDraw(Point Start, Point End)
         {
-            //int xStart = ((int)Start.X / props.coorStep) * props.coorStep;
-            //int yStart = ((int)Start.Y / props.coorStep) * props.coorStep;
-            //int xEnd = ((int)End.X / props.coorStep) * props.coorStep;
-            //int yEnd = ((int)End.Y / props.coorStep) * props.coorStep;
             props._oriMousePos = new Point(Start.X, Start.Y);
             props._desMousePos = new Point(End.X, End.Y);
             Draw();

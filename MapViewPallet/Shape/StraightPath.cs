@@ -63,41 +63,41 @@ namespace MapViewPallet.Shape
 
             //Render Path
             double angle = (Math.Atan2(props.yDiff, props.xDiff) * 180.0 / Math.PI);
-            switch (angle)
-            {
-                case double n when (n >= -22.5 && n < 22.5):
-                    {
-                        props.rotate = 0;
-                        break;
-                    }
-                case double n when (Math.Abs(n) >= 22.5 && Math.Abs(n) < 67.5): //1
-                    {
-                        props.rotate = Math.Sign(n) * 45;
-                        break;
-                    }
-                case double n when (Math.Abs(n) >= 67.5 && Math.Abs(n) < 112.5)://2
-                    {
-                        props.rotate = Math.Sign(angle) * 90;
-                        break;
-                    }
-                case double n when (Math.Abs(n) >= 112.5 && Math.Abs(n) < 157.5)://3
-                    {
-                        props.rotate = Math.Sign(angle) * 135;
-                        break;
-                    }
-                case double n when ((Math.Abs(n) >= 157.5 && (Math.Abs(n) <= 180))):
-                    {
-                        props.rotate = 180;
-                        break;
-                    }
-                default:
-                    {
-                        props.rotate = 45;
-                        break;
-                    }
-            }
+            //switch (angle)
+            //{
+            //    case double n when (n >= -22.5 && n < 22.5):
+            //        {
+            //            props.rotate = 0;
+            //            break;
+            //        }
+            //    case double n when (Math.Abs(n) >= 22.5 && Math.Abs(n) < 67.5): //1
+            //        {
+            //            props.rotate = Math.Sign(n) * 45;
+            //            break;
+            //        }
+            //    case double n when (Math.Abs(n) >= 67.5 && Math.Abs(n) < 112.5)://2
+            //        {
+            //            props.rotate = Math.Sign(angle) * 90;
+            //            break;
+            //        }
+            //    case double n when (Math.Abs(n) >= 112.5 && Math.Abs(n) < 157.5)://3
+            //        {
+            //            props.rotate = Math.Sign(angle) * 135;
+            //            break;
+            //        }
+            //    case double n when ((Math.Abs(n) >= 157.5 && (Math.Abs(n) <= 180))):
+            //        {
+            //            props.rotate = 180;
+            //            break;
+            //        }
+            //    default:
+            //        {
+            //            props.rotate = 45;
+            //            break;
+            //        }
+            //}
+            props.rotate = angle;
             props.myRotateTransform.Angle = props.rotate;
-            Console.WriteLine(props.rotate.ToString("0.0"));
             props.myTranslate = new TranslateTransform(props._oriMousePos.X, props._oriMousePos.Y - (Height/2));
             props.myTransformGroup.Children[1] = props.myTranslate;
             // SPECIAL POINTS
