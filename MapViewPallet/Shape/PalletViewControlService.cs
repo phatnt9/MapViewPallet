@@ -32,6 +32,7 @@ namespace MapViewPallet.Shape
         private string selectedItemName = "";
         private string hoveringItemName = "";
         private double slidingScale;
+        
         //---------------OBJECT-------------------
         public SortedDictionary<string, PathShape> list_Path;
         public SortedDictionary<string, StationShape> list_Station;
@@ -41,11 +42,29 @@ namespace MapViewPallet.Shape
         //======================MAP======================
         public PalletViewControlService(MainWindow mainWinDowIn)
         {
-
+            
             //cursorPoint.Fill = new SolidColorBrush(Colors.Black);
             //cursorPoint.Width = cursorPoint.Height = 2;
             mainWindow = mainWinDowIn;
             map = mainWindow.map;
+            //
+            //
+            //
+            map.ContextMenu = new ContextMenu();
+            //===================================
+            MenuItem editItem = new MenuItem();
+            editItem.Header = "Option 1";
+            //editItem.Click += EditMenu;
+            //===================================
+            MenuItem removeItem = new MenuItem();
+            removeItem.Header = "Option 2";
+            //removeItem.Click += RemoveMenu;
+            map.ContextMenu.Items.Add(editItem);
+            map.ContextMenu.Items.Add(removeItem);
+            //
+            //
+            //
+            //
             //map.Children.Add(cursorPoint);
             scaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
@@ -77,7 +96,7 @@ namespace MapViewPallet.Shape
 
             }
         }
-
+        
 
         //////////////////////////////////////////////////////
         //EVENT========EVENT========EVENT========EVENT========
@@ -251,9 +270,12 @@ namespace MapViewPallet.Shape
                     {
                         try
                         {
-                            list_Path[selectedItemName].Remove();
-                            list_Path.Remove(selectedItemName);
-                            Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
+                            if (list_Path.ContainsKey(selectedItemName))
+                            {
+                                list_Path[selectedItemName].Remove();
+                                //list_Path.Remove(selectedItemName);
+                                //Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
+                            }
                         }
                         catch
                         {
@@ -312,7 +334,7 @@ namespace MapViewPallet.Shape
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1:
                     pathTemp = new StraightPath(map, new Point(0, 0), new Point(0, 0));
-
+                    pathTemp.RemoveHandle += PathRemove;
                     if (mouseWasDownOn != null)
                     {
                         string elementName = mouseWasDownOn.Name;
@@ -422,6 +444,16 @@ namespace MapViewPallet.Shape
                     }
             }
         }
+
+        public void PathRemove(string name)
+        {
+            if (list_Path.ContainsKey(name))
+            {
+                list_Path.Remove(name);
+                Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
+            }
+        }
+
         void Statectrl_MouseMove(MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(map);

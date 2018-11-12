@@ -11,6 +11,9 @@ namespace MapViewPallet.Shape
 {
     public class PathShape: Border
     {
+        public event Action<string> RemoveHandle;
+        
+       // public RemoveHandle removeHandle;
         public struct Props
         {
             public string name;
@@ -81,7 +84,7 @@ namespace MapViewPallet.Shape
             }
 
             [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point OriMousePos
+            public Point OriginalPos
             {
                 get
                 {
@@ -94,7 +97,7 @@ namespace MapViewPallet.Shape
             }
 
             [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point DesMousePos
+            public Point DestinationPos
             {
                 get
                 {
@@ -105,32 +108,7 @@ namespace MapViewPallet.Shape
                     _desMousePos = value;
                 }
             }
-
-            [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point SpecialPoint0
-            {
-                get
-                {
-                    return eightCorner[0];
-                }
-                set
-                {
-                    eightCorner[0] = value;
-                }
-            }
-
-            [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point SpecialPoint4
-            {
-                get
-                {
-                    return eightCorner[4];
-                }
-                set
-                {
-                    eightCorner[4] = value;
-                }
-            }
+            
 
 
 
@@ -140,9 +118,10 @@ namespace MapViewPallet.Shape
         //====================METHOD=============================
         public PathShape(Canvas pCanvas, Point Start, Point End)
         {
-            
+            ToolTip = "";
+            ToolTipOpening += ChangeToolTipContent;
             props.sizeArrow = 3;
-            //props.coorStep = 10;
+            props.coorStep = 10;
             props.isSelected = false;
             props.isHovering = false;
             ContextMenu = new ContextMenu();
@@ -154,11 +133,8 @@ namespace MapViewPallet.Shape
             MenuItem removeItem = new MenuItem();
             removeItem.Header = "Remove";
             removeItem.Click += RemoveMenu;
-            
             ContextMenu.Items.Add(editItem);
             ContextMenu.Items.Add(removeItem);
-
-            
             //====================EVENT=====================
             MouseLeave += MouseLeavePath;
             MouseMove += MouseHoverPath;
@@ -192,6 +168,7 @@ namespace MapViewPallet.Shape
             props._pointTail.Visibility = Visibility.Hidden;
             props._arrow.Fill = new SolidColorBrush(Colors.Gray);
             props._arrow.Stroke = new SolidColorBrush(Colors.Gray);
+            props._arrow.StrokeThickness = 0.7;
             props._shape.Stroke = new SolidColorBrush(Colors.Gray);
             props._shape.StrokeThickness = 0.7;
             //==================CHILDREN===================
@@ -215,6 +192,14 @@ namespace MapViewPallet.Shape
             props.pathGrid.Children.Add(props._arrow);
             Child = props.pathGrid;
             props.canvas.Children.Add(this);
+        }
+
+        private void ChangeToolTipContent(object sender, ToolTipEventArgs e)
+        {
+            ToolTip = "Name: " + props.name + 
+                "\n Start: " + props._oriMousePos.X.ToString("0.0") + "," + props._oriMousePos.Y.ToString("0.0") + 
+                " \n End: " + props._desMousePos.X.ToString("0.0") + "," + props._desMousePos.Y.ToString("0.0") + 
+                " \n Rotate: " + props.rotate;
         }
 
         private void EditMenu(object sender, RoutedEventArgs e)
@@ -302,7 +287,7 @@ namespace MapViewPallet.Shape
         public void Remove()
         {
             props.canvas.Children.Remove(this);
-
+            RemoveHandle(props.name);
         }
 
         public void ShowPropertiesGrid ()
