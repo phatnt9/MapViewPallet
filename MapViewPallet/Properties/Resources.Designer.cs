@@ -151,20 +151,71 @@ namespace MapViewPallet.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream tennessee_whiskey {
+        internal static System.Drawing.Bitmap phat_joinpath {
             get {
-                return ResourceManager.GetStream("tennessee_whiskey", resourceCulture);
+                object obj = ResourceManager.GetObject("phat_joinpath", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap phat_joinpath_off {
+            get {
+                object obj = ResourceManager.GetObject("phat_joinpath_off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap phat_joinpath_on {
+            get {
+                object obj = ResourceManager.GetObject("phat_joinpath_on", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap phat_straightpath {
+            get {
+                object obj = ResourceManager.GetObject("phat_straightpath", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap phat_straightpath_off {
+            get {
+                object obj = ResourceManager.GetObject("phat_straightpath_off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap phat_straightpath_on {
+            get {
+                object obj = ResourceManager.GetObject("phat_straightpath_on", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream xx {
+        internal static System.IO.UnmanagedMemoryStream tennessee_whiskey {
             get {
-                return ResourceManager.GetStream("xx", resourceCulture);
+                return ResourceManager.GetStream("tennessee_whiskey", resourceCulture);
             }
         }
     }

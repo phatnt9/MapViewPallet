@@ -15,9 +15,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="Transparent">
@@ -37,11 +37,19 @@
                         <Separator />
                         <MenuItem Header="_Exit" />
                     </MenuItem>
+                    <MenuItem Header="_Map">
+                        <MenuItem Header="_Resize" Click="ChangeMapSize"/>
+                    </MenuItem>
+                    
                 </Menu>
             </DockPanel>
         </Grid>
         <Grid Grid.Row="1" Background="AliceBlue">
-            <ToolBar>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ToolBar Grid.Row="0">
                 <Button Name="btn_AddRect" Width="30" Height="30"
                     Click="btn_AddRect_Click" ToolTip="Add"/>
                 <Button Name="btn_moverect" Width="30" Height="30"
@@ -49,28 +57,127 @@
                 <Button Name="btn_normal" Width="30" Height="30"
                     Click="btn_normal_Click" ToolTip="Normal"/>
                 <Button Name="btn_DrawStraght" BorderBrush="Black"
-                        BorderThickness="2" Click="btn_DrawStraight_Click" 
+                        BorderThickness="1" Click="btn_DrawStraight_Click" 
                         ToolTip="DrawStraght" Content="Test"/>
-                <ToggleButton Name="btn_HandDrawStraight" BorderBrush="Black"
-                        BorderThickness="2" Checked="btn_HandDrawStraight_Click_toggle" Unchecked="btn_HandDrawStraight_Click_toggled" Click="btn_HandDrawStraight_Click" 
-                        ToolTip="Draw Straight" Content="Draw Straight"/>
-                <Button Name="btn_JoinPath" BorderBrush="Black"
-                        BorderThickness="2" Click="btn_JoinPath_Click" 
-                        ToolTip="Draw JoinPath" Content="Draw JoinPath"/>
+                <ToggleButton Name="btn_StraightPath" BorderBrush="Gray"
+                              BorderThickness="1" 
+                              Checked="btn_StraightPath_Click_on" 
+                              Unchecked="btn_Normal_Click"
+                              ToolTip="Draw Straight"
+                              Width="25" Height="25">
+                    <ToggleButton.Template>
+                        <ControlTemplate TargetType="{x:Type ButtonBase}">
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsDefaulted" Value="True"/>
+                                <Trigger Property="IsMouseOver" Value="True"/>
+                                <Trigger Property="IsPressed" Value="True"/>
+                                <Trigger Property="ToggleButton.IsChecked" Value="True"/>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </ToggleButton.Template>
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Border BorderThickness="0"  >
+                                        <Image Source="pack://siteoforigin:,,,/Resources/phat_straightpath_off.png" Stretch="Fill"  />
+                                    </Border>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Border  BorderThickness="0" >
+                                                <Image Source="pack://siteoforigin:,,,/Resources/phat_straightpath_on.png" Stretch="fill" />
+                                            </Border>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+                <ToggleButton Name="btn_JoinPath" BorderBrush="Gray"
+                              BorderThickness="1"
+                              Checked="btn_JoinPath_Click_on" 
+                              Unchecked="btn_Normal_Click"
+                        ToolTip="Draw JoinPath">
+                    <ToggleButton.Template>
+                        <ControlTemplate TargetType="{x:Type ButtonBase}">
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                              Content="{TemplateBinding Content}" 
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                                              Focusable="False" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" 
+                                              RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsDefaulted" Value="True"/>
+                                <Trigger Property="IsMouseOver" Value="True"/>
+                                <Trigger Property="IsPressed" Value="True"/>
+                                <Trigger Property="ToggleButton.IsChecked" Value="True"/>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </ToggleButton.Template>
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Border BorderThickness="0"  >
+                                        <Image Source="pack://siteoforigin:,,,/Resources/phat_joinpath_off.png" Stretch="Fill"  />
+                                    </Border>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Border  BorderThickness="0" >
+                                                <Image Source="pack://siteoforigin:,,,/Resources/phat_joinpath_on.png" Stretch="fill" />
+                                            </Border>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
                 <Button Name="btn_Warning" BorderBrush="Black"
-                        BorderThickness="2" Click="btn_Warning_Click" 
+                        BorderThickness="1" Click="btn_Warning_Click" 
                         ToolTip="Warning" Content="Music"/>
+                <Button Name="btn_ReCenterMap" BorderBrush="Black"
+                        BorderThickness="1" Click="btn_ReCenterMap_Click" 
+                        ToolTip="ReCenterMap" Content="ReCenterMap"/>
                 <Button Name="btn_LoadExcel" BorderBrush="Black"
-                        BorderThickness="2" Click="btn_LoadExcel_Click" 
+                        BorderThickness="1" Click="btn_LoadExcel_Click" 
                         ToolTip="LoadExcel" Content="LoadExcel"/>
                 
             </ToolBar>
+            <ToolBar Grid.Row="1">
+                <Button Name="btn_ExtendMap" BorderBrush="Black"
+                        BorderThickness="1" Click="btn_LoadExcel_Click" 
+                        ToolTip="Extend Map" Content="LoadExcel"/>
+                <Button Name="btn_ShrinkMap" BorderBrush="Black"
+                        BorderThickness="1" Click="btn_LoadExcel_Click" 
+                        ToolTip="Shrink Map" Content="LoadExcel"/>
+            </ToolBar>
         </Grid>
-        <Grid Grid.Row="2" Background="#E7E7E7" >
+        <Grid Grid.Row="2" Background="#E7E7E7">
 
             <Border Name="clipBorder" ClipToBounds="True" RenderTransformOrigin="0.5,0.5">
                 
-                <Canvas RenderTransformOrigin="0.5,0.5" Width="490" Height="335"
+                <Canvas RenderTransformOrigin="0.5,0.5" Width="999" Height="500"
                         Name="map" >
                     <Canvas.Background>
                         <DrawingBrush Viewport="0,0,50,50" ViewportUnits="Absolute" TileMode="Tile" >
@@ -79,7 +186,7 @@
                                     <DrawingGroup.Children>
                                         <GeometryDrawing Geometry="M0,0 L50,0">
                                             <GeometryDrawing.Pen>
-                                                <Pen Thickness="2" Brush="#D8D8D8" />
+                                                <Pen Thickness="2" Brush="Black" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="M0,10 L50,10">
@@ -104,7 +211,7 @@
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="M0,0 L0,50">
                                             <GeometryDrawing.Pen>
-                                                <Pen Thickness="2" Brush="#D8D8D8" />
+                                                <Pen Thickness="2" Brush="Black" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="M10,0 L10,50">
@@ -133,37 +240,7 @@
                         </DrawingBrush>
                     </Canvas.Background>
                     <Canvas.Children>
-                        <StackPanel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type Button}">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                    <Setter Property="Margin" Value="12" />
-                                    <Setter Property="RenderTransformOrigin" Value="0.5 0.5" />
-                                    <Setter Property="RenderTransform">
-                                        <Setter.Value>
-                                            <RotateTransform />
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <EventTrigger RoutedEvent="Button.Click">
-                                            <BeginStoryboard>
-                                                <Storyboard TargetProperty="RenderTransform.Angle">
-                                                    <DoubleAnimation 
-                                From="-5" To="5" Duration="0:0:0.05" 
-                                AutoReverse="True"
-                                RepeatBehavior="3x"
-                                FillBehavior="Stop" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </StackPanel.Resources>
-
-                            <Button>Click me to shake</Button>
-                        </StackPanel>
+                        
                         <!--<Border Canvas.Left="50" Canvas.Top="50" Width="50" Height="50">
                             <Grid >
                                 <Grid.Children>
@@ -200,21 +277,43 @@
                 </Canvas>
                 
             </Border>
-            <Grid VerticalAlignment="Bottom">
-                <Label   Name="MouseCoor" Foreground="Red" Content="X:Y" FontSize="20"></Label>
+            <Grid Name="Cursorhehe" VerticalAlignment="Bottom">
+                <Label   Name="MouseCoor" Foreground="Red" Content="X:Y" FontSize="12"></Label>
             </Grid>
         </Grid>
         <Grid Grid.Row="3">
-            <DataGrid Name="mainDataGrid"  AutoGenerateColumns="False" >
-                
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Station Name"/>
-                    <DataGridTextColumn Header="Line Id"/>
-                    <DataGridTextColumn Header="Pallets number"/>
-                    <DataGridTextColumn Header="Material Code"/>
-                    <DataGridTextColumn Header="Color"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <TabControl>
+                <TabItem Header="Stations">
+                    <DataGrid Name="StationsDataGrid"  AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Station Name"/>
+                            <DataGridTextColumn Header="Line Id"/>
+                            <DataGridTextColumn Header="Pallets number"/>
+                            <DataGridTextColumn Header="Material Code"/>
+                            <DataGridTextColumn Header="Color"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Orders" >
+                    <DataGrid Name="OrdersDataGrid"  AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Orders Name"/>
+                            <DataGridTextColumn Header="Orders Id"/>
+                            <DataGridTextColumn Header="Color"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Tasks" >
+                    <DataGrid Name="TasksDataGrid"  AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Tasks Name"/>
+                            <DataGridTextColumn Header="Tasks Id"/>
+                            <DataGridTextColumn Header="Color"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+            
         </Grid>
         <GridSplitter Background="DarkGray" Grid.Row="2"
                       Height="5" HorizontalAlignment="Stretch" 

@@ -79,7 +79,7 @@ namespace MapViewPallet.Shape
             map.MouseLeftButtonUp += Map_MouseLeftButtonUp;
             mainWindow.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             mainWindow.clipBorder.SizeChanged += ClipBorder_SizeChanged;
-            zoomOutLimit = mainWindow.clipBorder.ActualHeight / map.Height;
+            zoomOutLimit = 0.5;
 
         }
 
@@ -141,49 +141,74 @@ namespace MapViewPallet.Shape
                 ((scaleTransform.ScaleY + slidingScale) <= zoomInLitmit))
             {
                 scaleTransform.ScaleX = scaleTransform.ScaleY += slidingScale;
+                double x = (map.Width * (scaleTransform.ScaleX - 1)) / 2;
+                double y = (map.Height * (scaleTransform.ScaleY - 1)) / 2;
+                translateTransform.X = x;
+                translateTransform.Y = y;
             }
 
-            yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
-            xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
-            yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
-            xDistanceLeft = ((mainWindow.clipBorder.ActualWidth / 2 + (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
-            //YCoor
-            if (yDistanceTop > 0)
-            {
-                translateTransform.Y = translateTransform.Y - yDistanceTop;
-            }
-            if (yDistanceBottom > 0)
-            {
-                translateTransform.Y = translateTransform.Y + yDistanceBottom;
-            }
-            //XCoor
-            if ((map.Width * scaleTransform.ScaleX) < mainWindow.clipBorder.ActualWidth)
-            {
-                translateTransform.X = 0;
-            }
-            else
-            {
-                if (xDistanceLeft > 0)
-                {
-                    translateTransform.X = translateTransform.X - xDistanceLeft;
-                }
-
-                if (xDistanceRight > 0)
-                {
-                    translateTransform.X = translateTransform.X + xDistanceRight;
-                }
-            }
+            //yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
+            //xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
+            //yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
+            //xDistanceLeft = ((mainWindow.clipBorder.ActualWidth / 2 + (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
+            ////YCoor
+            //if (yDistanceTop > 0)
+            //{
+            //    translateTransform.Y = translateTransform.Y - yDistanceTop;
+            //}
+            //if (yDistanceBottom > 0)
+            //{
+            //    translateTransform.Y = translateTransform.Y + yDistanceBottom;
+            //}
+            ////XCoor
+            //if ((map.Width * scaleTransform.ScaleX) < mainWindow.clipBorder.ActualWidth)
+            //{
+            //    translateTransform.X = 0;
+            //}
+            //else
+            //{
+            //    if (xDistanceLeft > 0)
+            //    {
+            //        translateTransform.X = translateTransform.X - xDistanceLeft;
+            //    }
+            //    if (xDistanceRight > 0)
+            //    {
+            //        translateTransform.X = translateTransform.X + xDistanceRight;
+            //    }
+            //}
 
         }
         private void ClipBorder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            zoomOutLimit = mainWindow.clipBorder.ActualHeight / map.Height;
-            scaleTransform.ScaleX = scaleTransform.ScaleY = zoomOutLimit;
-            if (map.Width > (mainWindow.clipBorder.ActualWidth * scaleTransform.ScaleX))
+            Console.WriteLine("ClipBorder Size Change");
+            //mainWindow.map.Width = mainWindow.clipBorder.ActualWidth;
+            //mainWindow.map.Height = mainWindow.clipBorder.ActualHeight;
+            if (map.Width <= map.Height)
             {
-                translateTransform.X = 0;
-                translateTransform.Y = 0;
+                if ((map.Width * scaleTransform.ScaleX) < mainWindow.clipBorder.ActualWidth)
+                {
+                    scaleTransform.ScaleX = scaleTransform.ScaleY = (mainWindow.clipBorder.ActualWidth / map.Width);
+                }
             }
+            else
+            {
+                if ((map.Height * scaleTransform.ScaleY) < mainWindow.clipBorder.ActualHeight)
+                {
+                    scaleTransform.ScaleX = scaleTransform.ScaleY = (mainWindow.clipBorder.ActualHeight / map.Height);
+                }
+            }
+            double x = (map.Width * (scaleTransform.ScaleX - 1)) / 2;
+            double y = (map.Height * (scaleTransform.ScaleY - 1)) / 2;
+            translateTransform.X = x;
+            translateTransform.Y = y;
+
+            //zoomOutLimit = mainWindow.clipBorder.ActualHeight / map.Height;
+            //scaleTransform.ScaleX = scaleTransform.ScaleY = zoomOutLimit;
+            //if (map.Width > (mainWindow.clipBorder.ActualWidth * scaleTransform.ScaleX))
+            //{
+            //    translateTransform.X = 0;
+            //    translateTransform.Y = 0;
+            //}
         }
         private void Map_MouseMove(object sender, MouseEventArgs e)
         {
@@ -197,8 +222,13 @@ namespace MapViewPallet.Shape
             //roundedMousePos.X = x;
             //roundedMousePos.Y = y;
             //cursorPoint.RenderTransform = new TranslateTransform(mousePos.X, mousePos.Y);
+            //mainWindow.Cursorhehe.RenderTransform = new TranslateTransform(mousePos.X - (mainWindow.clipBorder.ActualWidth/2), mousePos.Y - (mainWindow.clipBorder.ActualHeight / 2));
+
+
             mainWindow.MouseCoor.Content = mousePos.X.ToString("0.0") + " " + mousePos.Y.ToString("0.0");
             // POINT OF VIEW
+            //Console.WriteLine(map.Height+"  "+map.Width);
+            //
             yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
             xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
             yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
@@ -207,40 +237,56 @@ namespace MapViewPallet.Shape
             {
                 if (!map.IsMouseCaptured) return;
                 Vector moveVector = startPoint - e.GetPosition(mainWindow.clipBorder);
+                Console.WriteLine("==================================");
+                Console.WriteLine("startPoint: " + startPoint.X+"  "+ startPoint.Y);
+                Console.WriteLine("e.GetPosition(mainWindow.clipBorder): " + e.GetPosition(mainWindow.clipBorder).X+"  "+ e.GetPosition(mainWindow.clipBorder).Y);
+                Console.WriteLine("moveVector: " + moveVector.X+"  "+ moveVector.Y);
+
                 double xCoor = originalPoint.X - moveVector.X;
                 double yCoor = originalPoint.Y - moveVector.Y;
-                translateTransform.X = xCoor;
-                translateTransform.Y = yCoor;
-                yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
-                xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
-                yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
-                xDistanceLeft = ((mainWindow.clipBorder.ActualWidth / 2 + (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
-                //YCoor
-                if (yDistanceTop > 0)
+                double xlim = (map.Width * (scaleTransform.ScaleX - 1)) / 2;
+                double ylim = (map.Height * (scaleTransform.ScaleY - 1)) / 2;
+                if ((xCoor <= xlim))// && (xCoor > -((((map.Width * scaleTransform.ScaleX) + (map.Width)) / 2) - mainWindow.clipBorder.ActualWidth)))//(map.Width*scaleTransform.ScaleX)-(((map.Width*scaleTransform.ScaleX) - (map.Width)) / 2)
                 {
-                    translateTransform.Y = translateTransform.Y - yDistanceTop;
+                    translateTransform.X = xCoor;
                 }
-                if (yDistanceBottom > 0)
+                if ((yCoor <= ylim))// && (yCoor > -((((map.Height * scaleTransform.ScaleY) + (map.Height)) / 2) - mainWindow.clipBorder.ActualHeight)))
                 {
-                    translateTransform.Y = translateTransform.Y + yDistanceBottom;
+                    translateTransform.Y = yCoor;
                 }
-                //XCoor
-                if ((map.Width * scaleTransform.ScaleX) < mainWindow.clipBorder.ActualWidth)
-                {
-                    translateTransform.X = 0;
-                }
-                else
-                {
-                    if (xDistanceLeft > 0)
-                    {
-                        translateTransform.X = translateTransform.X - xDistanceLeft;
-                    }
 
-                    if (xDistanceRight > 0)
-                    {
-                        translateTransform.X = translateTransform.X + xDistanceRight;
-                    }
-                }
+                Console.WriteLine("translateTransform: " + translateTransform.X + "  " + translateTransform.Y);
+                Console.WriteLine("lim: " + xlim + "  " + ylim);
+                //yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
+                //xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
+                //yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
+                //xDistanceLeft = ((mainWindow.clipBorder.ActualWidth / 2 + (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
+                ////YCoor
+                //if (yDistanceTop > 0)
+                //{
+                //    translateTransform.Y = translateTransform.Y - yDistanceTop;
+                //}
+                //if (yDistanceBottom > 0)
+                //{
+                //    translateTransform.Y = translateTransform.Y + yDistanceBottom;
+                //}
+                ////XCoor
+                //if ((map.Width * scaleTransform.ScaleX) < mainWindow.clipBorder.ActualWidth)
+                //{
+                //    translateTransform.X = 0;
+                //}
+                //else
+                //{
+                //    if (xDistanceLeft > 0)
+                //    {
+                //        translateTransform.X = translateTransform.X - xDistanceLeft;
+                //    }
+
+                //    if (xDistanceRight > 0)
+                //    {
+                //        translateTransform.X = translateTransform.X + xDistanceRight;
+                //    }
+                //}
             }
             if (!mainWindow.drag)
             {

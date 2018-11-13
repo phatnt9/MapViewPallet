@@ -12,8 +12,6 @@ namespace MapViewPallet.Shape
     public class PathShape: Border
     {
         public event Action<string> RemoveHandle;
-        
-       // public RemoveHandle removeHandle;
         public struct Props
         {
             public string name;

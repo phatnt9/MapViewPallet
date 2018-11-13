@@ -60,6 +60,12 @@
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
     <Compile Include="LoadExcels.cs" />
+    <Compile Include="MiniForm\MapResize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MiniForm\MapResize.Designer.cs">
+      <DependentUpon>MapResize.cs</DependentUpon>
+    </Compile>
     <Compile Include="Shape\CurvePath.cs" />
     <Compile Include="Shape\PalletShape.cs" />
     <Compile Include="Shape\PalletViewControlService.cs" />
@@ -99,9 +105,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="MiniForm\MapResize.resx">
+      <DependentUpon>MapResize.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Shape\Properties.resx">
       <DependentUpon>Properties.cs</DependentUpon>
@@ -145,13 +155,31 @@
     <None Include="Resources\tennessee_whiskey.mp3" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Xót Xa.wav" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\tennessee_whiskey.wav" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_joinpath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_straightpath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Picture1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_straightpath_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_joinpath_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_joinpath_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_straightpath_on.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
