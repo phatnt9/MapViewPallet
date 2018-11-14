@@ -296,5 +296,17 @@ namespace MapViewPallet
             canvasTranslateTransform.X = 0;
             canvasTranslateTransform.Y = 0;
         }
+
+        private void btn_ExtendMap_Click(object sender, RoutedEventArgs e)
+        {
+            map.Width += 100;
+            map.Height += 100;
+        }
+
+        private void btn_ShrinkMap_Click(object sender, RoutedEventArgs e)
+        {
+            map.Width -= 100;
+            map.Height -= 100;
+        }
     }
 }

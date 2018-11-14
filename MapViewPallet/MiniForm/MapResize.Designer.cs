@@ -94,7 +94,7 @@
             this.tb_Height.TabIndex = 0;
             this.tb_Height.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Height_KeyPress);
             // 
-            // Form1
+            // MapResize
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -107,8 +107,9 @@
             this.Controls.Add(this.tb_Width);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MapResize";
             this.Text = "Resize";
+            this.Load += new System.EventHandler(this.MapResize_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

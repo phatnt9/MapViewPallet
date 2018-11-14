@@ -63,8 +63,14 @@ namespace MapViewPallet.MiniForm
                 double W = double.Parse(tb_Width.Text);
                 double H = double.Parse(tb_Height.Text);
                 ResizeHandle(W, H);
+                Close();
             }
             catch { }
+
+        }
+
+        private void MapResize_Load(object sender, EventArgs e)
+        {
 
         }
     }

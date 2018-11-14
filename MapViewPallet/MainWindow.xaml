@@ -166,11 +166,11 @@
             </ToolBar>
             <ToolBar Grid.Row="1">
                 <Button Name="btn_ExtendMap" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_LoadExcel_Click" 
-                        ToolTip="Extend Map" Content="LoadExcel"/>
+                        BorderThickness="1" Click="btn_ExtendMap_Click" 
+                        ToolTip="Extend Map" Content="Extend Map"/>
                 <Button Name="btn_ShrinkMap" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_LoadExcel_Click" 
-                        ToolTip="Shrink Map" Content="LoadExcel"/>
+                        BorderThickness="1" Click="btn_ShrinkMap_Click" 
+                        ToolTip="Shrink Map" Content="Shrink Map"/>
             </ToolBar>
         </Grid>
         <Grid Grid.Row="2" Background="#E7E7E7">
