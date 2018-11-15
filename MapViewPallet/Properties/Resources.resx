@@ -148,9 +148,6 @@
   <data name="tennessee_whiskey" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tennessee_whiskey.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="phat_joinpath" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Picture1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="phat_straightpath" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\phat_straightpath.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -165,5 +162,14 @@
   </data>
   <data name="phat_straightpath_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\phat_straightpath_on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="phat_joinpath" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\phat_joinpath.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="phat_mapExtend" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\phat_mapExtend.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="phat_mapShrink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\phat_mapShrink.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

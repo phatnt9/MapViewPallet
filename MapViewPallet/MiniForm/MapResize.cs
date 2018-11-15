@@ -13,43 +13,18 @@ namespace MapViewPallet.MiniForm
     public partial class MapResize : Form
     {
         public event Action<double,double> ResizeHandle;
+        double mapWidth;
+        double mapHeight;
 
-
-        public MapResize()
+        public MapResize(double W, double H)
         {
             InitializeComponent();
-
+            tb_Width.Maximum = 10000;
+            tb_Height.Maximum = 10000;
+            mapWidth = W;
+            mapHeight = H;
         }
-
-        private void tb_Width_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-        (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void tb_Height_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-        (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
-
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-            {
-                e.Handled = true;
-            }
-        }
+        
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
@@ -71,6 +46,8 @@ namespace MapViewPallet.MiniForm
 
         private void MapResize_Load(object sender, EventArgs e)
         {
+            tb_Width.Value = (int)mapWidth;
+            tb_Height.Value = (int)mapHeight;
 
         }
     }

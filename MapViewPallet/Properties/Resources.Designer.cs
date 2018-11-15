@@ -183,6 +183,26 @@ namespace MapViewPallet.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap phat_mapExtend {
+            get {
+                object obj = ResourceManager.GetObject("phat_mapExtend", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap phat_mapShrink {
+            get {
+                object obj = ResourceManager.GetObject("phat_mapShrink", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap phat_straightpath {
             get {
                 object obj = ResourceManager.GetObject("phat_straightpath", resourceCulture);

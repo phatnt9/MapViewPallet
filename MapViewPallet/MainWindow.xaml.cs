@@ -26,6 +26,7 @@ namespace MapViewPallet
         Point transform = new Point(0, 0);
         private PalletViewControlService palletViewEventControl;
         System.Media.SoundPlayer snd;
+        public event Action<double, double> LoadMapSizeHandle;
         //=================METHOD==================
 
 
@@ -37,9 +38,9 @@ namespace MapViewPallet
             //map.Height = img.ImageSource.Height;
             //map.Background = img;
             palletViewEventControl = new PalletViewControlService(this);
-            btn_AddRect.Background = LoadImage("Pallet0");
-            btn_moverect.Background = LoadImage("Pallet1");
-            btn_normal.Background = LoadImage("Pallet2");
+            //btn_AddRect.Background = LoadImage("Pallet0");
+            //btn_moverect.Background = LoadImage("Pallet1");
+            //btn_normal.Background = LoadImage("Pallet2");
             snd = new System.Media.SoundPlayer();
             
 
@@ -64,26 +65,6 @@ namespace MapViewPallet
             finally { }
         }
         
-        private void btn_AddRect_Click(object sender, RoutedEventArgs e)
-        {
-            drag = false;
-            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._ADD_STATION;
-            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
-        }
-
-        private void btn_moverect_Click(object sender, RoutedEventArgs e)
-        {
-            drag = false;
-            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT;
-            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._SLIDE_OBJECT;
-        }
-
-        private void btn_normal_Click(object sender, RoutedEventArgs e)
-        {
-            drag = true;
-            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._NORMAL;
-            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
-        }
 
         public Point Transformations(Point origin, Point transform, double degrees)
         {
@@ -147,18 +128,18 @@ namespace MapViewPallet
 
         private void btn_Warning_Click(object sender, RoutedEventArgs e)
         {
-            if (!play)
-            {
-                Stream str = Properties.Resources.tennessee_whiskey;
-                snd.Stream = str;
-                snd.PlayLooping();
-                play = true;
-            }
-            else
-            {
-                snd.Stop();
-                play = false;
-            }
+            //if (!play)
+            //{
+            //    Stream str = Properties.Resources.tennessee_whiskey;
+            //    snd.Stream = str;
+            //    snd.PlayLooping();
+            //    play = true;
+            //}
+            //else
+            //{
+            //    snd.Stop();
+            //    play = false;
+            //}
 
         }
 
@@ -252,7 +233,7 @@ namespace MapViewPallet
         private void btn_StraightPath_Click_on(object sender, RoutedEventArgs e)
         {
             drag = false;
-            btn_JoinPath.IsChecked = false;
+            //btn_JoinPath.IsChecked = false;
             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
@@ -260,7 +241,7 @@ namespace MapViewPallet
         private void btn_JoinPath_Click_on(object sender, RoutedEventArgs e)
         {
             drag = false;
-            btn_StraightPath.IsChecked = false;
+            //btn_StraightPath.IsChecked = false;
             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_P1;
             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
@@ -274,7 +255,7 @@ namespace MapViewPallet
 
         private void ChangeMapSize(object sender, RoutedEventArgs e)
         {
-            MapResize tempForm = new MapResize();
+            MapResize tempForm = new MapResize(map.Width, map.Height);
             tempForm.ResizeHandle += CanvasResizeHandle;
             tempForm.Show();
         }
@@ -290,12 +271,7 @@ namespace MapViewPallet
                 map.Height = Height;
             }
         }
-
-        private void btn_ReCenterMap_Click(object sender, RoutedEventArgs e)
-        {
-            canvasTranslateTransform.X = 0;
-            canvasTranslateTransform.Y = 0;
-        }
+        
 
         private void btn_ExtendMap_Click(object sender, RoutedEventArgs e)
         {

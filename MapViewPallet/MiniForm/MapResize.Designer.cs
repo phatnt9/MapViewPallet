@@ -28,26 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tb_Width = new System.Windows.Forms.TextBox();
             this.btn_Close = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_Apply = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.tb_Height = new System.Windows.Forms.TextBox();
+            this.tb_Width = new System.Windows.Forms.NumericUpDown();
+            this.tb_Height = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_Width)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_Height)).BeginInit();
             this.SuspendLayout();
-            // 
-            // tb_Width
-            // 
-            this.tb_Width.Location = new System.Drawing.Point(49, 12);
-            this.tb_Width.Name = "tb_Width";
-            this.tb_Width.Size = new System.Drawing.Size(129, 20);
-            this.tb_Width.TabIndex = 0;
-            this.tb_Width.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Width_KeyPress);
             // 
             // btn_Close
             // 
             this.btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Close.Location = new System.Drawing.Point(96, 82);
+            this.btn_Close.Location = new System.Drawing.Point(118, 87);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(82, 28);
             this.btn_Close.TabIndex = 1;
@@ -58,17 +52,17 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(5, 13);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(18, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 15);
+            this.label1.Size = new System.Drawing.Size(42, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Width";
             // 
             // btn_Apply
             // 
             this.btn_Apply.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Apply.Location = new System.Drawing.Point(8, 82);
+            this.btn_Apply.Location = new System.Drawing.Point(21, 87);
             this.btn_Apply.Name = "btn_Apply";
             this.btn_Apply.Size = new System.Drawing.Size(82, 28);
             this.btn_Apply.TabIndex = 1;
@@ -79,49 +73,58 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(5, 39);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(18, 44);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 15);
+            this.label2.Size = new System.Drawing.Size(47, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "Height";
             // 
+            // tb_Width
+            // 
+            this.tb_Width.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Width.Location = new System.Drawing.Point(88, 12);
+            this.tb_Width.Name = "tb_Width";
+            this.tb_Width.Size = new System.Drawing.Size(120, 21);
+            this.tb_Width.TabIndex = 3;
+            // 
             // tb_Height
             // 
-            this.tb_Height.Location = new System.Drawing.Point(49, 38);
+            this.tb_Height.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Height.Location = new System.Drawing.Point(88, 39);
             this.tb_Height.Name = "tb_Height";
-            this.tb_Height.Size = new System.Drawing.Size(129, 20);
-            this.tb_Height.TabIndex = 0;
-            this.tb_Height.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tb_Height_KeyPress);
+            this.tb_Height.Size = new System.Drawing.Size(120, 21);
+            this.tb_Height.TabIndex = 3;
             // 
             // MapResize
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(187, 119);
+            this.ClientSize = new System.Drawing.Size(220, 134);
+            this.Controls.Add(this.tb_Height);
+            this.Controls.Add(this.tb_Width);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_Apply);
             this.Controls.Add(this.btn_Close);
-            this.Controls.Add(this.tb_Height);
-            this.Controls.Add(this.tb_Width);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MapResize";
             this.Text = "Resize";
             this.Load += new System.EventHandler(this.MapResize_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.tb_Width)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_Height)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox tb_Width;
         private System.Windows.Forms.Button btn_Close;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_Apply;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tb_Height;
+        private System.Windows.Forms.NumericUpDown tb_Width;
+        private System.Windows.Forms.NumericUpDown tb_Height;
     }
 }
