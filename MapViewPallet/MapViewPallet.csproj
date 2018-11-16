@@ -193,5 +193,14 @@
   <ItemGroup>
     <None Include="Resources\phat_straightpath.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-line-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pallet.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

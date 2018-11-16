@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500">
+        Title="MainWindow" Height="450" Width="600">
     <Window.Resources >
         <ContextMenu x:Key="PATH-MENU" Name="pathMenu" >
             <MenuItem Header="Edit" Name="pathEdit"/>
@@ -15,11 +15,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="32"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
-
         <Grid Grid.Row="0" Background="Transparent">
             <DockPanel>
                 <Menu DockPanel.Dock="Top">
@@ -30,208 +29,264 @@
                         <Separator />
                         <MenuItem Header="_Exit" />
                     </MenuItem>
-                    <MenuItem Header="_Help">
+                    <MenuItem Header="_View">
                         <MenuItem Header="_New" />
-                        <MenuItem Header="_Open" />
-                        <MenuItem Header="_Save" />
-                        <Separator />
-                        <MenuItem Header="_Exit" />
                     </MenuItem>
-                    <MenuItem Header="_Map">
+                    <MenuItem Header="_Tools">
                         <MenuItem Header="_Resize" Click="ChangeMapSize"/>
                     </MenuItem>
-                    
                 </Menu>
             </DockPanel>
         </Grid>
-        <Grid Grid.Row="1" Background="AliceBlue">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-            </Grid.RowDefinitions>
-            <ToolBar Grid.Row="0">
-                <Button Name="btn_DrawStraght" BorderBrush="Black"
+        <Border Grid.Row="1" BorderBrush="#B9B9B9" BorderThickness="0,0,0,2">
+            <Grid Background="#F5F5F5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <ToolBar Background="Transparent">
+                        <Button Name="btn_DrawStraght" BorderBrush="Black"
                         BorderThickness="1" Click="btn_DrawStraight_Click" 
                         ToolTip="DrawStraght" Content="Test" Height="25" Margin="2,0,0,0"/>
-                <Button Name="btn_StraightPath" BorderBrush="Black"
+                        <Button Name="btn_StraightPath" BorderBrush="Black"
                               BorderThickness="1" 
                               Click="btn_StraightPath_Click_on"
                               ToolTip="Draw Straight"
                               Margin="2,0,0,0">
-                    <Image Margin="-1" Source="pack://siteoforigin:,,,/Resources/phat_straightpath.png" Stretch="Fill"  />
-                </Button>
-                <Button Name="btn_JoinPath" BorderBrush="Black"
+                            <Image Margin="-2" Source="pack://siteoforigin:,,,/Resources/line.png" Stretch="Fill"  />
+                        </Button>
+                        <Button Name="btn_JoinPath" BorderBrush="Black"
                         BorderThickness="1" Click="btn_JoinPath_Click_on"
                         ToolTip="Draw JoinPath" Margin="2,0,0,0">
-                    <Image Margin="-1" Source="pack://siteoforigin:,,,/Resources/phat_joinpath.png" Stretch="Fill"  />
-                </Button>
-
-                <Button Name="btn_LoadExcel" BorderBrush="Black"
+                            <Image Margin="-1" Source="pack://siteoforigin:,,,/Resources/phat_joinpath.png" Stretch="Fill"  />
+                        </Button>
+                        <Button Name="btn_LoadExcel" BorderBrush="Black"
                         BorderThickness="1" Click="btn_LoadExcel_Click" 
                         ToolTip="LoadExcel" Content="LoadExcel" Margin="2,0,0,0"
                         Height="25"/>
-                
-            </ToolBar>
-            <ToolBar Grid.Row="1">
-                <Button Name="btn_ExtendMap" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_ExtendMap_Click" 
-                        ToolTip="Extend Map" Margin="2,0,0,0">
-                    <Image Margin="-4" Source="pack://siteoforigin:,,,/Resources/phat_mapExtend.png" Stretch="Fill"  />
-                </Button>
-                <Button Name="btn_ShrinkMap" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_ShrinkMap_Click" 
-                        ToolTip="Shrink Map" Margin="2,0,0,0">
-                    <Image Margin="-5" Source="pack://siteoforigin:,,,/Resources/phat_mapShrink.png" Stretch="Fill"  />
-                </Button>
-            </ToolBar>
-        </Grid>
-        <Grid Grid.Row="2" Background="#efefef">
+                    </ToolBar>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <!--OTHER MICS-->
+                </Grid>
 
-            <Border Name="clipBorder" ClipToBounds="True" 
-                    RenderTransformOrigin="0.5,0.5" BorderThickness="1"
-                    BorderBrush="#D9D9D9">
-
-                <Canvas Name="map" RenderTransformOrigin="0.5,0.5" 
-                        Width="492" Height="262">
-                    <Canvas.Background>
-                        <DrawingBrush Viewport="0,0,50,50" ViewportUnits="Absolute" TileMode="Tile" >
-                            <DrawingBrush.Drawing>
-                                <DrawingGroup>
-                                    <DrawingGroup.Children>
-                                        <GeometryDrawing Geometry="M0,0 L50,0">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1.5" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,10 L50,10">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,20 L50,20">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,30 L50,30">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,40 L50,40">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M0,0 L0,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1.5" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M10,0 L10,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M20,0 L20,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M30,0 L30,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                        <GeometryDrawing Geometry="M40,0 L40,50">
-                                            <GeometryDrawing.Pen>
-                                                <Pen Thickness="1" Brush="#D9D9D9" />
-                                            </GeometryDrawing.Pen>
-                                        </GeometryDrawing>
-                                    </DrawingGroup.Children>
-                                </DrawingGroup>
-                            </DrawingBrush.Drawing>
-                        </DrawingBrush>
-                    </Canvas.Background>
-                    <Canvas.Children>
-                        
-                        <!--<Border Canvas.Left="50" Canvas.Top="50" Width="50" Height="50">
-                            <Grid >
-                                <Grid.Children>
-                                    <Ellipse Fill="Blue" Height="10" Width="10" RenderTransformOrigin="1,0">
-                                        <Ellipse.RenderTransform>
-                                            <TransformGroup>
-                                            <RotateTransform Angle="0"></RotateTransform>
-                                            <TranslateTransform X="10" Y="10"></TranslateTransform>
-                                            </TransformGroup>
-                                        </Ellipse.RenderTransform>
-                                    </Ellipse>
-                                    <Path Stroke="#C0000000" StrokeThickness="3">
-                                        <Path.Data>
-                                            <PathGeometry>
-                                                <PathGeometry.Figures>
-                                                    <PathFigure StartPoint="0,25" IsClosed="False">
-                                                        <QuadraticBezierSegment Point1="10,150" Point2="200,20"/>
-                                                        <LineSegment Point="50,25"></LineSegment>
-                                                    </PathFigure>
-                                                </PathGeometry.Figures>
-                                            </PathGeometry>
-                                        </Path.Data>
-                                    </Path>
-                                </Grid.Children>
-                            </Grid>
-                        </Border>-->
-                    </Canvas.Children>
-                    <Canvas.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform x:Name="canvasScaleTransform"/>
-                            <TranslateTransform x:Name="canvasTranslateTransform"/>
-                        </TransformGroup>
-                    </Canvas.RenderTransform>
-                </Canvas>
-                
-            </Border>
-            <Grid Name="Cursorhehe" VerticalAlignment="Bottom">
-                <Label   Name="MouseCoor" Foreground="Red" Content="X:Y" FontSize="12"></Label>
             </Grid>
+        </Border>
+        <Grid Grid.Row="2" Background="#f5f5f5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <!--List Station-->
+                <TreeView Background="#F5F5F5" BorderThickness="0">
+                    <TreeViewItem IsExpanded="True">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="15" Source="pack://siteoforigin:,,,/Resources/pallet.png" Stretch="Fill" />
+                                <TextBlock Text="Robot" />
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                        <TreeViewItem>
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Level 2.1" Foreground="Blue" />
+                                </StackPanel>
+                            </TreeViewItem.Header>
+                        </TreeViewItem>
+                        <TreeViewItem IsExpanded="True">
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="15" Source="pack://siteoforigin:,,,/Resources/pallet.png" Stretch="Fill" />
+                                    <TextBlock Text="Level 2.2 (Green)" Foreground="Blue" />
+                                </StackPanel>
+                            </TreeViewItem.Header>
+                            <TreeViewItem>
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Level 3.1" Foreground="Green" />
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+                            <TreeViewItem>
+                                <TreeViewItem.Header>
+                                    <TextBlock Text="Level 3.2" Foreground="Green" />
+                                </TreeViewItem.Header>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem>
+                            <TreeViewItem.Header>
+                                <TextBlock Text="Level 2.3" Foreground="Blue" />
+                            </TreeViewItem.Header>
+                        </TreeViewItem>
+                    </TreeViewItem>
+                </TreeView>
+            </Grid>
+            <GridSplitter Background="#f5f5f5" Grid.Column="1" Width="2" HorizontalAlignment="Stretch" >
+
+            </GridSplitter>
+            <Border Grid.Column="2" BorderBrush="#B9B9B9" BorderThickness="2,0,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="24"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Name="Cursorhehe" VerticalAlignment="Bottom">
+                            <Label   Name="MouseCoor" Foreground="Red" Content="X:Y" FontSize="12"></Label>
+                        </Grid>
+                        <Border Grid.Column="0" Background="White">
+                            <Grid>
+                                <Border Name="clipBorder" ClipToBounds="True" 
+                                            RenderTransformOrigin="0.5,0.5">
+                                    <Canvas Name="map" RenderTransformOrigin="0.5,0.5" 
+                        Width="400" Height="250" >
+                                        <Canvas.Background>
+                                            <DrawingBrush Viewport="0,0,50,50" ViewportUnits="Absolute" TileMode="Tile" >
+                                                <DrawingBrush.Drawing>
+                                                    <DrawingGroup>
+                                                        <DrawingGroup.Children>
+                                                            <GeometryDrawing Geometry="M0,0 L50,0">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1.5" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                            <GeometryDrawing Geometry="M0,10 L50,10">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                            <GeometryDrawing Geometry="M0,20 L50,20">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                            <GeometryDrawing Geometry="M0,30 L50,30">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                            <GeometryDrawing Geometry="M0,40 L50,40">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                            <GeometryDrawing Geometry="M0,0 L0,50">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1.5" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                            <GeometryDrawing Geometry="M10,0 L10,50">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                            <GeometryDrawing Geometry="M20,0 L20,50">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                            <GeometryDrawing Geometry="M30,0 L30,50">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                            <GeometryDrawing Geometry="M40,0 L40,50">
+                                                                <GeometryDrawing.Pen>
+                                                                    <Pen Thickness="1" Brush="#A9A9A9" />
+                                                                </GeometryDrawing.Pen>
+                                                            </GeometryDrawing>
+                                                        </DrawingGroup.Children>
+                                                    </DrawingGroup>
+                                                </DrawingBrush.Drawing>
+                                            </DrawingBrush>
+                                        </Canvas.Background>
+                                        <Canvas.Children>
+                                        </Canvas.Children>
+                                        <Canvas.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform x:Name="canvasScaleTransform"/>
+                                                <TranslateTransform x:Name="canvasTranslateTransform"/>
+                                            </TransformGroup>
+                                        </Canvas.RenderTransform>
+                                    </Canvas>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <Grid Grid.Column="1">
+                            <Border BorderBrush="#f5f5f5" BorderThickness="1,0,0,0">
+                                <ToolBarTray Background="#f5f5f5" Orientation="Vertical">
+                                    <ToolBar Background="Transparent">
+                                        <Button Name="btn_ExtendMap" BorderBrush="Black"
+                        BorderThickness="1" Click="btn_ExtendMap_Click" 
+                        ToolTip="Extend Map" Margin="0,2,0,0" Width="20" Height="20">
+                                            <Image Margin="-4" Source="pack://siteoforigin:,,,/Resources/phat_mapExtend.png" Stretch="Fill"  />
+                                        </Button>
+                                        <Button Name="btn_ShrinkMap" BorderBrush="Black"
+                        BorderThickness="1" Click="btn_ShrinkMap_Click" 
+                        ToolTip="Shrink Map" Margin="0,2,0,0" Width="20" Height="20">
+                                            <Image Margin="-5" Source="pack://siteoforigin:,,,/Resources/phat_mapShrink.png" Stretch="Fill"  />
+                                        </Button>
+                                    </ToolBar>
+                                </ToolBarTray>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <TabControl Margin="3,5,0,2">
+                            <TabItem Header="Stations">
+                                <DataGrid Name="StationsDataGrid"  
+                                          AutoGenerateColumns="False" 
+                                          BorderBrush="#aaaaaa">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Station Name"/>
+                                        <DataGridTextColumn Header="Line Id"/>
+                                        <DataGridTextColumn Header="Pallets number"/>
+                                        <DataGridTextColumn Header="Material Code"/>
+                                        <DataGridTextColumn Header="Color"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem Header="Orders" >
+                                <DataGrid Name="OrdersDataGrid"  AutoGenerateColumns="False" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Orders Name"/>
+                                        <DataGridTextColumn Header="Orders Id"/>
+                                        <DataGridTextColumn Header="Color"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem Header="Tasks" >
+                                <DataGrid Name="TasksDataGrid"  AutoGenerateColumns="False" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Tasks Name"/>
+                                        <DataGridTextColumn Header="Tasks Id"/>
+                                        <DataGridTextColumn Header="Color"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                    <GridSplitter Background="#B9B9B9" Grid.Row="0"
+                      Height="2" HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Bottom">
+                    </GridSplitter>
+                </Grid>
+            </Border>
         </Grid>
         <Grid Grid.Row="3">
-            <TabControl>
-                <TabItem Header="Stations">
-                    <DataGrid Name="StationsDataGrid"  AutoGenerateColumns="False" >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Station Name"/>
-                            <DataGridTextColumn Header="Line Id"/>
-                            <DataGridTextColumn Header="Pallets number"/>
-                            <DataGridTextColumn Header="Material Code"/>
-                            <DataGridTextColumn Header="Color"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </TabItem>
-                <TabItem Header="Orders" >
-                    <DataGrid Name="OrdersDataGrid"  AutoGenerateColumns="False" >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Orders Name"/>
-                            <DataGridTextColumn Header="Orders Id"/>
-                            <DataGridTextColumn Header="Color"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </TabItem>
-                <TabItem Header="Tasks" >
-                    <DataGrid Name="TasksDataGrid"  AutoGenerateColumns="False" >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Tasks Name"/>
-                            <DataGridTextColumn Header="Tasks Id"/>
-                            <DataGridTextColumn Header="Color"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </TabItem>
-            </TabControl>
-            
+            <Border BorderThickness="0,2,0,0" BorderBrush="#B9B9B9" Margin="1,0,-1,0">
+                <StatusBar Name="sbar" >
+                    <StatusBarItem Background="#F5F5F5">
+                        <TextBlock Name="ProgramStatus" Foreground="Black" FontSize="10">Ready</TextBlock>
+                    </StatusBarItem>
+                </StatusBar>
+            </Border>
         </Grid>
-        <GridSplitter Background="LightGray" Grid.Row="2"
-                      Height="2" HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Bottom"/>
-
     </Grid>
 </Window>

@@ -8,9 +8,8 @@ namespace MapViewPallet.Shape
 {
     public class CurvePath: PathShape
     {
-
-        double rate = 0.3;
-        double t = 0.65;
+        readonly double rate = 0.3;
+        readonly double t = 0.65;
         Point Control;
         BezierSegment bezierSegment;
         bool direction; // true= Up, false = Down

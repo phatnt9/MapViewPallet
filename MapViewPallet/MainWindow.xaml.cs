@@ -170,65 +170,33 @@ namespace MapViewPallet
 
         private void btn_LoadExcel_Click(object sender, RoutedEventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            DataTable data = new DataTable();
+            data = Global_Object.LoadExcelFile();
+            foreach (DataRow row in data.Rows)
             {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 4;
-                openFileDialog.RestoreDirectory = true;
+                PathShape tempPath;
+                double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
+                double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
+                Point ori = new Point(oriX, oriY);
+                double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
+                double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
+                Point des = new Point(desX, desY);
 
-                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                // ... Write value of first field as integer.
+                if (row.Field<string>("TYPE") == "CurvePath")
                 {
-                    //Get the path of specified file
-                    string filePath = openFileDialog.FileName;
-                    Console.WriteLine(filePath);
-                    //Read the contents of the file into a stream
-                    //var fileStream = openFileDialog.OpenFile();
-                    //using (StreamReader reader = new StreamReader(fileStream))
-                    //{
-                    //    string fileContent = reader.ReadToEnd();
-                    //    Console.WriteLine(fileContent);
-                    //}
-                    string name = "Sheet1";
-                    string constr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
-                                    filePath +
-                                    ";Extended Properties='Excel 12.0 XML;HDR=YES;';";
-
-                    OleDbConnection con = new OleDbConnection(constr);
-                    OleDbCommand oconn = new OleDbCommand("Select * From [" + name + "$]", con);
-                    con.Open();
-
-                    OleDbDataAdapter sda = new OleDbDataAdapter(oconn);
-                    DataTable data = new DataTable();
-                    sda.Fill(data);
-                    foreach (DataRow row in data.Rows)
-                    {
-                        PathShape tempPath;
-                        double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
-                        double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
-                        Point ori = new Point(oriX, oriY);
-                        double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
-                        double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
-                        Point des = new Point(desX, desY);
-
-                        // ... Write value of first field as integer.
-                        if (row.Field<string>("TYPE") == "CurvePath")
-                        {
-                            bool Curve = bool.Parse(row.Field<string>("CURVE"));
-                            tempPath = new CurvePath(map, ori, des, Curve);
-
-                        }
-                        else
-                        {
-                            tempPath = new StraightPath(map, ori, des);
-                        }
-                        tempPath.RemoveHandle += palletViewEventControl.PathRemove;
-                        palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
-                    }
-
+                    bool Curve = bool.Parse(row.Field<string>("CURVE"));
+                    tempPath = new CurvePath(map, ori, des, Curve);
                 }
+                else
+                {
+                    tempPath = new StraightPath(map, ori, des);
+                }
+                tempPath.RemoveHandle += palletViewEventControl.PathRemove;
+                palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
             }
         }
+        
 
         private void btn_StraightPath_Click_on(object sender, RoutedEventArgs e)
         {
@@ -255,9 +223,9 @@ namespace MapViewPallet
 
         private void ChangeMapSize(object sender, RoutedEventArgs e)
         {
-            MapResize tempForm = new MapResize(map.Width, map.Height);
-            tempForm.ResizeHandle += CanvasResizeHandle;
-            tempForm.Show();
+            MapResize resizeForm = new MapResize(map.Width, map.Height);
+            resizeForm.ResizeHandle += CanvasResizeHandle;
+            resizeForm.Show();
         }
 
         private void CanvasResizeHandle(double Width, double Height)
@@ -281,8 +249,14 @@ namespace MapViewPallet
 
         private void btn_ShrinkMap_Click(object sender, RoutedEventArgs e)
         {
-            map.Width -= 100;
-            map.Height -= 100;
+            if ((map.Width - 100) > 1)
+            {
+                map.Width -= 100;
+            }
+            if ((map.Height - 100) > 1)
+            {
+                map.Height -= 100;
+            }
         }
     }
 }
