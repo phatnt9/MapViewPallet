@@ -196,7 +196,28 @@ namespace MapViewPallet
                 palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
             }
         }
-        
+
+        private void btn_LoadExcel2_Click(object sender, RoutedEventArgs e)
+        {
+            DataTable data = new DataTable();
+            data = Global_Object.LoadExcelFile();
+            foreach (DataRow row in data.Rows)
+            {
+                StationShape tempStation;
+                double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
+                double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
+                Point ori = new Point(oriX, oriY);
+
+                int lines = int.Parse(row.Field<string>("LINES"));
+                int pallets = int.Parse(row.Field<string>("PALLETS"));
+                tempStation = new StationShape(map,"acb",lines,pallets,"Pallet2");
+                // ... Write value of first field as integer.
+                tempStation.Move(ori);
+                //tempStation.RemoveHandle += palletViewEventControl.PathRemove;
+                //palletViewEventControl.list_Path.Add(tempStation.Name, tempStation);
+            }
+        }
+
 
         private void btn_StraightPath_Click_on(object sender, RoutedEventArgs e)
         {
@@ -257,6 +278,13 @@ namespace MapViewPallet
             {
                 map.Height -= 100;
             }
+        }
+
+        private void btn_AddStation_Click(object sender, RoutedEventArgs e)
+        {
+            drag = false;
+            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._ADD_STATION;
+            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
     }
 }

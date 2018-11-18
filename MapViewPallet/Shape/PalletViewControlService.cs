@@ -336,9 +336,10 @@ namespace MapViewPallet.Shape
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
                         {
                             StationShape stationTemp = null;
-                            stationTemp = new StationShape("MIX" + stationCount, 2, 7, "Pallet2");
+                            stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, "Pallet2");
+                            stationCount++;
                             stationTemp.Move(mousePos);
-                            map.Children.Add(stationTemp);
+                            //map.Children.Add(stationTemp);
                         }
                         break;
                     }
