@@ -14,6 +14,7 @@ namespace MapViewPallet.Shape
         public StraightPath(Canvas canvas, Point Start, Point End) : base(canvas, Start, End)
         {
             lineSegment = new LineSegment();
+            lineSegment.IsStroked = true;
             Name = "StraightPathx" + Global_Mouse.EncodeTransmissionTimestamp();
             props.name = Name;
             props._shape.Name = Name;
@@ -21,17 +22,17 @@ namespace MapViewPallet.Shape
             props._pointTail.Name = Name;
             props._arrow.Name = Name;
             RenderTransformOrigin = new Point(0, 0.5);
+            Height = 20;
+            props._start.X = 0;
+            props._start.Y = (Height / 2);
+            props._end.Y = (Height / 2);
             Draw();
         }
         
         public override void Draw()
         {
             Width = Global_Object.LengthBetweenPoints(props._oriMousePos, props._desMousePos);
-            Height = 20;
-            props._start.X = 0;
-            props._start.Y = (Height / 2) ;
             props._end.X = Width;
-            props._end.Y = (Height / 2) ;
             //Rotate param
             props.xDiff = props._desMousePos.X - props._oriMousePos.X;
             props.yDiff = props._desMousePos.Y - props._oriMousePos.Y;
@@ -43,14 +44,12 @@ namespace MapViewPallet.Shape
             props._pointTail.RenderTransform = new TranslateTransform((Width / 2), 0);
             //Arrow show direction
             //3 Point of Triangle
-            PointCollection points = new PointCollection(3);
-            points.Add(new Point(props._middle.X - props.sizeArrow, props._middle.Y - props.sizeArrow));
-            points.Add(new Point(props._middle.X - props.sizeArrow, props._middle.Y + props.sizeArrow));
-            points.Add(new Point(props._middle.X + props.sizeArrow + 1, props._middle.Y));
-            props._arrow.Points = points;
+            props.points[0] = (new Point(props._middle.X - props.sizeArrow, props._middle.Y - props.sizeArrow));
+            props.points[1] = (new Point(props._middle.X - props.sizeArrow, props._middle.Y + props.sizeArrow));
+            props.points[2] = (new Point(props._middle.X + props.sizeArrow + 1, props._middle.Y));
+            props._arrow.Points = props.points;
             //Position the Path
             lineSegment.Point = props._end;
-            lineSegment.IsStroked = true;
             if(props.pathSegments.Count>0)
             {
                 props.pathSegments[0] = lineSegment;
@@ -63,39 +62,6 @@ namespace MapViewPallet.Shape
 
             //Render Path
             double angle = (Math.Atan2(props.yDiff, props.xDiff) * 180.0 / Math.PI);
-            //switch (angle)
-            //{
-            //    case double n when (n >= -22.5 && n < 22.5):
-            //        {
-            //            props.rotate = 0;
-            //            break;
-            //        }
-            //    case double n when (Math.Abs(n) >= 22.5 && Math.Abs(n) < 67.5): //1
-            //        {
-            //            props.rotate = Math.Sign(n) * 45;
-            //            break;
-            //        }
-            //    case double n when (Math.Abs(n) >= 67.5 && Math.Abs(n) < 112.5)://2
-            //        {
-            //            props.rotate = Math.Sign(angle) * 90;
-            //            break;
-            //        }
-            //    case double n when (Math.Abs(n) >= 112.5 && Math.Abs(n) < 157.5)://3
-            //        {
-            //            props.rotate = Math.Sign(angle) * 135;
-            //            break;
-            //        }
-            //    case double n when ((Math.Abs(n) >= 157.5 && (Math.Abs(n) <= 180))):
-            //        {
-            //            props.rotate = 180;
-            //            break;
-            //        }
-            //    default:
-            //        {
-            //            props.rotate = 45;
-            //            break;
-            //        }
-            //}
             props.rotate = angle;
             props.myRotateTransform.Angle = props.rotate;
             props.myTranslate = new TranslateTransform(props._oriMousePos.X, props._oriMousePos.Y - (Height/2));

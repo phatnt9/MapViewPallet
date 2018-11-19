@@ -21,6 +21,8 @@ namespace MapViewPallet
     public partial class MainWindow : Window
     {
         //=================VARIABLE==================
+        public Point renderTransformOrigin = new Point(0, 0);
+
         public bool drag = true;
         bool play = false;
         Point transform = new Point(0, 0);
@@ -33,10 +35,10 @@ namespace MapViewPallet
         public MainWindow()
         {
             InitializeComponent();
-            //ImageBrush img = LoadImage("mapbackground");
-            //map.Width = img.ImageSource.Width;
-            //map.Height = img.ImageSource.Height;
-            //map.Background = img;
+            ImageBrush img = LoadImage("Map");
+            map.Width = img.ImageSource.Width;
+            map.Height = img.ImageSource.Height;
+            map.Background = img;
             palletViewEventControl = new PalletViewControlService(this);
             //btn_AddRect.Background = LoadImage("Pallet0");
             //btn_moverect.Background = LoadImage("Pallet1");
@@ -156,66 +158,65 @@ namespace MapViewPallet
             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_P1;
             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
-
-        private void pathEdit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void pathRemove_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
         
 
         private void btn_LoadExcel_Click(object sender, RoutedEventArgs e)
         {
-            DataTable data = new DataTable();
-            data = Global_Object.LoadExcelFile();
-            foreach (DataRow row in data.Rows)
+            try
             {
-                PathShape tempPath;
-                double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
-                double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
-                Point ori = new Point(oriX, oriY);
-                double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
-                double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
-                Point des = new Point(desX, desY);
+                DataTable data = new DataTable();
+                data = Global_Object.LoadExcelFile();
+                foreach (DataRow row in data.Rows)
+                {
+                    PathShape tempPath;
+                    double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
+                    double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
+                    Point ori = new Point(oriX, oriY);
+                    double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
+                    double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
+                    Point des = new Point(desX, desY);
 
-                // ... Write value of first field as integer.
-                if (row.Field<string>("TYPE") == "CurvePath")
-                {
-                    bool Curve = bool.Parse(row.Field<string>("CURVE"));
-                    tempPath = new CurvePath(map, ori, des, Curve);
+                    // ... Write value of first field as integer.
+                    if (row.Field<string>("TYPE") == "CurvePath")
+                    {
+                        bool Curve = bool.Parse(row.Field<string>("CURVE"));
+                        tempPath = new CurvePath(map, ori, des, Curve);
+                    }
+                    else
+                    {
+                        tempPath = new StraightPath(map, ori, des);
+                    }
+                    tempPath.RemoveHandle += palletViewEventControl.PathRemove;
+                    palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
                 }
-                else
-                {
-                    tempPath = new StraightPath(map, ori, des);
-                }
-                tempPath.RemoveHandle += palletViewEventControl.PathRemove;
-                palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
             }
+            catch { }
         }
 
         private void btn_LoadExcel2_Click(object sender, RoutedEventArgs e)
         {
-            DataTable data = new DataTable();
-            data = Global_Object.LoadExcelFile();
-            foreach (DataRow row in data.Rows)
+            try
             {
-                StationShape tempStation;
-                double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
-                double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
-                Point ori = new Point(oriX, oriY);
+                DataTable data = new DataTable();
+                data = Global_Object.LoadExcelFile();
+                foreach (DataRow row in data.Rows)
+                {
+                    StationShape tempStation;
+                    double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
+                    double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
+                    Point ori = new Point(-50,-50);
 
-                int lines = int.Parse(row.Field<string>("LINES"));
-                int pallets = int.Parse(row.Field<string>("PALLETS"));
-                tempStation = new StationShape(map,"acb",lines,pallets,"Pallet2");
-                // ... Write value of first field as integer.
-                tempStation.Move(ori);
-                //tempStation.RemoveHandle += palletViewEventControl.PathRemove;
-                //palletViewEventControl.list_Path.Add(tempStation.Name, tempStation);
+                    int lines = int.Parse(row.Field<string>("LINES"));
+                    int pallets = int.Parse(row.Field<string>("PALLETS"));
+                    tempStation = new StationShape(map, "acb", lines, pallets, "Pallet2");
+                    // ... Write value of first field as integer.
+                    tempStation.ReDraw(ori);
+                    tempStation.RemoveHandle += palletViewEventControl.StationRemove;
+                    palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
+                }
             }
+            catch { }
         }
 
 
@@ -244,9 +245,9 @@ namespace MapViewPallet
 
         private void ChangeMapSize(object sender, RoutedEventArgs e)
         {
-            MapResize resizeForm = new MapResize(map.Width, map.Height);
-            resizeForm.ResizeHandle += CanvasResizeHandle;
-            resizeForm.Show();
+            //MapResize resizeForm = new MapResize(map.Width, map.Height);
+            //resizeForm.ResizeHandle += CanvasResizeHandle;
+            //resizeForm.Show();
         }
 
         private void CanvasResizeHandle(double Width, double Height)
@@ -264,20 +265,20 @@ namespace MapViewPallet
 
         private void btn_ExtendMap_Click(object sender, RoutedEventArgs e)
         {
-            map.Width += 100;
-            map.Height += 100;
+            //map.Width += 100;
+            //map.Height += 100;
         }
 
         private void btn_ShrinkMap_Click(object sender, RoutedEventArgs e)
         {
-            if ((map.Width - 100) > 1)
-            {
-                map.Width -= 100;
-            }
-            if ((map.Height - 100) > 1)
-            {
-                map.Height -= 100;
-            }
+            //if ((map.Width - 100) > 1)
+            //{
+            //    map.Width -= 100;
+            //}
+            //if ((map.Height - 100) > 1)
+            //{
+            //    map.Height -= 100;
+            //}
         }
 
         private void btn_AddStation_Click(object sender, RoutedEventArgs e)
@@ -286,5 +287,10 @@ namespace MapViewPallet
             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._ADD_STATION;
             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
+
+        
+
+
     }
+
 }

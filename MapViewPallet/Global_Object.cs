@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 
 namespace MapViewPallet
 {
     public static class Global_Object
     {
+        //public static Point OriginPoint = new Point()
         public static DataTable LoadExcelFile()
         {
             DataTable data = new DataTable();
@@ -49,6 +51,8 @@ namespace MapViewPallet
                 return data;
             }
         }
+
+        public static double resolution = 0.1; // Square meters per pixel
         public static string Foo<T>(T parameter) { return typeof(T).Name; }
         public static double palletWidth = 13;
         public static double palletHeight = 15;

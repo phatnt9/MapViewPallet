@@ -56,11 +56,10 @@ namespace MapViewPallet.Shape
             props._pointHead.RenderTransform = new TranslateTransform(-Width / 2, Height / 2);
             //Arrow show direction
             //3 Point of Triangle
-            PointCollection points = new PointCollection(3);
-            points.Add(new Point(props._middle.X - props.sizeArrow, props._middle.Y - props.sizeArrow));
-            points.Add(new Point(props._middle.X - props.sizeArrow, props._middle.Y + props.sizeArrow));
-            points.Add(new Point(props._middle.X + props.sizeArrow + 1, props._middle.Y));
-            props._arrow.Points = points;
+            props.points[0] = (new Point(props._middle.X - props.sizeArrow, props._middle.Y - props.sizeArrow));
+            props.points[1] = (new Point(props._middle.X - props.sizeArrow, props._middle.Y + props.sizeArrow));
+            props.points[2] = (new Point(props._middle.X + props.sizeArrow + 1, props._middle.Y));
+            props._arrow.Points = props.points;
             //Position the Path
             bezierSegment.Point1 = props._start;
             bezierSegment.Point2 = Control;

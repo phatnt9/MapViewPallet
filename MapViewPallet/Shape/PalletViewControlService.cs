@@ -34,7 +34,7 @@ namespace MapViewPallet.Shape
         //---------------OBJECT-------------------
         public SortedDictionary<string, PathShape> list_Path;
         public SortedDictionary<string, StationShape> list_Station;
-        double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
+        //double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
         //---------------MICS-------------------
         //private Ellipse cursorPoint = new Ellipse();
         //======================MAP======================
@@ -178,7 +178,10 @@ namespace MapViewPallet.Shape
             Point mousePos = e.GetPosition(map);
             var mouseWasDownOn = (e.Source as FrameworkElement);
             hoveringItemName = mouseWasDownOn.Name;
-            mainWindow.MouseCoor.Content = mousePos.X.ToString("0.0") + " " + mousePos.Y.ToString("0.0");
+            double transX = map.Width * 0.5;
+            double transY = map.Height * 0.5;
+            //mainWindow.MouseCoor.Content = (transX-mousePos.X).ToString("0.0") + " " + (transY-mousePos.Y).ToString("0.0");
+            mainWindow.MouseCoor.Content = (mousePos.X- transX ).ToString("0.0") + " " + (transY-mousePos.Y ).ToString("0.0");
             //
             // POINT OF VIEW
             //
@@ -473,6 +476,15 @@ namespace MapViewPallet.Shape
             {
                 list_Path.Remove(name);
                 Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
+            }
+        }
+
+        public void StationRemove(string name)
+        {
+            if (list_Station.ContainsKey(name))
+            {
+                list_Station.Remove(name);
+                Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Station.Count);
             }
         }
 

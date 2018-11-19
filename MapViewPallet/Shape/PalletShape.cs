@@ -15,42 +15,34 @@ namespace MapViewPallet.Shape
 {
     class PalletShape : Border
     {
+        private double palletWidth = 1.2; //metters
+        private double palletHeight = 1; //metters
+        private double palletMargin = 0.1; //metters
+
         public PalletShape(string typePallet)
         {
-            Width = Global_Object.palletWidth;
-            Height = Global_Object.palletHeight;
-            Margin = new Thickness(2);
+            // Specific Size of Pallet
+            Width = palletWidth / Global_Object.resolution; //in pixel
+            Height = palletHeight / Global_Object.resolution; //in pixel
+            Margin = new Thickness(palletMargin / Global_Object.resolution);
+            // Style Pallet
             BorderBrush = new SolidColorBrush(Colors.Green);
             BorderThickness = new Thickness(0);
+            // Background for Pallet
             Bitmap bmp = (Bitmap)MapViewPallet.Properties.Resources.ResourceManager.GetObject(typePallet);
             ImageBrush img = new ImageBrush();
             img.ImageSource = ImageSourceForBitmap(bmp);
             Background = img;
-            this.MouseDown += PalletMouseDown;
+            // Event handler
+            MouseDown += PalletMouseDown;
         }
 
         private void PalletMouseDown(object sender, MouseButtonEventArgs e)
         {
         }
-
-        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        //\\\\\\\\\\\\Action\\\\\\\\\\\\\\\\\\
-        public void Move(double X, double Y)
-        {
-            TranslateTransform a = new TranslateTransform(X, Y);
-            RotateTransform b = new RotateTransform(45);
-            TransformGroup myTransformGroup = new TransformGroup();
-            myTransformGroup.Children.Add(a);
-            //myTransformGroup.Children.Add(b);
-            RenderTransform = myTransformGroup;
-        }
-        public void ChangeSize(int size)
-        {
-            Width = size;
-            Height = size;
-        }
+        
+        //\\\\\\\\\\\\Action\\\\\\\\\\\\\\\
+       
         //\\\\\\\\\\\\Others\\\\\\\\\\\\\\\
         private ImageSource ImageSourceForBitmap(Bitmap bmp)
         {

@@ -144,15 +144,16 @@
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="24"/>
                         </Grid.ColumnDefinitions>
-                        <Grid  Name="Cursorhehe" VerticalAlignment="Bottom">
-                            <Label   Name="MouseCoor" Foreground="Red" Content="X:Y" FontSize="12"></Label>
-                        </Grid>
-                        <Border Grid.Column="0" Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="24"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0" Background="White">
                             <Grid>
                                 <Border Name="clipBorder" ClipToBounds="True" 
                                             RenderTransformOrigin="0.5,0.5">
                                     <Canvas Name="map" RenderTransformOrigin="0.5,0.5" 
-                        Width="400" Height="250" >
+                        Width="400" Height="230" >
                                         <Canvas.Background>
                                             <DrawingBrush Viewport="0,0,50,50" ViewportUnits="Absolute" TileMode="Tile" >
                                                 <DrawingBrush.Drawing>
@@ -214,6 +215,49 @@
                                             </DrawingBrush>
                                         </Canvas.Background>
                                         <Canvas.Children>
+                                            <Border BorderBrush="Red" BorderThickness="0.1" RenderTransformOrigin="0.5,0.5">                                                
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1"/>
+                                                        <ColumnDefinition Width="1"/>
+                                                        <ColumnDefinition Width="1"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="1"/>
+                                                        <RowDefinition Height="1"/>
+                                                        <RowDefinition Height="1"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Border Padding="0" Grid.Column="0" Grid.Row="0">
+                                                        <Rectangle Fill="Blue"></Rectangle>
+                                                    </Border>
+                                                    <Border Padding="0" Grid.Column="0" Grid.Row="1">
+                                                        <Rectangle Fill="Blue"></Rectangle>
+                                                    </Border>
+                                                    <Border Padding="0" Grid.Column="0" Grid.Row="2">
+                                                        <Rectangle Fill="Blue"></Rectangle>
+                                                    </Border>
+                                                    <Border Padding="0" Grid.Column="1" Grid.Row="0">
+                                                        <Rectangle Fill="Blue"></Rectangle>
+                                                    </Border>
+                                                    <Border Padding="0" Grid.Column="1" Grid.Row="1">
+                                                        <Rectangle Fill="Blue"></Rectangle>
+                                                    </Border>
+                                                    <Border Padding="0" Grid.Column="1" Grid.Row="2">
+                                                        <Rectangle Fill="Blue"></Rectangle>
+                                                    </Border>
+                                                    <Border Padding="0" Grid.Column="2" Grid.Row="0">
+                                                        <Rectangle Fill="Blue"></Rectangle>
+                                                    </Border>
+                                                    <Border Padding="0" Grid.Column="2" Grid.Row="1">
+                                                        <Rectangle Fill="Blue"></Rectangle>
+                                                    </Border>
+                                                    <Border Padding="0" Grid.Column="2" Grid.Row="2">
+                                                        <Rectangle Fill="Blue"></Rectangle>
+                                                    </Border>
+                                                    
+                                                </Grid>
+                                            </Border>
+                                            <!--<Line X1="-100" X2="100" Y1="-100" Y2="100" Stroke="Black" Width="161" Height="140" Canvas.Left="46" Canvas.Top="70" />-->
                                         </Canvas.Children>
                                         <Canvas.RenderTransform>
                                             <TransformGroup>
@@ -225,8 +269,7 @@
                                 </Border>
                             </Grid>
                         </Border>
-
-                        <Grid Grid.Column="1">
+                        <Grid Grid.Row="0" Grid.Column="1">
                             <Border BorderBrush="#f5f5f5" BorderThickness="1,0,0,0">
                                 <ToolBarTray Background="#f5f5f5" Orientation="Vertical">
                                     <ToolBar Background="Transparent">
@@ -243,6 +286,11 @@
                                     </ToolBar>
                                 </ToolBarTray>
                             </Border>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Grid Name="Cursorhehe" VerticalAlignment="Bottom">
+                                <Label Name="MouseCoor" Foreground="Black" Content="X:Y" FontSize="11"></Label>
+                            </Grid>
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="1">

@@ -39,6 +39,7 @@ namespace MapViewPallet.Shape
             public TranslateTransform myTranslate;
             public TransformGroup myTransformGroup;
             public RotateTransform myRotateTransform;
+            public PointCollection points;
             public List<Point> eightCorner;
 
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
@@ -139,7 +140,11 @@ namespace MapViewPallet.Shape
             MouseLeftButtonDown += MouseLeftButtonDownPath;
             MouseRightButtonDown += MouseRightButtonDownPath;
             //===================CREATE=====================
-            PointCollection points = new PointCollection(3);
+            props.points = new PointCollection(3);
+            for (int i=0;i<3;i++)
+            {
+                props.points.Add(new Point());
+            }
             props._oriMousePos = new Point(Start.X, Start.Y);
             props._desMousePos = new Point(End.X,End.Y);
             props._shape = new Path();
