@@ -174,6 +174,7 @@ namespace MapViewPallet.Shape
             Global_Object.OriginPoint.X = map.Width * 0.5;
             Global_Object.OriginPoint.Y = map.Height * 0.5;
             mainWindow.rect.RenderTransform = new TranslateTransform(Global_Object.OriginPoint.X, Global_Object.OriginPoint.Y);
+            mainWindow.robot.RenderTransform = new TranslateTransform(Global_Object.OriginPoint.X, Global_Object.OriginPoint.Y);
             Point backGroundTransform = Global_Object.LaserOriginalCoor;
             double X = Global_Object.OriginPoint.X - backGroundTransform.X;
             double Y = Global_Object.OriginPoint.Y - backGroundTransform.Y;
