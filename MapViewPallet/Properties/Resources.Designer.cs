@@ -61,12 +61,12 @@ namespace MapViewPallet.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Bitmap line {
+        internal static System.Drawing.Icon bobo {
             get {
-                object obj = ResourceManager.GetObject("line", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("bobo", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -263,9 +263,9 @@ namespace MapViewPallet.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Robot2 {
+        internal static System.Drawing.Bitmap Robotpixel {
             get {
-                object obj = ResourceManager.GetObject("Robot2", resourceCulture);
+                object obj = ResourceManager.GetObject("Robotpixel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,9 +273,9 @@ namespace MapViewPallet.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Robotpixel {
+        internal static System.Drawing.Bitmap ssss {
             get {
-                object obj = ResourceManager.GetObject("Robotpixel", resourceCulture);
+                object obj = ResourceManager.GetObject("ssss", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

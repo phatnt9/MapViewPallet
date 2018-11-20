@@ -215,11 +215,9 @@
                                             </DrawingBrush>
                                         </Canvas.Background>
                                         <Canvas.Children>
-                                            <Rectangle x:Name="rect" Fill="Red" Width="1" Height="1">
-                                                
-                                            </Rectangle>
+                                            <Rectangle x:Name="rect" Fill="Red" Width="1" Height="1"/>
                                             <Border x:Name="robot">
-                                                <Image Source="pack://siteoforigin:,,,/Resources/Robot2.png"/>
+                                                <Image  Source="pack://siteoforigin:,,,/Resources/ssss.png"/>
                                             </Border>
                                             <!--<Path Stroke="Black" Data="M 0 4 L 16 4 L 10 0 M 16 4 L 10 8" />-->
                                             <!--<Button MinWidth="100">Click

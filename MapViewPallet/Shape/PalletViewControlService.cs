@@ -188,7 +188,7 @@ namespace MapViewPallet.Shape
             var mouseWasDownOn = (e.Source as FrameworkElement);
             hoveringItemName = mouseWasDownOn.Name;
             //mainWindow.MouseCoor.Content = (mousePos.X- Global_Object.OriginPoint.X).ToString("0.0") + " " + (Global_Object.OriginPoint.Y - mousePos.Y ).ToString("0.0");
-            mainWindow.MouseCoor.Content = (Global_Object.CoorLaser(mousePos).X.ToString("0.0") + " " + Global_Object.CoorLaser(mousePos).Y.ToString("0.0"));
+            mainWindow.MouseCoor.Content = (Global_Object.CoorLaser(mousePos).X * Global_Object.resolution).ToString("0.0") + " " + (Global_Object.CoorLaser(mousePos).Y * Global_Object.resolution).ToString("0.0");
             //mainWindow.MouseCoor.Content = ((mousePos).X.ToString("0.0") + " " + (mousePos).Y.ToString("0.0"));
 
             Console.WriteLine("============================================");
@@ -352,7 +352,7 @@ namespace MapViewPallet.Shape
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
                         {
                             StationShape stationTemp = null;
-                            stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, "Pallet2");
+                            stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0, "Pallet2");
                             stationCount++;
                             stationTemp.Move(mousePos);
                             //map.Children.Add(stationTemp);

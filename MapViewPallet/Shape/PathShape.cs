@@ -119,7 +119,7 @@ namespace MapViewPallet.Shape
         {
             ToolTip = "";
             ToolTipOpening += ChangeToolTipContent;
-            props.sizeArrow = 3;
+            props.sizeArrow = 1;
             props.coorStep = 10;
             props.isSelected = false;
             props.isHovering = false;
@@ -163,8 +163,8 @@ namespace MapViewPallet.Shape
             Background = new SolidColorBrush(Colors.Transparent);
             BorderBrush = new SolidColorBrush(Colors.Transparent);
             BorderThickness = new Thickness(0.1);
-            props._pointHead.Width = props._pointTail.Width = 6;
-            props._pointHead.Height = props._pointTail.Height = 6;
+            props._pointHead.Width = props._pointTail.Width = 2;
+            props._pointHead.Height = props._pointTail.Height = 2;
             props._pointHead.Fill = new SolidColorBrush(Colors.Red);
             props._pointTail.Fill = new SolidColorBrush(Colors.Red);
             props._pointHead.Visibility = Visibility.Hidden;

@@ -37,6 +37,7 @@ namespace MapViewPallet
             InitializeComponent();
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
             ImageBrush img = LoadImage("Map");
+            
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
@@ -171,12 +172,12 @@ namespace MapViewPallet
                 foreach (DataRow row in data.Rows)
                 {
                     PathShape tempPath;
-                    double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
-                    double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
+                    double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]) / Global_Object.resolution;
+                    double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]) / Global_Object.resolution;
                     Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
 
-                    double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
-                    double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
+                    double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]) / Global_Object.resolution;
+                    double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]) / Global_Object.resolution;
                     Point des = Global_Object.CoorCanvas(new Point(desX, desY));
 
                     // ... Write value of first field as integer.
@@ -205,13 +206,14 @@ namespace MapViewPallet
                 foreach (DataRow row in data.Rows)
                 {
                     StationShape tempStation;
-                    double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
-                    double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
+                    double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]) / Global_Object.resolution;
+                    double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]) / Global_Object.resolution;
                     Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
 
                     int lines = int.Parse(row.Field<string>("LINES"));
                     int pallets = int.Parse(row.Field<string>("PALLETS"));
-                    tempStation = new StationShape(map, "acb", lines, pallets, "Pallet2");
+                    double rotate = double.Parse(row.Field<string>("ROTATE"));
+                    tempStation = new StationShape(map, "acb", lines, pallets, rotate, "Pallet2");
                     // ... Write value of first field as integer.
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;

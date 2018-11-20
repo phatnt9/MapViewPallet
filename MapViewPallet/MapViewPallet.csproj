@@ -214,5 +214,14 @@
   <ItemGroup>
     <None Include="Resources\Robot2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Resources\Robotnew.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bobo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Resources\ssss.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

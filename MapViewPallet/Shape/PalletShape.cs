@@ -15,9 +15,10 @@ namespace MapViewPallet.Shape
 {
     class PalletShape : Border
     {
-        private double palletWidth = 1.2; //metters
-        private double palletHeight = 1; //metters
+        private double palletWidth = 1; //metters
+        private double palletHeight = 1.2; //metters
         private double palletMargin = 0.1; //metters
+        //private double palletPadding = 0.5; //metters
 
         public PalletShape(string typePallet)
         {
@@ -25,6 +26,7 @@ namespace MapViewPallet.Shape
             Width = palletWidth / Global_Object.resolution; //in pixel
             Height = palletHeight / Global_Object.resolution; //in pixel
             Margin = new Thickness(palletMargin / Global_Object.resolution);
+            //Padding = new Thickness(palletPadding / Global_Object.resolution);
             // Style Pallet
             BorderBrush = new SolidColorBrush(Colors.Green);
             BorderThickness = new Thickness(0);
