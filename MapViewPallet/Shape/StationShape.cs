@@ -41,10 +41,15 @@ namespace MapViewPallet.Shape
             editItem.Header = "Edit";
             editItem.Click += EditMenu;
             //===================================
+            MenuItem rotateItem = new MenuItem();
+            rotateItem.Header = "Rotate";
+            rotateItem.Click += RotateMenu;
+            //===================================
             MenuItem removeItem = new MenuItem();
             removeItem.Header = "Remove";
             removeItem.Click += RemoveMenu;
             ContextMenu.Items.Add(editItem);
+            ContextMenu.Items.Add(rotateItem);
             ContextMenu.Items.Add(removeItem);
             //====================EVENT=====================
             //MouseLeave += MouseLeaveStation;
@@ -125,6 +130,15 @@ namespace MapViewPallet.Shape
         private void EditMenu(object sender, RoutedEventArgs e)
         {
             stationProperties.ShowDialog();
+        }
+        private void RotateMenu(object sender, RoutedEventArgs e)
+        {
+            double rotate = props.rotate * Math.PI / 180.0;
+            rotate = (rotate + (Math.PI / 2));
+            props.rotate = (rotate * 180.0 / Math.PI);
+            props.myRotateTransform.Angle = props.rotate;
+            props.myTransformGroup.Children[0] = props.myRotateTransform;
+            RenderTransform = props.myTransformGroup;
         }
 
         private void RemoveMenu(object sender, RoutedEventArgs e)

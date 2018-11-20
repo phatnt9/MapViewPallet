@@ -124,6 +124,7 @@ namespace MapViewPallet.Shape
 
         private void ClipBorder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            Console.WriteLine("ClipBorder_SizeChanged");
             ReCenterMapCanvas();
         }
         private void Map_MouseDown(object sender, MouseButtonEventArgs e)
@@ -170,6 +171,13 @@ namespace MapViewPallet.Shape
         }
         private void Map_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            Global_Object.OriginPoint.X = map.Width * 0.5;
+            Global_Object.OriginPoint.Y = map.Height * 0.5;
+            mainWindow.rect.RenderTransform = new TranslateTransform(Global_Object.OriginPoint.X, Global_Object.OriginPoint.Y);
+            Point backGroundTransform = Global_Object.LaserOriginalCoor;
+            double X = Global_Object.OriginPoint.X - backGroundTransform.X;
+            double Y = Global_Object.OriginPoint.Y - backGroundTransform.Y;
+            map.Background.Transform = new TranslateTransform(X, Y);
             ReCenterMapCanvas();
         }
         private void Map_MouseMove(object sender, MouseEventArgs e)
@@ -178,10 +186,14 @@ namespace MapViewPallet.Shape
             Point mousePos = e.GetPosition(map);
             var mouseWasDownOn = (e.Source as FrameworkElement);
             hoveringItemName = mouseWasDownOn.Name;
-            double transX = map.Width * 0.5;
-            double transY = map.Height * 0.5;
-            //mainWindow.MouseCoor.Content = (transX-mousePos.X).ToString("0.0") + " " + (transY-mousePos.Y).ToString("0.0");
-            mainWindow.MouseCoor.Content = (mousePos.X- transX ).ToString("0.0") + " " + (transY-mousePos.Y ).ToString("0.0");
+            //mainWindow.MouseCoor.Content = (mousePos.X- Global_Object.OriginPoint.X).ToString("0.0") + " " + (Global_Object.OriginPoint.Y - mousePos.Y ).ToString("0.0");
+            mainWindow.MouseCoor.Content = (Global_Object.CoorLaser(mousePos).X.ToString("0.0") + " " + Global_Object.CoorLaser(mousePos).Y.ToString("0.0"));
+            //mainWindow.MouseCoor.Content = ((mousePos).X.ToString("0.0") + " " + (mousePos).Y.ToString("0.0"));
+
+            Console.WriteLine("============================================");
+            Console.WriteLine("MousePos:  (" + mousePos.X + "," + mousePos.Y + ")");
+            Console.WriteLine("CoorLaser:  (" + Global_Object.CoorLaser(mousePos).X.ToString("0.0") + "," + Global_Object.CoorLaser(mousePos).Y.ToString("0.0")+")");
+            Console.WriteLine("CoorCanvas:  ("+ Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).X.ToString("0.0") + "," + Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).Y.ToString("0.0") + ")");
             //
             // POINT OF VIEW
             //

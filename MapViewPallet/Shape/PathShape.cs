@@ -87,11 +87,11 @@ namespace MapViewPallet.Shape
             {
                 get
                 {
-                    return _oriMousePos;
+                    return Global_Object.CoorLaser(_oriMousePos);
                 }
                 set
                 {
-                    _oriMousePos = value;
+                    _oriMousePos = Global_Object.CoorCanvas(value);
                 }
             }
 
@@ -100,11 +100,11 @@ namespace MapViewPallet.Shape
             {
                 get
                 {
-                    return _desMousePos;
+                    return Global_Object.CoorLaser(_desMousePos);
                 }
                 set
                 {
-                    _desMousePos = value;
+                    _desMousePos = Global_Object.CoorCanvas(value);
                 }
             }
             
@@ -145,8 +145,8 @@ namespace MapViewPallet.Shape
             {
                 props.points.Add(new Point());
             }
-            props._oriMousePos = new Point(Start.X, Start.Y);
-            props._desMousePos = new Point(End.X,End.Y);
+            props._oriMousePos = new Point(Start.X,Start.Y);
+            props._desMousePos = new Point(End.X, End.Y);
             props._shape = new Path();
             props._pointHead = new Ellipse();
             props._pointTail = new Ellipse();

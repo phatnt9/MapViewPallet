@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MapViewPallet"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="600">
-    <Window.Resources >
+    <Window.Resources>
         <ContextMenu x:Key="PATH-MENU" Name="pathMenu" >
             <MenuItem Header="Edit" Name="pathEdit"/>
             <MenuItem Header="Remove" Name="pathRemove"/>
@@ -215,7 +215,23 @@
                                             </DrawingBrush>
                                         </Canvas.Background>
                                         <Canvas.Children>
-                                            <Border BorderBrush="Red" BorderThickness="0.1" RenderTransformOrigin="0.5,0.5">                                                
+                                            <Rectangle x:Name="rect" Fill="Red" Width="1" Height="1">
+                                                
+                                            </Rectangle>
+                                            <!--<Path Stroke="Black" Data="M 0 4 L 16 4 L 10 0 M 16 4 L 10 8" />-->
+                                            <!--<Button MinWidth="100">Click
+                                                <Button.RenderTransform>
+                                                    <MatrixTransform x:Name="myMatrixTransform">
+                                                        <MatrixTransform.Matrix >
+
+                                                             --><!--OffsetX and OffsetY specify the position of the button,
+              M11 stretches it, and M12 skews it.--><!-- 
+                                                            <Matrix OffsetX="10" OffsetY="100" M11="1" M12="0" M21="0" M22="-1"/>
+                                                        </MatrixTransform.Matrix>
+                                                    </MatrixTransform>
+                                                </Button.RenderTransform>
+                                            </Button>-->
+                                            <!--<Border BorderBrush="Red" BorderThickness="0.1" RenderTransformOrigin="0.5,0.5">                                                
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="1"/>
@@ -256,11 +272,12 @@
                                                     </Border>
                                                     
                                                 </Grid>
-                                            </Border>
+                                            </Border>-->
                                             <!--<Line X1="-100" X2="100" Y1="-100" Y2="100" Stroke="Black" Width="161" Height="140" Canvas.Left="46" Canvas.Top="70" />-->
                                         </Canvas.Children>
                                         <Canvas.RenderTransform>
                                             <TransformGroup>
+                                                <MatrixTransform x:Name="canvasMatrixTransform" Matrix="1,0,0,1,0,0"/>
                                                 <ScaleTransform x:Name="canvasScaleTransform"/>
                                                 <TranslateTransform x:Name="canvasTranslateTransform"/>
                                             </TransformGroup>

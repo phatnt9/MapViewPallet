@@ -28,13 +28,14 @@ namespace MapViewPallet
         Point transform = new Point(0, 0);
         private PalletViewControlService palletViewEventControl;
         System.Media.SoundPlayer snd;
-        public event Action<double, double> LoadMapSizeHandle;
+        //public event Action<double, double> LoadMapSizeHandle;
         //=================METHOD==================
 
 
         public MainWindow()
         {
             InitializeComponent();
+            canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
             ImageBrush img = LoadImage("Map");
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
@@ -172,10 +173,11 @@ namespace MapViewPallet
                     PathShape tempPath;
                     double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
                     double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
-                    Point ori = new Point(oriX, oriY);
+                    Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
+
                     double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
                     double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
-                    Point des = new Point(desX, desY);
+                    Point des = Global_Object.CoorCanvas(new Point(desX, desY));
 
                     // ... Write value of first field as integer.
                     if (row.Field<string>("TYPE") == "CurvePath")
@@ -205,7 +207,7 @@ namespace MapViewPallet
                     StationShape tempStation;
                     double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
                     double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
-                    Point ori = new Point(-50,-50);
+                    Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
 
                     int lines = int.Parse(row.Field<string>("LINES"));
                     int pallets = int.Parse(row.Field<string>("PALLETS"));

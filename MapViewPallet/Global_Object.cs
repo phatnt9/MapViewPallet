@@ -14,7 +14,24 @@ namespace MapViewPallet
 {
     public static class Global_Object
     {
-        //public static Point OriginPoint = new Point()
+        public static Point LaserOriginalCoor = new Point(648,378);
+        public static Point OriginPoint = new Point(0,0);
+        public static Point CoorLaser(Point canvas)
+        {
+            Point laser = new Point();
+            laser.X = Math.Cos(0) * (canvas.X - OriginPoint.X);
+            laser.Y = Math.Cos(Math.PI) * (canvas.Y - OriginPoint.Y);
+            return laser;
+        }
+
+        public static Point CoorCanvas(Point laser)
+        {
+            Point canvas = new Point();
+            canvas.X = (laser.X / Math.Cos(0)) + OriginPoint.X;
+            canvas.Y = (laser.Y / Math.Cos(Math.PI)) + OriginPoint.Y;
+            return canvas;
+        }
+
         public static DataTable LoadExcelFile()
         {
             DataTable data = new DataTable();
