@@ -60,6 +60,7 @@
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
     <Compile Include="LoadExcels.cs" />
+    <Compile Include="MainTreeView.cs" />
     <Compile Include="MiniForm\MapResize.cs">
       <SubType>Form</SubType>
     </Compile>

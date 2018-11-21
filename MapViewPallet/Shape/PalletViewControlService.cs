@@ -20,6 +20,7 @@ namespace MapViewPallet.Shape
         private Canvas map;
         private ScaleTransform scaleTransform;
         private TranslateTransform translateTransform;
+        private TreeView mainTreeView;
         //---------------DRAW-------------------
         //private Point roundedMousePos = new Point();
         private Point startPoint;
@@ -38,9 +39,10 @@ namespace MapViewPallet.Shape
         //---------------MICS-------------------
         //private Ellipse cursorPoint = new Ellipse();
         //======================MAP======================
-        public PalletViewControlService(MainWindow mainWinDowIn)
+        public PalletViewControlService(MainWindow mainWinDowIn, TreeView mainTreeViewIn)
         {
             mainWindow = mainWinDowIn;
+            mainTreeView = mainTreeViewIn;
             map = mainWindow.map;
             scaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;

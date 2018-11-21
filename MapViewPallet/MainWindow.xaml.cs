@@ -1,6 +1,8 @@
 ﻿using MapViewPallet.MiniForm;
 using MapViewPallet.Shape;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
@@ -18,33 +20,85 @@ namespace MapViewPallet
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+    public class StationList
+    {
+        public StationList()
+        {
+            Items = new ObservableCollection<StationItem>();
+            Title = "Stations";
+            Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
+        }
+
+        public string Title { get; set; }
+        public string Icon { get; set; }
+        public ObservableCollection<StationItem> Items { get; set; }
+    }
+    public class StationItem
+    {
+        StationShape station;
+
+        public StationItem(StationShape pStation)
+        {
+            station = pStation;
+            Name = station.Name;
+            Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
+
+            //===================================
+            System.Windows.Controls.MenuItem editItem = new System.Windows.Controls.MenuItem();
+            editItem.Header = "Edit";
+            //editItem.Click += EditMenu;
+            //contextMenu.Items.Add(editItem);
+        }
+        public string Name { get; set; }
+        public string Icon { get; set; }
+        //public System.Windows.Controls.ContextMenu contextMenu {}
+
+    }
+    
+
+
+
     public partial class MainWindow : Window
     {
         //=================VARIABLE==================
         public Point renderTransformOrigin = new Point(0, 0);
-
         public bool drag = true;
         bool play = false;
+        //====================
+        StationList stationList;
+        //RobotList robotList;
+        List<dynamic> trvItems;
+        //====================
         Point transform = new Point(0, 0);
         private PalletViewControlService palletViewEventControl;
         System.Media.SoundPlayer snd;
         //public event Action<double, double> LoadMapSizeHandle;
-        //=================METHOD==================
+        //=================CLASS==================
 
+
+        //=================METHOD==================
+        
 
         public MainWindow()
         {
             InitializeComponent();
+
+            //==============TreeView=============
+            trvItems = new List<dynamic>();
+            stationList = new StationList();
+            //robotList = new RobotList();
+            trvItems.Add(stationList);
+            //trvItems.Add(robotList);
+            mainTreeView.ItemsSource = trvItems;
+            //===================================
+
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
             ImageBrush img = LoadImage("Map");
-            
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
-            palletViewEventControl = new PalletViewControlService(this);
-            //btn_AddRect.Background = LoadImage("Pallet0");
-            //btn_moverect.Background = LoadImage("Pallet1");
-            //btn_normal.Background = LoadImage("Pallet2");
+            palletViewEventControl = new PalletViewControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
             
 
@@ -214,10 +268,10 @@ namespace MapViewPallet
                     int pallets = int.Parse(row.Field<string>("PALLETS"));
                     double rotate = double.Parse(row.Field<string>("ROTATE"));
                     tempStation = new StationShape(map, "acb", lines, pallets, rotate, "Pallet2");
-                    // ... Write value of first field as integer.
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
+                    stationList.Items.Add(new StationItem(tempStation));
                 }
             }
             catch { }
@@ -292,9 +346,20 @@ namespace MapViewPallet
             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
 
-        
+        private void clearLog_Clicked(object sender, RoutedEventArgs e)
+        {
 
+        }
 
+        private void autoScrollLog_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void mainTreeView_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 
 }

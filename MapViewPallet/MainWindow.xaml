@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MapViewPallet"
+        
+        xmlns:self="clr-namespace:MapViewPallet"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="600">
     <Window.Resources>
@@ -87,57 +88,41 @@
                 <ColumnDefinition Width="2"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
+            <Grid Name="gridTreeView" Grid.Column="0">
                 <!--List Station-->
-                <TreeView Background="#F5F5F5" BorderThickness="0">
-                    <TreeViewItem IsExpanded="True">
-                        <TreeViewItem.Header>
+                <TreeView Name="mainTreeView" Background="#F5F5F5" BorderThickness="0"
+                          MouseRightButtonDown="mainTreeView_MouseRightButtonDown">
+                    <TreeView.Resources>
+                        <ContextMenu x:Key ="SolutionContext"  StaysOpen="true">
+                            <MenuItem Header="Add..." />
+                            <MenuItem Header="Rename"/>
+                        </ContextMenu>
+                        <HierarchicalDataTemplate DataType="{x:Type self:StationList}" ItemsSource="{Binding Items}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Width="15" Source="pack://siteoforigin:,,,/Resources/pallet.png" Stretch="Fill" />
-                                <TextBlock Text="Robot" />
+                                <Image Height="16" Margin="0,0,5,0" Source="{Binding Icon}"/>
+                                <TextBlock Text="{Binding Title}" />
+                                <TextBlock Text=" [" Foreground="Blue" />
+                                <TextBlock Text="{Binding Items.Count}" Foreground="Blue" />
+                                <TextBlock Text="]" Foreground="Blue" />
                             </StackPanel>
-                        </TreeViewItem.Header>
-                        <TreeViewItem>
-                            <TreeViewItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Level 2.1" Foreground="Blue" />
-                                </StackPanel>
-                            </TreeViewItem.Header>
-                        </TreeViewItem>
-                        <TreeViewItem IsExpanded="True">
-                            <TreeViewItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Width="15" Source="pack://siteoforigin:,,,/Resources/pallet.png" Stretch="Fill" />
-                                    <TextBlock Text="Level 2.2 (Green)" Foreground="Blue" />
-                                </StackPanel>
-                            </TreeViewItem.Header>
-                            <TreeViewItem>
-                                <TreeViewItem.Header>
-                                    <TextBlock Text="Level 3.1" Foreground="Green" />
-                                </TreeViewItem.Header>
-                            </TreeViewItem>
-                            <TreeViewItem>
-                                <TreeViewItem.Header>
-                                    <TextBlock Text="Level 3.2" Foreground="Green" />
-                                </TreeViewItem.Header>
-                            </TreeViewItem>
-                        </TreeViewItem>
-                        <TreeViewItem>
-                            <TreeViewItem.Header>
-                                <TextBlock Text="Level 2.3" Foreground="Blue" />
-                            </TreeViewItem.Header>
-                        </TreeViewItem>
-                    </TreeViewItem>
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type self:StationItem}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Height="16" Margin="0,0,5,0" Source="{Binding Icon}"/>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeView.Resources>
                 </TreeView>
             </Grid>
-            <GridSplitter Background="#f5f5f5" Grid.Column="1" Width="2" HorizontalAlignment="Stretch" >
+            <GridSplitter Background="#f5f5f5" Grid.Column="1" Width="2" HorizontalAlignment="Stretch" />
 
-            </GridSplitter>
+
             <Border Grid.Column="2" BorderBrush="#B9B9B9" BorderThickness="2,0,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"></RowDefinition>
-                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="1*" MinHeight="28" ></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
@@ -312,6 +297,15 @@
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="27"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
                         <TabControl Margin="3,5,0,2">
                             <TabItem Header="Stations">
                                 <DataGrid Name="StationsDataGrid"  
@@ -336,8 +330,8 @@
                                 </DataGrid>
                             </TabItem>
                             <TabItem Header="Tasks" >
-                                <DataGrid Name="TasksDataGrid"  AutoGenerateColumns="False" >
-                                    <DataGrid.Columns>
+                                    <DataGrid Name="TasksDataGrid"  AutoGenerateColumns="False" >
+                                        <DataGrid.Columns>
                                         <DataGridTextColumn Header="Tasks Name"/>
                                         <DataGridTextColumn Header="Tasks Id"/>
                                         <DataGridTextColumn Header="Color"/>
@@ -345,6 +339,18 @@
                                 </DataGrid>
                             </TabItem>
                         </TabControl>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <StackPanel Orientation ="Horizontal">
+                                <Button HorizontalAlignment="Left" Width="55" Height="18" 
+                                        Content="Clear" FontSize="10" Background="OrangeRed"
+                                        VerticalContentAlignment = "Top" Foreground="White"
+                                        Margin="0,1,0,0" Click="clearLog_Clicked"></Button>
+                                <CheckBox Margin="7,0,0,0" HorizontalAlignment="Left" 
+                                          VerticalAlignment="Center" Content="Auto Scroll" 
+                                          Checked="autoScrollLog_Checked"></CheckBox>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                     <GridSplitter Background="#B9B9B9" Grid.Row="0"
                       Height="2" HorizontalAlignment="Stretch" 
