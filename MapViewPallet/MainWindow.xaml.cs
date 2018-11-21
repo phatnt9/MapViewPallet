@@ -36,14 +36,14 @@ namespace MapViewPallet
     }
     public class StationItem
     {
-        StationShape station;
+        public StationShape station;
 
         public StationItem(StationShape pStation)
         {
+            
             station = pStation;
             Name = station.Name;
             Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
-
             //===================================
             System.Windows.Controls.MenuItem editItem = new System.Windows.Controls.MenuItem();
             editItem.Header = "Edit";
@@ -52,8 +52,6 @@ namespace MapViewPallet
         }
         public string Name { get; set; }
         public string Icon { get; set; }
-        //public System.Windows.Controls.ContextMenu contextMenu {}
-
     }
     
 
@@ -359,6 +357,19 @@ namespace MapViewPallet
         private void mainTreeView_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void StationEditMenu_Click(object sender, RoutedEventArgs e)
+        {
+            StationItem temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as StationItem;
+            temp.station.stationProperties.ShowDialog();
+        }
+
+        private void StationRemoveMenu_Click(object sender, RoutedEventArgs e)
+        {
+            StationItem temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as StationItem;
+            temp.station.Remove();
+            stationList.Items.Remove(temp);
         }
     }
 

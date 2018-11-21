@@ -137,7 +137,7 @@ namespace MapViewPallet.Shape
             props.myTransformGroup.Children[1] = props.myTranslate;
         }
 
-        private void EditMenu(object sender, RoutedEventArgs e)
+        public void EditMenu(object sender, RoutedEventArgs e)
         {
             stationProperties.ShowDialog();
         }
@@ -151,7 +151,7 @@ namespace MapViewPallet.Shape
             RenderTransform = props.myTransformGroup;
         }
 
-        private void RemoveMenu(object sender, RoutedEventArgs e)
+        public void RemoveMenu(object sender, RoutedEventArgs e)
         {
             Remove();
         }

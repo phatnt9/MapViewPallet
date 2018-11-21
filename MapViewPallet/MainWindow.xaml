@@ -108,6 +108,13 @@
                         </HierarchicalDataTemplate>
                         <DataTemplate DataType="{x:Type self:StationItem}">
                             <StackPanel Orientation="Horizontal">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Edit" Click="StationEditMenu_Click"/>
+                                        <MenuItem Header="Remove" Click="StationRemoveMenu_Click"/>
+                                        <!-- Command="{Binding Command}" This command should be in the data context (each country item)-->
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <Image Height="16" Margin="0,0,5,0" Source="{Binding Icon}"/>
                                 <TextBlock Text="{Binding Name}" />
                             </StackPanel>
