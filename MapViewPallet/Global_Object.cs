@@ -22,16 +22,16 @@ namespace MapViewPallet
         public static Point CoorLaser(Point canvas)
         {
             Point laser = new Point();
-            laser.X = Math.Cos(0) * (canvas.X - OriginPoint.X);
-            laser.Y = Math.Cos(Math.PI) * (canvas.Y - OriginPoint.Y);
+            laser.X = (Math.Cos(0) * (canvas.X - OriginPoint.X)) * resolution;
+            laser.Y = (Math.Cos(Math.PI) * (canvas.Y - OriginPoint.Y)) * resolution;
             return laser;
         }
 
         public static Point CoorCanvas(Point laser)
         {
             Point canvas = new Point();
-            canvas.X = (laser.X / Math.Cos(0)) + OriginPoint.X;
-            canvas.Y = (laser.Y / Math.Cos(Math.PI)) + OriginPoint.Y;
+            canvas.X = (laser.X / (resolution * Math.Cos(0))) + OriginPoint.X;
+            canvas.Y = (laser.Y / (resolution * Math.Cos(Math.PI))) + OriginPoint.Y;
             return canvas;
         }
 

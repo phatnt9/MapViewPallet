@@ -29,7 +29,6 @@ namespace MapViewPallet
             Title = "Stations";
             Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
         }
-
         public string Title { get; set; }
         public string Icon { get; set; }
         public ObservableCollection<StationItem> Items { get; set; }
@@ -40,15 +39,10 @@ namespace MapViewPallet
 
         public StationItem(StationShape pStation)
         {
-            
             station = pStation;
             Name = station.Name;
             Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
             //===================================
-            System.Windows.Controls.MenuItem editItem = new System.Windows.Controls.MenuItem();
-            editItem.Header = "Edit";
-            //editItem.Click += EditMenu;
-            //contextMenu.Items.Add(editItem);
         }
         public string Name { get; set; }
         public string Icon { get; set; }
@@ -213,7 +207,6 @@ namespace MapViewPallet
             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
         }
         
-        
 
         private void btn_LoadExcel_Click(object sender, RoutedEventArgs e)
         {
@@ -224,12 +217,12 @@ namespace MapViewPallet
                 foreach (DataRow row in data.Rows)
                 {
                     PathShape tempPath;
-                    double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]) / Global_Object.resolution;
-                    double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]) / Global_Object.resolution;
+                    double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
+                    double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
                     Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
 
-                    double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]) / Global_Object.resolution;
-                    double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]) / Global_Object.resolution;
+                    double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
+                    double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
                     Point des = Global_Object.CoorCanvas(new Point(desX, desY));
 
                     // ... Write value of first field as integer.
@@ -258,14 +251,14 @@ namespace MapViewPallet
                 foreach (DataRow row in data.Rows)
                 {
                     StationShape tempStation;
-                    double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]) / Global_Object.resolution;
-                    double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]) / Global_Object.resolution;
-                    Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
-
+                    string stationName = row.Field<string>("NAME");
+                    double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
+                    double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
+                    Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY)); // Change Laser Metter to Canvas Position
                     int lines = int.Parse(row.Field<string>("LINES"));
                     int pallets = int.Parse(row.Field<string>("PALLETS"));
                     double rotate = double.Parse(row.Field<string>("ROTATE"));
-                    tempStation = new StationShape(map, "acb", lines, pallets, rotate, "Pallet2");
+                    tempStation = new StationShape(map, stationName, lines, pallets, rotate, "normal");
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);

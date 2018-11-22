@@ -89,10 +89,6 @@ namespace MapViewPallet.Shape
                 {
                     return Global_Object.CoorLaser(_oriMousePos);
                 }
-                set
-                {
-                    _oriMousePos = Global_Object.CoorCanvas(value);
-                }
             }
 
             [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
@@ -101,10 +97,6 @@ namespace MapViewPallet.Shape
                 get
                 {
                     return Global_Object.CoorLaser(_desMousePos);
-                }
-                set
-                {
-                    _desMousePos = Global_Object.CoorCanvas(value);
                 }
             }
             
@@ -240,25 +232,25 @@ namespace MapViewPallet.Shape
 
         public void ToggleStyle ()
         {
-            if (props.isSelected || props.isHovering)
-            {
-                BorderBrush = new SolidColorBrush(Colors.Black);
-                props._shape.Stroke = new SolidColorBrush(Colors.Red);
-                props._arrow.Fill = new SolidColorBrush(Colors.Red);
-                props._arrow.Stroke = new SolidColorBrush(Colors.Red);
-                props._pointHead.Visibility = Visibility.Visible;
-                props._pointTail.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                BorderBrush = new SolidColorBrush(Colors.Transparent);
-                props._shape.Stroke = new SolidColorBrush(Colors.Gray);
-                props._arrow.Fill = new SolidColorBrush(Colors.Gray);
-                props._arrow.Stroke = new SolidColorBrush(Colors.Gray);
-                props._pointHead.Visibility = Visibility.Hidden;
-                props._pointTail.Visibility = Visibility.Hidden;
+            //if (props.isSelected || props.isHovering)
+            //{
+            //    BorderBrush = new SolidColorBrush(Colors.Black);
+            //    props._shape.Stroke = new SolidColorBrush(Colors.Red);
+            //    props._arrow.Fill = new SolidColorBrush(Colors.Red);
+            //    props._arrow.Stroke = new SolidColorBrush(Colors.Red);
+            //    props._pointHead.Visibility = Visibility.Visible;
+            //    props._pointTail.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    BorderBrush = new SolidColorBrush(Colors.Transparent);
+            //    props._shape.Stroke = new SolidColorBrush(Colors.Gray);
+            //    props._arrow.Fill = new SolidColorBrush(Colors.Gray);
+            //    props._arrow.Stroke = new SolidColorBrush(Colors.Gray);
+            //    props._pointHead.Visibility = Visibility.Hidden;
+            //    props._pointTail.Visibility = Visibility.Hidden;
 
-            }
+            //}
         }
         
 

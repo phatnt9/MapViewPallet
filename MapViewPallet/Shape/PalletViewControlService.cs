@@ -138,7 +138,7 @@ namespace MapViewPallet.Shape
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             ToggleSelectedPath(selectedItemName);
             selectedItemName = elementName;
-            //Console.WriteLine(elementName);
+            Console.WriteLine(elementName);
             if ((mainWindow.drag))
             {
                 if (e.Source.ToString() == "System.Windows.Controls.Canvas")
@@ -190,14 +190,14 @@ namespace MapViewPallet.Shape
             var mouseWasDownOn = (e.Source as FrameworkElement);
             hoveringItemName = mouseWasDownOn.Name;
             //mainWindow.MouseCoor.Content = (mousePos.X- Global_Object.OriginPoint.X).ToString("0.0") + " " + (Global_Object.OriginPoint.Y - mousePos.Y ).ToString("0.0");
-            mainWindow.MouseCoor.Content = (Global_Object.CoorLaser(mousePos).X * Global_Object.resolution).ToString("0.0") + " " + (Global_Object.CoorLaser(mousePos).Y * Global_Object.resolution).ToString("0.0");
+            mainWindow.MouseCoor.Content = (Global_Object.CoorLaser(mousePos).X).ToString("0.00") + " " + (Global_Object.CoorLaser(mousePos).Y).ToString("0.00");
             //mainWindow.MouseCoor.Content = ((mousePos).X.ToString("0.0") + " " + (mousePos).Y.ToString("0.0"));
 
-            Console.WriteLine("============================================");
-            Console.WriteLine("MousePos:  (" + mousePos.X + "," + mousePos.Y + ")");
-            Console.WriteLine("CoorLaser:  (" + Global_Object.CoorLaser(mousePos).X.ToString("0.0") + "," + Global_Object.CoorLaser(mousePos).Y.ToString("0.0")+")");
-            Console.WriteLine("CoorCanvas:  ("+ Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).X.ToString("0.0") + "," + Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).Y.ToString("0.0") + ")");
-            //
+            //Console.WriteLine("============================================");
+            //Console.WriteLine("MousePos:  (" + mousePos.X + "," + mousePos.Y + ")");
+            //Console.WriteLine("CoorLaser:  (" + Global_Object.CoorLaser(mousePos).X.ToString("0.0") + "," + Global_Object.CoorLaser(mousePos).Y.ToString("0.0")+")");
+            //Console.WriteLine("CoorCanvas:  ("+ Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).X.ToString("0.0") + "," + Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).Y.ToString("0.0") + ")");
+            ////
             // POINT OF VIEW
             //
             if ((mainWindow.drag))
@@ -354,7 +354,7 @@ namespace MapViewPallet.Shape
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
                         {
                             StationShape stationTemp = null;
-                            stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0, "Pallet2");
+                            stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0, "normal");
                             stationCount++;
                             stationTemp.Move(mousePos);
                             //map.Children.Add(stationTemp);
