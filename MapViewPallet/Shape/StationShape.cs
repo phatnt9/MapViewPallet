@@ -23,7 +23,6 @@ namespace MapViewPallet.Shape
             public Grid stationGrid; // Grid to hold all Pallet in Station
             public Point _posision; // Where station will be render,only accept Cavnas Coordinate
             public double rotate; // Station rotate
-            
 
             public Border stationInfomation;
             public TranslateTransform myTranslate;

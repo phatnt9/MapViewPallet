@@ -77,6 +77,7 @@
       <DependentUpon>Properties.cs</DependentUpon>
     </Compile>
     <Compile Include="Shape\PathShape.cs" />
+    <Compile Include="Shape\RobotShape.cs" />
     <Compile Include="Shape\StationShape.cs" />
     <Compile Include="Shape\StraightPath.cs" />
     <Page Include="MainWindow.xaml">

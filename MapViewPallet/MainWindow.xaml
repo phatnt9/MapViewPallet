@@ -215,8 +215,28 @@
                                         </Canvas.Background>
                                         <Canvas.Children>
                                             <Rectangle x:Name="rect" Fill="Red" Width="1" Height="1"/>
-                                            <Border x:Name="robot">
-                                                <Image  Source="pack://siteoforigin:,,,/Resources/ssss.png"/>
+                                            <Border x:Name="robot" Width="22" Height="15" BorderThickness="1" BorderBrush="Linen" Background="Black" CornerRadius="3">
+                                                <!--<Image  Source="pack://siteoforigin:,,,/Resources/ssss.png"/>-->
+                                                <Grid Name="mainGrid" Background="Transparent">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1"></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition Width="1"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Rectangle Grid.Column="0" Fill="OrangeRed" Height="7"></Rectangle>
+                                                    <Rectangle Grid.Column="2" Fill="DodgerBlue" Height="7"></Rectangle>
+                                                    <Border Name="statusBorder" Grid.Column="1" Width="10" Height="13"
+                                                            RenderTransformOrigin="0.5,0.5">
+                                                        <Grid Name="statusGrid">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition></RowDefinition>
+                                                                <RowDefinition></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <Label Name="rbID" Grid.Row="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="01" Foreground="Yellow" FontFamily="Calibri" FontSize="6" FontWeight="Bold"/>
+                                                            <Label Name="rbTask" Grid.Row="1" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top" Content="31" Foreground="LawnGreen" FontFamily="Calibri" FontSize="6" FontWeight="Bold"/>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
                                             </Border>
                                             <!--<Grid Width="50" Height="50">
                                                 <Border Margin="0" BorderBrush="Red" BorderThickness="6" CornerRadius="5" Width="50" Height="50" Background="Lime">
