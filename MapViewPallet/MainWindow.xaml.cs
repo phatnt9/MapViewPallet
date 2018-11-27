@@ -75,7 +75,8 @@ namespace MapViewPallet
         public MainWindow()
         {
             InitializeComponent();
-
+            RobotShape xxx = new RobotShape(map, new Point(500, 500));
+            xxx.ReDraw(new Point(500, 500));
             //==============TreeView=============
             trvItems = new List<dynamic>();
             stationList = new StationList();

@@ -137,8 +137,8 @@ namespace MapViewPallet.Shape
             props.stationInfomation.Height = 5;
             Grid.SetColumn(props.stationInfomation, 0);
 
-            //Name = "Stationx" + Global_Mouse.EncodeTransmissionTimestamp(); //Object name
-            Name = stationName; //Object name
+            Name = "Stationx" + Global_Mouse.EncodeTransmissionTimestamp(); //Object name
+            //Name = stationName; //Object name
             ContextMenu = new ContextMenu();
             //===================================
             MenuItem editItem = new MenuItem();

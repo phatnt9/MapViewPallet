@@ -115,7 +115,7 @@ namespace MapViewPallet.Shape
             props.statusBorder.RenderTransformOrigin = new Point(0.5,0.5);
             Grid.SetColumn(props.statusBorder, 1);
             //statusGrid
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
                 RowDefinition rowTemp = new RowDefinition();
                 rowTemp.Name = Name + "xR" + i;
@@ -123,28 +123,41 @@ namespace MapViewPallet.Shape
             }
             //rbID
             props.rbID.Padding = new Thickness(0);
+            props.rbID.Margin = new Thickness(-5, 0, -5, 0);
             props.rbID.HorizontalAlignment = HorizontalAlignment.Center;
             props.rbID.VerticalAlignment = VerticalAlignment.Bottom;
-            props.rbID.Content = "01";
+            props.rbID.Content = "9999";
             props.rbID.Foreground = new SolidColorBrush(Colors.Yellow);
             props.rbID.FontFamily = new FontFamily("Calibri");
             props.rbID.FontSize = 6;
             props.rbID.FontWeight = FontWeights.Bold;
-            Grid.SetColumn(props.rbID, 0);
+            Grid.SetRow(props.rbID, 0);
 
             //rbTask
             props.rbTask.Padding = new Thickness(0);
+            props.rbTask.Margin = new Thickness(-5, -1, -5, -1);
             props.rbTask.HorizontalAlignment = HorizontalAlignment.Center;
             props.rbTask.VerticalAlignment = VerticalAlignment.Top;
-            props.rbTask.Content = "31";
+            props.rbTask.Content = "9999";
             props.rbTask.Foreground = new SolidColorBrush(Colors.LawnGreen);
             props.rbTask.FontFamily = new FontFamily("Calibri");
             props.rbTask.FontSize = 6;
             props.rbTask.FontWeight = FontWeights.Bold;
-            Grid.SetColumn(props.rbTask, 1);
+            Grid.SetRow(props.rbTask, 1);
 
-
-
+            //===================CHILDREN===================
+            props.statusGrid.Children.Add(props.rbID);
+            props.statusGrid.Children.Add(props.rbTask);
+            props.statusBorder.Child = props.statusGrid;
+            props.mainGrid.Children.Add(props.headLed);
+            props.mainGrid.Children.Add(props.tailLed);
+            props.mainGrid.Children.Add(props.statusBorder);
+            props.myTransformGroup.Children.Add(props.myRotateTransform);
+            props.myTransformGroup.Children.Add(props.myTranslate);
+            RenderTransform = props.myTransformGroup;
+            props.canvas = pCanvas;
+            Child = props.mainGrid;
+            props.canvas.Children.Add(this);
 
             //====================FINAL=====================
 
@@ -153,7 +166,43 @@ namespace MapViewPallet.Shape
 
 
 
+        public void ReDraw(Point Position)
+        {
+            props.position = new Point(Position.X, Position.Y);
+            Draw();
+        }
 
+        public void Draw()
+        {
+            //Render Path
+            double angle = 45;
+            props.rotate = angle;
+            props.myRotateTransform.Angle = props.rotate;
+            props.myTranslate = new TranslateTransform(props.position.X - (Width / 2), props.position.Y - (Height / 2));
+            props.myTransformGroup.Children[1] = props.myTranslate;
+            // SPECIAL POINTS
+            //props.eightCorner[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
+            //props.eightCorner[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left
+            //props.eightCorner[2] = CoorPointAtBorder(new Point((Width / 2), (0)));           //top-mid
+            //props.eightCorner[3] = CoorPointAtBorder(new Point((Width), (0)));             //top-right
+            //props.eightCorner[4] = CoorPointAtBorder(new Point((Width), (Height / 2)));      //mid-right
+            //props.eightCorner[5] = CoorPointAtBorder(new Point((Width), (Height)));        //bot-right
+            //props.eightCorner[6] = CoorPointAtBorder(new Point((Width / 2), (Height)));      //bot-mid
+            //props.eightCorner[7] = CoorPointAtBorder(new Point((0), (Height)));            //bot-left
+        }
+
+        public Point CoorPointAtBorder(Point pointOnBorder)
+        {
+            //double xDiff = (pointOnBorder.X) - (props._start.X);
+            //double yDiff = (pointOnBorder.Y) - (props._start.Y);
+            //double rad1 = (props.rotate * Math.PI) / 180;
+            //double rad2 = (Math.Atan2(yDiff, xDiff));
+            //double L = Global_Object.LengthBetweenPoints(props._start, pointOnBorder);
+            //double x1 = props._oriMousePos.X + ((L * Math.Cos(rad1 + rad2)));
+            //double y1 = props._oriMousePos.Y + ((L * Math.Sin(rad1 + rad2)));
+            //return new Point(x1, y1);
+            return new Point(0,0);
+        }
 
 
 

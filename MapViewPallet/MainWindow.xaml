@@ -232,8 +232,8 @@
                                                                 <RowDefinition></RowDefinition>
                                                                 <RowDefinition></RowDefinition>
                                                             </Grid.RowDefinitions>
-                                                            <Label Name="rbID" Grid.Row="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="01" Foreground="Yellow" FontFamily="Calibri" FontSize="6" FontWeight="Bold"/>
-                                                            <Label Name="rbTask" Grid.Row="1" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top" Content="31" Foreground="LawnGreen" FontFamily="Calibri" FontSize="6" FontWeight="Bold"/>
+                                                            <Label Name="rbID" Grid.Row="0" Padding="0" Margin="-5,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="9999" Foreground="Yellow" FontFamily="Calibri" FontSize="6" FontWeight="Bold"/>
+                                                            <Label Name="rbTask" Grid.Row="1" Padding="0" Margin="-5,-1" HorizontalAlignment="Center" VerticalAlignment="Top" Content="9999" Foreground="LawnGreen" FontFamily="Calibri" FontSize="6" FontWeight="Bold"/>
                                                         </Grid>
                                                     </Border>
                                                 </Grid>
