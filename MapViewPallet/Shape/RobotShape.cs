@@ -21,12 +21,13 @@ namespace MapViewPallet.Shape
             public Grid mainGrid;
             public Grid statusGrid;
             public Point position; //on canvas
-            public double xDiff;
-            public double yDiff;
             public double rotate;
-            public TranslateTransform myTranslate;
-            public TransformGroup myTransformGroup;
-            public RotateTransform myRotateTransform;
+            public TranslateTransform myTranslate1;
+            public TransformGroup myTransformGroup1;
+            public RotateTransform myRotateTransform1;
+            public TranslateTransform myTranslate2;
+            public TransformGroup myTransformGroup2;
+            public RotateTransform myRotateTransform2;
             public Border statusBorder;
             public Label rbID;
             public Label rbTask;
@@ -38,7 +39,7 @@ namespace MapViewPallet.Shape
         public Properties robotProperties;
         public Props props;
 
-        public RobotShape(Canvas pCanvas, Point Coor)
+        public RobotShape(Canvas pCanvas)
         {
             ToolTip = "";
             ToolTipOpening += ChangeToolTipContent;
@@ -77,9 +78,12 @@ namespace MapViewPallet.Shape
                 Point temp = new Point();
                 props.eightCorner.Add(temp);
             }
-            props.myRotateTransform = new RotateTransform();
-            props.myTranslate = new TranslateTransform();
-            props.myTransformGroup = new TransformGroup();
+            props.myRotateTransform1 = new RotateTransform();
+            props.myTranslate1 = new TranslateTransform();
+            props.myTransformGroup1 = new TransformGroup();
+            props.myRotateTransform2 = new RotateTransform();
+            props.myTranslate2 = new TranslateTransform();
+            props.myTransformGroup2 = new TransformGroup();
             robotProperties = new Properties(this);
             //===================STYLE=====================
             //Robot border
@@ -89,6 +93,7 @@ namespace MapViewPallet.Shape
             BorderBrush = new SolidColorBrush(Colors.Linen);
             Background = new SolidColorBrush(Colors.Black);
             CornerRadius = new CornerRadius(3);
+            RenderTransformOrigin = new Point(0.5, 0.5);
             //mainGrid
             props.mainGrid.Background = new SolidColorBrush(Colors.Transparent);
             for (int i=0; i<3; i++)
@@ -126,7 +131,7 @@ namespace MapViewPallet.Shape
             props.rbID.Margin = new Thickness(-5, 0, -5, 0);
             props.rbID.HorizontalAlignment = HorizontalAlignment.Center;
             props.rbID.VerticalAlignment = VerticalAlignment.Bottom;
-            props.rbID.Content = "9999";
+            props.rbID.Content = "27";
             props.rbID.Foreground = new SolidColorBrush(Colors.Yellow);
             props.rbID.FontFamily = new FontFamily("Calibri");
             props.rbID.FontSize = 6;
@@ -152,9 +157,12 @@ namespace MapViewPallet.Shape
             props.mainGrid.Children.Add(props.headLed);
             props.mainGrid.Children.Add(props.tailLed);
             props.mainGrid.Children.Add(props.statusBorder);
-            props.myTransformGroup.Children.Add(props.myRotateTransform);
-            props.myTransformGroup.Children.Add(props.myTranslate);
-            RenderTransform = props.myTransformGroup;
+            props.myTransformGroup1.Children.Add(props.myRotateTransform1);
+            props.myTransformGroup1.Children.Add(props.myTranslate1);
+            RenderTransform = props.myTransformGroup1;
+            props.myTransformGroup2.Children.Add(props.myRotateTransform2);
+            props.myTransformGroup2.Children.Add(props.myTranslate2);
+            props.statusBorder.RenderTransform = props.myTransformGroup2;
             props.canvas = pCanvas;
             Child = props.mainGrid;
             props.canvas.Children.Add(this);
@@ -164,22 +172,30 @@ namespace MapViewPallet.Shape
 
         }
 
-
-
-        public void ReDraw(Point Position)
+        public void ChangeTask (string taskID)
         {
+            props.rbTask.Content = taskID;
+        }
+
+
+
+        public void ReDraw(Point Position, double Rotate)
+        {
+            props.rotate = Rotate;
             props.position = new Point(Position.X, Position.Y);
             Draw();
         }
 
         public void Draw()
         {
-            //Render Path
-            double angle = 45;
-            props.rotate = angle;
-            props.myRotateTransform.Angle = props.rotate;
-            props.myTranslate = new TranslateTransform(props.position.X - (Width / 2), props.position.Y - (Height / 2));
-            props.myTransformGroup.Children[1] = props.myTranslate;
+            //Render Robot
+            props.myRotateTransform1.Angle = props.rotate;
+            props.myTranslate1 = new TranslateTransform(props.position.X - (Width / 2), props.position.Y - (Height / 2));
+            props.myTransformGroup1.Children[1] = props.myTranslate1;
+            //Render Status
+            props.myRotateTransform2.Angle = -(props.rotate);
+            props.myTranslate2 = new TranslateTransform(0,0);
+            props.myTransformGroup2.Children[1] = props.myTranslate2;
             // SPECIAL POINTS
             //props.eightCorner[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
             //props.eightCorner[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left

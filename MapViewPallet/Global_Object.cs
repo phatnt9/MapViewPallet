@@ -72,6 +72,26 @@ namespace MapViewPallet
             }
         }
 
+        public static DataTable LoadExcelFile(string path)
+        {
+            DataTable data = new DataTable();
+
+            Console.WriteLine(path);
+
+            string name = "Sheet1";
+            string constr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                            path +
+                            ";Extended Properties='Excel 12.0 XML;HDR=YES;';";
+
+            OleDbConnection con = new OleDbConnection(constr);
+            OleDbCommand oconn = new OleDbCommand("Select * From [" + name + "$]", con);
+            con.Open();
+            OleDbDataAdapter sda = new OleDbDataAdapter(oconn);
+            sda.Fill(data);
+            return data;
+        
+        }
+
         public static double resolution = 0.1; // Square meters per pixel
         public static string Foo<T>(T parameter) { return typeof(T).Name; }
         public static double palletWidth = 13;

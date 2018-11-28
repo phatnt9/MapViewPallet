@@ -12,6 +12,43 @@
             <MenuItem Header="Edit" Name="pathEdit"/>
             <MenuItem Header="Remove" Name="pathRemove"/>
         </ContextMenu>
+        <Style x:Key="GridSplitterPreviewStyle" >
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Fill="#80000000"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="GridSplitterStyle1" TargetType="{x:Type GridSplitter}">
+            <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+            <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridSplitter}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            >
+                            <Canvas RenderOptions.EdgeMode="Aliased" UseLayoutRounding="True"
+                                Height="6" VerticalAlignment="Center"
+                                Width="50" HorizontalAlignment="Center">
+                                <Line X1="23" X2="23" Y1="-25" Y2="20"
+                                  Stroke="White" StrokeThickness="1"/>
+                                <Line X1="24" X2="24" Y1="-25" Y2="20"
+                                  Stroke="#A0A0A0" StrokeThickness="1"/>
+                                <Line X1="27" X2="27" Y1="-25" Y2="20"
+                                  Stroke="White" StrokeThickness="1"/>
+                                <Line X1="28" X2="28" Y1="-25" Y2="20"
+                                  Stroke="#A0A0A0" StrokeThickness="1"/>
+                            </Canvas>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -47,10 +84,10 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <ToolBar Background="Transparent">
-                        <Button Name="btn_DrawStraght" BorderBrush="Black"
+                        <!--<Button Name="btn_DrawStraght" BorderBrush="Black"
                         BorderThickness="1" Click="btn_DrawStraight_Click" 
-                        ToolTip="DrawStraght" Content="Test" Height="25" Margin="2,0,0,0"/>
-                        <Button Name="btn_StraightPath" BorderBrush="Black"
+                        ToolTip="DrawStraght" Content="Test" Height="25" Margin="2,0,0,0"/>-->
+                        <!--<Button Name="btn_StraightPath" BorderBrush="Black"
                               BorderThickness="1" 
                               Click="btn_StraightPath_Click_on"
                               ToolTip="Draw Straight"
@@ -61,7 +98,7 @@
                         BorderThickness="1" Click="btn_JoinPath_Click_on"
                         ToolTip="Draw JoinPath" Margin="2,0,0,0">
                             <Image Margin="-1" Source="pack://siteoforigin:,,,/Resources/phat_joinpath.png" Stretch="Fill"  />
-                        </Button>
+                        </Button>-->
                         <Button Name="btn_LoadExcel" BorderBrush="Black"
                         BorderThickness="1" Click="btn_LoadExcel_Click" 
                         ToolTip="LoadPath" Content="Load Path" Margin="2,0,0,0"
@@ -70,10 +107,15 @@
                         BorderThickness="1" Click="btn_LoadExcel2_Click" 
                         ToolTip="LoadStation" Content="Load Station" Margin="2,0,0,0"
                         Height="25"/>
-                        <Button Name="btn_AdddStation" BorderBrush="Black"
+                        <Button Name="btn_LoadAll" BorderBrush="Black"
+                        BorderThickness="1" Click="btn_LoadAll_Click" 
+                        ToolTip="LoadAll" Content="Load All" Margin="2,0,0,0"
+                        Height="25"/>
+                        
+                        <!--<Button Name="btn_AdddStation" BorderBrush="Black"
                         BorderThickness="1" Click="btn_AddStation_Click" 
                         ToolTip="AddStation" Content="Add Station" Margin="2,0,0,0"
-                        Height="25"/>
+                        Height="25"/>-->
                     </ToolBar>
                 </Grid>
                 <Grid Grid.Column="1">
@@ -85,7 +127,7 @@
         <Grid Grid.Row="2" Background="#f5f5f5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2"/>
+                <ColumnDefinition Width="8"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
@@ -131,7 +173,7 @@
                     <!--Tool Treeview-->
                 </Grid>
             </Grid>
-            <GridSplitter Background="#B9B9B9" Grid.Column="1" Width="2" HorizontalAlignment="Stretch" />
+            <GridSplitter Style="{DynamicResource GridSplitterStyle1}" Background="#B9B9B9" Grid.Column="1" Width="8"  HorizontalAlignment="Stretch" />
             <Border Grid.Column="2" BorderBrush="#B9B9B9" BorderThickness="0,0,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -215,8 +257,8 @@
                                         </Canvas.Background>
                                         <Canvas.Children>
                                             <Rectangle x:Name="rect" Fill="Red" Width="1" Height="1"/>
-                                            <Border x:Name="robot" Width="22" Height="15" BorderThickness="1" BorderBrush="Linen" Background="Black" CornerRadius="3">
-                                                <!--<Image  Source="pack://siteoforigin:,,,/Resources/ssss.png"/>-->
+                                            <!--<Border x:Name="robot" Width="22" Height="15" BorderThickness="1" BorderBrush="Linen" Background="Black" CornerRadius="3">
+                                                --><!--<Image  Source="pack://siteoforigin:,,,/Resources/ssss.png"/>--><!--
                                                 <Grid Name="mainGrid" Background="Transparent">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="1"></ColumnDefinition>
@@ -237,21 +279,23 @@
                                                         </Grid>
                                                     </Border>
                                                 </Grid>
-                                            </Border>
+                                            </Border>-->
                                             <!--<Grid Width="50" Height="50">
                                                 <Border Margin="0" BorderBrush="Red" BorderThickness="6" CornerRadius="5" Width="50" Height="50" Background="Lime">
 
                                                 </Border>
                                             </Grid>-->
-                                                
+
                                             <!--<Path Stroke="Black" Data="M 0 4 L 16 4 L 10 0 M 16 4 L 10 8" />-->
                                             <!--<Button MinWidth="100">Click
                                                 <Button.RenderTransform>
                                                     <MatrixTransform x:Name="myMatrixTransform">
                                                         <MatrixTransform.Matrix >
 
-                                                             --><!--OffsetX and OffsetY specify the position of the button,
-              M11 stretches it, and M12 skews it.--><!-- 
+                                                             -->
+                                            <!--OffsetX and OffsetY specify the position of the button,
+              M11 stretches it, and M12 skews it.-->
+                                            <!-- 
                                                             <Matrix OffsetX="10" OffsetY="100" M11="1" M12="0" M21="0" M22="-1"/>
                                                         </MatrixTransform.Matrix>
                                                     </MatrixTransform>
@@ -316,7 +360,7 @@
                             <Border BorderBrush="#f5f5f5" BorderThickness="1,0,0,0">
                                 <ToolBarTray Background="#f5f5f5" Orientation="Vertical">
                                     <ToolBar Background="Transparent">
-                                        <Button Name="btn_ExtendMap" BorderBrush="Black"
+                                        <!--<Button Name="btn_ExtendMap" BorderBrush="Black"
                         BorderThickness="1" Click="btn_ExtendMap_Click" 
                         ToolTip="Extend Map" Margin="0,2,0,0" Width="20" Height="20">
                                             <Image Margin="-4" Source="pack://siteoforigin:,,,/Resources/phat_mapExtend.png" Stretch="Fill"  />
@@ -325,7 +369,7 @@
                         BorderThickness="1" Click="btn_ShrinkMap_Click" 
                         ToolTip="Shrink Map" Margin="0,2,0,0" Width="20" Height="20">
                                             <Image Margin="-5" Source="pack://siteoforigin:,,,/Resources/phat_mapShrink.png" Stretch="Fill"  />
-                                        </Button>
+                                        </Button>-->
                                     </ToolBar>
                                 </ToolBarTray>
                             </Border>
@@ -346,39 +390,39 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                        <TabControl Margin="3,5,0,2">
-                            <TabItem Header="Stations">
-                                <DataGrid Name="StationsDataGrid"  
+                            <TabControl Margin="3,5,0,2">
+                                <TabItem Header="Stations">
+                                    <DataGrid Name="StationsDataGrid" 
                                           AutoGenerateColumns="False" 
                                           BorderBrush="#aaaaaa">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Station Name"/>
-                                        <DataGridTextColumn Header="Line Id"/>
-                                        <DataGridTextColumn Header="Pallets number"/>
-                                        <DataGridTextColumn Header="Material Code"/>
-                                        <DataGridTextColumn Header="Color"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
-                            <TabItem Header="Orders" >
-                                <DataGrid Name="OrdersDataGrid"  AutoGenerateColumns="False" >
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Orders Name"/>
-                                        <DataGridTextColumn Header="Orders Id"/>
-                                        <DataGridTextColumn Header="Color"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
-                            <TabItem Header="Tasks" >
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Station Name"/>
+                                            <DataGridTextColumn Header="Lines"/>
+                                            <DataGridTextColumn Header="Pallets per Line"/>
+                                            <DataGridTextColumn Header="Position"/>
+                                            <DataGridTextColumn Header="Rotate"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                                <TabItem Header="Orders" >
+                                    <DataGrid Name="OrdersDataGrid"  AutoGenerateColumns="False" >
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Orders Name"/>
+                                            <DataGridTextColumn Header="Orders Id"/>
+                                            <DataGridTextColumn Header="Color"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                                <TabItem Header="Tasks" >
                                     <DataGrid Name="TasksDataGrid"  AutoGenerateColumns="False" >
                                         <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Tasks Name"/>
-                                        <DataGridTextColumn Header="Tasks Id"/>
-                                        <DataGridTextColumn Header="Color"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
-                        </TabControl>
+                                            <DataGridTextColumn Header="Tasks Name"/>
+                                            <DataGridTextColumn Header="Tasks Id"/>
+                                            <DataGridTextColumn Header="Color"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                            </TabControl>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
                             <StackPanel Orientation ="Horizontal">
@@ -393,17 +437,17 @@
                         </Grid>
                     </Grid>
                     <GridSplitter Background="#B9B9B9" Grid.Row="0"
-                      Height="2" HorizontalAlignment="Stretch" 
-                      VerticalAlignment="Bottom">
-                    </GridSplitter>
+                      Height="3" HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Bottom"/>
+
                 </Grid>
             </Border>
         </Grid>
         <Grid Grid.Row="3">
-            <Border BorderThickness="0,2,0,0" BorderBrush="#B9B9B9" Margin="1,0,-1,0">
+            <Border BorderThickness="0,0,0,0" BorderBrush="#B9B9B9" Margin="0">
                 <StatusBar Name="sbar" >
-                    <StatusBarItem Background="#F5F5F5">
-                        <TextBlock Name="ProgramStatus" Foreground="Black" FontSize="10">Ready</TextBlock>
+                    <StatusBarItem Background="#007abc">
+                        <TextBlock Name="ProgramStatus" Foreground="White" FontSize="10">Ready</TextBlock>
                     </StatusBarItem>
                 </StatusBar>
             </Border>
