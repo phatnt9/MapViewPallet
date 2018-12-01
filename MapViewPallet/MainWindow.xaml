@@ -392,35 +392,15 @@
                         <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
                             <TabControl Margin="3,5,0,2">
                                 <TabItem Header="Stations">
-                                    <DataGrid Name="StationsDataGrid" 
-                                          AutoGenerateColumns="False" 
-                                          BorderBrush="#aaaaaa">
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Station Name"/>
-                                            <DataGridTextColumn Header="Lines"/>
-                                            <DataGridTextColumn Header="Pallets per Line"/>
-                                            <DataGridTextColumn Header="Position"/>
-                                            <DataGridTextColumn Header="Rotate"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
+                                    <DataGrid Name="StationsDataGrid"
+                                              ItemsSource="{Binding Stations_DGV}"
+                                              CanUserAddRows="False"/>
                                 </TabItem>
                                 <TabItem Header="Orders" >
-                                    <DataGrid Name="OrdersDataGrid"  AutoGenerateColumns="False" >
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Orders Name"/>
-                                            <DataGridTextColumn Header="Orders Id"/>
-                                            <DataGridTextColumn Header="Color"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
+                                    <DataGrid Name="OrdersDataGrid"/>
                                 </TabItem>
                                 <TabItem Header="Tasks" >
-                                    <DataGrid Name="TasksDataGrid"  AutoGenerateColumns="False" >
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Tasks Name"/>
-                                            <DataGridTextColumn Header="Tasks Id"/>
-                                            <DataGridTextColumn Header="Color"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
+                                    <DataGrid Name="TasksDataGrid"/>
                                 </TabItem>
                             </TabControl>
                         </Grid>
@@ -446,7 +426,7 @@
         <Grid Grid.Row="3">
             <Border BorderThickness="0,0,0,0" BorderBrush="#B9B9B9" Margin="0">
                 <StatusBar Name="sbar" >
-                    <StatusBarItem Background="#007abc">
+                    <StatusBarItem Background="#1987c2">
                         <TextBlock Name="ProgramStatus" Foreground="White" FontSize="10">Ready</TextBlock>
                     </StatusBarItem>
                 </StatusBar>

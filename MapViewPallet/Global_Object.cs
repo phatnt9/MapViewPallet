@@ -81,13 +81,14 @@ namespace MapViewPallet
             string name = "Sheet1";
             string constr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
                             path +
-                            ";Extended Properties='Excel 12.0 XML;HDR=YES;';";
+                            ";Extended Properties='Excel 12.0 XmL;HDR=YES;';";
 
             OleDbConnection con = new OleDbConnection(constr);
             OleDbCommand oconn = new OleDbCommand("Select * From [" + name + "$]", con);
             con.Open();
             OleDbDataAdapter sda = new OleDbDataAdapter(oconn);
             sda.Fill(data);
+            Console.WriteLine(data.Rows.Count);
             return data;
         
         }

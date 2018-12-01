@@ -1,14 +1,17 @@
-﻿using MapViewPallet.MiniForm;
+﻿using MapViewPallet.DataGridView;
+using MapViewPallet.MiniForm;
 using MapViewPallet.Shape;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -57,6 +60,8 @@ namespace MapViewPallet
         public Point renderTransformOrigin = new Point(0, 0);
         public bool drag = true;
         bool play = false;
+        MainWindowDataGridViewModel dgv_model;
+
         //====================
         StationList stationList;
         //RobotList robotList;
@@ -70,6 +75,8 @@ namespace MapViewPallet
 
 
         //=================METHOD==================
+        
+        
         
 
         public MainWindow()
@@ -86,7 +93,6 @@ namespace MapViewPallet
             //trvItems.Add(robotList);
             mainTreeView.ItemsSource = trvItems;
             //===================================
-
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
             ImageBrush img = LoadImage("Map");
             map.Width = img.ImageSource.Width;
@@ -94,7 +100,9 @@ namespace MapViewPallet
             map.Background = img;
             palletViewEventControl = new PalletViewControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
-
+            //===============DATAGRIDVIEW========
+            dgv_model = new MainWindowDataGridViewModel();
+            DataContext = dgv_model;
         }
 
         
@@ -227,17 +235,19 @@ namespace MapViewPallet
                     }
                     tempPath.RemoveHandle += palletViewEventControl.PathRemove;
                     palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
+                    
                 }
             }
             catch { }
         }
 
-        public void LoadStation (string Path)
+        public void LoadStation(string Path)
         {
             try
             {
                 DataTable data = new DataTable();
                 data = Global_Object.LoadExcelFile(Path);
+                Console.WriteLine(data.Rows.Count);
                 foreach (DataRow row in data.Rows)
                 {
                     StationShape tempStation;
@@ -253,9 +263,19 @@ namespace MapViewPallet
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
                     stationList.Items.Add(new StationItem(tempStation));
+                    dgv_model.AddItem(new DgvStation
+                    {
+                        Name = tempStation.Name,
+                        Bays = tempStation.props.Bays,
+                        Rows = tempStation.props.Rows,
+                        Position = tempStation.props._posision,
+                        Angle = tempStation.props._rotate
+                    });
                 }
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         private void btn_LoadExcel_Click(object sender, RoutedEventArgs e)
@@ -350,24 +370,7 @@ namespace MapViewPallet
         }
         
         
-
-        //private void btn_ExtendMap_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //map.Width += 100;
-        //    //map.Height += 100;
-        //}
-
-        //private void btn_ShrinkMap_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //if ((map.Width - 100) > 1)
-        //    //{
-        //    //    map.Width -= 100;
-        //    //}
-        //    //if ((map.Height - 100) > 1)
-        //    //{
-        //    //    map.Height -= 100;
-        //    //}
-        //}
+        
 
         //private void btn_AddStation_Click(object sender, RoutedEventArgs e)
         //{
@@ -406,8 +409,8 @@ namespace MapViewPallet
 
         private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
         {
-            LoadPath(@"C:\Users\Charlie\Desktop\Path.xls");
-            LoadStation(@"C:\Users\Charlie\Desktop\StationMain.xls");
+            LoadPath(@"C:\Users\Phat\Desktop\seldat\Path.xls");
+            LoadStation(@"C:\Users\Phat\Desktop\seldat\StationMain.xls");
         }
     }
 
