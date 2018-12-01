@@ -84,21 +84,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <ToolBar Background="Transparent">
-                        <!--<Button Name="btn_DrawStraght" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_DrawStraight_Click" 
-                        ToolTip="DrawStraght" Content="Test" Height="25" Margin="2,0,0,0"/>-->
-                        <!--<Button Name="btn_StraightPath" BorderBrush="Black"
-                              BorderThickness="1" 
-                              Click="btn_StraightPath_Click_on"
-                              ToolTip="Draw Straight"
-                              Margin="2,0,0,0">
-                            <Image Margin="-2" Source="pack://siteoforigin:,,,/Resources/line.png" Stretch="Fill"  />
-                        </Button>
-                        <Button Name="btn_JoinPath" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_JoinPath_Click_on"
-                        ToolTip="Draw JoinPath" Margin="2,0,0,0">
-                            <Image Margin="-1" Source="pack://siteoforigin:,,,/Resources/phat_joinpath.png" Stretch="Fill"  />
-                        </Button>-->
+                        
                         <Button Name="btn_LoadExcel" BorderBrush="Black"
                         BorderThickness="1" Click="btn_LoadExcel_Click" 
                         ToolTip="LoadPath" Content="Load Path" Margin="2,0,0,0"
@@ -112,10 +98,6 @@
                         ToolTip="LoadAll" Content="Load All" Margin="2,0,0,0"
                         Height="25"/>
                         
-                        <!--<Button Name="btn_AdddStation" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_AddStation_Click" 
-                        ToolTip="AddStation" Content="Add Station" Margin="2,0,0,0"
-                        Height="25"/>-->
                     </ToolBar>
                 </Grid>
                 <Grid Grid.Column="1">
@@ -257,93 +239,6 @@
                                         </Canvas.Background>
                                         <Canvas.Children>
                                             <Rectangle x:Name="rect" Fill="Red" Width="1" Height="1"/>
-                                            <!--<Border x:Name="robot" Width="22" Height="15" BorderThickness="1" BorderBrush="Linen" Background="Black" CornerRadius="3">
-                                                --><!--<Image  Source="pack://siteoforigin:,,,/Resources/ssss.png"/>--><!--
-                                                <Grid Name="mainGrid" Background="Transparent">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="1"></ColumnDefinition>
-                                                        <ColumnDefinition></ColumnDefinition>
-                                                        <ColumnDefinition Width="1"></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Rectangle Grid.Column="0" Fill="OrangeRed" Height="7"></Rectangle>
-                                                    <Rectangle Grid.Column="2" Fill="DodgerBlue" Height="7"></Rectangle>
-                                                    <Border Name="statusBorder" Grid.Column="1" Width="10" Height="13"
-                                                            RenderTransformOrigin="0.5,0.5">
-                                                        <Grid Name="statusGrid">
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition></RowDefinition>
-                                                                <RowDefinition></RowDefinition>
-                                                            </Grid.RowDefinitions>
-                                                            <Label Name="rbID" Grid.Row="0" Padding="0" Margin="-5,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="9999" Foreground="Yellow" FontFamily="Calibri" FontSize="6" FontWeight="Bold"/>
-                                                            <Label Name="rbTask" Grid.Row="1" Padding="0" Margin="-5,-1" HorizontalAlignment="Center" VerticalAlignment="Top" Content="9999" Foreground="LawnGreen" FontFamily="Calibri" FontSize="6" FontWeight="Bold"/>
-                                                        </Grid>
-                                                    </Border>
-                                                </Grid>
-                                            </Border>-->
-                                            <!--<Grid Width="50" Height="50">
-                                                <Border Margin="0" BorderBrush="Red" BorderThickness="6" CornerRadius="5" Width="50" Height="50" Background="Lime">
-
-                                                </Border>
-                                            </Grid>-->
-
-                                            <!--<Path Stroke="Black" Data="M 0 4 L 16 4 L 10 0 M 16 4 L 10 8" />-->
-                                            <!--<Button MinWidth="100">Click
-                                                <Button.RenderTransform>
-                                                    <MatrixTransform x:Name="myMatrixTransform">
-                                                        <MatrixTransform.Matrix >
-
-                                                             -->
-                                            <!--OffsetX and OffsetY specify the position of the button,
-              M11 stretches it, and M12 skews it.-->
-                                            <!-- 
-                                                            <Matrix OffsetX="10" OffsetY="100" M11="1" M12="0" M21="0" M22="-1"/>
-                                                        </MatrixTransform.Matrix>
-                                                    </MatrixTransform>
-                                                </Button.RenderTransform>
-                                            </Button>-->
-                                            <!--<Border BorderBrush="Red" BorderThickness="0.1" RenderTransformOrigin="0.5,0.5">                                                
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="1"/>
-                                                        <ColumnDefinition Width="1"/>
-                                                        <ColumnDefinition Width="1"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="1"/>
-                                                        <RowDefinition Height="1"/>
-                                                        <RowDefinition Height="1"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Border Padding="0" Grid.Column="0" Grid.Row="0">
-                                                        <Rectangle Fill="Blue"></Rectangle>
-                                                    </Border>
-                                                    <Border Padding="0" Grid.Column="0" Grid.Row="1">
-                                                        <Rectangle Fill="Blue"></Rectangle>
-                                                    </Border>
-                                                    <Border Padding="0" Grid.Column="0" Grid.Row="2">
-                                                        <Rectangle Fill="Blue"></Rectangle>
-                                                    </Border>
-                                                    <Border Padding="0" Grid.Column="1" Grid.Row="0">
-                                                        <Rectangle Fill="Blue"></Rectangle>
-                                                    </Border>
-                                                    <Border Padding="0" Grid.Column="1" Grid.Row="1">
-                                                        <Rectangle Fill="Blue"></Rectangle>
-                                                    </Border>
-                                                    <Border Padding="0" Grid.Column="1" Grid.Row="2">
-                                                        <Rectangle Fill="Blue"></Rectangle>
-                                                    </Border>
-                                                    <Border Padding="0" Grid.Column="2" Grid.Row="0">
-                                                        <Rectangle Fill="Blue"></Rectangle>
-                                                    </Border>
-                                                    <Border Padding="0" Grid.Column="2" Grid.Row="1">
-                                                        <Rectangle Fill="Blue"></Rectangle>
-                                                    </Border>
-                                                    <Border Padding="0" Grid.Column="2" Grid.Row="2">
-                                                        <Rectangle Fill="Blue"></Rectangle>
-                                                    </Border>
-                                                    
-                                                </Grid>
-                                            </Border>-->
-                                            <!--<Line X1="-100" X2="100" Y1="-100" Y2="100" Stroke="Black" Width="161" Height="140" Canvas.Left="46" Canvas.Top="70" />-->
                                         </Canvas.Children>
                                         <Canvas.RenderTransform>
                                             <TransformGroup>
@@ -360,16 +255,7 @@
                             <Border BorderBrush="#f5f5f5" BorderThickness="1,0,0,0">
                                 <ToolBarTray Background="#f5f5f5" Orientation="Vertical">
                                     <ToolBar Background="Transparent">
-                                        <!--<Button Name="btn_ExtendMap" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_ExtendMap_Click" 
-                        ToolTip="Extend Map" Margin="0,2,0,0" Width="20" Height="20">
-                                            <Image Margin="-4" Source="pack://siteoforigin:,,,/Resources/phat_mapExtend.png" Stretch="Fill"  />
-                                        </Button>
-                                        <Button Name="btn_ShrinkMap" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_ShrinkMap_Click" 
-                        ToolTip="Shrink Map" Margin="0,2,0,0" Width="20" Height="20">
-                                            <Image Margin="-5" Source="pack://siteoforigin:,,,/Resources/phat_mapShrink.png" Stretch="Fill"  />
-                                        </Button>-->
+                                        
                                     </ToolBar>
                                 </ToolBarTray>
                             </Border>
@@ -396,7 +282,9 @@
                                               ItemsSource="{Binding Stations_DGV}"
                                               CanUserAddRows="False" CanUserDeleteRows="False" 
                                               CanUserResizeColumns="False" CanUserResizeRows="False" 
-                                              CanUserReorderColumns="False"/>
+                                              CanUserReorderColumns="False" AlternatingRowBackground="Gainsboro"  
+                                              AlternationCount="2" SelectionMode="Single" SelectionUnit="FullRow"
+                                              SelectedCellsChanged="StationsDataGrid_SelectedCellsChanged"/>
                                 </TabItem>
                                 <TabItem Header="Orders" >
                                     <DataGrid Name="OrdersDataGrid"/>

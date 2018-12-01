@@ -21,13 +21,6 @@ namespace MapViewPallet.DataGridView
         {
             _stations = new List<DgvStation>();
             Stations_DGV = CollectionViewSource.GetDefaultView(_stations);
-            Stations_DGV.CollectionChanged += asd;
-
-        }
-
-        private void asd(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            
         }
 
         public void AddItem(DgvStation x)

@@ -112,88 +112,6 @@ namespace MapViewPallet
             finally { }
         }
         
-
-        //private void btn_DrawStraight_Click(object sender, RoutedEventArgs e)
-        //{
-        //    drag = true;
-        //    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT;
-        //    Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._DRAWING;
-            
-        //    ////=================DRAW TEST====================
-        //    string name = "Sheet1";
-        //    string constr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
-        //                    "C:\\Users\\Charlie\\Desktop\\test.xls" +
-        //                    ";Extended Properties='Excel 12.0 XML;HDR=YES;';";
-
-        //    OleDbConnection con = new OleDbConnection(constr);
-        //    OleDbCommand oconn = new OleDbCommand("Select * From [" + name + "$]", con);
-        //    con.Open();
-
-        //    OleDbDataAdapter sda = new OleDbDataAdapter(oconn);
-        //    DataTable data = new DataTable();
-        //    sda.Fill(data);
-        //    foreach (DataRow row in data.Rows)
-        //    {
-        //        PathShape tempPath;
-        //        double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
-        //        double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
-        //        Point ori = new Point(oriX, oriY);
-        //        double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
-        //        double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
-        //        Point des = new Point(desX, desY);
-                
-        //        // ... Write value of first field as integer.
-        //        if (row.Field<string>("TYPE") == "CurvePath")
-        //        {
-        //            bool Curve = bool.Parse(row.Field<string>("CURVE"));
-        //            tempPath = new CurvePath(map, ori, des, Curve);
-
-        //        }
-        //        else
-        //        {
-        //            tempPath = new StraightPath(map, ori, des);
-        //        }
-        //        tempPath.RemoveHandle += palletViewEventControl.PathRemove;
-        //        palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
-        //    }
-
-        //    //====================================
-        //}
-
-        
-        
-
-        //private void btn_Warning_Click(object sender, RoutedEventArgs e)
-        //{
-        //    //if (!play)
-        //    //{
-        //    //    Stream str = Properties.Resources.tennessee_whiskey;
-        //    //    snd.Stream = str;
-        //    //    snd.PlayLooping();
-        //    //    play = true;
-        //    //}
-        //    //else
-        //    //{
-        //    //    snd.Stop();
-        //    //    play = false;
-        //    //}
-
-        //}
-
-        //private void btn_HandDrawCurveUp_Click(object sender, RoutedEventArgs e)
-        //{
-        //    drag = false;
-        //    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_P1;
-        //    Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
-        //}
-
-        //private void btn_HandDrawCurveDown_Click(object sender, RoutedEventArgs e)
-        //{
-        //    drag = false;
-        //    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_P1;
-        //    Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
-        //}
-        
         public void LoadPath (string Path)
         {
             try
@@ -325,30 +243,7 @@ namespace MapViewPallet
             }
             catch { }
         }
-
-
-        //private void btn_StraightPath_Click_on(object sender, RoutedEventArgs e)
-        //{
-        //    drag = false;
-        //    //btn_JoinPath.IsChecked = false;
-        //    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1;
-        //    Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
-        //}
-
-        //private void btn_JoinPath_Click_on(object sender, RoutedEventArgs e)
-        //{
-        //    drag = false;
-        //    //btn_StraightPath.IsChecked = false;
-        //    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_P1;
-        //    Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
-        //}
-
-        //private void btn_Normal_Click(object sender, RoutedEventArgs e)
-        //{
-        //    drag = true;
-        //    Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
-        //    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._NORMAL;
-        //}
+        
 
         private void ChangeMapSize(object sender, RoutedEventArgs e)
         {
@@ -360,12 +255,7 @@ namespace MapViewPallet
         
         
 
-        //private void btn_AddStation_Click(object sender, RoutedEventArgs e)
-        //{
-        //    drag = false;
-        //    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._ADD_STATION;
-        //    Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
-        //}
+        
 
         private void clearLog_Clicked(object sender, RoutedEventArgs e)
         {
@@ -397,8 +287,14 @@ namespace MapViewPallet
 
         private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
         {
-            LoadPath(@"C:\Users\Phat\Desktop\seldat\Path.xls");
-            LoadStation(@"C:\Users\Phat\Desktop\seldat\StationMain.xls");
+            LoadPath(@"C:\Users\LI\Desktop\Path.xls");
+            LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
+        }
+
+        private void StationsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            DgvStation temp = (sender as System.Windows.Controls.DataGrid).CurrentCell.Item as DgvStation;
+            Console.WriteLine(temp.Name+"-" + temp.Bays + "-"+ temp.Rows);
         }
     }
 

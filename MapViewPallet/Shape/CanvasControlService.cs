@@ -126,7 +126,7 @@ namespace MapViewPallet.Shape
 
         private void ClipBorder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Console.WriteLine("ClipBorder_SizeChanged");
+            //Console.WriteLine("ClipBorder_SizeChanged");
             ReCenterMapCanvas();
         }
         private void Map_MouseDown(object sender, MouseButtonEventArgs e)
