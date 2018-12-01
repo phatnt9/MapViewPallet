@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace MapViewPallet.Shape
 {
-    class Robot : Border
+    class CanvasRobot : Border
     {
         public event Action<string> RemoveHandle;
         public struct Props
@@ -22,24 +22,24 @@ namespace MapViewPallet.Shape
             public Grid statusGrid;
             public Point position; //on canvas
             public double rotate;
-            public TranslateTransform myTranslate1;
-            public TransformGroup myTransformGroup1;
-            public RotateTransform myRotateTransform1;
-            public TranslateTransform myTranslate2;
-            public TransformGroup myTransformGroup2;
-            public RotateTransform myRotateTransform2;
-            public Border statusBorder;
             public Label rbID;
             public Label rbTask;
             public Rectangle headLed;
             public Rectangle tailLed;
+            public TranslateTransform rbTranslate;
+            public TransformGroup rbTransformGroup;
+            public RotateTransform rbRotateTransform;
+            public TranslateTransform contentTranslate;
+            public TransformGroup contentTransformGroup;
+            public RotateTransform contentRotateTransform;
+            public Border statusBorder;
             public List<Point> eightCorner;
         }
 
         public Properties robotProperties;
         public Props props;
 
-        public Robot(Canvas pCanvas)
+        public CanvasRobot(Canvas pCanvas)
         {
             ToolTip = "";
             ToolTipOpening += ChangeToolTipContent;
@@ -78,12 +78,12 @@ namespace MapViewPallet.Shape
                 Point temp = new Point();
                 props.eightCorner.Add(temp);
             }
-            props.myRotateTransform1 = new RotateTransform();
-            props.myTranslate1 = new TranslateTransform();
-            props.myTransformGroup1 = new TransformGroup();
-            props.myRotateTransform2 = new RotateTransform();
-            props.myTranslate2 = new TranslateTransform();
-            props.myTransformGroup2 = new TransformGroup();
+            props.rbRotateTransform = new RotateTransform();
+            props.rbTranslate = new TranslateTransform();
+            props.rbTransformGroup = new TransformGroup();
+            props.contentRotateTransform = new RotateTransform();
+            props.contentTranslate = new TranslateTransform();
+            props.contentTransformGroup = new TransformGroup();
             robotProperties = new Properties(this);
             //===================STYLE=====================
             //Robot border
@@ -157,12 +157,12 @@ namespace MapViewPallet.Shape
             props.mainGrid.Children.Add(props.headLed);
             props.mainGrid.Children.Add(props.tailLed);
             props.mainGrid.Children.Add(props.statusBorder);
-            props.myTransformGroup1.Children.Add(props.myRotateTransform1);
-            props.myTransformGroup1.Children.Add(props.myTranslate1);
-            RenderTransform = props.myTransformGroup1;
-            props.myTransformGroup2.Children.Add(props.myRotateTransform2);
-            props.myTransformGroup2.Children.Add(props.myTranslate2);
-            props.statusBorder.RenderTransform = props.myTransformGroup2;
+            props.rbTransformGroup.Children.Add(props.rbRotateTransform);
+            props.rbTransformGroup.Children.Add(props.rbTranslate);
+            RenderTransform = props.rbTransformGroup;
+            props.contentTransformGroup.Children.Add(props.contentRotateTransform);
+            props.contentTransformGroup.Children.Add(props.contentTranslate);
+            props.statusBorder.RenderTransform = props.contentTransformGroup;
             props.canvas = pCanvas;
             Child = props.mainGrid;
             props.canvas.Children.Add(this);
@@ -189,13 +189,13 @@ namespace MapViewPallet.Shape
         public void Draw()
         {
             //Render Robot
-            props.myRotateTransform1.Angle = props.rotate;
-            props.myTranslate1 = new TranslateTransform(props.position.X - (Width / 2), props.position.Y - (Height / 2));
-            props.myTransformGroup1.Children[1] = props.myTranslate1;
+            props.rbRotateTransform.Angle = props.rotate;
+            props.rbTranslate = new TranslateTransform(props.position.X - (Width / 2), props.position.Y - (Height / 2));
+            props.rbTransformGroup.Children[1] = props.rbTranslate;
             //Render Status
-            props.myRotateTransform2.Angle = -(props.rotate);
-            props.myTranslate2 = new TranslateTransform(0,0);
-            props.myTransformGroup2.Children[1] = props.myTranslate2;
+            props.contentRotateTransform.Angle = -(props.rotate);
+            props.contentTranslate = new TranslateTransform(0,0);
+            props.contentTransformGroup.Children[1] = props.contentTranslate;
             // SPECIAL POINTS
             //props.eightCorner[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
             //props.eightCorner[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left

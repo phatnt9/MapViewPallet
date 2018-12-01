@@ -6,14 +6,15 @@ using System.Windows.Shapes;
 
 namespace MapViewPallet.Shape
 {
-    public class Curve: PathShape
+
+    public class CanvasCurve: CanvasPath
     {
         readonly double rate = 0.3;
         readonly double t = 0.65;
-        Point Control;
+        Point controlPoint;
         BezierSegment bezierSegment;
         bool direction; // true= Up, false = Down
-        public Curve(Canvas canvas, Point Start, Point End, bool direction) : base(canvas, Start, End)
+        public CanvasCurve(Canvas canvas, Point Start, Point End, bool direction) : base(canvas, Start, End)
         {
             
             bezierSegment = new BezierSegment();
@@ -25,7 +26,7 @@ namespace MapViewPallet.Shape
             props._arrow.Name = Name;
             this.direction = direction;
             RenderTransformOrigin = new Point(0, 1);
-            Control = new Point();
+            controlPoint = new Point();
             Draw();
         }
 
@@ -41,28 +42,28 @@ namespace MapViewPallet.Shape
             props._start.Y = Height;
             props._end.X = Width;
             props._end.Y = Height;
-            //Control point of Path
+            //Control point
             props.xDiff = props._desMousePos.X - props._oriMousePos.X;
             props.yDiff = props._desMousePos.Y - props._oriMousePos.Y;
-            Control.X = Width / 2;
-            Control.Y = -Height / 1.5;
+            controlPoint.X = Width / 2;
+            controlPoint.Y = -Height / 1.5;
             //Middle point of curve path
             //-----------Middle point-------------
-            props._middle.X = (1 - t) * (1 - t) * (1 - t) * props._start.X + 3 * (1 - t) * (1 - t) * t * props._start.X + 3 * (1 - t) * t * t * Control.X + t * t * t * props._end.X;
-            props._middle.Y = (1 - t) * (1 - t) * (1 - t) * props._start.Y + 3 * (1 - t) * (1 - t) * t * props._start.Y + 3 * (1 - t) * t * t * Control.Y + t * t * t * props._end.Y;
+            props._middle.X = (1 - t) * (1 - t) * (1 - t) * props._start.X + 3 * (1 - t) * (1 - t) * t * props._start.X + 3 * (1 - t) * t * t * controlPoint.X + t * t * t * props._end.X;
+            props._middle.Y = (1 - t) * (1 - t) * (1 - t) * props._start.Y + 3 * (1 - t) * (1 - t) * t * props._start.Y + 3 * (1 - t) * t * t * controlPoint.Y + t * t * t * props._end.Y;
             //--------------------------------
             // Point at _start and _end
             props._pointTail.RenderTransform = new TranslateTransform(Width / 2, Height / 2);
             props._pointHead.RenderTransform = new TranslateTransform(-Width / 2, Height / 2);
             //Arrow show direction
             //3 Point of Triangle
-            props.points[0] = (new Point(props._middle.X - props.sizeArrow, props._middle.Y - props.sizeArrow));
-            props.points[1] = (new Point(props._middle.X - props.sizeArrow, props._middle.Y + props.sizeArrow));
-            props.points[2] = (new Point(props._middle.X + props.sizeArrow + 1, props._middle.Y));
-            props._arrow.Points = props.points;
+            props.arrowPoints[0] = (new Point(props._middle.X - props.sizeArrow, props._middle.Y - props.sizeArrow));
+            props.arrowPoints[1] = (new Point(props._middle.X - props.sizeArrow, props._middle.Y + props.sizeArrow));
+            props.arrowPoints[2] = (new Point(props._middle.X + props.sizeArrow + 1, props._middle.Y));
+            props._arrow.Points = props.arrowPoints;
             //Position the Path
             bezierSegment.Point1 = props._start;
-            bezierSegment.Point2 = Control;
+            bezierSegment.Point2 = controlPoint;
             bezierSegment.Point3 = props._end;
             bezierSegment.IsStroked = true;
             if(props.pathSegments.Count>0)
@@ -80,14 +81,14 @@ namespace MapViewPallet.Shape
             props.myTranslate = new TranslateTransform(props._oriMousePos.X, props._oriMousePos.Y - (Height));
             props.myTransformGroup.Children[1] = props.myTranslate;
             // SPECIAL POINTS
-            props.eightCorner[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
-            props.eightCorner[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left
-            props.eightCorner[2] = CoorPointAtBorder(new Point((Width / 2), (0)));           //top-mid
-            props.eightCorner[3] = CoorPointAtBorder(new Point((Width), (0)));             //top-right
-            props.eightCorner[4] = CoorPointAtBorder(new Point((Width), (Height / 2)));      //mid-right
-            props.eightCorner[5] = CoorPointAtBorder(new Point((Width), (Height)));        //bot-right
-            props.eightCorner[6] = CoorPointAtBorder(new Point((Width / 2), (Height)));      //bot-mid
-            props.eightCorner[7] = CoorPointAtBorder(new Point((0), (Height)));            //bot-left
+            props.cornerPoints[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
+            props.cornerPoints[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left
+            props.cornerPoints[2] = CoorPointAtBorder(new Point((Width / 2), (0)));           //top-mid
+            props.cornerPoints[3] = CoorPointAtBorder(new Point((Width), (0)));             //top-right
+            props.cornerPoints[4] = CoorPointAtBorder(new Point((Width), (Height / 2)));      //mid-right
+            props.cornerPoints[5] = CoorPointAtBorder(new Point((Width), (Height)));        //bot-right
+            props.cornerPoints[6] = CoorPointAtBorder(new Point((Width / 2), (Height)));      //bot-mid
+            props.cornerPoints[7] = CoorPointAtBorder(new Point((0), (Height)));            //bot-left
         }
 
         public Point CoorPointAtBorder(Point pointOnBorder)

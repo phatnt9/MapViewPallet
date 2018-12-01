@@ -394,8 +394,9 @@
                                 <TabItem Header="Stations">
                                     <DataGrid Name="StationsDataGrid"
                                               ItemsSource="{Binding Stations_DGV}"
-                                              CanUserAddRows="False" CanUserResizeColumns="False"
-                                              CanUserResizeRows="False"/>
+                                              CanUserAddRows="False" CanUserDeleteRows="False" 
+                                              CanUserResizeColumns="False" CanUserResizeRows="False" 
+                                              CanUserReorderColumns="False"/>
                                 </TabItem>
                                 <TabItem Header="Orders" >
                                     <DataGrid Name="OrdersDataGrid"/>

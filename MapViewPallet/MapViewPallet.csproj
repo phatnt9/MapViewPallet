@@ -67,8 +67,8 @@
     <Compile Include="MiniForm\MapResize.Designer.cs">
       <DependentUpon>MapResize.cs</DependentUpon>
     </Compile>
-    <Compile Include="Shape\Curve.cs" />
-    <Compile Include="Shape\Pallet.cs" />
+    <Compile Include="Shape\CanvasCurve.cs" />
+    <Compile Include="Shape\CanvasPallet.cs" />
     <Compile Include="Shape\CanvasControlService.cs" />
     <Compile Include="Shape\Properties.cs">
       <SubType>Form</SubType>
@@ -76,10 +76,10 @@
     <Compile Include="Shape\Properties.Designer.cs">
       <DependentUpon>Properties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Shape\PathShape.cs" />
-    <Compile Include="Shape\Robot.cs" />
-    <Compile Include="Shape\Station.cs" />
-    <Compile Include="Shape\Straight.cs" />
+    <Compile Include="Shape\CanvasPath.cs" />
+    <Compile Include="Shape\CanvasRobot.cs" />
+    <Compile Include="Shape\CanvasStation.cs" />
+    <Compile Include="Shape\CanvasStraight.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

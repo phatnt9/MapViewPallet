@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace MapViewPallet.Shape
 {
-    public class Station : Border
+    public class CanvasStation : Border
     {
         public event Action<string> RemoveHandle;
 
@@ -29,7 +29,7 @@ namespace MapViewPallet.Shape
             public TransformGroup _myTransformGroup;
             public RotateTransform _myRotateTransform;
             public List<Point> _eightCorner;
-            public SortedDictionary<string, Pallet> _palletList;
+            public SortedDictionary<string, CanvasPallet> _palletList;
 
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID
@@ -126,7 +126,7 @@ namespace MapViewPallet.Shape
         public Properties stationProperties;
         public Props props;
 
-        public Station(Canvas pCanvas, string stationName, int bays, int rows, double rotate, string status)
+        public CanvasStation(Canvas pCanvas, string stationName, int bays, int rows, double rotate, string status)
         {
             Background = new SolidColorBrush(Colors.Transparent);
             //ToolTip = "";
@@ -166,7 +166,7 @@ namespace MapViewPallet.Shape
             props.Rows = rows;
             Width = 11 * props.Bays;
             Height = 13 * props.Rows;
-            props._palletList = new SortedDictionary<string, Pallet>();
+            props._palletList = new SortedDictionary<string, CanvasPallet>();
             props._myRotateTransform = new RotateTransform();
             props._myTranslate = new TranslateTransform();
             props._myTransformGroup = new TransformGroup();
@@ -209,7 +209,7 @@ namespace MapViewPallet.Shape
                     gridLine.RowDefinitions.Add(rowTemp);
                     //=============
 
-                    Pallet palletTemp = new Pallet(Name + "x" + lineIndex + "x" + palletIndex, status);
+                    CanvasPallet palletTemp = new CanvasPallet(Name + "x" + lineIndex + "x" + palletIndex, status);
                     Grid.SetRow(palletTemp, palletIndex);
                     gridLine.Children.Add(palletTemp);
                     props._palletList.Add(palletTemp.Name, palletTemp);

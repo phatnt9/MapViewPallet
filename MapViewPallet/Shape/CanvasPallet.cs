@@ -14,14 +14,14 @@ using System.Windows.Shapes;
 
 namespace MapViewPallet.Shape
 {
-    public class Pallet : Border
+    public class CanvasPallet : Border
     {
         private double palletWidth = 1; //metters
         private double palletHeight = 1.2; //metters
         private double palletMargin = 0.05; //metters
         //private double palletPadding = 0.5; //metters
 
-        public Pallet(string name, string status)
+        public CanvasPallet(string name, string status)
         {
             Name = name;
             // Specific Size of Pallet

@@ -9,15 +9,19 @@ using System.Collections.Generic;
 
 namespace MapViewPallet.Shape
 {
-    public class PathShape: Border
+    public class CanvasPath: Border
     {
         public event Action<string> RemoveHandle;
-        public struct Props
+        public struct Properties
         {
             public string name;
             public int coorStep;
             public bool isSelected;
             public bool isHovering;
+            public double xDiff;
+            public double yDiff;
+            public double rotate;
+            public double sizeArrow;
             public Canvas canvas;
             public Grid pathGrid;
             public Point _oriMousePos;
@@ -32,15 +36,11 @@ namespace MapViewPallet.Shape
             public PathFigure pathFigure;
             public PathGeometry pathGeometry;
             public PathSegmentCollection pathSegments;
-            public double xDiff;
-            public double yDiff;
-            public double rotate;
-            public double sizeArrow;
             public TranslateTransform myTranslate;
             public TransformGroup myTransformGroup;
             public RotateTransform myRotateTransform;
-            public PointCollection points;
-            public List<Point> eightCorner;
+            public PointCollection arrowPoints;
+            public List<Point> cornerPoints;
 
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID
@@ -104,10 +104,12 @@ namespace MapViewPallet.Shape
 
 
         }
-        public Properties pathProperties;
-        public Props props;
-        //====================METHOD=============================
-        public PathShape(Canvas pCanvas, Point Start, Point End)
+        public Shape.Properties pathProperties;
+        public Properties props;
+
+
+        //******************METHOD******************
+        public CanvasPath(Canvas pCanvas, Point Start, Point End)
         {
             ToolTip = "";
             ToolTipOpening += ChangeToolTipContent;
@@ -115,27 +117,32 @@ namespace MapViewPallet.Shape
             props.coorStep = 10;
             props.isSelected = false;
             props.isHovering = false;
+
+
+            //*********CONTEX_MENU*********
             ContextMenu = new ContextMenu();
-            //===================================
             MenuItem editItem = new MenuItem();
             editItem.Header = "Edit";
             editItem.Click += EditMenu;
-            //===================================
             MenuItem removeItem = new MenuItem();
             removeItem.Header = "Remove";
             removeItem.Click += RemoveMenu;
             ContextMenu.Items.Add(editItem);
             ContextMenu.Items.Add(removeItem);
-            //====================EVENT=====================
+
+
+            //*********MOUSE_EVENT*********
             MouseLeave += MouseLeavePath;
             MouseMove += MouseHoverPath;
             MouseLeftButtonDown += MouseLeftButtonDownPath;
             MouseRightButtonDown += MouseRightButtonDownPath;
-            //===================CREATE=====================
-            props.points = new PointCollection(3);
+
+
+            //*********CREATE_NEW*********
+            props.arrowPoints = new PointCollection(3);
             for (int i=0;i<3;i++)
             {
-                props.points.Add(new Point());
+                props.arrowPoints.Add(new Point());
             }
             props._oriMousePos = new Point(Start.X,Start.Y);
             props._desMousePos = new Point(End.X, End.Y);
@@ -150,8 +157,8 @@ namespace MapViewPallet.Shape
             props.myRotateTransform = new RotateTransform();
             props.myTranslate = new TranslateTransform();
             props.myTransformGroup = new TransformGroup();
-            pathProperties = new Properties(this);
-            //===================STYLE=====================
+            pathProperties = new Shape.Properties(this);
+            //*********STYLE_CONTROL*********
             Background = new SolidColorBrush(Colors.Transparent);
             BorderBrush = new SolidColorBrush(Colors.Transparent);
             BorderThickness = new Thickness(0.1);
@@ -166,7 +173,7 @@ namespace MapViewPallet.Shape
             props._arrow.StrokeThickness = 0.7;
             props._shape.Stroke = new SolidColorBrush(Colors.Gray);
             props._shape.StrokeThickness = 0.7;
-            //==================CHILDREN===================
+            //*********ADD_CHILDREN*********
             props.pathFigure.IsClosed = false;
             props.pathFigure.Segments = props.pathSegments;
             props.pathGeometry.Figures.Add(props.pathFigure);
@@ -175,11 +182,11 @@ namespace MapViewPallet.Shape
             props.myTransformGroup.Children.Add(props.myTranslate);
             RenderTransform = props.myTransformGroup;
             props.canvas = pCanvas;
-            props.eightCorner = new List<Point>();
+            props.cornerPoints = new List<Point>();
             for (int i = 0; i < 8; i++)
             {
                 Point temp = new Point();
-                props.eightCorner.Add(temp);
+                props.cornerPoints.Add(temp);
             }
             props.pathGrid.Children.Add(props._shape);
             props.pathGrid.Children.Add(props._pointHead);
