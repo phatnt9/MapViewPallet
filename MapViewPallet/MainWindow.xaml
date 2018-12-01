@@ -144,7 +144,7 @@
                                 <MenuItem Header="Add..." />
                                 <MenuItem Header="Rename"/>
                             </ContextMenu>
-                            <HierarchicalDataTemplate DataType="{x:Type self:StationList}" ItemsSource="{Binding Items}">
+                            <HierarchicalDataTemplate DataType="{x:Type self:Trv_StationGroup}" ItemsSource="{Binding Items}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Height="16" Margin="0,0,5,0" Source="{Binding Icon}"/>
                                     <TextBlock Text="{Binding Title}" />
@@ -153,7 +153,7 @@
                                     <TextBlock Text="]" Foreground="Blue" />
                                 </StackPanel>
                             </HierarchicalDataTemplate>
-                            <DataTemplate DataType="{x:Type self:StationItem}">
+                            <DataTemplate DataType="{x:Type self:Trv_Station}">
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel.ContextMenu>
                                         <ContextMenu>
@@ -394,7 +394,8 @@
                                 <TabItem Header="Stations">
                                     <DataGrid Name="StationsDataGrid"
                                               ItemsSource="{Binding Stations_DGV}"
-                                              CanUserAddRows="False"/>
+                                              CanUserAddRows="False" CanUserResizeColumns="False"
+                                              CanUserResizeRows="False"/>
                                 </TabItem>
                                 <TabItem Header="Orders" >
                                     <DataGrid Name="OrdersDataGrid"/>

@@ -61,17 +61,15 @@
     <Compile Include="DataGridView\MainWindowDataGridViewModel.cs" />
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
-    <Compile Include="LoadExcels.cs" />
-    <Compile Include="MainTreeView.cs" />
     <Compile Include="MiniForm\MapResize.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MiniForm\MapResize.Designer.cs">
       <DependentUpon>MapResize.cs</DependentUpon>
     </Compile>
-    <Compile Include="Shape\CurvePath.cs" />
-    <Compile Include="Shape\PalletShape.cs" />
-    <Compile Include="Shape\PalletViewControlService.cs" />
+    <Compile Include="Shape\Curve.cs" />
+    <Compile Include="Shape\Pallet.cs" />
+    <Compile Include="Shape\CanvasControlService.cs" />
     <Compile Include="Shape\Properties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,9 +77,9 @@
       <DependentUpon>Properties.cs</DependentUpon>
     </Compile>
     <Compile Include="Shape\PathShape.cs" />
-    <Compile Include="Shape\RobotShape.cs" />
-    <Compile Include="Shape\StationShape.cs" />
-    <Compile Include="Shape\StraightPath.cs" />
+    <Compile Include="Shape\Robot.cs" />
+    <Compile Include="Shape\Station.cs" />
+    <Compile Include="Shape\Straight.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

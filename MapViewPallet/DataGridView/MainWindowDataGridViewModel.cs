@@ -20,16 +20,6 @@ namespace MapViewPallet.DataGridView
         public MainWindowDataGridViewModel()
         {
             _stations = new List<DgvStation>();
-            _stations.Add(
-                new DgvStation {
-                    Angle = 22,
-                    Bays = 3,
-                    Name = "sss",
-                    Position = new System.Windows.Point(202, 20),
-                    Rows = 9
-                }
-                
-                );
             Stations_DGV = CollectionViewSource.GetDefaultView(_stations);
             Stations_DGV.CollectionChanged += asd;
 
@@ -43,7 +33,7 @@ namespace MapViewPallet.DataGridView
         public void AddItem(DgvStation x)
         {
             _stations.Add(x);
-           
+            Stations_DGV.Refresh();
         }
 
     }

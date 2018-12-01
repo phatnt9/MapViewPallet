@@ -24,28 +24,27 @@ namespace MapViewPallet
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-    public class StationList
+    public class Trv_StationGroup
     {
-        public StationList()
+        public Trv_StationGroup()
         {
-            Items = new ObservableCollection<StationItem>();
+            Items = new ObservableCollection<Trv_Station>();
             Title = "Stations";
             Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
         }
         public string Title { get; set; }
         public string Icon { get; set; }
-        public ObservableCollection<StationItem> Items { get; set; }
+        public ObservableCollection<Trv_Station> Items { get; set; }
     }
-    public class StationItem
+    public class Trv_Station
     {
-        public StationShape station;
+        public Station station;
 
-        public StationItem(StationShape pStation)
+        public Trv_Station(Station pStation)
         {
             station = pStation;
             Name = station.Name;
             Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
-            //===================================
         }
         public string Name { get; set; }
         public string Icon { get; set; }
@@ -59,22 +58,13 @@ namespace MapViewPallet
         //=================VARIABLE==================
         public Point renderTransformOrigin = new Point(0, 0);
         public bool drag = true;
-        bool play = false;
+        //bool play = false;
         MainWindowDataGridViewModel dgv_model;
-
-        //====================
-        StationList stationList;
-        //RobotList robotList;
-        List<dynamic> trvItems;
-        //====================
+        Trv_StationGroup stationGroup;
+        List<dynamic> trvGroups;
         Point transform = new Point(0, 0);
-        private PalletViewControlService palletViewEventControl;
+        private CanvasControlService palletViewEventControl;
         System.Media.SoundPlayer snd;
-        //public event Action<double, double> LoadMapSizeHandle;
-        //=================CLASS==================
-
-
-        //=================METHOD==================
         
         
         
@@ -82,23 +72,21 @@ namespace MapViewPallet
         public MainWindow()
         {
             InitializeComponent();
-            RobotShape xxx = new RobotShape(map);
-            xxx.ReDraw(new Point(600, 400), -45);
-            xxx.ChangeTask("22");
+            Robot rbot = new Robot(map);
+            rbot.ReDraw(new Point(600, 400), -45);
+            rbot.ChangeTask("22");
             //==============TreeView=============
-            trvItems = new List<dynamic>();
-            stationList = new StationList();
-            //robotList = new RobotList();
-            trvItems.Add(stationList);
-            //trvItems.Add(robotList);
-            mainTreeView.ItemsSource = trvItems;
+            trvGroups = new List<dynamic>();
+            stationGroup = new Trv_StationGroup();
+            trvGroups.Add(stationGroup);
+            mainTreeView.ItemsSource = trvGroups;
             //===================================
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
             ImageBrush img = LoadImage("Map");
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
-            palletViewEventControl = new PalletViewControlService(this, mainTreeView);
+            palletViewEventControl = new CanvasControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
             //===============DATAGRIDVIEW========
             dgv_model = new MainWindowDataGridViewModel();
@@ -214,7 +202,7 @@ namespace MapViewPallet
                 data = Global_Object.LoadExcelFile(Path);
                 foreach (DataRow row in data.Rows)
                 {
-                    PathShape tempPath;
+                    Shape.PathShape tempPath;
                     double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
                     double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
                     Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
@@ -227,11 +215,11 @@ namespace MapViewPallet
                     if (row.Field<string>("TYPE") == "CurvePath")
                     {
                         bool Curve = bool.Parse(row.Field<string>("CURVE"));
-                        tempPath = new CurvePath(map, ori, des, Curve);
+                        tempPath = new Curve(map, ori, des, Curve);
                     }
                     else
                     {
-                        tempPath = new StraightPath(map, ori, des);
+                        tempPath = new Straight(map, ori, des);
                     }
                     tempPath.RemoveHandle += palletViewEventControl.PathRemove;
                     palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
@@ -250,7 +238,7 @@ namespace MapViewPallet
                 Console.WriteLine(data.Rows.Count);
                 foreach (DataRow row in data.Rows)
                 {
-                    StationShape tempStation;
+                    Station tempStation;
                     string stationName = row.Field<string>("NAME");
                     double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
                     double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
@@ -258,11 +246,11 @@ namespace MapViewPallet
                     int lines = int.Parse(row.Field<string>("LINES"));
                     int pallets = int.Parse(row.Field<string>("PALLETS"));
                     double rotate = double.Parse(row.Field<string>("ROTATE"));
-                    tempStation = new StationShape(map, stationName, lines, pallets, rotate, "normal");
+                    tempStation = new Station(map, stationName, lines, pallets, rotate, "normal");
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
-                    stationList.Items.Add(new StationItem(tempStation));
+                    stationGroup.Items.Add(new Trv_Station(tempStation));
                     dgv_model.AddItem(new DgvStation
                     {
                         Name = tempStation.Name,
@@ -286,7 +274,7 @@ namespace MapViewPallet
                 data = Global_Object.LoadExcelFile();
                 foreach (DataRow row in data.Rows)
                 {
-                    PathShape tempPath;
+                    Shape.PathShape tempPath;
                     double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
                     double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
                     Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
@@ -299,11 +287,11 @@ namespace MapViewPallet
                     if (row.Field<string>("TYPE") == "CurvePath")
                     {
                         bool Curve = bool.Parse(row.Field<string>("CURVE"));
-                        tempPath = new CurvePath(map, ori, des, Curve);
+                        tempPath = new Curve(map, ori, des, Curve);
                     }
                     else
                     {
-                        tempPath = new StraightPath(map, ori, des);
+                        tempPath = new Straight(map, ori, des);
                     }
                     tempPath.RemoveHandle += palletViewEventControl.PathRemove;
                     palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
@@ -320,7 +308,7 @@ namespace MapViewPallet
                 data = Global_Object.LoadExcelFile();
                 foreach (DataRow row in data.Rows)
                 {
-                    StationShape tempStation;
+                    Station tempStation;
                     string stationName = row.Field<string>("NAME");
                     double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
                     double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
@@ -328,11 +316,11 @@ namespace MapViewPallet
                     int lines = int.Parse(row.Field<string>("LINES"));
                     int pallets = int.Parse(row.Field<string>("PALLETS"));
                     double rotate = double.Parse(row.Field<string>("ROTATE"));
-                    tempStation = new StationShape(map, stationName, lines, pallets, rotate, "normal");
+                    tempStation = new Station(map, stationName, lines, pallets, rotate, "normal");
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
-                    stationList.Items.Add(new StationItem(tempStation));
+                    stationGroup.Items.Add(new Trv_Station(tempStation));
                 }
             }
             catch { }
@@ -396,15 +384,15 @@ namespace MapViewPallet
 
         private void StationEditMenu_Click(object sender, RoutedEventArgs e)
         {
-            StationItem temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as StationItem;
+            Trv_Station temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as Trv_Station;
             temp.station.stationProperties.ShowDialog();
         }
 
         private void StationRemoveMenu_Click(object sender, RoutedEventArgs e)
         {
-            StationItem temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as StationItem;
+            Trv_Station temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as Trv_Station;
             temp.station.Remove();
-            stationList.Items.Remove(temp);
+            stationGroup.Items.Remove(temp);
         }
 
         private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
