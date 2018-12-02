@@ -1,18 +1,11 @@
 ﻿using MapViewPallet.DataGridView;
-using MapViewPallet.MiniForm;
 using MapViewPallet.Shape;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data;
-using System.Data.OleDb;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -24,23 +17,23 @@ namespace MapViewPallet
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-    public class Trv_StationGroup
+    public class TrvStationGroup
     {
-        public Trv_StationGroup()
+        public TrvStationGroup()
         {
-            Items = new ObservableCollection<Trv_Station>();
+            Items = new ObservableCollection<TrvStation>();
             Title = "Stations";
             Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
         }
         public string Title { get; set; }
         public string Icon { get; set; }
-        public ObservableCollection<Trv_Station> Items { get; set; }
+        public ObservableCollection<TrvStation> Items { get; set; }
     }
-    public class Trv_Station
+    public class TrvStation
     {
-        public CanvasStation station;
+        public StationShape station;
 
-        public Trv_Station(CanvasStation pStation)
+        public TrvStation(StationShape pStation)
         {
             station = pStation;
             Name = station.Name;
@@ -56,11 +49,14 @@ namespace MapViewPallet
     public partial class MainWindow : Window
     {
         //=================VARIABLE==================
+        //bool play = false;
         public Point renderTransformOrigin = new Point(0, 0);
         public bool drag = true;
-        //bool play = false;
-        MainWindowDataGridViewModel dgv_model;
-        Trv_StationGroup stationGroup;
+        //Data Grid View
+        DgvModel dgv_model;
+        string previousStationNameId;
+        //Tree View
+        TrvStationGroup stationGroup;
         List<dynamic> trvGroups;
         Point transform = new Point(0, 0);
         private CanvasControlService palletViewEventControl;
@@ -72,14 +68,16 @@ namespace MapViewPallet
         public MainWindow()
         {
             InitializeComponent();
-            CanvasRobot rbot = new CanvasRobot(map);
+            RobotShape rbot = new RobotShape(map);
             rbot.ReDraw(new Point(600, 400), -45);
             rbot.ChangeTask("22");
             //==============TreeView=============
             trvGroups = new List<dynamic>();
-            stationGroup = new Trv_StationGroup();
+            stationGroup = new TrvStationGroup();
             trvGroups.Add(stationGroup);
             mainTreeView.ItemsSource = trvGroups;
+            mainTreeView.GotFocus += mainTreeView_GotFocus;
+            mainTreeView.LostFocus += mainTreeView_LostFocus;
             //===================================
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
             ImageBrush img = LoadImage("Map");
@@ -88,12 +86,29 @@ namespace MapViewPallet
             map.Background = img;
             palletViewEventControl = new CanvasControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
-            //===============DATAGRIDVIEW========
-            dgv_model = new MainWindowDataGridViewModel();
+            //===============DataGridView========
+            StationsDataGrid.CanUserAddRows = false;
+            StationsDataGrid.CanUserDeleteRows = false;
+            StationsDataGrid.CanUserReorderColumns = false;
+            StationsDataGrid.CanUserResizeColumns = false;
+            StationsDataGrid.CanUserResizeRows = false;
+            StationsDataGrid.SelectionMode = DataGridSelectionMode.Single;
+            StationsDataGrid.SelectionUnit = DataGridSelectionUnit.FullRow;
+            StationsDataGrid.SelectedCellsChanged += StationsDataGrid_SelectedCellsChanged;
+            StationsDataGrid.SelectionChanged += StationsDataGrid_SelectionChanged;
+            
+            StationsDataGrid.GotFocus += StationsDataGrid_GotFocus;
+            StationsDataGrid.LostFocus += StationsDataGrid_LostFocus;
+            dgv_model = new DgvModel();
+            previousStationNameId = "";
             DataContext = dgv_model;
         }
-
         
+        private void testinout(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Console.WriteLine("test in out");
+        }
+
         public ImageBrush LoadImage (string name)
         {
             System.Drawing.Bitmap bmp = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject(name);
@@ -133,11 +148,11 @@ namespace MapViewPallet
                     if (row.Field<string>("TYPE") == "CurvePath")
                     {
                         bool Curve = bool.Parse(row.Field<string>("CURVE"));
-                        tempPath = new CanvasCurve(map, ori, des, Curve);
+                        tempPath = new CurveShape(map, ori, des, Curve);
                     }
                     else
                     {
-                        tempPath = new CanvasStraight(map, ori, des);
+                        tempPath = new StraightShape(map, ori, des);
                     }
                     tempPath.RemoveHandle += palletViewEventControl.PathRemove;
                     palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
@@ -156,7 +171,7 @@ namespace MapViewPallet
                 Console.WriteLine(data.Rows.Count);
                 foreach (DataRow row in data.Rows)
                 {
-                    CanvasStation tempStation;
+                    StationShape tempStation;
                     string stationName = row.Field<string>("NAME");
                     double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
                     double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
@@ -164,11 +179,11 @@ namespace MapViewPallet
                     int lines = int.Parse(row.Field<string>("LINES"));
                     int pallets = int.Parse(row.Field<string>("PALLETS"));
                     double rotate = double.Parse(row.Field<string>("ROTATE"));
-                    tempStation = new CanvasStation(map, stationName, lines, pallets, rotate, "normal");
+                    tempStation = new StationShape(map, stationName, lines, pallets, rotate, "normal");
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
-                    stationGroup.Items.Add(new Trv_Station(tempStation));
+                    stationGroup.Items.Add(new TrvStation(tempStation));
                     dgv_model.AddItem(new DgvStation
                     {
                         Name = tempStation.Name,
@@ -205,11 +220,11 @@ namespace MapViewPallet
                     if (row.Field<string>("TYPE") == "CurvePath")
                     {
                         bool Curve = bool.Parse(row.Field<string>("CURVE"));
-                        tempPath = new CanvasCurve(map, ori, des, Curve);
+                        tempPath = new CurveShape(map, ori, des, Curve);
                     }
                     else
                     {
-                        tempPath = new CanvasStraight(map, ori, des);
+                        tempPath = new StraightShape(map, ori, des);
                     }
                     tempPath.RemoveHandle += palletViewEventControl.PathRemove;
                     palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
@@ -226,7 +241,7 @@ namespace MapViewPallet
                 data = Global_Object.LoadExcelFile();
                 foreach (DataRow row in data.Rows)
                 {
-                    CanvasStation tempStation;
+                    StationShape tempStation;
                     string stationName = row.Field<string>("NAME");
                     double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
                     double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
@@ -234,11 +249,11 @@ namespace MapViewPallet
                     int lines = int.Parse(row.Field<string>("LINES"));
                     int pallets = int.Parse(row.Field<string>("PALLETS"));
                     double rotate = double.Parse(row.Field<string>("ROTATE"));
-                    tempStation = new CanvasStation(map, stationName, lines, pallets, rotate, "normal");
+                    tempStation = new StationShape(map, stationName, lines, pallets, rotate, "normal");
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
-                    stationGroup.Items.Add(new Trv_Station(tempStation));
+                    stationGroup.Items.Add(new TrvStation(tempStation));
                 }
             }
             catch { }
@@ -274,13 +289,13 @@ namespace MapViewPallet
 
         private void StationEditMenu_Click(object sender, RoutedEventArgs e)
         {
-            Trv_Station temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as Trv_Station;
+            TrvStation temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as TrvStation;
             temp.station.stationProperties.ShowDialog();
         }
 
         private void StationRemoveMenu_Click(object sender, RoutedEventArgs e)
         {
-            Trv_Station temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as Trv_Station;
+            TrvStation temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as TrvStation;
             temp.station.Remove();
             stationGroup.Items.Remove(temp);
         }
@@ -293,8 +308,50 @@ namespace MapViewPallet
 
         private void StationsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            DgvStation temp = (sender as System.Windows.Controls.DataGrid).CurrentCell.Item as DgvStation;
-            Console.WriteLine(temp.Name+"-" + temp.Bays + "-"+ temp.Rows);
+            
+        }
+
+        private void StationsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+
+        private void StationsDataGrid_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
+            if (temp != null)
+            {
+                Console.WriteLine("In: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
+                palletViewEventControl.list_Station[temp.Name].SelectedStyle();
+                previousStationNameId = temp.Name;
+            }
+            else
+            {
+
+            }
+        }
+
+        private void StationsDataGrid_LostFocus(object sender, RoutedEventArgs e)
+        {
+            DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
+            if (temp!=null)
+            {
+                Console.WriteLine("Out: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
+                palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
+            }
+            else
+            {
+                palletViewEventControl.list_Station[previousStationNameId].DeselectedStyle();
+            }
+        }
+
+        private void mainTreeView_LostFocus(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void mainTreeView_GotFocus(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 

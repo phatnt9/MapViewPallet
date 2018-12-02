@@ -11,13 +11,13 @@ namespace MapViewPallet.DataGridView
 {
 
 
-    public class MainWindowDataGridViewModel
+    public class DgvModel
     {
         public ICollectionView Stations_DGV { get; private set; }
 
         //***************VARIABLES*********************
         public List<DgvStation> _stations;
-        public MainWindowDataGridViewModel()
+        public DgvModel()
         {
             _stations = new List<DgvStation>();
             Stations_DGV = CollectionViewSource.GetDefaultView(_stations);

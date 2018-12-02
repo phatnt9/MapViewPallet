@@ -7,14 +7,14 @@ using System.Windows.Shapes;
 namespace MapViewPallet.Shape
 {
 
-    public class CanvasCurve: CanvasPath
+    public class CurveShape: CanvasPath
     {
         readonly double rate = 0.3;
         readonly double t = 0.65;
         Point controlPoint;
         BezierSegment bezierSegment;
         bool direction; // true= Up, false = Down
-        public CanvasCurve(Canvas canvas, Point Start, Point End, bool direction) : base(canvas, Start, End)
+        public CurveShape(Canvas canvas, Point Start, Point End, bool direction) : base(canvas, Start, End)
         {
             
             bezierSegment = new BezierSegment();

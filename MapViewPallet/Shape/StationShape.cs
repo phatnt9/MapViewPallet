@@ -8,41 +8,27 @@ using System.ComponentModel;
 
 namespace MapViewPallet.Shape
 {
-    public class CanvasStation : Border
+    public class StationShape : Border
     {
         public event Action<string> RemoveHandle;
 
         public struct Props
         {
-            private string _name; //Considered as label
-            private int _bays;
-            private int _rows;
             public bool isSelected;
             public bool isHovering;
             public Canvas _canvas;
             public Grid _stationGrid; // Grid to hold all Pallet in Station
             public Point _posision; // Where station will be render,only accept Cavnas Coordinate
             public double _rotate; // Station rotate
-
             public Border _stationInfomation;
             public TranslateTransform _myTranslate;
             public TransformGroup _myTransformGroup;
             public RotateTransform _myRotateTransform;
             public List<Point> _eightCorner;
-            public SortedDictionary<string, CanvasPallet> _palletList;
+            public SortedDictionary<string, PalletShape> _palletList;
 
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public string NameID
-            {
-                get
-                {
-                    return _name;
-                }
-                set
-                {
-                    _name = value;
-                }
-            }
+            public string NameID { get; set; }
 
             [CategoryAttribute("Special Point"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public Point Point0
@@ -94,30 +80,10 @@ namespace MapViewPallet.Shape
             }
 
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public int Bays
-            {
-                get
-                {
-                    return _bays;
-                }
-                set
-                {
-                    _bays = value;
-                }
-            }
+            public int Bays { get; set; }
 
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public int Rows
-            {
-                get
-                {
-                    return _rows;
-                }
-                set
-                {
-                    _rows = value;
-                }
-            }
+            public int Rows { get; set; }
 
 
 
@@ -126,7 +92,7 @@ namespace MapViewPallet.Shape
         public Properties stationProperties;
         public Props props;
 
-        public CanvasStation(Canvas pCanvas, string stationName, int bays, int rows, double rotate, string status)
+        public StationShape(Canvas pCanvas, string stationName, int bays, int rows, double rotate, string status)
         {
             Background = new SolidColorBrush(Colors.Transparent);
             //ToolTip = "";
@@ -145,15 +111,15 @@ namespace MapViewPallet.Shape
             editItem.Header = "Edit";
             editItem.Click += EditMenu;
             //===================================
-            MenuItem rotateItem = new MenuItem();
-            rotateItem.Header = "Rotate";
-            rotateItem.Click += RotateMenu;
+            //MenuItem rotateItem = new MenuItem();
+            //rotateItem.Header = "Rotate";
+            //rotateItem.Click += RotateMenu;
             //===================================
             MenuItem removeItem = new MenuItem();
             removeItem.Header = "Remove";
             removeItem.Click += RemoveMenu;
             ContextMenu.Items.Add(editItem);
-            ContextMenu.Items.Add(rotateItem);
+            //ContextMenu.Items.Add(rotateItem);
             ContextMenu.Items.Add(removeItem);
             //====================EVENT=====================
             //MouseLeave += MouseLeaveStation;
@@ -166,14 +132,14 @@ namespace MapViewPallet.Shape
             props.Rows = rows;
             Width = 11 * props.Bays;
             Height = 13 * props.Rows;
-            props._palletList = new SortedDictionary<string, CanvasPallet>();
+            props._palletList = new SortedDictionary<string, PalletShape>();
             props._myRotateTransform = new RotateTransform();
             props._myTranslate = new TranslateTransform();
             props._myTransformGroup = new TransformGroup();
             RenderTransformOrigin = new Point(0, 0);
             stationProperties = new Properties(this);
-            BorderBrush = new SolidColorBrush(Colors.Black);
-            BorderThickness = new Thickness(0.3);
+            BorderBrush = new SolidColorBrush(Colors.Transparent);
+            BorderThickness = new Thickness(1);
             CornerRadius = new CornerRadius(1.2);
             props._stationGrid = new Grid();
             
@@ -209,7 +175,7 @@ namespace MapViewPallet.Shape
                     gridLine.RowDefinitions.Add(rowTemp);
                     //=============
 
-                    CanvasPallet palletTemp = new CanvasPallet(Name + "x" + lineIndex + "x" + palletIndex, status);
+                    PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex, status);
                     Grid.SetRow(palletTemp, palletIndex);
                     gridLine.Children.Add(palletTemp);
                     props._palletList.Add(palletTemp.Name, palletTemp);
@@ -319,5 +285,16 @@ namespace MapViewPallet.Shape
             double y1 = props._posision.Y + ((L * Math.Sin(rad1 + rad2)));
             return new Point(x1, y1);
         }
+
+        public void SelectedStyle ()
+        {
+            BorderBrush = new SolidColorBrush(Colors.Red);
+        }
+        public void DeselectedStyle()
+        {
+            BorderBrush = new SolidColorBrush(Colors.Transparent);
+        }
+
+        
     }
 }

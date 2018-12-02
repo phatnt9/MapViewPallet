@@ -6,12 +6,12 @@ using System.Windows.Shapes;
 
 namespace MapViewPallet.Shape
 {
-    public class CanvasStraight : CanvasPath
+    public class StraightShape : CanvasPath
     {
 
 
         LineSegment lineSegment;
-        public CanvasStraight(Canvas canvas, Point Start, Point End) : base(canvas, Start, End)
+        public StraightShape(Canvas canvas, Point Start, Point End) : base(canvas, Start, End)
         {
             lineSegment = new LineSegment();
             lineSegment.IsStroked = true;

@@ -34,7 +34,7 @@ namespace MapViewPallet.Shape
         
         //---------------OBJECT-------------------
         public SortedDictionary<string, CanvasPath> list_Path;
-        public SortedDictionary<string, CanvasStation> list_Station;
+        public SortedDictionary<string, StationShape> list_Station;
         //double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
         //---------------MICS-------------------
         //private Ellipse cursorPoint = new Ellipse();
@@ -47,7 +47,7 @@ namespace MapViewPallet.Shape
             scaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
             list_Path = new SortedDictionary<string, CanvasPath>();
-            list_Station = new SortedDictionary<string, CanvasStation>();
+            list_Station = new SortedDictionary<string, StationShape>();
             //==========EVENT==========
             map.MouseDown += Map_MouseDown;
             map.MouseWheel += Map_Zoom;
@@ -353,8 +353,8 @@ namespace MapViewPallet.Shape
                     {
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
                         {
-                            CanvasStation stationTemp = null;
-                            stationTemp = new CanvasStation(map, "MIX" + stationCount, 2, 7, 0, "normal");
+                            StationShape stationTemp = null;
+                            stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0, "normal");
                             stationCount++;
                             stationTemp.Move(mousePos);
                             //map.Children.Add(stationTemp);
@@ -373,7 +373,7 @@ namespace MapViewPallet.Shape
                     }
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1:
-                    pathTemp = new CanvasStraight(map, new Point(0, 0), new Point(0, 0));
+                    pathTemp = new StraightShape(map, new Point(0, 0), new Point(0, 0));
                     pathTemp.RemoveHandle += PathRemove;
                     if (mouseWasDownOn != null)
                     {
@@ -387,7 +387,7 @@ namespace MapViewPallet.Shape
                     }
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_P1:
-                    pathTemp = new CanvasCurve(map, new Point(0, 0), new Point(0, 0), true);
+                    pathTemp = new CurveShape(map, new Point(0, 0), new Point(0, 0), true);
                     if (mouseWasDownOn != null)
                     {
                         string elementName = mouseWasDownOn.Name;
@@ -400,7 +400,7 @@ namespace MapViewPallet.Shape
                     }
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_P1:
-                    pathTemp = new CanvasCurve(map, new Point(0, 0), new Point(0, 0), false);
+                    pathTemp = new CurveShape(map, new Point(0, 0), new Point(0, 0), false);
                     if (mouseWasDownOn != null)
                     {
                         string elementName = mouseWasDownOn.Name;
@@ -413,7 +413,7 @@ namespace MapViewPallet.Shape
                     }
                     break;
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_P1:
-                    pathTemp = new CanvasCurve(map, new Point(0, 0), new Point(0, 0), false);
+                    pathTemp = new CurveShape(map, new Point(0, 0), new Point(0, 0), false);
                     if (mouseWasDownOn != null)
                     {
                         string elementName = mouseWasDownOn.Name;

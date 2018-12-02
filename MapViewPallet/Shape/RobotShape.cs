@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace MapViewPallet.Shape
 {
-    class CanvasRobot : Border
+    class RobotShape : Border
     {
         public event Action<string> RemoveHandle;
         public struct Props
@@ -39,7 +39,7 @@ namespace MapViewPallet.Shape
         public Properties robotProperties;
         public Props props;
 
-        public CanvasRobot(Canvas pCanvas)
+        public RobotShape(Canvas pCanvas)
         {
             ToolTip = "";
             ToolTipOpening += ChangeToolTipContent;
