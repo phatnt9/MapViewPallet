@@ -60,11 +60,11 @@ namespace MapViewPallet.Shape
             mainWindow.clipBorder.SizeChanged += ClipBorder_SizeChanged;
 
         }
-        
-        //////////////////////////////////////////////////////
-        //METHOD======METHOD======METHOD======METHOD======METHOD======
-        //////////////////////////////////////////////////////
-        
+
+        //########################################################
+        //METHOD======METHOD======METHOD======METHOD======METHOD==
+        //########################################################
+
         private void ToggleSelectedPath(string currentPath)
         {
             if (list_Path.ContainsKey(currentPath))
@@ -354,7 +354,7 @@ namespace MapViewPallet.Shape
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
                         {
                             StationShape stationTemp = null;
-                            stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0, "normal");
+                            stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0);
                             stationCount++;
                             stationTemp.Move(mousePos);
                             //map.Children.Add(stationTemp);

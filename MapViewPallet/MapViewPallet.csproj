@@ -118,6 +118,8 @@
     <EmbeddedResource Include="Shape\Properties.resx">
       <DependentUpon>Properties.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Excels\Path.xls" />
+    <None Include="Excels\StationMain.xls" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -224,6 +226,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\Resources\ssss.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Yellow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Unknow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Warning.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

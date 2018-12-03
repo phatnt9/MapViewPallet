@@ -3,7 +3,9 @@ using MapViewPallet.Shape;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,15 +31,86 @@ namespace MapViewPallet
         public string Icon { get; set; }
         public ObservableCollection<TrvStation> Items { get; set; }
     }
-    public class TrvStation
+    public class TrvStation : INotifyPropertyChanged
     {
         public StationShape station;
+        private string iconError = "pack://siteoforigin:,,,/Resources/Station_Error.png";
+        private string iconNormal = "pack://siteoforigin:,,,/Resources/Station_Normal.png";
+        private string iconWarning = "pack://siteoforigin:,,,/Resources/Station_Warning.png";
+        private string iconUnknow = "pack://siteoforigin:,,,/Resources/Station_Unknow.png";
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Private Helpers
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
 
         public TrvStation(StationShape pStation)
         {
             station = pStation;
             Name = station.Name;
-            Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
+            switch (station.props.Status)
+            {
+                case Global_Object.StationState.Normal:
+                    {
+                        Icon = iconNormal;
+                        break;
+                    }
+                case Global_Object.StationState.Error:
+                    {
+                        Icon = iconError;
+                        break;
+                    }
+                case Global_Object.StationState.Warning:
+                    {
+                        Icon = iconWarning;
+                        break;
+                    }
+                default:
+                    {
+                        Icon = iconUnknow;
+                        break;
+                    }
+            }
+        }
+        public void Refresh ()
+        {
+            switch (station.props.Status)
+            {
+                case Global_Object.StationState.Normal:
+                    {
+                        Icon = iconNormal;
+                        break;
+                    }
+                case Global_Object.StationState.Error:
+                    {
+                        Icon = iconError;
+                        break;
+                    }
+                case Global_Object.StationState.Warning:
+                    {
+                        Icon = iconWarning;
+                        break;
+                    }
+                default:
+                    {
+                        Icon = iconUnknow;
+                        break;
+                    }
+            }
+            
         }
         public string Name { get; set; }
         public string Icon { get; set; }
@@ -54,7 +127,8 @@ namespace MapViewPallet
         public bool drag = true;
         //Data Grid View
         DgvModel dgv_model;
-        string previousStationNameId;
+        string previousStationNameIdDgv;
+        string previousStationNameIdTrv;
         //Tree View
         TrvStationGroup stationGroup;
         List<dynamic> trvGroups;
@@ -100,7 +174,8 @@ namespace MapViewPallet
             StationsDataGrid.GotFocus += StationsDataGrid_GotFocus;
             StationsDataGrid.LostFocus += StationsDataGrid_LostFocus;
             dgv_model = new DgvModel();
-            previousStationNameId = "";
+            previousStationNameIdDgv = "";
+            previousStationNameIdTrv = "";
             DataContext = dgv_model;
         }
         
@@ -168,7 +243,6 @@ namespace MapViewPallet
             {
                 DataTable data = new DataTable();
                 data = Global_Object.LoadExcelFile(Path);
-                Console.WriteLine(data.Rows.Count);
                 foreach (DataRow row in data.Rows)
                 {
                     StationShape tempStation;
@@ -179,7 +253,7 @@ namespace MapViewPallet
                     int lines = int.Parse(row.Field<string>("LINES"));
                     int pallets = int.Parse(row.Field<string>("PALLETS"));
                     double rotate = double.Parse(row.Field<string>("ROTATE"));
-                    tempStation = new StationShape(map, stationName, lines, pallets, rotate, "normal");
+                    tempStation = new StationShape(map, stationName, lines, pallets, rotate);
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
@@ -249,7 +323,7 @@ namespace MapViewPallet
                     int lines = int.Parse(row.Field<string>("LINES"));
                     int pallets = int.Parse(row.Field<string>("PALLETS"));
                     double rotate = double.Parse(row.Field<string>("ROTATE"));
-                    tempStation = new StationShape(map, stationName, lines, pallets, rotate, "normal");
+                    tempStation = new StationShape(map, stationName, lines, pallets, rotate);
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
@@ -302,8 +376,14 @@ namespace MapViewPallet
 
         private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
         {
-            LoadPath(@"C:\Users\LI\Desktop\Path.xls");
-            LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
+            //LoadPath(@"C:\Users\LI\Desktop\Path.xls");
+            //LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
+            string fileName1 = "Path.xls";
+            string fileName2 = "StationMain.xls";
+            string path1 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName1);
+            string path2 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName2);
+            LoadPath(path1);
+            LoadStation(path2);
         }
 
         private void StationsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -322,7 +402,7 @@ namespace MapViewPallet
             {
                 Console.WriteLine("In: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
                 palletViewEventControl.list_Station[temp.Name].SelectedStyle();
-                previousStationNameId = temp.Name;
+                previousStationNameIdDgv = temp.Name;
             }
             else
             {
@@ -340,19 +420,48 @@ namespace MapViewPallet
             }
             else
             {
-                palletViewEventControl.list_Station[previousStationNameId].DeselectedStyle();
+                if (previousStationNameIdDgv != "")
+                {
+                    palletViewEventControl.list_Station[previousStationNameIdDgv].DeselectedStyle();
+                }
             }
+        }
+        
+        private void mainTreeView_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TrvStation temp = mainTreeView.SelectedItem as TrvStation;
+            if (temp != null)
+            {
+                Console.WriteLine("In: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
+                palletViewEventControl.list_Station[temp.Name].SelectedStyle();
+                previousStationNameIdTrv = temp.Name;
+                temp.station.ChangeStatus(Global_Object.StationState.Error);
+                temp.Refresh();
+            }
+            else
+            {
+
+            }
+
         }
 
         private void mainTreeView_LostFocus(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            TrvStation temp = mainTreeView.SelectedItem as TrvStation;
+            if (temp != null)
+            {
+                Console.WriteLine("Out: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
+                palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
+            }
+            else
+            {
+                if (previousStationNameIdTrv != "")
+                {
+                    palletViewEventControl.list_Station[previousStationNameIdTrv].DeselectedStyle();
+                }
+            }
         }
 
-        private void mainTreeView_GotFocus(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }

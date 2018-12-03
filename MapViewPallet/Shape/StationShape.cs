@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using static MapViewPallet.Global_Object;
 
 namespace MapViewPallet.Shape
 {
@@ -16,6 +17,7 @@ namespace MapViewPallet.Shape
         {
             public bool isSelected;
             public bool isHovering;
+            //private StationState _status;
             public Canvas _canvas;
             public Grid _stationGrid; // Grid to hold all Pallet in Station
             public Point _posision; // Where station will be render,only accept Cavnas Coordinate
@@ -29,6 +31,9 @@ namespace MapViewPallet.Shape
 
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID { get; set; }
+
+            [ReadOnlyAttribute(true)]
+            public StationState Status { get; set; }
 
             [CategoryAttribute("Special Point"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public Point Point0
@@ -92,11 +97,12 @@ namespace MapViewPallet.Shape
         public Properties stationProperties;
         public Props props;
 
-        public StationShape(Canvas pCanvas, string stationName, int bays, int rows, double rotate, string status)
+        public StationShape(Canvas pCanvas, string stationName, int bays, int rows, double rotate)
         {
             Background = new SolidColorBrush(Colors.Transparent);
             //ToolTip = "";
             //ToolTipOpening += ChangeToolTipContent;
+            props.Status = StationState.Normal;
             props._stationInfomation = new Border();
             props._stationInfomation.Background = new SolidColorBrush(Colors.Red);
             props._stationInfomation.CornerRadius = new CornerRadius(1.3);
@@ -175,7 +181,7 @@ namespace MapViewPallet.Shape
                     gridLine.RowDefinitions.Add(rowTemp);
                     //=============
 
-                    PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex, status);
+                    PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
                     Grid.SetRow(palletTemp, palletIndex);
                     gridLine.Children.Add(palletTemp);
                     props._palletList.Add(palletTemp.Name, palletTemp);
@@ -294,6 +300,12 @@ namespace MapViewPallet.Shape
         {
             BorderBrush = new SolidColorBrush(Colors.Transparent);
         }
+
+        public void ChangeStatus (StationState state)
+        {
+            props.Status = state;
+        }
+
 
         
     }

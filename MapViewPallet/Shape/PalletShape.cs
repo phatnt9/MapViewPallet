@@ -11,22 +11,22 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static MapViewPallet.Global_Object;
 
 namespace MapViewPallet.Shape
 {
     public class PalletShape : Border
     {
-        private double palletWidth = 1; //metters
-        private double palletHeight = 1.2; //metters
         private double palletMargin = 0.05; //metters
+        private PalletState _status = PalletState.Unoccupied; //metters
+
+        
         //private double palletPadding = 0.5; //metters
 
-        public PalletShape(string name, string status)
+        public PalletShape(string name)
         {
             Name = name;
             // Specific Size of Pallet
-            //Width = palletWidth / Global_Object.resolution; //in pixel
-            //Height = palletHeight / Global_Object.resolution; //in pixel
             Margin = new Thickness(palletMargin / Global_Object.resolution);
             //Padding = new Thickness(palletPadding / Global_Object.resolution);
             // Style Pallet Border
@@ -50,6 +50,11 @@ namespace MapViewPallet.Shape
             switch (status)
             {
                 case "normal":
+                    {
+                        Background = new SolidColorBrush(Colors.Lime);
+                        break;
+                    }
+                case "":
                     {
                         Background = new SolidColorBrush(Colors.Lime);
                         break;

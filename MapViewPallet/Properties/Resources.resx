@@ -187,4 +187,16 @@
   <data name="ssss" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\Resources\ssss.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Station_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Station_Error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Station_Normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Station_Normal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Station_Unknow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Station_Unknow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Station_Warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Station_Warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -17,6 +17,22 @@ namespace MapViewPallet
 {
     public static class Global_Object
     {
+        public enum StationState
+        {
+            Normal,
+            Warning,
+            Error
+        }
+
+        public enum PalletState
+        {
+            Occupied,
+            Unoccupied,
+            Holding
+        }
+        
+
+
         public static Point LaserOriginalCoor = new Point(648,378);
         public static Point OriginPoint = new Point(0,0);
         public static Point CoorLaser(Point canvas)
@@ -75,9 +91,6 @@ namespace MapViewPallet
         public static DataTable LoadExcelFile(string path)
         {
             DataTable data = new DataTable();
-
-            Console.WriteLine(path);
-
             string name = "Sheet1";
             string constr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
                             path +
@@ -88,7 +101,6 @@ namespace MapViewPallet
             con.Open();
             OleDbDataAdapter sda = new OleDbDataAdapter(oconn);
             sda.Fill(data);
-            Console.WriteLine(data.Rows.Count);
             return data;
         
         }

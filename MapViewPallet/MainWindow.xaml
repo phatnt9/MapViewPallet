@@ -55,7 +55,7 @@
             <RowDefinition Height="18"></RowDefinition>
             <RowDefinition Height="32"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="Transparent">
             <DockPanel>
@@ -293,13 +293,13 @@
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
                             <StackPanel Orientation ="Horizontal">
-                                <Button HorizontalAlignment="Left" Width="55" Height="18" 
+                                <Button Name="ClearButton" HorizontalAlignment="Left" Width="55" Height="18" 
                                         Content="Clear" FontSize="10" Background="OrangeRed"
                                         VerticalContentAlignment = "Top" Foreground="White"
-                                        Margin="0,1,0,0" Click="clearLog_Clicked"></Button>
-                                <CheckBox Margin="7,0,0,0" HorizontalAlignment="Left" 
+                                        Margin="0,1,0,0" Click="clearLog_Clicked"/>
+                                <CheckBox Name="CheckScroll" Margin="7,0,0,0" HorizontalAlignment="Left" 
                                           VerticalAlignment="Center" Content="Auto Scroll" 
-                                          Checked="autoScrollLog_Checked"></CheckBox>
+                                          Checked="autoScrollLog_Checked"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -311,13 +311,19 @@
             </Border>
         </Grid>
         <Grid Grid.Row="3">
-            <Border BorderThickness="0,0,0,0" BorderBrush="#B9B9B9" Margin="0">
+            <StatusBar Background="#1987c2">
+                <StatusBarItem>
+                    <TextBlock Name="lblCursorPosition" Text="Ready" 
+                               Foreground="White"/>
+                </StatusBarItem>
+            </StatusBar>
+            <!--<Border BorderThickness="0,0,0,0" BorderBrush="#B9B9B9" Margin="0">
                 <StatusBar Name="sbar" >
                     <StatusBarItem Background="#1987c2">
                         <TextBlock Name="ProgramStatus" Foreground="White" FontSize="10">Ready</TextBlock>
                     </StatusBarItem>
                 </StatusBar>
-            </Border>
+            </Border>-->
         </Grid>
     </Grid>
 </Window>
