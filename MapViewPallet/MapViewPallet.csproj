@@ -67,6 +67,9 @@
     <Compile Include="MiniForm\MapResize.Designer.cs">
       <DependentUpon>MapResize.cs</DependentUpon>
     </Compile>
+    <Compile Include="MiniForm\OperationControl.xaml.cs">
+      <DependentUpon>OperationControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shape\CurveShape.cs" />
     <Compile Include="Shape\PalletShape.cs" />
     <Compile Include="Shape\CanvasControlService.cs" />
@@ -92,6 +95,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MiniForm\OperationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -247,6 +254,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Station_Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Group.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

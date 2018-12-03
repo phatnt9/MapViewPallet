@@ -97,6 +97,10 @@
                         BorderThickness="1" Click="btn_LoadAll_Click" 
                         ToolTip="LoadAll" Content="Load All" Margin="2,0,0,0"
                         Height="25"/>
+                        <Button Name="btn_LapLich" BorderBrush="Black"
+                        BorderThickness="1" Click="btn_LapLich_Click" 
+                        ToolTip="Lap Lich" Content="Lap Lich" Margin="2,0,0,0"
+                        Height="25"/>
                         
                     </ToolBar>
                 </Grid>
@@ -139,8 +143,8 @@
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel.ContextMenu>
                                         <ContextMenu>
+                                            <MenuItem Header="Properties" Click="StationPropertiesMenu_Click"/>
                                             <MenuItem Header="Edit" Click="StationEditMenu_Click"/>
-                                            <MenuItem Header="Remove" Click="StationRemoveMenu_Click"/>
                                             <!-- Command="{Binding Command}" This command should be in the data context (each country item)-->
                                         </ContextMenu>
                                     </StackPanel.ContextMenu>

@@ -1,4 +1,5 @@
 ﻿using MapViewPallet.DataGridView;
+using MapViewPallet.MiniForm;
 using MapViewPallet.Shape;
 using System;
 using System.Collections.Generic;
@@ -25,93 +26,23 @@ namespace MapViewPallet
         {
             Items = new ObservableCollection<TrvStation>();
             Title = "Stations";
-            Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
+            Icon = "pack://siteoforigin:,,,/Resources/Group.png";
         }
         public string Title { get; set; }
         public string Icon { get; set; }
         public ObservableCollection<TrvStation> Items { get; set; }
     }
-    public class TrvStation : INotifyPropertyChanged
+    public class TrvStation
     {
         public StationShape station;
-        private string iconError = "pack://siteoforigin:,,,/Resources/Station_Error.png";
-        private string iconNormal = "pack://siteoforigin:,,,/Resources/Station_Normal.png";
-        private string iconWarning = "pack://siteoforigin:,,,/Resources/Station_Warning.png";
-        private string iconUnknow = "pack://siteoforigin:,,,/Resources/Station_Unknow.png";
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Private Helpers
-
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion
-
         public TrvStation(StationShape pStation)
         {
             station = pStation;
             Name = station.Name;
-            switch (station.props.Status)
-            {
-                case Global_Object.StationState.Normal:
-                    {
-                        Icon = iconNormal;
-                        break;
-                    }
-                case Global_Object.StationState.Error:
-                    {
-                        Icon = iconError;
-                        break;
-                    }
-                case Global_Object.StationState.Warning:
-                    {
-                        Icon = iconWarning;
-                        break;
-                    }
-                default:
-                    {
-                        Icon = iconUnknow;
-                        break;
-                    }
-            }
+            Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
+
         }
-        public void Refresh ()
-        {
-            switch (station.props.Status)
-            {
-                case Global_Object.StationState.Normal:
-                    {
-                        Icon = iconNormal;
-                        break;
-                    }
-                case Global_Object.StationState.Error:
-                    {
-                        Icon = iconError;
-                        break;
-                    }
-                case Global_Object.StationState.Warning:
-                    {
-                        Icon = iconWarning;
-                        break;
-                    }
-                default:
-                    {
-                        Icon = iconUnknow;
-                        break;
-                    }
-            }
-            
-        }
+        
         public string Name { get; set; }
         public string Icon { get; set; }
     }
@@ -135,7 +66,7 @@ namespace MapViewPallet
         Point transform = new Point(0, 0);
         private CanvasControlService palletViewEventControl;
         System.Media.SoundPlayer snd;
-        
+        OperationControl GiaoDienLapLich;
         
         
 
@@ -160,6 +91,7 @@ namespace MapViewPallet
             map.Background = img;
             palletViewEventControl = new CanvasControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
+            GiaoDienLapLich = new OperationControl();
             //===============DataGridView========
             StationsDataGrid.CanUserAddRows = false;
             StationsDataGrid.CanUserDeleteRows = false;
@@ -361,17 +293,17 @@ namespace MapViewPallet
 
         }
 
-        private void StationEditMenu_Click(object sender, RoutedEventArgs e)
+        private void StationPropertiesMenu_Click(object sender, RoutedEventArgs e)
         {
-            TrvStation temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as TrvStation;
+            TrvStation temp = ((sender as MenuItem).DataContext) as TrvStation;
             temp.station.stationProperties.ShowDialog();
         }
 
-        private void StationRemoveMenu_Click(object sender, RoutedEventArgs e)
+        private void StationEditMenu_Click(object sender, RoutedEventArgs e)
         {
-            TrvStation temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as TrvStation;
-            temp.station.Remove();
-            stationGroup.Items.Remove(temp);
+            //TrvStation temp = ((sender as System.Windows.Controls.MenuItem).DataContext) as TrvStation;
+            //temp.station.Remove();
+            //stationGroup.Items.Remove(temp);
         }
 
         private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
@@ -436,7 +368,6 @@ namespace MapViewPallet
                 palletViewEventControl.list_Station[temp.Name].SelectedStyle();
                 previousStationNameIdTrv = temp.Name;
                 temp.station.ChangeStatus(Global_Object.StationState.Error);
-                temp.Refresh();
             }
             else
             {
@@ -462,6 +393,11 @@ namespace MapViewPallet
             }
         }
 
+        private void btn_LapLich_Click(object sender, RoutedEventArgs e)
+        {
+            GiaoDienLapLich.Show();
+            
+        }
     }
 
 }
