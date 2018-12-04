@@ -364,10 +364,9 @@ namespace MapViewPallet
             TrvStation temp = mainTreeView.SelectedItem as TrvStation;
             if (temp != null)
             {
-                Console.WriteLine("In: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
+                //Console.WriteLine("In: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
                 palletViewEventControl.list_Station[temp.Name].SelectedStyle();
                 previousStationNameIdTrv = temp.Name;
-                temp.station.ChangeStatus(Global_Object.StationState.Error);
             }
             else
             {
@@ -381,7 +380,7 @@ namespace MapViewPallet
             TrvStation temp = mainTreeView.SelectedItem as TrvStation;
             if (temp != null)
             {
-                Console.WriteLine("Out: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
+                //Console.WriteLine("Out: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
                 palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
             }
             else

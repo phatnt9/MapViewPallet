@@ -3,12 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:staticData="clr-namespace:MapViewPallet.MiniForm"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
         mc:Ignorable="d"
         Title="OperationControl" Height="450" Width="800">
+    <Window.Resources>
+        <staticData:MachineList x:Key="MachineList"></staticData:MachineList>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="190"></ColumnDefinition>
+            <ColumnDefinition Width="280"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
@@ -18,50 +22,211 @@
             </Grid.RowDefinitions>
             <Grid Name="CalendarCol" Grid.Row="0" Background="Bisque">
                 <Calendar HorizontalAlignment="Center" VerticalAlignment="Center">
-                    
+
                 </Calendar>
             </Grid>
-            <Grid Name="MicsDetail" Grid.Row="1" Background="LightGray">
-
+            <Grid Name="MicsDetail" Grid.Row="1" >
+                <Border BorderThickness="2" BorderBrush="Black">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                        <TabControl TabStripPlacement="Left">
+                            <TabItem Header="JUJENG">
+                                <StackPanel Margin="10">
+                                    <TextBlock>Machine: JUJENG</TextBlock>
+                                    <TextBlock>Packing Materials: Cap,Bottle</TextBlock>
+                                    <TextBlock>Connected Stations:</TextBlock>
+                                    <TextBlock>____________*JUJENG1 [6]</TextBlock>
+                                    <TextBlock>____________*JUJENG2 [12]</TextBlock>
+                                    <TextBlock>____________*JUJENG3 [5]</TextBlock>
+                                    <TextBlock>Status: Normal</TextBlock>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="POSIMAT1"></TabItem>
+                            <TabItem Header="POSIMAT2"></TabItem>
+                            <TabItem Header="POSIMAT3" Height="24" VerticalAlignment="Top"></TabItem>
+                            <TabItem Header="SANGTAO2"></TabItem>
+                            <TabItem Header="SANGTAO3"></TabItem>
+                            <TabItem Header="SANGTAO4"></TabItem>
+                            <TabItem Header="MESPACK1"></TabItem>
+                            <TabItem Header="MESPACK2"></TabItem>
+                            <TabItem Header="VOLPACK"></TabItem>
+                            <TabItem Header="LEEPACK"></TabItem>
+                            <TabItem Header="AKASH1"></TabItem>
+                            <TabItem Header="AKASH2"></TabItem>
+                            <TabItem Header="AKASH3"></TabItem>
+                        </TabControl>
+                    </ScrollViewer>
+                </Border>
             </Grid>
         </Grid>
 
         <Grid Name="ProcedureTabs" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="150"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="27"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
-            <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                <TabControl Margin="3,5,0,2">
-                    <TabItem Header="Shift 1">
-                        <DataGrid Name="Task1DataGrid"
-                                  ItemsSource="{Binding Stations_DGV}"
-                                  AlternatingRowBackground="Gainsboro"  
-                                  AlternationCount="2"/>
-                    </TabItem>
-                    <TabItem Header="Shift 2" >
-                        <DataGrid Name="Task2DataGrid"/>
-                    </TabItem>
-                    <TabItem Header="Shift 3" >
-                        <DataGrid Name="Task3DataGrid"/>
-                    </TabItem>
-                </TabControl>
-            </Grid>
-            <Grid Grid.Row="0" Grid.Column="1">
-                <StackPanel Orientation ="Horizontal">
-                    <Button Name="ClearButton" HorizontalAlignment="Left" Width="55" Height="18" 
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="150"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="27"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                    <TabControl Margin="3,5,0,2">
+                        <TabItem Header="Shift 1">
+                            <DataGrid Name="Shift1Dgv"
+                                  ItemsSource="{Binding GroupedMachines_S1}"
+                                  CanUserReorderColumns="False" CanUserAddRows="False"
+                                  CanUserResizeColumns="False" CanUserResizeRows="False"
+                                  CanUserDeleteRows="False" CanUserSortColumns="False">
+                                <!--<DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Machine" IsReadOnly="False">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <ComboBox 
+                                                        ItemsSource="{StaticResource MachineList}"
+                                                        SelectedItem="{Binding Machine}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>-->
+                                <DataGrid.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.HeaderTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GroupStyle.HeaderTemplate>
+                                        <GroupStyle.ContainerStyle>
+                                            <Style TargetType="{x:Type GroupItem}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                            <Expander>
+                                                                <Expander.Header>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <TextBlock Text="{Binding Path=Name}" />
+                                                                        <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
+                                                                        <TextBlock Text="Items"/>
+                                                                    </StackPanel>
+                                                                </Expander.Header>
+                                                                <ItemsPresenter />
+                                                            </Expander>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </GroupStyle.ContainerStyle>
+                                    </GroupStyle>
+                                </DataGrid.GroupStyle>
+                            </DataGrid>
+                        </TabItem>
+                        <TabItem Header="Shift 2" >
+                            <DataGrid Name="Shift2Dgv"
+                                  ItemsSource="{Binding GroupedMachines_S2}"
+                                  CanUserReorderColumns="False" CanUserAddRows="False"
+                                  CanUserResizeColumns="False" CanUserResizeRows="False"
+                                  CanUserDeleteRows="False" CanUserSortColumns="False">
+                                <DataGrid.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.HeaderTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GroupStyle.HeaderTemplate>
+                                        <GroupStyle.ContainerStyle>
+                                            <Style TargetType="{x:Type GroupItem}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                            <Expander>
+                                                                <Expander.Header>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <TextBlock Text="{Binding Path=Name}" />
+                                                                        <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
+                                                                        <TextBlock Text="Items"/>
+                                                                    </StackPanel>
+                                                                </Expander.Header>
+                                                                <ItemsPresenter />
+                                                            </Expander>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </GroupStyle.ContainerStyle>
+                                    </GroupStyle>
+                                </DataGrid.GroupStyle>
+                            </DataGrid>
+                        </TabItem>
+                        <TabItem Header="Shift 3" >
+                            <DataGrid Name="Shift3Dgv"
+                                  ItemsSource="{Binding GroupedMachines_S3}"
+                                  CanUserReorderColumns="False" CanUserAddRows="False"
+                                  CanUserResizeColumns="False" CanUserResizeRows="False"
+                                  CanUserDeleteRows="False" CanUserSortColumns="False">
+                                <DataGrid.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.HeaderTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GroupStyle.HeaderTemplate>
+                                        <GroupStyle.ContainerStyle>
+                                            <Style TargetType="{x:Type GroupItem}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                            <Expander>
+                                                                <Expander.Header>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <TextBlock Text="{Binding Path=Name}" />
+                                                                        <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
+                                                                        <TextBlock Text="Items"/>
+                                                                    </StackPanel>
+                                                                </Expander.Header>
+                                                                <ItemsPresenter />
+                                                            </Expander>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </GroupStyle.ContainerStyle>
+                                    </GroupStyle>
+                                </DataGrid.GroupStyle>
+                            </DataGrid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <StackPanel Orientation ="Horizontal">
+                        <Button Name="ClearButton" HorizontalAlignment="Left" Width="55" Height="18" 
                             Content="Clear" FontSize="10" Background="OrangeRed"
                             VerticalContentAlignment = "Top" Foreground="White"
                             Margin="0,1,0,0"/>
-                    <CheckBox Name="CheckScroll" Margin="7,0,0,0" HorizontalAlignment="Left"
+                        <CheckBox Name="CheckScroll" Margin="7,0,0,0" HorizontalAlignment="Left"
                               VerticalAlignment="Center" Content="Auto Scroll"
                               />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" Background="LightGray">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Name="Btn_Accept" Width="50" Content="Apply" Margin="5,5"/>
+                    <Button Name="Btn_Request" Width="50" Content="Request" Margin="5,5"/>
+                    <Button Name="Btn_Cancel" Width="50" Content="Cancel" Margin="5,5"/>
                 </StackPanel>
             </Grid>
+
         </Grid>
     </Grid>
 </Window>

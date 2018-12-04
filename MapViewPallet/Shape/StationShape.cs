@@ -301,11 +301,6 @@ namespace MapViewPallet.Shape
             BorderBrush = new SolidColorBrush(Colors.Transparent);
         }
 
-        public void ChangeStatus (StationState state)
-        {
-            props.Status = state;
-        }
-
 
         
     }

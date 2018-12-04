@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -61,15 +64,11 @@
     <Compile Include="DataGridView\DgvModel.cs" />
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
-    <Compile Include="MiniForm\MapResize.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MiniForm\MapResize.Designer.cs">
-      <DependentUpon>MapResize.cs</DependentUpon>
-    </Compile>
+    <Compile Include="MiniForm\Operation.cs" />
     <Compile Include="MiniForm\OperationControl.xaml.cs">
       <DependentUpon>OperationControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiniForm\OperationModel.cs" />
     <Compile Include="Shape\CurveShape.cs" />
     <Compile Include="Shape\PalletShape.cs" />
     <Compile Include="Shape\CanvasControlService.cs" />
@@ -114,9 +113,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="MiniForm\MapResize.resx">
-      <DependentUpon>MapResize.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -127,6 +123,7 @@
     </EmbeddedResource>
     <None Include="Excels\Path.xls" />
     <None Include="Excels\StationMain.xls" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
