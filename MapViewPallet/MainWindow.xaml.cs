@@ -394,7 +394,7 @@ namespace MapViewPallet
 
         private void btn_LapLich_Click(object sender, RoutedEventArgs e)
         {
-            GiaoDienLapLich.Show();
+            GiaoDienLapLich.ShowDialog();
             
         }
     }

@@ -255,5 +255,11 @@
   <ItemGroup>
     <None Include="Resources\Group.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unilever_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\seldat_logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

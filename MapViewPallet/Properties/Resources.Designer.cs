@@ -283,6 +283,16 @@ namespace MapViewPallet.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap seldat_logo {
+            get {
+                object obj = ResourceManager.GetObject("seldat_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ssss {
             get {
                 object obj = ResourceManager.GetObject("ssss", resourceCulture);
@@ -336,6 +346,16 @@ namespace MapViewPallet.Properties {
         internal static System.IO.UnmanagedMemoryStream tennessee_whiskey {
             get {
                 return ResourceManager.GetStream("tennessee_whiskey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap unilever_logo {
+            get {
+                object obj = ResourceManager.GetObject("unilever_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

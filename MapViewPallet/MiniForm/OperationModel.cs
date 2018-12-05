@@ -9,6 +9,42 @@ using System.Windows.Data;
 
 namespace MapViewPallet.MiniForm
 {
+    public class Machine
+    {
+        public string Name;
+        public string BufferArea;
+        public List<string> ActivePMs; //Cac loai hang dang chay Cap/Bottle/Pouch/Divider/Outer
+        public Machine(string name, string bufferArea, List<string> activePMs)
+        {
+            Name = name;
+            BufferArea = bufferArea;
+            ActivePMs = activePMs;
+        }
+
+    }
+
+
+    public class MachineList : List<Machine>
+    {
+        public MachineList()
+        {
+            Add(new Machine("JUJENG", "Buffer_A", new List<string>(new string[] { "Cap", "Bottle", "Pouch", "Divider", "Outer" })));
+            Add(new Machine("POSIMAT1", "Buffer_B", new List<string>(new string[] { "Cap", "Bottle", "Pouch", "Divider", "Outer" })));
+            Add(new Machine("POSIMAT2", "Buffer_C", new List<string>(new string[] { "Cap", "Bottle", "Pouch", "Divider", "Outer" })));
+            Add(new Machine("POSIMAT3", "Buffer_D", new List<string>(new string[] { "Cap", "Bottle", "Pouch", "Divider", "Outer" })));
+            Add(new Machine("SANGTAO2", "Buffer_E", new List<string>(new string[] { "Cap", "Bottle", "Pouch", "Divider", "Outer" })));
+            Add(new Machine("SANGTAO3", "Buffer_F", new List<string>(new string[] { "Cap", "Bottle", "Pouch", "Divider", "Outer" })));
+            Add(new Machine("SANGTAO4", "Buffer_G", new List<string>(new string[] { "Cap", "Bottle", "Pouch", "Divider", "Outer" })));
+            Add(new Machine("MESPACK1", "Buffer_H", new List<string>(new string[] { "Divider", "Outer" })));
+            Add(new Machine("MESPACK2", "Buffer_I", new List<string>(new string[] { "Divider", "Outer" })));
+            Add(new Machine("AKASH1", "Buffer_J", new List<string>(new string[] { "Divider", "Outer" })));
+            Add(new Machine("AKASH2", "Buffer_K", new List<string>(new string[] { "Divider", "Outer" })));
+            Add(new Machine("AKASH3", "Buffer_L", new List<string>(new string[] { "Divider", "Outer" })));
+            Add(new Machine("VOLPACK", "Buffer_M", new List<string>(new string[] { "Divider", "Outer" })));
+            Add(new Machine("LEEPACK", "Buffer_N", new List<string>(new string[] { "Cap", "Bottle", "Pouch", "Divider", "Outer" })));
+        }
+    }
+
     public class OperationModel
     {
         public ICollectionView Shift1Data { get; private set; }
@@ -27,75 +63,30 @@ namespace MapViewPallet.MiniForm
         public OperationModel()
         {
             MachineList temp = new MachineList();
-            _shift1_Operations = _shift2_Operations = _shift3_Operations = new List<Operation>
+            /*
+             * Connect to DB and Add Machine Item to this MachineList
+             */
+
+            List<Operation> initialItem = new List<Operation>();
+
+            foreach (Machine item in temp)
             {
-                //##############
-                new Operation { Machine = temp[0], PMs = PackingMaterials.Bottle, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[0], PMs = PackingMaterials.Cap, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[0], PMs = PackingMaterials.Pouch, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[0], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[0], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[1], PMs = PackingMaterials.Bottle, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[1], PMs = PackingMaterials.Cap, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[1], PMs = PackingMaterials.Pouch, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[1], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[1], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[2], PMs = PackingMaterials.Bottle, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[2], PMs = PackingMaterials.Cap, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[2], PMs = PackingMaterials.Pouch, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[2], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[2], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[3], PMs = PackingMaterials.Bottle, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[3], PMs = PackingMaterials.Cap, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[3], PMs = PackingMaterials.Pouch, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[3], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[3], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[4], PMs = PackingMaterials.Bottle, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[4], PMs = PackingMaterials.Cap, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[4], PMs = PackingMaterials.Pouch, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[4], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[4], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[5], PMs = PackingMaterials.Bottle, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[5], PMs = PackingMaterials.Cap, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[5], PMs = PackingMaterials.Pouch, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[5], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[5], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[6], PMs = PackingMaterials.Bottle, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[6], PMs = PackingMaterials.Cap, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[6], PMs = PackingMaterials.Pouch, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[6], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[6], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[7], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[7], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[8], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[8], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[9], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[9], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[10], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[10], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[11], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[11], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[12], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[12], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                //##############
-                new Operation { Machine = temp[13], PMs = PackingMaterials.Bottle, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[13], PMs = PackingMaterials.Cap, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[13], PMs = PackingMaterials.Pouch, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[13], PMs = PackingMaterials.Outer, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-                new Operation { Machine = temp[13], PMs = PackingMaterials.Divider, Quantity = 0, Serial = Codes.Empty, Buffered = 0 },
-            };
+                foreach (string PMs in item.ActivePMs)
+                {
+                    initialItem.Add(new Operation
+                    {
+                        Machine = item.Name,
+                        PMs = PMs,
+                        Quantity = 0,
+                        Serial = Codes.Empty,
+                        Area = item.BufferArea,
+                        Buffered = 0
+                    });
+                }
+            }
+
+            _shift1_Operations = _shift2_Operations = _shift3_Operations = initialItem;
+            //#######
             Shift1Data = CollectionViewSource.GetDefaultView(_shift1_Operations);
             Shift2Data = CollectionViewSource.GetDefaultView(_shift2_Operations);
             Shift3Data = CollectionViewSource.GetDefaultView(_shift3_Operations);

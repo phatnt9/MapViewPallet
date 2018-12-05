@@ -35,27 +35,57 @@ namespace MapViewPallet.MiniForm
             //Shift1Dgv.LostFocus += Shift1Dgv_LostFocus;
             operation_model = new OperationModel();
             DataContext = operation_model;
+            pCalendar.SelectionMode = CalendarSelectionMode.SingleDate;
+            DateTime tempDT = DateTime.Now;
+            RefreshDate(tempDT);
         }
-    }
-    public class MachineList : List<string>
-    {
-        public MachineList()
-        {
-            this.Add("JUJENG");
-            this.Add("POSIMAT1");
-            this.Add("POSIMAT2");
-            this.Add("POSIMAT3");
-            this.Add("SANGTAO2");
-            this.Add("SANGTAO3");
-            this.Add("SANGTAO4");
 
-            this.Add("MESPACK1");
-            this.Add("MESPACK2");
-            this.Add("AKASH1");
-            this.Add("AKASH2");
-            this.Add("AKASH3");
-            this.Add("VOLPACK");
-            this.Add("LEEPACK");
+        private void PCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((DateTime)pCalendar.SelectedDate != null)
+            {
+                RefreshDate((DateTime)pCalendar.SelectedDate);
+            }
+        }
+
+        public void RefreshDate (DateTime pDate)
+        {
+            string ngay = "";
+            switch (pDate.DayOfWeek)
+            {
+                case DayOfWeek.Monday: { ngay = "Thứ Hai"; break; }
+                case DayOfWeek.Tuesday: { ngay = "Thứ Ba"; break; }
+                case DayOfWeek.Wednesday: { ngay = "Thứ Tư"; break; }
+                case DayOfWeek.Thursday: { ngay = "Thứ Năm"; break; }
+                case DayOfWeek.Friday: { ngay = "Thứ Sáu"; break; }
+                case DayOfWeek.Saturday: { ngay = "Thứ Bảy"; break; }
+                case DayOfWeek.Sunday: { ngay = "Chủ Nhật"; break; }
+                default: { ngay = "Chủ Nhật"; break; }
+            }
+            lb_Date.Text = ngay + ", "+ pDate.Day + " Tháng " + pDate.Month + ", " + pDate.Year;
+            if (DateTime.Now.ToShortDateString() == pDate.ToShortDateString())
+            {
+                DateTimeBorder.Background = new SolidColorBrush(Colors.LightGreen);
+                pCalendar.Background = new SolidColorBrush(Colors.LightGreen);
+                lb_Date.Foreground = new SolidColorBrush(Colors.Black);
+            }
+            else
+            {
+                Console.WriteLine(DateTime.Now.CompareTo(pDate));
+                if (DateTime.Now.CompareTo(pDate) == 1)
+                {
+                    DateTimeBorder.Background = new SolidColorBrush(Colors.IndianRed);
+                    pCalendar.Background = new SolidColorBrush(Colors.IndianRed);
+                    lb_Date.Foreground = new SolidColorBrush(Colors.Black);
+                }
+                else
+                {
+                    DateTimeBorder.Background = new SolidColorBrush(Colors.LightGray);
+                    pCalendar.Background = new SolidColorBrush(Colors.LightGray);
+                    lb_Date.Foreground = new SolidColorBrush(Colors.DimGray);
+                }
+            }
         }
     }
+    
 }

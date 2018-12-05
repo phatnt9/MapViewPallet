@@ -47,8 +47,9 @@ namespace MapViewPallet.MiniForm
     public class Operation : INotifyPropertyChanged
     {
         private string _machine;
-        private PackingMaterials _material;
+        private string _material;
         private int _quantity;
+        private string _bufferArea;
         private int _buffered;
         private Codes _serials;
 
@@ -64,7 +65,7 @@ namespace MapViewPallet.MiniForm
         }
 
         [ReadOnlyAttribute(true)]
-        public PackingMaterials PMs
+        public string PMs
         {
             get { return _material; }
             set
@@ -96,6 +97,17 @@ namespace MapViewPallet.MiniForm
             {
                 _serials = value;
                 NotifyPropertyChanged("Serial");
+            }
+        }
+        //###################################################
+        [ReadOnlyAttribute(true)]
+        public string Area
+        {
+            get { return _bufferArea; }
+            set
+            {
+                _bufferArea = value;
+                NotifyPropertyChanged("BufferArea");
             }
         }
         //###################################################

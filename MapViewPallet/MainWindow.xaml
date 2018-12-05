@@ -6,7 +6,7 @@
         
         xmlns:self="clr-namespace:MapViewPallet"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600">
+        Title="MainWindow" Height="450" Width="600" MinWidth="400" MinHeight="300">
     <Window.Resources>
         <ContextMenu x:Key="PATH-MENU" Name="pathMenu" >
             <MenuItem Header="Edit" Name="pathEdit"/>
@@ -53,7 +53,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"></RowDefinition>
-            <RowDefinition Height="32"></RowDefinition>
+            <RowDefinition Height="64"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
         </Grid.RowDefinitions>
@@ -77,14 +77,17 @@
             </DockPanel>
         </Grid>
         <Border Grid.Row="1" BorderBrush="#B9B9B9" BorderThickness="0,0,0,2">
-            <Grid Background="#F5F5F5">
+            <Grid Background="#DCDCDC">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="190"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
+                <Grid Grid.Column="0" Grid.Row="0">
                     <ToolBar Background="Transparent">
-                        
                         <Button Name="btn_LoadExcel" BorderBrush="Black"
                         BorderThickness="1" Click="btn_LoadExcel_Click" 
                         ToolTip="LoadPath" Content="Load Path" Margin="2,0,0,0"
@@ -104,8 +107,11 @@
                         
                     </ToolBar>
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                     <!--OTHER MICS-->
+                    <Grid Margin="5,0">
+                        <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
+                    </Grid>
                 </Grid>
 
             </Grid>
@@ -118,11 +124,15 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition Height="24"></RowDefinition>
                 </Grid.RowDefinitions>
-                <!--List Station-->
                 <Grid Grid.Row="0">
+                    
+                </Grid>
+                <!--List Station-->
+                <Grid Grid.Row="1">
                     <TreeView Name="mainTreeView" Background="#F5F5F5" BorderThickness="0"
                           MouseRightButtonDown="mainTreeView_MouseRightButtonDown">
                         <TreeView.Resources>
@@ -155,7 +165,7 @@
                         </TreeView.Resources>
                     </TreeView>
                 </Grid>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
                     <!--Tool Treeview-->
                 </Grid>
             </Grid>
