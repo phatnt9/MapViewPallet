@@ -22,10 +22,13 @@ namespace MapViewPallet.MiniForm
     {
         //=================VARIABLE==================
         OperationModel operation_model;
+        
+        
 
         public OperationControl()
         {
             InitializeComponent();
+            Loaded += GoRefreshData;
             //===============DataGridView1========
             Shift1Dgv.SelectionMode = Shift2Dgv.SelectionMode = Shift3Dgv.SelectionMode = DataGridSelectionMode.Single;
             Shift1Dgv.SelectionUnit = Shift2Dgv.SelectionUnit = Shift3Dgv.SelectionUnit = DataGridSelectionUnit.FullRow;
@@ -38,6 +41,12 @@ namespace MapViewPallet.MiniForm
             pCalendar.SelectionMode = CalendarSelectionMode.SingleDate;
             DateTime tempDT = DateTime.Now;
             RefreshDate(tempDT);
+        }
+
+        private void GoRefreshData(object sender, RoutedEventArgs e)
+        {
+            
+            operation_model.RefreshData();
         }
 
         private void PCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -71,7 +80,6 @@ namespace MapViewPallet.MiniForm
             }
             else
             {
-                Console.WriteLine(DateTime.Now.CompareTo(pDate));
                 if (DateTime.Now.CompareTo(pDate) == 1)
                 {
                     DateTimeBorder.Background = new SolidColorBrush(Colors.IndianRed);
@@ -82,9 +90,14 @@ namespace MapViewPallet.MiniForm
                 {
                     DateTimeBorder.Background = new SolidColorBrush(Colors.LightGray);
                     pCalendar.Background = new SolidColorBrush(Colors.LightGray);
-                    lb_Date.Foreground = new SolidColorBrush(Colors.DimGray);
+                    lb_Date.Foreground = new SolidColorBrush(Colors.Black);
                 }
             }
+        }
+
+        private void Btn_Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            operation_model.RefreshData();
         }
     }
     

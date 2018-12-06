@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace MapViewPallet
 {
+
     public static class Global_Object
     {
         public enum StationState

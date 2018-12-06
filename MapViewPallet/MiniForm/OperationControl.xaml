@@ -6,7 +6,7 @@
         xmlns:staticData="clr-namespace:MapViewPallet.MiniForm"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
         mc:Ignorable="d"
-        Title="OperationControl" Height="450" Width="800">
+        Title="Thiết Lập Quy Trình" Height="450" Width="800">
     <Window.Resources>
         <staticData:MachineList x:Key="MachineList"></staticData:MachineList>
     </Window.Resources>
@@ -107,7 +107,7 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
                         <TabControl Margin="3,5,0,2">
-                            <TabItem Header="Shift 1">
+                            <TabItem Header="Ca 1">
                                 <DataGrid Name="Shift1Dgv"
                                   ItemsSource="{Binding GroupedMachines_S1}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
@@ -146,7 +146,7 @@
                                     </DataGrid.GroupStyle>
                                 </DataGrid>
                             </TabItem>
-                            <TabItem Header="Shift 2" >
+                            <TabItem Header="Ca 2" >
                                 <DataGrid Name="Shift2Dgv"
                                   ItemsSource="{Binding GroupedMachines_S2}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
@@ -185,7 +185,7 @@
                                     </DataGrid.GroupStyle>
                                 </DataGrid>
                             </TabItem>
-                            <TabItem Header="Shift 3" >
+                            <TabItem Header="Ca 3" >
                                 <DataGrid Name="Shift3Dgv"
                                   ItemsSource="{Binding GroupedMachines_S3}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
@@ -242,6 +242,7 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button Name="Btn_Accept" Width="50" Content="Apply" Margin="5,5"/>
                         <Button Name="Btn_Request" Width="50" Content="Request" Margin="5,5"/>
+                        <Button Name="Btn_Refresh" Width="50" Content="Request" Margin="5,5" Click="Btn_Refresh_Click"/>
                         <Button Name="Btn_Cancel" Width="50" Content="Cancel" Margin="5,5"/>
                     </StackPanel>
                 </Grid>

@@ -92,6 +92,7 @@ namespace MapViewPallet
             palletViewEventControl = new CanvasControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
             GiaoDienLapLich = new OperationControl();
+            //GiaoDienLapLich.Show();
             //===============DataGridView========
             StationsDataGrid.CanUserAddRows = false;
             StationsDataGrid.CanUserDeleteRows = false;
@@ -395,7 +396,6 @@ namespace MapViewPallet
         private void btn_LapLich_Click(object sender, RoutedEventArgs e)
         {
             GiaoDienLapLich.ShowDialog();
-            
         }
     }
 

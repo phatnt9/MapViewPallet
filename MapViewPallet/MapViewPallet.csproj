@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Communication\HttpBridge\BridgeClientRequest.cs" />
     <Compile Include="DataGridView\DgvStation.cs" />
     <Compile Include="DataGridView\DgvModel.cs" />
     <Compile Include="Global_Mouse.cs" />
@@ -80,6 +81,7 @@
     </Compile>
     <Compile Include="Shape\CanvasPath.cs" />
     <Compile Include="Shape\RobotShape.cs" />
+    <Compile Include="Shape\StationDataService.cs" />
     <Compile Include="Shape\StationShape.cs" />
     <Compile Include="Shape\StraightShape.cs" />
     <Page Include="MainWindow.xaml">

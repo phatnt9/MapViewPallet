@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using static MapViewPallet.Global_Object;
+using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 
 namespace MapViewPallet.Shape
 {
     public class StationShape : Border
     {
         public event Action<string> RemoveHandle;
-
+        public StationDataService dataControl;
         public struct Props
         {
             public bool isSelected;
@@ -28,60 +29,24 @@ namespace MapViewPallet.Shape
             public RotateTransform _myRotateTransform;
             public List<Point> _eightCorner;
             public SortedDictionary<string, PalletShape> _palletList;
-
+            //##########################
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID { get; set; }
 
             [ReadOnlyAttribute(true)]
             public StationState Status { get; set; }
-
-            [CategoryAttribute("Special Point"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point Point0
-            {
-                get
-                {
-                    return Global_Object.CoorLaser(_eightCorner[0]);
-                }
-            }
-
-            [CategoryAttribute("Special Point"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point Point1
-            {
-                get
-                {
-                    return Global_Object.CoorLaser(_eightCorner[1]);
-                }
-            }
-
-            [CategoryAttribute("Special Point"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point Point2
-            {
-                get
-                {
-                    return Global_Object.CoorLaser(_eightCorner[2]);
-                }
-            }
-
+            
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public Point Position
             {
-                get
-                {
-                    return Global_Object.CoorLaser(_posision);
-                }
+                get{return Global_Object.CoorLaser(_posision);}
             }
 
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public double Rotation
             {
-                get
-                {
-                    return _rotate;
-                }
-                set
-                {
-                    _rotate = value;
-                }
+                get {return _rotate;}
+                set{_rotate = value;}
             }
 
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
@@ -90,13 +55,11 @@ namespace MapViewPallet.Shape
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public int Rows { get; set; }
 
-
-
-
         }
         public Properties stationProperties;
         public Props props;
-
+        
+        //#############---METHOD---############
         public StationShape(Canvas pCanvas, string stationName, int bays, int rows, double rotate)
         {
             Background = new SolidColorBrush(Colors.Transparent);
@@ -116,10 +79,6 @@ namespace MapViewPallet.Shape
             MenuItem editItem = new MenuItem();
             editItem.Header = "Edit";
             editItem.Click += EditMenu;
-            //===================================
-            //MenuItem rotateItem = new MenuItem();
-            //rotateItem.Header = "Rotate";
-            //rotateItem.Click += RotateMenu;
             //===================================
             MenuItem removeItem = new MenuItem();
             removeItem.Header = "Remove";
@@ -208,6 +167,19 @@ namespace MapViewPallet.Shape
             props._myTransformGroup.Children[1] = props._myTranslate;
             props._canvas = pCanvas;
             props._canvas.Children.Add(this);
+            //
+            dataControl = new StationDataService();
+            //Get list pallet
+        }
+
+        private void RecievedErrorListPallet(int obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void RecievedListPallet(string obj)
+        {
+            throw new NotImplementedException();
         }
 
         public void ReDraw(Point position)
