@@ -65,11 +65,14 @@
     <Compile Include="DataGridView\DgvModel.cs" />
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
-    <Compile Include="MiniForm\Operation.cs" />
-    <Compile Include="MiniForm\OperationControl.xaml.cs">
-      <DependentUpon>OperationControl.xaml</DependentUpon>
+    <Compile Include="MiniForm\Device.cs" />
+    <Compile Include="MiniForm\DeviceList.cs" />
+    <Compile Include="MiniForm\Plan.cs" />
+    <Compile Include="MiniForm\PlanControl.xaml.cs">
+      <DependentUpon>PlanControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MiniForm\OperationModel.cs" />
+    <Compile Include="MiniForm\PlanModel.cs" />
+    <Compile Include="MiniForm\Product.cs" />
     <Compile Include="Shape\CurveShape.cs" />
     <Compile Include="Shape\PalletShape.cs" />
     <Compile Include="Shape\CanvasControlService.cs" />
@@ -96,7 +99,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MiniForm\OperationControl.xaml">
+    <Page Include="MiniForm\PlanControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

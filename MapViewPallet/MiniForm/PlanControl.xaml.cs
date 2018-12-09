@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace MapViewPallet.MiniForm
 {
@@ -18,14 +12,16 @@ namespace MapViewPallet.MiniForm
     /// Interaction logic for OperationControl.xaml
     /// </summary>
     ///
-    public partial class OperationControl : Window
+    
+
+    public partial class PlanControl : Window
     {
         //=================VARIABLE==================
-        OperationModel operation_model;
+        PlanModel operation_model;
         
         
 
-        public OperationControl()
+        public PlanControl()
         {
             InitializeComponent();
             Loaded += GoRefreshData;
@@ -36,16 +32,15 @@ namespace MapViewPallet.MiniForm
             //Shift1Dgv.SelectionChanged += Shift1Dgv_SelectionChanged;
             //Shift1Dgv.GotFocus += Shift1Dgv_GotFocus;
             //Shift1Dgv.LostFocus += Shift1Dgv_LostFocus;
-            operation_model = new OperationModel();
+            operation_model = new PlanModel();
             DataContext = operation_model;
             pCalendar.SelectionMode = CalendarSelectionMode.SingleDate;
             DateTime tempDT = DateTime.Now;
-            RefreshDate(tempDT);
+            UpdateDateStatus(tempDT);
         }
 
         private void GoRefreshData(object sender, RoutedEventArgs e)
         {
-            
             operation_model.RefreshData();
         }
 
@@ -53,11 +48,11 @@ namespace MapViewPallet.MiniForm
         {
             if ((DateTime)pCalendar.SelectedDate != null)
             {
-                RefreshDate((DateTime)pCalendar.SelectedDate);
+                UpdateDateStatus((DateTime)pCalendar.SelectedDate);
             }
         }
 
-        public void RefreshDate (DateTime pDate)
+        public void UpdateDateStatus (DateTime pDate)
         {
             string ngay = "";
             switch (pDate.DayOfWeek)
@@ -98,6 +93,16 @@ namespace MapViewPallet.MiniForm
         private void Btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
             operation_model.RefreshData();
+        }
+
+        private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+        }
+
+        private void Btn_Test_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(operation_model.deviceList);
         }
     }
     

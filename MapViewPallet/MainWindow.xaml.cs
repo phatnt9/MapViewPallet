@@ -66,7 +66,7 @@ namespace MapViewPallet
         Point transform = new Point(0, 0);
         private CanvasControlService palletViewEventControl;
         System.Media.SoundPlayer snd;
-        OperationControl GiaoDienLapLich;
+        PlanControl GiaoDienLapLich;
         
         
 
@@ -91,7 +91,7 @@ namespace MapViewPallet
             map.Background = img;
             palletViewEventControl = new CanvasControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
-            GiaoDienLapLich = new OperationControl();
+            GiaoDienLapLich = new PlanControl();
             //GiaoDienLapLich.Show();
             //===============DataGridView========
             StationsDataGrid.CanUserAddRows = false;
