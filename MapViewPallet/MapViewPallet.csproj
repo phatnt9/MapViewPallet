@@ -35,9 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,11 +60,52 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Communication\HttpBridge\BridgeClientRequest.cs" />
+    <Compile Include="DataGridView\DgvStation.cs" />
+    <Compile Include="DataGridView\DgvModel.cs" />
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
+    <Compile Include="MiniForm\Device.cs" />
+    <Compile Include="MiniForm\DeviceList.cs" />
+    <Compile Include="MiniForm\Database\dtBuffer.cs" />
+    <Compile Include="MiniForm\Database\dtDevice.cs" />
+    <Compile Include="MiniForm\Database\dtDeviceBuffer.cs" />
+    <Compile Include="MiniForm\Database\dtDeviceProduct.cs" />
+    <Compile Include="MiniForm\Database\dtPallet.cs" />
+    <Compile Include="MiniForm\Database\dtPlan.cs" />
+    <Compile Include="MiniForm\Database\dtProduct.cs" />
+    <Compile Include="MiniForm\Database\dtProductDetail.cs" />
+    <Compile Include="MiniForm\Database\dtTimeWork.cs" />
+    <Compile Include="MiniForm\Database\dtUser.cs" />
+    <Compile Include="MiniForm\Database\dtUserDevice.cs" />
+    <Compile Include="MiniForm\Plan.cs" />
+    <Compile Include="MiniForm\PlanControl.xaml.cs">
+      <DependentUpon>PlanControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MiniForm\PlanModel.cs" />
+    <Compile Include="MiniForm\DeviceProduct.cs" />
+    <Compile Include="MiniForm\Product.cs" />
+    <Compile Include="MiniForm\ProductDetail.cs" />
+    <Compile Include="MiniForm\Database\RptProcessChargeDTO.cs" />
+    <Compile Include="MiniForm\Database\RptProcessRobotDTO.cs" />
+    <Compile Include="MiniForm\userModel.cs" />
+    <Compile Include="Shape\CurveShape.cs" />
+    <Compile Include="Shape\Edit.xaml.cs">
+      <DependentUpon>Edit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shape\PalletShape.cs" />
-    <Compile Include="Shape\PalletViewControlService.cs" />
+    <Compile Include="Shape\CanvasControlService.cs" />
+    <Compile Include="Shape\Properties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shape\Properties.Designer.cs">
+      <DependentUpon>Properties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shape\CanvasPath.cs" />
+    <Compile Include="Shape\RobotShape.cs" />
+    <Compile Include="Shape\StationDataService.cs" />
     <Compile Include="Shape\StationShape.cs" />
+    <Compile Include="Shape\StraightShape.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,6 +118,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MiniForm\PlanControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shape\Edit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -91,7 +144,14 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Shape\Properties.resx">
+      <DependentUpon>Properties.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Excels\Path.xls" />
+    <None Include="Excels\StationMain.xls" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -126,6 +186,108 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mapbackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tennessee_whiskey.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tennessee_whiskey.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Picture1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_straightpath_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_joinpath_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_joinpath_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_straightpath_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Resources\phat_mapShrink.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Resources\phat_mapExtend.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_mapShrink.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_mapExtend.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_joinpath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\phat_straightpath.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-line-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pallet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Map.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Resources\Map\Map.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Robotpixel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Robot2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Resources\Robotnew.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bobo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Resources\ssss.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Yellow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Unknow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Station_Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\unilever_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\seldat_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,47 +10,70 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using static MapViewPallet.Global_Object;
 
 namespace MapViewPallet.Shape
 {
-    class PalletShape : Border
+    public class PalletShape : Border
     {
-        public PalletShape(string typePallet)
+        private double palletMargin = 0.05; //metters
+        private PalletState _status = PalletState.Unoccupied; //metters
+
+        
+        //private double palletPadding = 0.5; //metters
+
+        public PalletShape(string name)
         {
-            Width = 13;
-            Height = 15;
-            Margin = new Thickness(2);
-            BorderBrush = new SolidColorBrush(Colors.Green);
-            BorderThickness = new Thickness(0);
-            Bitmap bmp = (Bitmap)Properties.Resources.ResourceManager.GetObject(typePallet);
-            ImageBrush img = new ImageBrush();
-            img.ImageSource = ImageSourceForBitmap(bmp);
-            Background = img;
-            this.MouseDown += PalletMouseDown;
+            Name = name;
+            // Specific Size of Pallet
+            Margin = new Thickness(palletMargin / Global_Object.resolution);
+            //Padding = new Thickness(palletPadding / Global_Object.resolution);
+            // Style Pallet Border
+            BorderBrush = new SolidColorBrush(Colors.Black);
+            BorderThickness = new Thickness(0.3);
+            CornerRadius = new CornerRadius(1.3);
+            // Background for Pallet
+            //Bitmap bmp = (Bitmap)MapViewPallet.Properties.Resources.ResourceManager.GetObject(typePallet);
+            //ImageBrush img = new ImageBrush();
+            //img.ImageSource = ImageSourceForBitmap(bmp);
+            //Background = img;
+            //=============================
+            StatusChanged("normal");
+
+            // Event handler
+            MouseDown += PalletMouseDown;
+        }
+
+        public void StatusChanged (string status)
+        {
+            switch (status)
+            {
+                case "normal":
+                    {
+                        Background = new SolidColorBrush(Colors.Lime);
+                        break;
+                    }
+                case "":
+                    {
+                        Background = new SolidColorBrush(Colors.Lime);
+                        break;
+                    }
+                default:
+                    {
+                        Background = new SolidColorBrush(Colors.Transparent);
+                        break;
+                    }
+
+            }
         }
 
         private void PalletMouseDown(object sender, MouseButtonEventArgs e)
         {
         }
-
-        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-        //\\\\\\\\\\\\Action\\\\\\\\\\\\\\\\\\
-        public void Move(double X, double Y)
-        {
-            TranslateTransform a = new TranslateTransform(X, Y);
-            RotateTransform b = new RotateTransform(45);
-            TransformGroup myTransformGroup = new TransformGroup();
-            myTransformGroup.Children.Add(a);
-            //myTransformGroup.Children.Add(b);
-            RenderTransform = myTransformGroup;
-        }
-        public void ChangeSize(int size)
-        {
-            Width = size;
-            Height = size;
-        }
+        
+        //\\\\\\\\\\\\Action\\\\\\\\\\\\\\\
+       
         //\\\\\\\\\\\\Others\\\\\\\\\\\\\\\
         private ImageSource ImageSourceForBitmap(Bitmap bmp)
         {
@@ -62,6 +85,12 @@ namespace MapViewPallet.Shape
             finally { }
         }
         //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
+        private void ChangeToolTipContent(object sender, ToolTipEventArgs e)
+        {
+            ToolTip = "Name: " + 
+                "\n Start: " +
+                " \n End: " +
+                " \n Rotate: ";
+        }
     }
 }
