@@ -1,144 +1,62 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using SelDatUnilever_Ver1._00.Communication.HttpBridge;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MapViewPallet.MiniForm
 {
-
-
-    public class Plan : BridgeClientRequest
+    public class Plan : dtPlan
     {
-        private DateTime _date;
-        private int _deviceId;
-        private string _deviceName;
-        private int _productId;
-        private string _productName;
-        private int _quantity;
-        private int _buffered;
-        private List<string> _serials;
+        private string pDeviceName;
+        private string pProductName;
+        
+        public string deviceName { get => pDeviceName; set { pDeviceName = value; NotifyPropertyChanged("deviceName"); } }
+        public string productName { get => pProductName; set { pProductName = value; NotifyPropertyChanged("productName"); } }
 
+        private List<ProductDetail> pListProductDetails;
+        public List<ProductDetail> listProductDetails { get => pListProductDetails; set { pListProductDetails = value; NotifyPropertyChanged("listProductDetails"); } }
 
         public Plan()
         {
-            dynamic postApiBody = new JObject();
-            postApiBody.deviceId = _deviceId;
-            PostCallAPI("http://localhost:8081/robot/rest/product/getListProductDetailByProductId", JsonConvert.SerializeObject(postApiBody));
+            listProductDetails = new List<ProductDetail>();
         }
 
-        public override void ReceiveResponseHandler(string msg)
+        public void UpdateProductDetailId (int productDetailId)
         {
-            dynamic stuff = JsonConvert.DeserializeObject(msg);
-            foreach (dynamic item in stuff)
-            {
-                if ((int)item.productId == 1)
-                {
-
-                }
-            }
+            this.productDetailId = productDetailId;
         }
-        //private ObservableCollection<Serial> _serials;
 
-        [ReadOnlyAttribute(true)]
-        public string DeviceName
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Private Helpers
+
+        private void NotifyPropertyChanged(string propertyName)
         {
-            get { return _deviceName; }
-            set
+            if (PropertyChanged != null)
             {
-                _deviceName = value;
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
-
-        [ReadOnlyAttribute(true)]
-        public int DeviceId
-        {
-            get { return _deviceId; }
-            set
-            {
-                _deviceId = value;
-            }
-        }
-
-        [ReadOnlyAttribute(true)]
-        public string ProductName
-        {
-            get { return _productName; }
-            set
-            {
-                _productName = value;
-            }
-        }
-
-        [ReadOnlyAttribute(true)]
-        public int ProductId
-        {
-            get { return _productId; }
-            set
-            {
-                _productId = value;
-            }
-        }
-        //###################################################
-        [ReadOnlyAttribute(false)]
-        public int Quantity
-        {
-            get { return _quantity; }
-            set
-            {
-                _quantity = value;
-            }
-        }
-        //###################################################
-        [ReadOnlyAttribute(false)]
-        public List<string> Serials
-        {
-            get
-            {
-                return _serials;
-            }
-            set
-            {
-                _serials = value;
-            }
-        }
-        //###################################################
-        [ReadOnlyAttribute(true)]
-        public int Buffered
-        {
-            get { return _buffered; }
-            set
-            {
-                _buffered = value;
-            }
-        }
+        #endregion
 
 
-
-
-
-        //#region INotifyPropertyChanged Members
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-
-        //#endregion
-
-        //#region Private Helpers
-
-        //private void NotifyPropertyChanged(string propertyName)
+        //private string pProductDetailName;
+        //public string productDetailName
         //{
-        //    if (PropertyChanged != null)
+        //    get => pProductDetailName;
+        //    set
         //    {
-        //        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        //        pProductDetailName = value;
+        //        NotifyPropertyChanged("productDetailName");
         //    }
         //}
 
-        //#endregion
     }
 }

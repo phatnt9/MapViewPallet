@@ -1,34 +1,38 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MapViewPallet.MiniForm
 {
-    public class Device : dtDevice
+    public class DeviceProduct : dtDeviceProduct
     {
-        //########-----VARIABLE-----#######
-        public List<DeviceProduct> listDeviceProduct;
+        //#############################
+        public List<ProductDetail> listProductDetails;
+
         
-        //########-----METHOD-----#######
-        public Device()
+
+        public DeviceProduct()
         {
-            listDeviceProduct = new List<DeviceProduct>();
+            listProductDetails = new List<ProductDetail>();
         }
 
-        public void GetDeviceProductsList()
+        public void GetProductDetailsList()
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListDeviceProductByDeviceId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProductDetailByProductId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
-                postApiBody.deviceId = deviceId;
+                postApiBody.productId = productId;
                 string jsonData = JsonConvert.SerializeObject(postApiBody);
                 System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
                 Byte[] byteArray = encoding.GetBytes(jsonData);
@@ -47,21 +51,19 @@ namespace MapViewPallet.MiniForm
                     DataTable deviceProducts = JsonConvert.DeserializeObject<DataTable>(result);
                     foreach (DataRow dr in deviceProducts.Rows)
                     {
-                        DeviceProduct tempDeviceProduct = new DeviceProduct
+                        ProductDetail tempDeviceProduct = new ProductDetail
                         {
                             creUsrId = int.Parse(dr["creUsrId"].ToString()),
                             creDt = dr["creDt"].ToString(),
                             updUsrId = int.Parse(dr["updUsrId"].ToString()),
                             updDt = dr["updDt"].ToString(),
-                            deviceProductId = int.Parse(dr["deviceProductId"].ToString()),
-                            deviceId = int.Parse(dr["deviceId"].ToString()),
+                            productDetailId = int.Parse(dr["productDetailId"].ToString()),
                             productId = int.Parse(dr["productId"].ToString()),
-                            productName = dr["productName"].ToString(),
-                            checkStatus = bool.Parse(dr["checkStatus"].ToString())
+                            productDetailName = dr["productDetailName"].ToString()
                         };
-                        if (AddDeviceProduct(tempDeviceProduct))
+                        if (AddProductDetail(tempDeviceProduct))
                         {
-                            tempDeviceProduct.GetProductDetailsList();
+                            //tempDeviceProduct.GetProductDetailsList();
                         }
                     }
                 }
@@ -71,29 +73,30 @@ namespace MapViewPallet.MiniForm
 
             }
         }
+        
 
-        public bool AddDeviceProduct(DeviceProduct deviceProduct)
+        public bool AddProductDetail(ProductDetail productDetail)
         {
-            foreach (DeviceProduct item in listDeviceProduct)
+            foreach (ProductDetail item in listProductDetails)
             {
-                if (item.deviceProductId == deviceProduct.deviceProductId)
+                if (item.productDetailId == productDetail.productDetailId)
                 {
                     return false;
                 }
             }
-            listDeviceProduct.Add(deviceProduct);
+            listProductDetails.Add(productDetail);
             return true;
         }
 
-        public DeviceProduct Get_DeviceProduct_By_DeviceProductId(int deviceProductId)
+        public ProductDetail Get_ProductDetail_By_ProductDetailId(int productDetailId)
         {
             try
             {
-                foreach (DeviceProduct deviceProduct in listDeviceProduct)
+                foreach (ProductDetail productDetail in listProductDetails)
                 {
-                    if (deviceProduct.deviceProductId == deviceProductId)
+                    if (productDetail.productDetailId == productDetailId)
                     {
-                        return deviceProduct;
+                        return productDetail;
                     }
                 }
                 return null;

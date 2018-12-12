@@ -67,13 +67,32 @@
     <Compile Include="Global_Object.cs" />
     <Compile Include="MiniForm\Device.cs" />
     <Compile Include="MiniForm\DeviceList.cs" />
+    <Compile Include="MiniForm\Database\dtBuffer.cs" />
+    <Compile Include="MiniForm\Database\dtDevice.cs" />
+    <Compile Include="MiniForm\Database\dtDeviceBuffer.cs" />
+    <Compile Include="MiniForm\Database\dtDeviceProduct.cs" />
+    <Compile Include="MiniForm\Database\dtPallet.cs" />
+    <Compile Include="MiniForm\Database\dtPlan.cs" />
+    <Compile Include="MiniForm\Database\dtProduct.cs" />
+    <Compile Include="MiniForm\Database\dtProductDetail.cs" />
+    <Compile Include="MiniForm\Database\dtTimeWork.cs" />
+    <Compile Include="MiniForm\Database\dtUser.cs" />
+    <Compile Include="MiniForm\Database\dtUserDevice.cs" />
     <Compile Include="MiniForm\Plan.cs" />
     <Compile Include="MiniForm\PlanControl.xaml.cs">
       <DependentUpon>PlanControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MiniForm\PlanModel.cs" />
+    <Compile Include="MiniForm\DeviceProduct.cs" />
     <Compile Include="MiniForm\Product.cs" />
+    <Compile Include="MiniForm\ProductDetail.cs" />
+    <Compile Include="MiniForm\Database\RptProcessChargeDTO.cs" />
+    <Compile Include="MiniForm\Database\RptProcessRobotDTO.cs" />
+    <Compile Include="MiniForm\userModel.cs" />
     <Compile Include="Shape\CurveShape.cs" />
+    <Compile Include="Shape\Edit.xaml.cs">
+      <DependentUpon>Edit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shape\PalletShape.cs" />
     <Compile Include="Shape\CanvasControlService.cs" />
     <Compile Include="Shape\Properties.cs">
@@ -100,6 +119,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MiniForm\PlanControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shape\Edit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

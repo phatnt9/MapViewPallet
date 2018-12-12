@@ -76,16 +76,21 @@ namespace MapViewPallet.Shape
             //Name = stationName; //Object name
             ContextMenu = new ContextMenu();
             //===================================
+            MenuItem propertiesItem = new MenuItem();
+            propertiesItem.Header = "Thông tin";
+            propertiesItem.Click += PropertiesMenu;
+            //===================================
             MenuItem editItem = new MenuItem();
-            editItem.Header = "Edit";
+            editItem.Header = "Tùy chỉnh";
             editItem.Click += EditMenu;
             //===================================
             MenuItem removeItem = new MenuItem();
-            removeItem.Header = "Remove";
+            removeItem.Header = "Xóa";
             removeItem.Click += RemoveMenu;
+            ContextMenu.Items.Add(propertiesItem);
             ContextMenu.Items.Add(editItem);
             //ContextMenu.Items.Add(rotateItem);
-            ContextMenu.Items.Add(removeItem);
+            //ContextMenu.Items.Add(removeItem);
             //====================EVENT=====================
             //MouseLeave += MouseLeaveStation;
             //MouseMove += MouseHoverStation;
@@ -207,6 +212,10 @@ namespace MapViewPallet.Shape
         }
 
         public void EditMenu(object sender, RoutedEventArgs e)
+        {
+        }
+
+        public void PropertiesMenu(object sender, RoutedEventArgs e)
         {
             stationProperties.ShowDialog();
         }

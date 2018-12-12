@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace MapViewPallet.MiniForm
 {
-    class Product : dtProduct
+    public class ProductDetail : dtProductDetail
     {
+        
+
     }
 }

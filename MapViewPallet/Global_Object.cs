@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace MapViewPallet
 {
-
+    
     public static class Global_Object
     {
         public enum StationState
@@ -31,9 +31,9 @@ namespace MapViewPallet
             Unoccupied,
             Holding
         }
-        
 
 
+        public static string url = @"http://localhost:8081/robot/rest/";
         public static Point LaserOriginalCoor = new Point(648,378);
         public static Point OriginPoint = new Point(0,0);
         public static Point CoorLaser(Point canvas)

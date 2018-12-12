@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:staticData="clr-namespace:MapViewPallet.MiniForm"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
+        xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
         Title="Thiết Lập Quy Trình" Height="450" Width="800">
     <Window.Resources>
@@ -42,7 +43,7 @@
 
                 <Grid Name="MicsDetail" Grid.Row="2" >
                     <Border BorderThickness="0" BorderBrush="Black" Margin="10">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                        <!--<ScrollViewer HorizontalScrollBarVisibility="Auto">
                             <TabControl TabStripPlacement="Left">
                                 <TabItem Header="JUJENG">
                                     <StackPanel Margin="10">
@@ -51,7 +52,7 @@
                                 <TabItem Header="POSIMAT1"></TabItem>
                                 <TabItem Header="POSIMAT2"></TabItem>
                                 <TabItem Header="POSIMAT3"></TabItem>
-                                <!--<TabItem Header="SANGTAO2"></TabItem>
+                                --><!--<TabItem Header="SANGTAO2"></TabItem>
                             <TabItem Header="SANGTAO3"></TabItem>
                             <TabItem Header="SANGTAO4"></TabItem>
                             <TabItem Header="MESPACK1"></TabItem>
@@ -60,10 +61,14 @@
                             <TabItem Header="LEEPACK"></TabItem>
                             <TabItem Header="AKASH1"></TabItem>
                             <TabItem Header="AKASH2"></TabItem>
-                            <TabItem Header="AKASH3"></TabItem>-->
+                            <TabItem Header="AKASH3"></TabItem>--><!--
                             </TabControl>
 
-                        </ScrollViewer>
+                        </ScrollViewer>-->
+                        <StackPanel>
+                            <TextBlock TextAlignment="Center" FontSize="20">Current Shift</TextBlock>
+                            <TextBlock TextAlignment="Center">1</TextBlock>
+                        </StackPanel>
                     </Border>
                 </Grid>
             </Grid>
@@ -111,10 +116,13 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                            <TabControl Margin="3,5,0,2">
-                                <TabItem Header="Ca 1">
-                                    <DataGrid Name="Shift1Dgv"
-                                  ItemsSource="{Binding GroupedDevices_S1}"
+                            <TabControl Name="TabControlShift" Margin="3,5,0,2" >
+                                <!--<TabItem Name="Plan_Shift0" Header="Ca 0">
+                                    
+                                </TabItem>-->
+                                <TabItem Name="Plan_Shift1" Header="Ca 1">
+                                    <DataGrid Name="Shift1Dgv" Loaded="Shift1Dgv_Loaded"
+                                              ItemsSource="{Binding GroupedDevices_S1}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
                                   CanUserResizeColumns="False" CanUserResizeRows="False"
                                   CanUserDeleteRows="False" CanUserSortColumns="False"
@@ -133,7 +141,7 @@
                                                         <Setter Property="Template">
                                                             <Setter.Value>
                                                                 <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                                    <Expander>
+                                                                    <Expander IsExpanded="True">
                                                                         <Expander.Header>
                                                                             <StackPanel Orientation="Horizontal">
                                                                                 <TextBlock Text="{Binding Path=Name}" />
@@ -151,30 +159,32 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Machine" Binding="{Binding DeviceName}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Material" Binding="{Binding ProductName}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
+                                            <DataGridTextColumn Header="Machine" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Material" Binding="{Binding Path=productName}" IsReadOnly="True"/>
                                             <DataGridTemplateColumn  Header="Serials"  >
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <ComboBox 
-                                                            ItemsSource="{Binding Serials}"
-                                                            SelectedItem="{Binding string, Mode=OneWay}"
-                                                            >
-                                                        </ComboBox>
+                                                            ItemsSource="{Binding Path=listProductDetails}"
+                                                            DisplayMemberPath="productDetailName"
+                                                            SelectedValuePath="productDetailId"
+                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                            />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn Header="Buffered" Binding="{Binding Buffered}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Request" Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <DataGridTextColumn Header="Buffered" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
-                                <TabItem Header="Ca 2" >
-                                    <DataGrid Name="Shift2Dgv"
+                                <TabItem Name="Plan_Shift2" Header="Ca 2">
+                                    <DataGrid Name="Shift2Dgv" Loaded="Shift2Dgv_Loaded"
                                   ItemsSource="{Binding GroupedDevices_S2}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
                                   CanUserResizeColumns="False" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False">
+                                  CanUserDeleteRows="False" CanUserSortColumns="False"
+                                              AutoGenerateColumns="False">
                                         <DataGrid.GroupStyle>
                                             <GroupStyle>
                                                 <GroupStyle.HeaderTemplate>
@@ -189,7 +199,7 @@
                                                         <Setter Property="Template">
                                                             <Setter.Value>
                                                                 <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                                    <Expander>
+                                                                    <Expander IsExpanded="True">
                                                                         <Expander.Header>
                                                                             <StackPanel Orientation="Horizontal">
                                                                                 <TextBlock Text="{Binding Path=Name}" />
@@ -206,14 +216,33 @@
                                                 </GroupStyle.ContainerStyle>
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Machine" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Material" Binding="{Binding Path=productName}" IsReadOnly="True"/>
+                                            <DataGridTemplateColumn  Header="Serials"  >
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <ComboBox 
+                                                            ItemsSource="{Binding Path=listProductDetails}"
+                                                            DisplayMemberPath="productDetailName"
+                                                            SelectedValuePath="productDetailId"
+                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                            />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Header="Request" Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <DataGridTextColumn Header="Buffered" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
+                                        </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
-                                <TabItem Header="Ca 3" >
-                                    <DataGrid Name="Shift3Dgv"
+                                <TabItem Name="Plan_Shift3" Header="Ca 3" >
+                                    <DataGrid Name="Shift3Dgv" Loaded="Shift3Dgv_Loaded"
                                   ItemsSource="{Binding GroupedDevices_S3}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
                                   CanUserResizeColumns="False" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False">
+                                  CanUserDeleteRows="False" CanUserSortColumns="False"
+                                              AutoGenerateColumns="False">
                                         <DataGrid.GroupStyle>
                                             <GroupStyle>
                                                 <GroupStyle.HeaderTemplate>
@@ -228,7 +257,7 @@
                                                         <Setter Property="Template">
                                                             <Setter.Value>
                                                                 <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                                    <Expander>
+                                                                    <Expander IsExpanded="True">
                                                                         <Expander.Header>
                                                                             <StackPanel Orientation="Horizontal">
                                                                                 <TextBlock Text="{Binding Path=Name}" />
@@ -245,6 +274,24 @@
                                                 </GroupStyle.ContainerStyle>
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Machine" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Material" Binding="{Binding Path=productName}" IsReadOnly="True"/>
+                                            <DataGridTemplateColumn  Header="Serials"  >
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <ComboBox 
+                                                            ItemsSource="{Binding Path=listProductDetails}"
+                                                            DisplayMemberPath="productDetailName"
+                                                            SelectedValuePath="productDetailId"
+                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                            />
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Header="Request" Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <DataGridTextColumn Header="Buffered" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
+                                        </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
                             </TabControl>
@@ -265,6 +312,7 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Name="Btn_Accept" Width="70" Content="Hoàn thành" Margin="5,5"/>
                             <Button Name="Btn_Refresh" Width="70" Content="Làm mới" Margin="5,5" Click="Btn_Refresh_Click"/>
+                            <Button Name="Btn_Clear" Width="70" Content="Dọn" Margin="5,5" Click="Btn_Clear_Click"/>
                             <Button Name="Btn_Test" Width="70" Content="Test" Margin="5,5" Click="Btn_Test_Click"/>
                             <Button Name="Btn_Cancel" Width="70" Content="Thoát" Margin="5,5" Click="Btn_Cancel_Click"/>
                         </StackPanel>
