@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MapViewPallet.MiniForm
 {
-    public class Product : dtProduct
+    public class DeviceBuffer : dtDeviceBuffer
     {
+
     }
 }

@@ -66,7 +66,8 @@ namespace MapViewPallet
         Point transform = new Point(0, 0);
         private CanvasControlService palletViewEventControl;
         System.Media.SoundPlayer snd;
-        PlanControl GiaoDienLapLich;
+        PlanControl planControl;
+        DevicesManagement devicesManagement;
         
         
 
@@ -91,7 +92,8 @@ namespace MapViewPallet
             map.Background = img;
             palletViewEventControl = new CanvasControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
-            GiaoDienLapLich = new PlanControl();
+            
+            
             //GiaoDienLapLich.Show();
             //===============DataGridView========
             StationsDataGrid.CanUserAddRows = false;
@@ -393,9 +395,16 @@ namespace MapViewPallet
             }
         }
 
-        private void btn_LapLich_Click(object sender, RoutedEventArgs e)
+        private void btn_PlanControl_Click(object sender, RoutedEventArgs e)
         {
-            GiaoDienLapLich.ShowDialog();
+            planControl = new PlanControl();
+            planControl.ShowDialog();
+        }
+
+        private void btn_DevicesManagement_Click(object sender, RoutedEventArgs e)
+        {
+            devicesManagement = new DevicesManagement();
+            devicesManagement.ShowDialog();
         }
     }
 

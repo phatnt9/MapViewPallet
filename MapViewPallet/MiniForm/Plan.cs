@@ -12,11 +12,11 @@ namespace MapViewPallet.MiniForm
         private string pDeviceName;
         private string pProductName;
         
-        public string deviceName { get => pDeviceName; set { pDeviceName = value; NotifyPropertyChanged("deviceName"); } }
-        public string productName { get => pProductName; set { pProductName = value; NotifyPropertyChanged("productName"); } }
+        public string deviceName { get => pDeviceName; set { pDeviceName = value; RaisePropertyChanged("deviceName"); } }
+        public string productName { get => pProductName; set { pProductName = value; RaisePropertyChanged("productName"); } }
 
         private List<ProductDetail> pListProductDetails;
-        public List<ProductDetail> listProductDetails { get => pListProductDetails; set { pListProductDetails = value; NotifyPropertyChanged("listProductDetails"); } }
+        public List<ProductDetail> listProductDetails { get => pListProductDetails; set { pListProductDetails = value; RaisePropertyChanged("listProductDetails"); } }
 
         public Plan()
         {
@@ -28,23 +28,23 @@ namespace MapViewPallet.MiniForm
             this.productDetailId = productDetailId;
         }
 
-        #region INotifyPropertyChanged Members
+        //#region INotifyPropertyChanged Members
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion
+        //#endregion
 
-        #region Private Helpers
+        //#region Private Helpers
 
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+        //private void NotifyPropertyChanged(string propertyName)
+        //{
+        //    if (PropertyChanged != null)
+        //    {
+        //        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
 
         //private string pProductDetailName;

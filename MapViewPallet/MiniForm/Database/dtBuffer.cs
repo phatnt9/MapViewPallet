@@ -14,6 +14,7 @@ namespace MapViewPallet.MiniForm
         private int pMaxBay;
         private int pMaxRowOld;
         private int pMaxBayOld;
+        private List<dtPallet> pPallets;
 
         public string bufferId { get => pBufferId; set => pBufferId = value; }
         public int maxRow { get => pMaxRow; set => pMaxRow = value; }
@@ -22,5 +23,7 @@ namespace MapViewPallet.MiniForm
         public string bufferIdOld { get => pBufferIdOld; set => pBufferIdOld = value; }
         public int maxRowOld { get => pMaxRowOld; set => pMaxRowOld = value; }
         public int maxBayOld { get => pMaxBayOld; set => pMaxBayOld = value; }
+        public List<dtPallet> pallets { get => pPallets; set => pPallets = value; }
+
     }
 }

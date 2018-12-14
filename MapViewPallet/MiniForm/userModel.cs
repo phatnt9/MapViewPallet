@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MapViewPallet.MiniForm
 {
-    public class userModel: INotifyPropertyChanged
+    public class userModel: NotifyUIBase//INotifyPropertyChanged
     {
         private int pCreUsrId;
         private string pCreDt;
@@ -22,11 +22,11 @@ namespace MapViewPallet.MiniForm
 
 
 
-        #region INotifyPropertyChanged Members
+        //#region INotifyPropertyChanged Members
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion
+        //#endregion
 
         
     }

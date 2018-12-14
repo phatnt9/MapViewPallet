@@ -83,15 +83,15 @@ namespace MapViewPallet.MiniForm
 
         private void GroupedDevices_S1_Change(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Console.WriteLine("GroupedDevices_S1_Change");
+            //Console.WriteLine("GroupedDevices_S1_Change");
         }
         private void GroupedDevices_S2_Change(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Console.WriteLine("GroupedDevices_S2_Change");
+            //Console.WriteLine("GroupedDevices_S2_Change");
         }
         private void GroupedDevices_S3_Change(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Console.WriteLine("GroupedDevices_S3_Change");
+            //Console.WriteLine("GroupedDevices_S3_Change");
         }
 
         public bool ContainPlan(Plan tempOpe, List<Plan> Base)
@@ -157,23 +157,19 @@ namespace MapViewPallet.MiniForm
 
         public void CreateListPlansFromDeviceList(DateTime selectedDate)
         {
-            basePlans1.Clear();
-            basePlans2.Clear();
-            basePlans3.Clear();
             string date = selectedDate.Year + "-" + selectedDate.Month + "-" + selectedDate.Day.ToString("00.");
             List<Plan> jsonShift1 = CheckPlans(1, selectedDate);
             List<Plan> jsonShift2 = CheckPlans(2, selectedDate);
             List<Plan> jsonShift3 = CheckPlans(3, selectedDate);
-
-            //Console.WriteLine("Number Of Plan: " + temp.Rows.Count);
+            
             for (int i = 1; i < 4; i++)
             {
                 List<Plan> plansTemp = new List<Plan>();
+                List<Plan> checkPlanList = (i == 1) ? jsonShift1 : ((i == 2) ? jsonShift2 : jsonShift3);
                 foreach (Device device in deviceList.listDevices)
                 {
                     foreach (DeviceProduct product in device.listDeviceProduct)
                     {
-                        //Plan addPlan = new Plan();
                         Plan tempOpe = new Plan()
                         {
                             planId = 0,
@@ -190,41 +186,49 @@ namespace MapViewPallet.MiniForm
                             productId = product.productId,
                             productName = product.productName
                         };
-                        if (jsonShift1.Count != 0)
+                        if (checkPlanList.Count != 0)
                         {
-                            foreach (Plan pl in jsonShift1)
+                            foreach (Plan tempPlan in checkPlanList)
                             {
-                                if (ComparePlan(tempOpe,pl))
+                                if (ComparePlan(tempOpe,tempPlan))
                                 {
-                                    tempOpe.creUsrId = pl.creUsrId;
-                                    tempOpe.creDt = pl.creDt;
-                                    tempOpe.updUsrId = pl.updUsrId;
-                                    tempOpe.updDt = pl.updDt;
-                                    tempOpe.planId = pl.planId;
-                                    tempOpe.deviceProductId = pl.deviceProductId;
-                                    tempOpe.timeWorkId = pl.timeWorkId;
-                                    tempOpe.productDetailId = pl.productDetailId;
-                                    //tempOpe.UpdateProductDetailId(3);
-                                    tempOpe.palletAmount = pl.palletAmount;
-                                    tempOpe.palletUse = pl.palletUse;
-                                    tempOpe.palletMiss = pl.palletMiss;
-                                    tempOpe.activeDate = pl.activeDate;
+                                    tempOpe.creUsrId = tempPlan.creUsrId;
+                                    tempOpe.creDt = tempPlan.creDt;
+                                    tempOpe.updUsrId = tempPlan.updUsrId;
+                                    tempOpe.updDt = tempPlan.updDt;
 
+                                    tempOpe.planId = tempPlan.planId;
+                                    tempOpe.productDetailId = tempPlan.productDetailId;
+                                    tempOpe.palletAmount = tempPlan.palletAmount;
+                                    tempOpe.palletUse = tempPlan.palletUse;
+                                    tempOpe.palletMiss = tempPlan.palletMiss;
 
-                                    plansTemp.Add(tempOpe);
-                                    break;
+                                    //**************************************
+                                    //tempOpe.deviceProductId = tempPlan.deviceProductId;
+                                    //tempOpe.timeWorkId = tempPlan.timeWorkId;
+                                    //tempOpe.activeDate = tempPlan.activeDate;
+                                    tempOpe.deviceId = tempPlan.deviceId;
+                                    tempOpe.productId = tempPlan.productId;
+                                    //tempOpe.buffers = pl.buffers;
+                                    //tempOpe.buffers = pl.buffers;
+                                    //**************************************
                                 }
                             }
                             plansTemp.Add(tempOpe);
                         }
+                        else
+                        {
+                            plansTemp.Add(tempOpe);
+                        }
                     }
-                    switch (i)
-                    {
-                        case 1: { AddPlans(plansTemp, basePlans1); break; }
-                        case 2: { AddPlans(plansTemp, basePlans2); break; }
-                        case 3: { AddPlans(plansTemp, basePlans3); break; }
-                        default: { break; }
-                    }
+                    
+                }
+                switch (i)
+                {
+                    case 1: { basePlans1.Clear(); AddPlans(plansTemp, basePlans1); break; }
+                    case 2: { basePlans2.Clear(); AddPlans(plansTemp, basePlans2); break; }
+                    case 3: { basePlans3.Clear(); AddPlans(plansTemp, basePlans3); break; }
+                    default: { break; }
                 }
             }
             //RefreshData();
@@ -240,7 +244,7 @@ namespace MapViewPallet.MiniForm
         public bool ComparePlan (Plan pl0, Plan pl1)
         {
             if ((pl0.deviceProductId == pl1.deviceProductId) &&
-                        (pl0.productDetailId == pl1.productDetailId) &&
+                        //(pl0.productDetailId == pl1.productDetailId) &&
                         (pl0.timeWorkId == pl1.timeWorkId) &&
                         (pl0.activeDate == pl1.activeDate))
             {
@@ -251,7 +255,7 @@ namespace MapViewPallet.MiniForm
 
         public void RefreshData ()
         {
-            Console.WriteLine("RefreshData 123");
+            //Console.WriteLine("RefreshData 123");
             GroupedDevices_S1.Refresh();
             GroupedDevices_S2.Refresh();
             GroupedDevices_S3.Refresh();
@@ -311,15 +315,74 @@ namespace MapViewPallet.MiniForm
                         };
                         AddPlan(tempPlan, returnList);
                     }
-                    //dynamic listplans = JObject.Parse(result);
-                    //planByShift = JsonConvert.DeserializeObject<DataTable>(result);
-                    //Console.WriteLine(planByShift);
                     return returnList;
                 }
             }
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        public void UpdateAllCurrentPlansToDb()
+        {
+            UpdatePlansToDb(basePlans1);
+            UpdatePlansToDb(basePlans2);
+            UpdatePlansToDb(basePlans3);
+            Console.WriteLine("---Done---");
+        }
+
+        public void UpdatePlansToDb (List<Plan> listPlan)
+        {
+            foreach (Plan item in listPlan)
+            {
+                SendPlanToDb(item);
+            }
+        }
+
+        public void SendPlanToDb (Plan plan)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/insertUpdatePlan");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+
+                //********************************
+                dynamic postApiBody = new JObject();
+                postApiBody.planId = plan.planId;
+                postApiBody.deviceProductId = plan.deviceProductId;
+                postApiBody.timeWorkId = plan.timeWorkId;
+                postApiBody.productDetailId = plan.productDetailId;
+                postApiBody.palletAmount = plan.palletAmount;
+                postApiBody.activeDate = plan.activeDate;
+                postApiBody.creUsrId = plan.creUsrId;
+                postApiBody.updUsrId =  plan.updUsrId;
+                //postApiBody.deviceId =  plan.deviceId;
+                //postApiBody.productId =  plan.productId;
+
+                //********************************
+                string jsonData = "["+JsonConvert.SerializeObject(postApiBody)+"]";
+                //Console.WriteLine(jsonData);
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+                    //Console.WriteLine("Insert or Update plan"+result);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 

@@ -42,7 +42,7 @@ namespace MapViewPallet.MiniForm
         {
             if (pCalendar.SelectedDate == null)
             {
-                Console.WriteLine("Tao Ngay");
+                //Console.WriteLine("Tao Ngay");
                 pCalendar.SelectedDate = DateTime.Now;
             }
         }
@@ -51,7 +51,7 @@ namespace MapViewPallet.MiniForm
         {
             if (pCalendar.SelectedDate != null)
             {
-                Console.WriteLine("PCalendar_SelectedDatesChanged");
+                //Console.WriteLine("PCalendar_SelectedDatesChanged");
                 int dateStatus = UpdateDateStatus((DateTime)pCalendar.SelectedDate);
                 //**************************
                 DateTime selectedDate = (DateTime)pCalendar.SelectedDate;
@@ -73,6 +73,7 @@ namespace MapViewPallet.MiniForm
 
         private void FormLoad(object sender, RoutedEventArgs e)
         {
+            operation_model.deviceList.GetDevicesList();
             //Thread.Sleep(1000);
             //Mặc định kiểm tra plan của ngày hôm nay đã 
             //operation_model.RefreshData();
@@ -98,8 +99,8 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
-            operation_model.CreateListPlansFromDeviceList((DateTime)pCalendar.SelectedDate);
-            operation_model.RefreshData();
+            //operation_model.CreateListPlansFromDeviceList((DateTime)pCalendar.SelectedDate);
+            //operation_model.RefreshData();
         }
 
         private void Btn_Clear_Click(object sender, RoutedEventArgs e)
@@ -112,7 +113,7 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void Btn_Test_Click(object sender, RoutedEventArgs e)
@@ -188,21 +189,26 @@ namespace MapViewPallet.MiniForm
 
         private void Shift1Dgv_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Shift1Dgv_Loaded");
+            //Console.WriteLine("Shift1Dgv_Loaded");
             //operation_model.RefreshData();
         }
 
         private void Shift2Dgv_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Shift2Dgv_Loaded");
+            //Console.WriteLine("Shift2Dgv_Loaded");
             //operation_model.RefreshData();
         }
 
         private void Shift3Dgv_Loaded(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Shift3Dgv_Loaded");
+            //Console.WriteLine("Shift3Dgv_Loaded");
             //operation_model.CreateListPlansFromDeviceList((DateTime)pCalendar.SelectedDate);
             //operation_model.RefreshData();
+        }
+
+        private void Btn_Accept_Click(object sender, RoutedEventArgs e)
+        {
+            operation_model.UpdateAllCurrentPlansToDb();
         }
 
 

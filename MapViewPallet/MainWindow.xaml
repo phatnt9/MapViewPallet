@@ -71,6 +71,8 @@
                     </MenuItem>
                     <MenuItem Header="_Tools">
                         <MenuItem Header="_Resize" Click="ChangeMapSize"/>
+                        <MenuItem Header="_Quản lý quy trình" Click="btn_PlanControl_Click"/>
+                        <MenuItem Header="_Quản lý thiết bị" Click="btn_DevicesManagement_Click"/>
                     </MenuItem>
                 </Menu>
             </DockPanel>
@@ -100,7 +102,7 @@
                         ToolTip="LoadAll" Content="Load All" Margin="2,0,0,0"
                         Height="25"/>
                         <Button Name="btn_LapLich" BorderBrush="Black"
-                        BorderThickness="1" Click="btn_LapLich_Click" 
+                        BorderThickness="1" Click="btn_PlanControl_Click" 
                         ToolTip="Lap Lich" Content="Lap Lich" Margin="2,0,0,0"
                         Height="25"/>
                         

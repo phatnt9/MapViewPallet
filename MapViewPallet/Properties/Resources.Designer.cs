@@ -61,6 +61,16 @@ namespace MapViewPallet.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap add_item {
+            get {
+                object obj = ResourceManager.GetObject("add_item", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon bobo {
@@ -266,6 +276,26 @@ namespace MapViewPallet.Properties {
         internal static System.Drawing.Bitmap phat_straightpath_on {
             get {
                 object obj = ResourceManager.GetObject("phat_straightpath_on", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap refresh_item {
+            get {
+                object obj = ResourceManager.GetObject("refresh_item", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap remove_item {
+            get {
+                object obj = ResourceManager.GetObject("remove_item", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

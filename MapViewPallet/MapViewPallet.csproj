@@ -65,6 +65,7 @@
     <Compile Include="DataGridView\DgvModel.cs" />
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
+    <Compile Include="MiniForm\DeviceBuffer.cs" />
     <Compile Include="MiniForm\Device.cs" />
     <Compile Include="MiniForm\DeviceList.cs" />
     <Compile Include="MiniForm\Database\dtBuffer.cs" />
@@ -78,6 +79,11 @@
     <Compile Include="MiniForm\Database\dtTimeWork.cs" />
     <Compile Include="MiniForm\Database\dtUser.cs" />
     <Compile Include="MiniForm\Database\dtUserDevice.cs" />
+    <Compile Include="MiniForm\DevicesManagement.xaml.cs">
+      <DependentUpon>DevicesManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MiniForm\ManagementModel.cs" />
+    <Compile Include="MiniForm\NotifyUIBase.cs" />
     <Compile Include="MiniForm\Plan.cs" />
     <Compile Include="MiniForm\PlanControl.xaml.cs">
       <DependentUpon>PlanControl.xaml</DependentUpon>
@@ -118,6 +124,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MiniForm\DevicesManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MiniForm\PlanControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -288,6 +298,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\seldat_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove_item.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

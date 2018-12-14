@@ -310,7 +310,7 @@
                     </Grid>
                     <Grid Grid.Row="2" Background="LightGray">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Name="Btn_Accept" Width="70" Content="Hoàn thành" Margin="5,5"/>
+                            <Button Name="Btn_Accept" Width="70" Content="Hoàn thành" Margin="5,5" Click="Btn_Accept_Click"/>
                             <Button Name="Btn_Refresh" Width="70" Content="Làm mới" Margin="5,5" Click="Btn_Refresh_Click"/>
                             <Button Name="Btn_Clear" Width="70" Content="Dọn" Margin="5,5" Click="Btn_Clear_Click"/>
                             <Button Name="Btn_Test" Width="70" Content="Test" Margin="5,5" Click="Btn_Test_Click"/>

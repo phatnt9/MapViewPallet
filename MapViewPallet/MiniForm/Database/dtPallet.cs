@@ -16,6 +16,8 @@ namespace MapViewPallet.MiniForm
         private int pBay;
         private string pDataPallet;
         private string pPalletStatus;
+        private int pDeviceId;
+
 
         public int palletId { get => pPalletId; set => pPalletId = value; }
         public int deviceBufferId { get => pDeviceBufferId; set => pDeviceBufferId = value; }
@@ -25,5 +27,7 @@ namespace MapViewPallet.MiniForm
         public string dataPallet { get => pDataPallet; set => pDataPallet = value; }
         public string palletStatus { get => pPalletStatus; set => pPalletStatus = value; }
         public string bufferId { get => pBufferId; set => pBufferId = value; }
+        public int deviceId { get => pDeviceId; set => pDeviceId = value; }
+
     }
 }
