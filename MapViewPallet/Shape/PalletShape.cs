@@ -18,10 +18,8 @@ namespace MapViewPallet.Shape
     public class PalletShape : Border
     {
         private double palletMargin = 0.05; //metters
-        private PalletState _status = PalletState.Unoccupied; //metters
 
         
-        //private double palletPadding = 0.5; //metters
 
         public PalletShape(string name)
         {

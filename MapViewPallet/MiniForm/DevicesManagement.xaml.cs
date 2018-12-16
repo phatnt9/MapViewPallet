@@ -1,22 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using MapViewPallet.MiniForm.MicsWpfForm;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MapViewPallet.MiniForm
 {
@@ -26,59 +19,271 @@ namespace MapViewPallet.MiniForm
     public partial class DevicesManagement : Window
     {
         public ManagementModel managementModel;
-
-        public string deviceNameSelect = "";
-        private int productIdSelect = -1;
-        private string bufferIdSelect = "";
+        
 
         public DevicesManagement()
         {
             InitializeComponent();
+            DeviceManagementTabControl.SelectionChanged += DeviceManagementTabControl_SelectionChanged;
+
+            //*****************************************************************
+
             managementModel = new ManagementModel(this);
             DataContext = managementModel;
-            DeviceListDg.SelectionMode = DeviceProductListDg.SelectionMode = BufferListDg.SelectionMode = DataGridSelectionMode.Single;
-            DeviceListDg.SelectionUnit = DeviceProductListDg.SelectionUnit = BufferListDg.SelectionUnit = DataGridSelectionUnit.FullRow;
 
-            DeviceListDg.SelectedCellsChanged += DeviceListDg_SelectedCellsChanged;
-            DeviceProductListDg.SelectedCellsChanged += DeviceProductListDg_SelectedCellsChanged;
+            //*****************************************************************
 
-            this.Loaded += devicesManagement_Loaded;
+            DevicesListDg.SelectionMode =
+                DeviceProductsListDg.SelectionMode =
+                DeviceBuffersListDg.SelectionMode =
+                ProductsListDg.SelectionMode =
+                ProductDetailsListDg.SelectionMode =
+                BuffersListDg.SelectionMode = DataGridSelectionMode.Single;
+            DevicesListDg.SelectionUnit =
+                DeviceProductsListDg.SelectionUnit =
+                DeviceBuffersListDg.SelectionUnit =
+                ProductsListDg.SelectionUnit =
+                ProductDetailsListDg.SelectionUnit =
+                BuffersListDg.SelectionUnit = DataGridSelectionUnit.FullRow;
+
+            //*****************************************************************
+
+            DevicesListDg.SelectedCellsChanged += DevicesListDg_SelectedCellsChanged;
+            ProductsListDg.SelectedCellsChanged += ProductsListDg_SelectedCellsChanged;
+
 
         }
 
-        private void DeviceProductListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void ProductsListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            DeviceProduct deviceProduct = DeviceProductListDg.SelectedItem as DeviceProduct;
-            //Console.WriteLine(deviceProduct.deviceProductId + "-" + deviceProduct.productId + "-" + deviceProduct.productName);
-            //managementModel.ReLoadListDeviceBuffers(device.deviceId);
+            dtProduct temp = ProductsListDg.SelectedItem as dtProduct;
+            managementModel.ReloadListProductDetails(temp.productId);
         }
 
-        private void DeviceListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void DevicesListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
+            dtDevice temp = DevicesListDg.SelectedItem as dtDevice;
+            managementModel.ReloadListDeviceProducts(temp.deviceId);
+            managementModel.ReloadListDeviceBuffers(temp.deviceId);
+        }
+        
 
-            Device temp = DeviceListDg.SelectedItem as Device;
-            //Console.WriteLine(temp.deviceId+"-"+temp.deviceName);
-            //Reload lại
-            managementModel.ReLoadListDeviceProducts(temp.deviceId);
-            managementModel.ReLoadListDeviceBuffers(temp.deviceId);
+        //****************************************************************************************
+
+        private void DeviceManagementTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is System.Windows.Controls.TabControl)
+            {
+                switch (((e.Source as System.Windows.Controls.TabControl).SelectedIndex))
+                {
+                    case 0:
+                        {
+                            //Console.WriteLine("Thiết bị");
+                            //Console.WriteLine(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                            managementModel.ReloadListDevices();
+                            break;
+                        }
+                    case 1:
+                        {
+                            //Console.WriteLine("Sản phẩm");
+                            //Console.WriteLine(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                            managementModel.ReloadListProducts();
+                            break;
+                        }
+                    case 2:
+                        {
+                            //Console.WriteLine("Buffer");
+                            //Console.WriteLine(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                            managementModel.ReloadListBuffers();
+                            break;
+                        }
+                }
+            }
+        }
+        private void DeviceBuffersListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (DevicesListDg.SelectedItem != null)
+            {
+                SaveData(false);
+            }
+            UpdateTab1(false);
         }
 
-        private void devicesManagement_Loaded(object sender, RoutedEventArgs e)
+        //****************************************************************************************
+
+        private void SaveData(bool isProduct)
         {
-            managementModel.LoadListDevices();
-            //if (!string.IsNullOrEmpty(deviceNameSelect))
-            //{
-            //    //DeviceListDg.UnselectAll();
-            //    int indexSelect = 0;
-            //    //foreach (DataGridViewRow row in DeviceListDg.row)
-            //    //{
-            //    //}
-            //}
+            managementModel.UpdateDataStatus("Đang cập nhật...");
+            dtDevice device = GetDataSave();
+            string jsonData = JsonConvert.SerializeObject(device);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateDevice");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                int result = 0;
+                int.TryParse(reader.ReadToEnd(), out result);
+                UpdateTab1(false);
+            }
+            Thread.Sleep(150);
+            managementModel.UpdateDataStatus("Sẵn sàng");
+        }
+        private dtDevice GetDataSave()
+        {
+            dtDevice deviceData = new dtDevice();
+            if (DevicesListDg.SelectedItem == null)
+            {
+                return deviceData;
+            }
+            int deviceID = 0;
+            int.TryParse((DevicesListDg.SelectedItem as dtDevice).deviceId.ToString(), out deviceID);
+            deviceData.deviceId = deviceID;
+            deviceData.deviceName = (DevicesListDg.SelectedItem as dtDevice).deviceName.ToString().Trim();
+            deviceData.creUsrId = Global_Object.userLogin;
+            deviceData.updUsrId = Global_Object.userLogin;
+            List<dtDeviceProduct> deviceProducts = new List<dtDeviceProduct>();
+            foreach (dtDeviceProduct item in managementModel.deviceProductsList)
+            {
+                if (item.checkStatus)
+                {
+                    dtDeviceProduct deviceProductTemp = new dtDeviceProduct();
+                    deviceProductTemp.deviceProductId = item.deviceProductId;
+                    deviceProductTemp.productId = item.productId;
+                    deviceProductTemp.checkStatus = item.checkStatus;
+                    deviceProductTemp.checkStatus = item.checkStatus;
+                    deviceProducts.Add(deviceProductTemp);
+
+                }
+            }
+            deviceData.deviceProducts = deviceProducts;
+
+            List<dtDeviceBuffer> deviceBuffers = new List<dtDeviceBuffer>();
+            foreach (DeviceBuffer item in managementModel.deviceBuffersList)
+            {
+                if (item.checkStatus)
+                {
+                    dtDeviceBuffer deviceBuffer = new dtDeviceBuffer();
+                    deviceBuffer.deviceBufferId = item.deviceBufferId;
+                    deviceBuffer.bufferId = item.bufferId;
+                    deviceBuffer.checkStatus = item.checkStatus;
+                    deviceBuffer.bufferSort = item.bufferSort;
+                    deviceBuffers.Add(deviceBuffer);
+                }
+            }
+            deviceData.deviceBuffers = deviceBuffers;
+            return deviceData;
+        }
+        public void UpdateTab1(bool isAddDevice)
+        {
+            managementModel.UpdateDataStatus("Đang cập nhật...");
+            if (isAddDevice)
+            {
+                managementModel.ReloadListDevices();
+            }
+            else
+            {
+                if (DevicesListDg.HasItems)
+                {
+                    if (DevicesListDg.SelectedItem == null)
+                    {
+                        DevicesListDg.SelectedItem = DevicesListDg.Items[0];
+                        DevicesListDg.ScrollIntoView(DevicesListDg.SelectedItem);
+                    }
+                    else
+                    {
+                        if (!DeviceProductsListDg.HasItems)
+                        {
+                            managementModel.ReloadListDeviceProducts((DevicesListDg.SelectedItem as dtDevice).deviceId);
+                        }
+                        if (!DeviceBuffersListDg.HasItems)
+                        {
+                            managementModel.ReloadListDeviceBuffers((DevicesListDg.SelectedItem as dtDevice).deviceId);
+                        }
+                    }
+                }
+                else
+                {
+                    managementModel.ReloadListDevices();
+                }
+            }
+            managementModel.UpdateDataStatus("Sẵn sàng");
+        }
+        public void UpdateTab3(bool isAddBuffer)
+        {
+            managementModel.UpdateDataStatus("Đang cập nhật...");
+            if (isAddBuffer)
+            {
+                managementModel.ReloadListBuffers();
+            }
+            else
+            {
+                if (BuffersListDg.HasItems)
+                {
+                    if (BuffersListDg.SelectedItem == null)
+                    {
+                        BuffersListDg.SelectedItem = BuffersListDg.Items[0];
+                        BuffersListDg.ScrollIntoView(BuffersListDg.SelectedItem);
+                    }
+                    else
+                    {
+                        if (!PalletsListDg.HasItems)
+                        {
+                            managementModel.ReloadListPallets((BuffersListDg.SelectedItem as dtBuffer).bufferId);
+                        }
+                    }
+                }
+                else
+                {
+                    managementModel.ReloadListBuffers();
+                }
+            }
+            managementModel.UpdateDataStatus("Sẵn sàng");
         }
 
-        private void Btn_Save_Click(object sender, RoutedEventArgs e)
+        //****************************************************************************************
+
+        private void DeviceProductCbRow_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Device dr in managementModel.devicesList)
+
+            if (DevicesListDg.SelectedItem != null)
+            {
+                System.Windows.Controls.CheckBox temp = e.Source as System.Windows.Controls.CheckBox;
+                if (DevicesListDg.SelectedItem != null)
+                {
+                    SaveData(true);
+                }
+            }
+            UpdateTab1(false);
+
+        }
+        private void DeviceBufferCbRow_Click(object sender, RoutedEventArgs e)
+        {
+            if (DevicesListDg.SelectedItem != null)
+            {
+                SaveData(false);
+            }
+            UpdateTab1(false);
+        }
+
+        //****************************************************************************************
+        
+        private void Btn_Save_tab1_Click(object sender, RoutedEventArgs e)
+        {
+            managementModel.UpdateDataStatus("Đang cập nhật...");
+            foreach (dtDevice dr in managementModel.devicesList)
             {
                 if ((dr.deviceName == "") || String.IsNullOrEmpty(dr.deviceName))
                 {
@@ -89,7 +294,7 @@ namespace MapViewPallet.MiniForm
                 dr.updUsrId = Global_Object.userLogin;
             }
             List<dynamic> postApiBody = new List<dynamic>();
-            foreach (Device dr in managementModel.devicesList)
+            foreach (dtDevice dr in managementModel.devicesList)
             {
                 dynamic postApiBodyChild = new JObject();
                 postApiBodyChild.creUsrId = dr.creUsrId;
@@ -98,13 +303,14 @@ namespace MapViewPallet.MiniForm
                 postApiBodyChild.updDt = dr.updDt;
                 postApiBodyChild.deviceId = dr.deviceId;
                 postApiBodyChild.deviceName = dr.deviceName;
-                postApiBodyChild.deviceProducts = dr.deviceProducts;
-                postApiBodyChild.deviceBuffers = dr.deviceBuffers;
+                //postApiBodyChild.deviceProducts = dr.deviceProducts;
+                //postApiBodyChild.deviceBuffers = dr.deviceBuffers;
                 postApiBody.Add(postApiBodyChild);
             }
             string jsonData = JsonConvert.SerializeObject(postApiBody, Formatting.Indented);
-            //jsonData = jsonData.Trim(new Char[] { ' '});
+            //jsonData = jsonData.Trim();
             //jsonData = jsonData.Replace("  ", "");
+            //jsonData = jsonData.Trim(new Char[] { ' '});
             jsonData = jsonData.Replace("\r\n", "");
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateListNameDevice");
             request.Method = "POST";
@@ -128,8 +334,8 @@ namespace MapViewPallet.MiniForm
                 if (result == 1)
                 {
                     System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    DeviceListDg.SelectedItem = DeviceListDg.Items[0];
-                    DeviceListDg.ScrollIntoView(DeviceListDg.SelectedItem);
+                    DevicesListDg.SelectedItem = DevicesListDg.Items[0];
+                    DevicesListDg.ScrollIntoView(DevicesListDg.SelectedItem);
                 }
                 else if (result == -2)
                 {
@@ -142,317 +348,84 @@ namespace MapViewPallet.MiniForm
                     return;
                 }
             }
-
-            //Console.WriteLine("");
+            managementModel.UpdateDataStatus("Sẵn sàng");
         }
-
-        private void Btn_Exit_Click(object sender, RoutedEventArgs e)
+        private void Btn_Exit_tab1_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void DeviceListDg_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
+        //****************************************************************************************
 
         private void Btn_Refresh_Device_Click(object sender, RoutedEventArgs e)
         {
-            managementModel.GroupedDevices.Refresh();
+            UpdateTab1(true);
+        }
+        private void Btn_Refresh_DeviceProduct_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTab1(false);
+        }
+        private void Btn_Refresh_DeviceBuffer_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTab1(false);
         }
 
-        private void Btn_Refresh_Product_Click(object sender, RoutedEventArgs e)
-        {
-            managementModel.GroupedProducts.Refresh();
-        }
+        //****************************************************************************************
 
-        private void Btn_Refresh_Buffer_Click(object sender, RoutedEventArgs e)
+        private void Btn_Test_DeviceBuffer_Click(object sender, RoutedEventArgs e)
         {
-            managementModel.GroupedBuffers.Refresh();
-        }
-
-        private void Btn_Test_Buffer_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (DeviceBuffer item in managementModel.buffersList)
+            foreach (DeviceBuffer item in managementModel.deviceBuffersList)
             {
                 Console.WriteLine(item.bufferName + "-" + item.checkStatus + "-" + item.bufferSort);
             }
         }
-
-        private void Btn_Test_Product_Click(object sender, RoutedEventArgs e)
+        private void Btn_Test_DeviceProduct_Click(object sender, RoutedEventArgs e)
         {
-            foreach (DeviceProduct item in managementModel.productsList)
+            foreach (dtDeviceProduct item in managementModel.deviceProductsList)
             {
                 Console.WriteLine(item.productName + "-" + item.checkStatus);
             }
         }
-
         private void Btn_Test_Device_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Device item in managementModel.devicesList)
+            foreach (dtDevice item in managementModel.devicesList)
             {
                 Console.WriteLine(item.deviceName);
             }
         }
 
+        //****************************************************************************************
 
-        //*********************************************************************************************
-        //*********************************************************************************************
-        //*********************************************************************************************
-        private void ProductCbCol_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void Btn_Add_Device_Click(object sender, RoutedEventArgs e)
         {
-            //Console.WriteLine("ProductCbCol_DataContextChanged");
+            AddDeviceForm form = new AddDeviceForm();
+            form.ShowDialog();
+            UpdateTab1(true);
         }
 
-        private void ProductCbCol_Checked(object sender, RoutedEventArgs e)
+        private void Btn_Add_Buffer_Click(object sender, RoutedEventArgs e)
         {
-            //Console.WriteLine("ProductCbCol_Checked");
+            //AddBufferForm form = new AddBufferForm();
+            //form.ShowDialog();
+            //UpdateTab1(true);
+        }
+        //****************************************************************************************
+
+        private void Btn_Save_DeviceProduct_Click(object sender, RoutedEventArgs e)
+        {
+            SaveData(true);
+            UpdateTab1(false);
+        }
+        private void Btn_Save_DeviceBuffer_Click(object sender, RoutedEventArgs e)
+        {
+            SaveData(false);
+            UpdateTab1(false);
+        }
+        private void Btn_Save_Device_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTab1(true);
         }
 
-        private void ProductCbCol_Click(object sender, RoutedEventArgs e)
-        {
-            //Console.WriteLine("ProductCbCol_Click");
-        }
-
-        private void ProductCbCol_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            //Console.WriteLine("ProductCbCol_FocusableChanged");
-        }
-
-        private void ProductCbCol_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //Console.WriteLine("ProductCbCol_GotFocus");
-        }
-
-        private void ProductCbCol_LostFocus(object sender, RoutedEventArgs e)
-        {
-            //Console.WriteLine("ProductCbCol_LostFocus");
-        }
-
-
-
-        //*********************************************************************************************
-        //*********************************************************************************************
-        //*********************************************************************************************
-        private void ProductCbRow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            //DeviceProduct temp = e.NewValue as DeviceProduct;
-            //Console.WriteLine(temp.productName + "-ProductCbRow_DataContextChanged");
-        }
-
-        private void ProductCbRow_Checked(object sender, RoutedEventArgs e)
-        {
-            //if (DeviceListDg.SelectedItem != null)
-            //{
-            //    SaveData(true);
-            //}
-            //System.Windows.Controls.CheckBox temp = e.Source as System.Windows.Controls.CheckBox;
-            //DeviceProduct temp1 = temp.DataContext as DeviceProduct;
-            //Console.WriteLine(temp1.productName + "-ProductCbRow_Checked:" + temp.IsChecked + "-Device:" + (DeviceListDg.SelectedItem as Device).deviceName);
-
-            //if (DeviceListDg.SelectedItem != null)
-            //{
-            //    System.Windows.Controls.CheckBox temp = e.Source as System.Windows.Controls.CheckBox;
-            //    DeviceProduct temp2 = temp.DataContext as DeviceProduct;
-            //    Console.WriteLine(((DeviceListDg.SelectedItem) as Device).deviceName + "-" + temp2.productName + "-[" + temp.IsChecked + "]-ProductCbRow_LostFocus");
-            //}
-        }
-
-        private void ProductCbRow_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (DeviceListDg.SelectedItem != null)
-            {
-                System.Windows.Controls.CheckBox temp = e.Source as System.Windows.Controls.CheckBox;
-                //Console.WriteLine("ProductCbRow_Click-"+temp.IsChecked);
-                if (DeviceListDg.SelectedItem != null)
-                {
-                    SaveData(true);
-                }
-                //DeviceProduct temp2 = temp.DataContext as DeviceProduct;
-                //Console.WriteLine(((DeviceListDg.SelectedItem) as Device).deviceName + "-" + temp2.productName + "-[" + temp.IsChecked + "]-ProductCbRow_LostFocus");
-                //SaveData(true);
-            }
-            UpdateDgv();
-
-        }
-
-        private void ProductCbRow_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            //Console.WriteLine("ProductCbRow_FocusableChanged");
-        }
-
-        private void ProductCbRow_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //System.Windows.Controls.CheckBox temp = e.Source as System.Windows.Controls.CheckBox;
-            //DeviceProduct temp2 = sender
-            //Console.WriteLine("ProductCbRow_GotFocus");
-        }
-
-        private void ProductCbRow_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (DeviceListDg.SelectedItem != null)
-            {
-                //System.Windows.Controls.CheckBox temp = e.Source as System.Windows.Controls.CheckBox;
-                //DeviceProduct temp2 = temp.DataContext as DeviceProduct;
-                //Console.WriteLine(((DeviceListDg.SelectedItem) as Device).deviceName + "-" + temp2.productName + "-[" + temp.IsChecked + "]-ProductCbRow_LostFocus");
-            }
-        }
-
-        private void SaveData(bool isProduct)
-        {
-            //UpdateDgv();
-            dtDevice device = GetDateSave();
-            if (DeviceProductListDg.CurrentItem != null)
-            {
-                productIdSelect = int.Parse((DeviceProductListDg.CurrentItem as DeviceProduct).productId.ToString());
-            }
-            if (BufferListDg.CurrentItem != null)
-            {
-                bufferIdSelect = (BufferListDg.CurrentItem as DeviceBuffer).bufferId.ToString();
-            }
-
-            string jsonData = JsonConvert.SerializeObject(device);
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateDevice");
-            request.Method = "POST";
-            request.ContentType = "application/json";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
-
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                if (isProduct)
-                {
-                    //managementModel.ReLoadListDeviceProducts((DeviceListDg.SelectedItem as Device).deviceId);
-                    UpdateDgv();
-                }
-                else
-                {
-                    //managementModel.ReLoadListDeviceBuffers((DeviceListDg.SelectedItem as Device).deviceId);
-                    UpdateDgv();
-                }
-            }
-        }
-
-        private dtDevice GetDateSave()
-        {
-            dtDevice deviceData = new dtDevice();
-            if (DeviceListDg.CurrentCell == null || DeviceListDg.SelectedItem == null || DeviceListDg.CurrentCell.IsValid)
-            {
-                return deviceData;
-            }
-            int deviceID = 0;
-            int.TryParse((DeviceListDg.SelectedItem as Device).deviceId.ToString(), out deviceID);
-            deviceData.deviceId = deviceID;
-            deviceData.deviceName = (DeviceListDg.SelectedItem as Device).deviceName.ToString().Trim();
-            deviceData.creUsrId = Global_Object.userLogin;
-            deviceData.updUsrId = Global_Object.userLogin;
-            List<dtDeviceProduct> deviceProducts = new List<dtDeviceProduct>();
-            foreach (DeviceProduct item in managementModel.productsList)
-            {
-                if (item.checkStatus)
-                {
-                    dtDeviceProduct deviceProductTemp = new dtDeviceProduct();
-                    deviceProductTemp.deviceProductId = item.deviceProductId;
-                    deviceProductTemp.productId = item.productId;
-                    deviceProductTemp.checkStatus = item.checkStatus;
-                    deviceProductTemp.checkStatus = item.checkStatus;
-                    deviceProducts.Add(deviceProductTemp);
-
-                }
-            }
-            deviceData.deviceProducts = deviceProducts;
-
-            List<dtDeviceBuffer> deviceBuffers = new List<dtDeviceBuffer>();
-            foreach (DeviceBuffer item in managementModel.buffersList)
-            {
-                if (item.checkStatus)
-                {
-                    dtDeviceBuffer deviceBuffer = new dtDeviceBuffer();
-                    deviceBuffer.deviceBufferId = item.deviceBufferId;
-                    deviceBuffer.bufferId = item.bufferId;
-                    deviceBuffer.checkStatus = item.checkStatus;
-                    deviceBuffer.bufferSort = item.bufferSort;
-                    deviceBuffers.Add(deviceBuffer);
-                }
-            }
-            deviceData.deviceBuffers = deviceBuffers;
-            return deviceData;
-        }
-
-
-        public void UpdateDgv()
-        {
-            if (DeviceListDg.HasItems)
-            {
-                if (DeviceListDg.SelectedItem == null)
-                {
-                    DeviceListDg.SelectedItem = DeviceListDg.Items[0];
-                    DeviceListDg.ScrollIntoView(DeviceListDg.SelectedItem);
-                }
-                else
-                {
-                    managementModel.ReLoadListDeviceProducts((DeviceListDg.SelectedItem as Device).deviceId);
-                    managementModel.ReLoadListDeviceBuffers((DeviceListDg.SelectedItem as Device).deviceId);
-                }
-            }
-            else
-            {
-                managementModel.LoadListDevices();
-            }
-
-        }
         
-
-        private void ProductCbRow_Unchecked(object sender, RoutedEventArgs e)
-        {
-            //if (DeviceListDg.SelectedItem != null)
-            //{
-            //    SaveData(true);
-            //}
-        }
-
-        private void BufferCbRow_Click(object sender, RoutedEventArgs e)
-        {
-            if (DeviceListDg.SelectedItem != null)
-            {
-                System.Windows.Controls.CheckBox temp = e.Source as System.Windows.Controls.CheckBox;
-                //Console.WriteLine("ProductCbRow_Click-"+temp.IsChecked);
-                if (DeviceListDg.SelectedItem != null)
-                {
-                    SaveData(false);
-                }
-                //DeviceProduct temp2 = temp.DataContext as DeviceProduct;
-                //Console.WriteLine(((DeviceListDg.SelectedItem) as Device).deviceName + "-" + temp2.productName + "-[" + temp.IsChecked + "]-ProductCbRow_LostFocus");
-                //SaveData(true);
-            }
-            UpdateDgv();
-        }
-
-        private void BufferListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            if (DeviceListDg.SelectedItem != null)
-            {
-                //System.Windows.Controls.CheckBox temp = e.Source as System.Windows.Controls.CheckBox;
-                //Console.WriteLine("ProductCbRow_Click-"+temp.IsChecked);
-                if (DeviceListDg.SelectedItem != null)
-                {
-                    SaveData(false);
-                }
-                //DeviceProduct temp2 = temp.DataContext as DeviceProduct;
-                //Console.WriteLine(((DeviceListDg.SelectedItem) as Device).deviceName + "-" + temp2.productName + "-[" + temp.IsChecked + "]-ProductCbRow_LostFocus");
-                //SaveData(true);
-            }
-            UpdateDgv();
-        }
     }
 }

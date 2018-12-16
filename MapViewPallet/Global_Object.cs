@@ -33,6 +33,8 @@ namespace MapViewPallet
         }
 
         //#######################################
+        public static bool IsEngLish = false;
+
 
         public static string url = @"http://localhost:8081/robot/rest/";
         public static int userLogin = 1;

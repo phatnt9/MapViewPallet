@@ -7,79 +7,7 @@
         mc:Ignorable="d"
         Title="Quản Lý Thiết Bị" Height="450" Width="800" MinHeight="300" MinWidth="500">
     <Window.Resources>
-        <!--<Style TargetType="{x:Type DataGridRow}">
-            -->
-        <!--<Setter Property="Background"
-            Value="Transparent" />-->
-        <!--
-            <Setter Property="BorderBrush" 
-            Value="Red" />
-            <Setter Property="BorderThickness" 
-            Value="0" />
-            -->
-        <!--<Setter Property="SnapsToDevicePixels"
-            Value="true" />-->
-        <!--<Setter Property="Validation.ErrorTemplate"
-            Value="{x:Null}" />-->
-        <!--<Setter Property="ValidationErrorTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <TextBlock Foreground="Red"
-                           Margin="2,0,0,0"
-                           Text="!"
-                           VerticalAlignment="Center" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>-->
-        <!--
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type DataGridRow}">
-                        <Border x:Name="DGR_Border"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        Background="{TemplateBinding Background}"
-                        SnapsToDevicePixels="True"
-                        CornerRadius="0">
-                            <SelectiveScrollingGrid>
-                                <SelectiveScrollingGrid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </SelectiveScrollingGrid.ColumnDefinitions>
-                                <SelectiveScrollingGrid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
-                                </SelectiveScrollingGrid.RowDefinitions>
-                                <DataGridCellsPresenter Grid.Column="1"
-                                                ItemsPanel="{TemplateBinding ItemsPanel}"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                <DataGridDetailsPresenter Grid.Column="1"
-                                                  Grid.Row="1"
-                                                  SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding AreRowDetailsFrozen, ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical}, Converter={x:Static DataGrid.RowDetailsScrollingConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
-                                                  Visibility="{TemplateBinding DetailsVisibility}" />
-                                <DataGridRowHeader Grid.RowSpan="2"
-                                           SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
-                                           Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
-                            </SelectiveScrollingGrid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver"
-                             Value="True">
-                                <Setter TargetName="DGR_Border"
-                                Property="Background"
-                                Value="LightGray" />
-                            </Trigger>
-                            <Trigger Property="IsSelected"
-                             Value="True">
-                                <Setter TargetName="DGR_Border"
-                                Property="Background"
-                                Value="Gray" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -88,253 +16,854 @@
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Grid Margin="0,5,0,2">
+            <Grid Margin="0,5,0,5">
                 <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <GroupBox >
-                    <GroupBox.Header>
-                        <StackPanel>
-                            <TextBlock FontSize="16" FontWeight="Bold">Thiết bị</TextBlock>
-                        </StackPanel>
-                    </GroupBox.Header>
+            <TabControl Name="DeviceManagementTabControl">
+                <TabItem Header="Thiết bị">
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
                             <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition ></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                <Button Name="btn_Test_Device" Margin="5,0,0,5" Width="Auto" FontSize="14" Click="Btn_Test_Device_Click">Test</Button>
-                                <Button Name="btn_Refresh_Device" Margin="5,0,0,5" Width="Auto" FontSize="14" Click="Btn_Refresh_Device_Click">
-                                    <StackPanel>
-                                        <Image Width="20" Height="20" Source="pack://siteoforigin:,,,/Resources/refresh_item.png"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Name="btn_Add_Device" Margin="5,0,0,5" Width="Auto" FontSize="14">
-                                    <StackPanel>
-                                        <Image Width="20" Height="20" Source="pack://siteoforigin:,,,/Resources/add_item.png"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Name="btn_Delete_Device" Margin="5,0,0,5" Width="Auto" FontSize="14">
-                                    <StackPanel>
-                                        <Image Width="20" Height="20" Source="pack://siteoforigin:,,,/Resources/remove_item.png"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <DataGrid Name="DeviceListDg" Loaded="DeviceListDg_Loaded"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <GroupBox >
+                                    <GroupBox.Header>
+                                        <StackPanel>
+                                            <TextBlock FontSize="20" 
+                                       FontWeight="Bold"
+                                       Text="Thiết bị">
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <StackPanel Orientation="Horizontal" 
+                                                        HorizontalAlignment="Right" 
+                                                        VerticalAlignment="Center">
+                                                <Button Name="btn_Test_Device" 
+                                                        Margin="5,0,0,5" 
+                                                        Width="Auto" 
+                                                        FontSize="14" 
+                                                        Click="Btn_Test_Device_Click" 
+                                                        Content="Test"/>
+                                                <Button Name="btn_Save_Device" 
+                                                        Margin="5,0,0,5" 
+                                                        Width="Auto" 
+                                                        FontSize="14" 
+                                                        Click="Btn_Save_Device_Click">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                                               Height="20" 
+                                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Refresh_Device" 
+                                                        Margin="5,0,0,5" 
+                                                        Width="Auto" 
+                                                        FontSize="14" 
+                                                        Click="Btn_Refresh_Device_Click">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                                               Height="20" 
+                                                               Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Add_Device" 
+                                                        Margin="5,0,0,5" 
+                                                        Width="Auto" 
+                                                        FontSize="14"
+                                                        Click="Btn_Add_Device_Click">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20"
+                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Delete_Device" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <DataGrid Name="DevicesListDg" 
                                       ItemsSource="{Binding GroupedDevices}"
-                                      CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="False" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False">
-                                <DataGrid.ColumnHeaderStyle>
-                                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                                        <!--<Setter Property="Background" Value="LightGray"/>
-                                        <Setter Property="Foreground" Value="Black" />
-                                        <Setter Property="FontSize" Value="15" />
-                                        <Setter Property="FontWeight" Value="DemiBold" />-->
-                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                    </Style>
-                                </DataGrid.ColumnHeaderStyle>
-                                <DataGrid.RowStyle>
-                                    <Style TargetType="DataGridRow">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <!--<Setter Property="Background" Value="Black" />-->
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </DataGrid.RowStyle>
-                                <DataGrid.Columns>
-                                    <DataGridTemplateColumn  
-                                        Width="*" Header="Tên thiết bị">
-                                        <DataGridTemplateColumn.CellTemplate>
+                                      CanUserReorderColumns="False" 
+                                      CanUserAddRows="False"
+                                      CanUserResizeColumns="False" 
+                                      CanUserResizeRows="False"
+                                      CanUserDeleteRows="False" 
+                                      CanUserSortColumns="False"
+                                      AutoGenerateColumns="False">
+                                                <DataGrid.ColumnHeaderStyle>
+                                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment" 
+                                                Value="Center" />
+                                                    </Style>
+                                                </DataGrid.ColumnHeaderStyle>
+                                                <DataGrid.RowStyle>
+                                                    <Style TargetType="DataGridRow">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsSelected" 
+                                                     Value="True">
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </DataGrid.RowStyle>
+                                                <DataGrid.Columns>
+                                                    <DataGridTemplateColumn Width="*" 
+                                                            Header="Tên thiết bị">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=deviceName}"/>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <GroupBox >
+                                    <GroupBox.Header>
+                                        <StackPanel>
+                                            <TextBlock FontSize="20" FontWeight="Bold">Sản phẩm</TextBlock>
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Center">
+
+                                                <Button Name="btn_Test_DeviceProduct" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14" 
+                                        Click="Btn_Test_DeviceProduct_Click" 
+                                        Content="Test"/>
+
+                                                <Button Name="btn_Save_DeviceProduct" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14" 
+                                        Click="Btn_Save_DeviceProduct_Click">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <Button Name="btn_Refresh_DeviceProduct"
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14" 
+                                        Click="Btn_Refresh_DeviceProduct_Click">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Add_DeviceProduct" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Delete_DeviceProduct" 
+                                        Margin="5,0,0,5"
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <DataGrid Name="DeviceProductsListDg" 
+                                      ItemsSource="{Binding GroupedDeviceProducts}"
+                                      CanUserReorderColumns="False" 
+                                      CanUserAddRows="False"
+                                      CanUserResizeColumns="False" 
+                                      CanUserResizeRows="False"
+                                      CanUserDeleteRows="False" 
+                                      CanUserSortColumns="False"
+                                      AutoGenerateColumns="False">
+                                                <DataGrid.Columns>
+                                                    <DataGridTemplateColumn>
+                                                        <!--<DataGridTemplateColumn.HeaderTemplate>
                                             <DataTemplate>
-                                                <StackPanel>
-                                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Path=deviceName}"/>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <!--<DataGridTextColumn 
-                                        IsReadOnly="True"
-                                        Header="Tên thiết bị" Width="*"
-                                        Binding="{Binding Path=deviceName}">
-                                    </DataGridTextColumn>-->
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                    </Grid>
-                </GroupBox>
-            </Grid>
-            <Grid Grid.Column="1">
-                <GroupBox >
-                    <GroupBox.Header>
-                        <StackPanel>
-                            <TextBlock FontSize="16" FontWeight="Bold">Sản phẩm</TextBlock>
-                        </StackPanel>
-                    </GroupBox.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition ></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                <Button Name="btn_Test_Product" Margin="5,0,0,5" Width="Auto" FontSize="14" Click="Btn_Test_Product_Click">Test</Button>
-                                <Button Name="btn_Refresh_Product" Margin="5,0,0,5" Width="Auto" FontSize="14" Click="Btn_Refresh_Product_Click">
-                                    <StackPanel>
-                                        <Image Width="20" Height="20" Source="pack://siteoforigin:,,,/Resources/refresh_item.png"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Name="btn_Add_Product" Margin="5,0,0,5" Width="Auto" FontSize="14">
-                                    <StackPanel>
-                                        <Image Width="20" Height="20" Source="pack://siteoforigin:,,,/Resources/add_item.png"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Name="btn_Delete_Product" Margin="5,0,0,5" Width="Auto" FontSize="14">
-                                    <StackPanel>
-                                        <Image Width="20" Height="20" Source="pack://siteoforigin:,,,/Resources/remove_item.png"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <DataGrid Name="DeviceProductListDg" 
-                                      ItemsSource="{Binding GroupedProducts}"
-                                      CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="False" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False">
-                                <DataGrid.Columns>
-                                    <DataGridTemplateColumn>
-                                        <DataGridTemplateColumn.HeaderTemplate>
-                                            <DataTemplate>
-                                                <CheckBox Name="productCbCol" HorizontalAlignment="Center"
+                                                <CheckBox Name="ProductCbCol" 
+                                                          HorizontalAlignment="Center"
                                                           Checked="ProductCbCol_Checked"
-                                                          Click="ProductCbCol_Click"
-                                                          DataContextChanged="ProductCbCol_DataContextChanged"
-                                                          FocusableChanged="ProductCbCol_FocusableChanged"
-                                                          GotFocus="ProductCbCol_GotFocus"
-                                                          LostFocus="ProductCbCol_LostFocus"/>
+                                                          Unchecked="ProductCbCol_Unchecked"/>
                                             </DataTemplate>
-                                        </DataGridTemplateColumn.HeaderTemplate>
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <CheckBox Name="productCbRow" HorizontalAlignment="Center"
+                                        </DataGridTemplateColumn.HeaderTemplate>-->
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox Name="DeviceProductCbRow" 
+                                                          HorizontalAlignment="Center"
                                                           IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                          Checked="ProductCbRow_Checked"
-                                                          Unchecked="ProductCbRow_Unchecked"
-                                                          Click="ProductCbRow_Click"
-                                                          DataContextChanged="ProductCbRow_DataContextChanged"
-                                                          FocusableChanged="ProductCbRow_FocusableChanged"
-                                                          GotFocus="ProductCbRow_GotFocus"
-                                                          LostFocus="ProductCbRow_LostFocus"
-                                                          
+                                                          Click="DeviceProductCbRow_Click"
                                                           />
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <!--<DataGridCheckBoxColumn Header="" Width="SizeToHeader" 
-                                                            Binding="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                    </DataGridCheckBoxColumn>-->
-                                    <DataGridTextColumn Header="Tên sản phẩm" Width="*" IsReadOnly="True"
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTextColumn Header="Tên sản phẩm" 
+                                                        Width="*" 
+                                                        IsReadOnly="True"
                                                         Binding="{Binding Path=productName}">
 
-                                    </DataGridTextColumn>
-
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
-                    </Grid>
-                </GroupBox>
-            </Grid>
-            <Grid Grid.Column="2">
-                <GroupBox >
-                    <GroupBox.Header>
-                        <StackPanel>
-                            <TextBlock FontSize="16" FontWeight="Bold">Vùng Buffer</TextBlock>
-                        </StackPanel>
-                    </GroupBox.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"></RowDefinition>
-                            <RowDefinition ></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                <Button Name="btn_Test_Buffer" Margin="5,0,0,5" Width="Auto" FontSize="14" Click="Btn_Test_Buffer_Click">Test</Button>
-                                <Button Name="btn_Refresh_Buffer" Margin="5,0,0,5" Width="Auto" FontSize="14" Click="Btn_Refresh_Buffer_Click">
-                                    <StackPanel>
-                                        <Image Width="20" Height="20" Source="pack://siteoforigin:,,,/Resources/refresh_item.png"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Name="btn_Add_Buffer" Margin="5,0,0,5" Width="Auto" FontSize="14">
-                                    <StackPanel>
-                                        <Image Width="20" Height="20" Source="pack://siteoforigin:,,,/Resources/add_item.png"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Name="btn_Delete_Buffer" Margin="5,0,0,5" Width="Auto" FontSize="14">
-                                    <StackPanel>
-                                        <Image Width="20" Height="20" Source="pack://siteoforigin:,,,/Resources/remove_item.png"/>
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <DataGrid Name="BufferListDg"
-                                      ItemsSource="{Binding GroupedBuffers}"
-                                      CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="False" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False"
-                                      CellEditEnding="BufferListDg_CellEditEnding">
-
-                                <DataGrid.Columns>
-                                    <DataGridTemplateColumn>
-                                        <DataGridTemplateColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <GroupBox >
+                                    <GroupBox.Header>
+                                        <StackPanel>
+                                            <TextBlock FontSize="20" 
+                                       FontWeight="Bold">Vùng Buffer</TextBlock>
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Center">
+                                                <Button Name="btn_Test_DeviceBuffer" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14" 
+                                        Content="Test"
+                                        Click="Btn_Test_DeviceBuffer_Click"/>
+                                                <Button Name="btn_Save_DeviceBuffer" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14"
+                                        Click="Btn_Save_DeviceBuffer_Click">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Refresh_DeviceBuffer" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14" 
+                                        Click="Btn_Refresh_DeviceBuffer_Click">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Add_DeviceBuffer" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Delete_DeviceBuffer" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <DataGrid Name="DeviceBuffersListDg" 
+                                      ItemsSource="{Binding GroupedDeviceBuffers}"
+                                      CanUserReorderColumns="False" 
+                                      CanUserAddRows="False"
+                                      CanUserResizeColumns="False" 
+                                      CanUserResizeRows="False"
+                                      CanUserDeleteRows="False" 
+                                      CanUserSortColumns="False"
+                                      AutoGenerateColumns="False" 
+                                      CellEditEnding="DeviceBuffersListDg_CellEditEnding">
+                                                <DataGrid.Columns>
+                                                    <DataGridTemplateColumn>
+                                                        <!--<DataGridTemplateColumn.HeaderTemplate>
                                             <DataTemplate>
-                                                <CheckBox Name="BufferCbCol" HorizontalAlignment="Center"></CheckBox>
+                                                <CheckBox Name="BufferCbCol" 
+                                                          HorizontalAlignment="Center"></CheckBox>
                                             </DataTemplate>
-                                        </DataGridTemplateColumn.HeaderTemplate>
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <CheckBox Name="BufferCbRow" HorizontalAlignment="Center"
+                                        </DataGridTemplateColumn.HeaderTemplate>-->
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox Name="DeviceBufferCbRow" 
+                                                          HorizontalAlignment="Center"
                                                           IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                          Click="BufferCbRow_Click"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <!--<DataGridCheckBoxColumn Header="" Width="SizeToHeader" 
-                                                            Binding="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                    </DataGridCheckBoxColumn>-->
-                                    <DataGridTextColumn Header="Tên Buffer" Width="*" IsReadOnly="True"
+                                                          Click="DeviceBufferCbRow_Click"/>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTextColumn Header="Tên Buffer" 
+                                                        Width="*" 
+                                                        IsReadOnly="True"
                                                         Binding="{Binding Path=bufferName}"/>
-                                    <DataGridTextColumn Header="Sort" Width="Auto" IsReadOnly="False"
+                                                    <DataGridTextColumn Header="Sort" 
+                                                        Width="Auto" 
+                                                        IsReadOnly="False"
                                                         Binding="{Binding Path=bufferSort, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                         />
-                                </DataGrid.Columns>
-                            </DataGrid>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+                                <Button Name="Btn_Save_tab1" 
+                        Width="70" 
+                        Content="Lưu" 
+                        Margin="30,5" 
+                        Click="Btn_Save_tab1_Click"/>
+                                <Button Name="Btn_Exit_tab1" 
+                        Width="70" 
+                        Content="Thoát" 
+                        Margin="30,5" 
+                        Click="Btn_Exit_tab1_Click"/>
+                            </StackPanel>
                         </Grid>
                     </Grid>
-                </GroupBox>
-            </Grid>
+                </TabItem>
+                <TabItem Header="Sản phẩm">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <GroupBox >
+                                    <GroupBox.Header>
+                                        <StackPanel>
+                                            <TextBlock FontSize="20" FontWeight="Bold">Sản phẩm</TextBlock>
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Center">
+
+                                                <Button Name="btn_Test_Product" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14"
+                                        Content="Test"/>
+
+                                                <Button Name="btn_Save_Product" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14" >
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <Button Name="btn_Refresh_Product"
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Add_Product" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Delete_Product" 
+                                        Margin="5,0,0,5"
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <DataGrid Name="ProductsListDg" 
+                                      ItemsSource="{Binding GroupedProducts}"
+                                      CanUserReorderColumns="False" 
+                                      CanUserAddRows="False"
+                                      CanUserResizeColumns="False" 
+                                      CanUserResizeRows="False"
+                                      CanUserDeleteRows="False" 
+                                      CanUserSortColumns="False"
+                                      AutoGenerateColumns="False">
+                                                <DataGrid.Columns>
+                                                    <!--<DataGridTemplateColumn>
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox
+                                                          HorizontalAlignment="Center"
+                                                          IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                          />
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>-->
+                                                    <DataGridTextColumn Header="Tên sản phẩm" 
+                                                        Width="*" 
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=productName}">
+
+                                                    </DataGridTextColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <GroupBox >
+                                    <GroupBox.Header>
+                                        <StackPanel>
+                                            <TextBlock FontSize="20" FontWeight="Bold">Chi tiết sản phẩm</TextBlock>
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Center">
+
+                                                <Button Name="btn_Test_ProductDetail" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14"
+                                        Content="Test"/>
+
+                                                <Button Name="btn_Save_ProductDetail" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <Button Name="btn_Refresh_ProductDetail"
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Add_ProductDetail" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Delete_ProductDetail" 
+                                        Margin="5,0,0,5"
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <DataGrid Name="ProductDetailsListDg" 
+                                      ItemsSource="{Binding GroupedProductDetails}"
+                                      CanUserReorderColumns="False" 
+                                      CanUserAddRows="False"
+                                      CanUserResizeColumns="False" 
+                                      CanUserResizeRows="False"
+                                      CanUserDeleteRows="False" 
+                                      CanUserSortColumns="False"
+                                      AutoGenerateColumns="False">
+                                                <DataGrid.Columns>
+                                                    <!--<DataGridTemplateColumn>
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox
+                                                          HorizontalAlignment="Center"
+                                                          IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                          />
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>-->
+                                                    <DataGridTextColumn Header="Mã sản phẩm" 
+                                                        Width="*" 
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=productDetailName}">
+
+                                                    </DataGridTextColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Center">
+                                <Button Name="Btn_Save_tab2" 
+                        Width="70" 
+                        Content="Lưu" 
+                        Margin="30,5"/>
+                                <Button Name="Btn_Exit_tab2" 
+                        Width="70" 
+                        Content="Thoát" 
+                        Margin="30,5"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Buffer">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <GroupBox >
+                                    <GroupBox.Header>
+                                        <StackPanel>
+                                            <TextBlock FontSize="20" FontWeight="Bold">Buffer</TextBlock>
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Center">
+
+                                                <Button Name="btn_Test_Buffer" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14"
+                                        Content="Test"/>
+
+                                                <Button Name="btn_Save_Buffer" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14" >
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <Button Name="btn_Refresh_Buffer"
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Add_Buffer" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14"
+                                                        Click="Btn_Add_Buffer_Click">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Delete_Buffer" 
+                                        Margin="5,0,0,5"
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <DataGrid Name="BuffersListDg" 
+                                      ItemsSource="{Binding GroupedBuffers}"
+                                      CanUserReorderColumns="False" 
+                                      CanUserAddRows="False"
+                                      CanUserResizeColumns="False" 
+                                      CanUserResizeRows="False"
+                                      CanUserDeleteRows="False" 
+                                      CanUserSortColumns="False"
+                                      AutoGenerateColumns="False">
+                                                <DataGrid.Columns>
+                                                    <!--<DataGridTemplateColumn>
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox
+                                                          HorizontalAlignment="Center"
+                                                          IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                          />
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>-->
+                                                    <DataGridTextColumn Header="Tên Buffer" 
+                                                        Width="*" 
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=bufferName}">
+
+                                                    </DataGridTextColumn>
+                                                    <DataGridTextColumn Header="Bays" 
+                                                                        Width="*" 
+                                                                        IsReadOnly="True"
+                                                                        Binding="{Binding Path=maxBay}">
+
+                                                    </DataGridTextColumn>
+                                                    <DataGridTextColumn Header="Rows" 
+                                                                        Width="*" 
+                                                                        IsReadOnly="True"
+                                                                        Binding="{Binding Path=maxRow}">
+
+                                                    </DataGridTextColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <GroupBox >
+                                    <GroupBox.Header>
+                                        <StackPanel>
+                                            <TextBlock FontSize="20" FontWeight="Bold">Danh sách Pallet</TextBlock>
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition ></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Center">
+
+                                                <Button Name="btn_Test_Pallet" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14"
+                                        Content="Test"/>
+
+                                                <Button Name="btn_Save_Pallet" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <Button Name="btn_Refresh_Pallet"
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Add_Pallet" 
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                                <Button Name="btn_Delete_Pallet" 
+                                        Margin="5,0,0,5"
+                                        Width="Auto" 
+                                        FontSize="14">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <DataGrid Name="PalletsListDg" 
+                                      ItemsSource="{Binding GroupedPallets}"
+                                      CanUserReorderColumns="False" 
+                                      CanUserAddRows="False"
+                                      CanUserResizeColumns="False" 
+                                      CanUserResizeRows="False"
+                                      CanUserDeleteRows="False" 
+                                      CanUserSortColumns="False"
+                                      AutoGenerateColumns="False">
+                                                <DataGrid.Columns>
+                                                    <!--<DataGridTemplateColumn>
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox
+                                                          HorizontalAlignment="Center"
+                                                          IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                          />
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>-->
+                                                    <!--<DataGridTextColumn Header="Mã sản phẩm" 
+                                                        Width="*" 
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=productDetailName}">
+
+                                                    </DataGridTextColumn>-->
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Center">
+                                <Button Name="Btn_Save_tab3" 
+                        Width="70" 
+                        Content="Lưu" 
+                        Margin="30,5"/>
+                                <Button Name="Btn_Exit_tab3" 
+                        Width="70" 
+                        Content="Thoát" 
+                        Margin="30,5"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Name="Btn_Save" Width="70" Content="Lưu" Margin="30,5" Click="Btn_Save_Click"/>
-                <Button Name="Btn_Exit" Width="70" Content="Thoát" Margin="30,5" Click="Btn_Exit_Click"/>
-            </StackPanel>
+            <StatusBar Name="sbar" 
+           VerticalAlignment="Bottom" Background="LemonChiffon" >
+
+                <StatusBarItem>
+                    <TextBlock Text="{Binding statusData, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </StatusBarItem>
+
+                <Separator/>
+                <StatusBarItem>
+                    <TextBlock Text="Online"/>
+                </StatusBarItem>
+            </StatusBar>
         </Grid>
     </Grid>
 </Window>

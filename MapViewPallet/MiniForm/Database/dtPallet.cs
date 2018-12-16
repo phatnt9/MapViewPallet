@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MapViewPallet.MiniForm
+﻿namespace MapViewPallet.MiniForm
 {
     public class dtPallet : userModel
     {
         private int pPalletId;
         private int pDeviceBufferId;
-        private string pBufferId;
+        private int pBufferId;
         private int pPlanId;
         private int pRow;
         private int pBay;
         private string pDataPallet;
         private string pPalletStatus;
         private int pDeviceId;
-
 
         public int palletId { get => pPalletId; set => pPalletId = value; }
         public int deviceBufferId { get => pDeviceBufferId; set => pDeviceBufferId = value; }
@@ -26,7 +19,7 @@ namespace MapViewPallet.MiniForm
         public int bay { get => pBay; set => pBay = value; }
         public string dataPallet { get => pDataPallet; set => pDataPallet = value; }
         public string palletStatus { get => pPalletStatus; set => pPalletStatus = value; }
-        public string bufferId { get => pBufferId; set => pBufferId = value; }
+        public int bufferId { get => pBufferId; set => pBufferId = value; }
         public int deviceId { get => pDeviceId; set => pDeviceId = value; }
 
     }
