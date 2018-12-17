@@ -17,12 +17,13 @@ namespace MapViewPallet.MiniForm
         private string pDeviceName;
         private string pProductName;
         private string pProductDetailName;
+        private string pPalletStatus;
         private List<dtBuffer> pBuffers;
 
         public int planId { get => pPlanId; set => pPlanId = value; }
         public int deviceProductId { get; set; }
         public int timeWorkId { get => pTimeWorkId; set => pTimeWorkId = value; }
-        public int productDetailId { get => pProductDetailId; set  { pProductDetailId = value; RaisePropertyChanged("productDetailId"); } }
+        public int productDetailId { get => pProductDetailId; set => pProductDetailId = value; }
         public int palletAmount { get => pPalletAmount; set => pPalletAmount = value; }
         public int palletUse { get => pPalletUse; set => pPalletUse = value; }
         public int palletMiss { get => pPalletMiss; set => pPalletMiss = value; }
@@ -33,6 +34,7 @@ namespace MapViewPallet.MiniForm
         public string deviceName { get => pDeviceName; set => pDeviceName = value; }
         public string productName { get => pProductName; set => pProductName = value; }
         public string productDetailName { get => pProductDetailName; set => pProductDetailName = value; }
+        public string palletStatus { get => pPalletStatus; set => pPalletStatus = value; }
 
 
 

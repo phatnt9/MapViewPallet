@@ -19,7 +19,7 @@ namespace MapViewPallet.MiniForm
     public partial class DevicesManagement : Window
     {
         public ManagementModel managementModel;
-        
+
 
         public DevicesManagement()
         {
@@ -50,8 +50,14 @@ namespace MapViewPallet.MiniForm
 
             DevicesListDg.SelectedCellsChanged += DevicesListDg_SelectedCellsChanged;
             ProductsListDg.SelectedCellsChanged += ProductsListDg_SelectedCellsChanged;
+            BuffersListDg.SelectedCellsChanged += BuffersListDg_SelectedCellsChanged;
 
+        }
 
+        private void BuffersListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            dtBuffer temp = BuffersListDg.SelectedItem as dtBuffer;
+            managementModel.ReloadListPallets(temp.bufferId);
         }
 
         private void ProductsListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -66,7 +72,9 @@ namespace MapViewPallet.MiniForm
             managementModel.ReloadListDeviceProducts(temp.deviceId);
             managementModel.ReloadListDeviceBuffers(temp.deviceId);
         }
-        
+
+
+
 
         //****************************************************************************************
 
@@ -100,18 +108,19 @@ namespace MapViewPallet.MiniForm
                 }
             }
         }
+
         private void DeviceBuffersListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (DevicesListDg.SelectedItem != null)
             {
-                SaveData(false);
+                SaveData_tab1(false);
             }
             UpdateTab1(false);
         }
 
         //****************************************************************************************
 
-        private void SaveData(bool isProduct)
+        private void SaveData_tab1(bool isProduct)
         {
             managementModel.UpdateDataStatus("Đang cập nhật...");
             dtDevice device = GetDataSave();
@@ -136,11 +145,45 @@ namespace MapViewPallet.MiniForm
                 StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                 int result = 0;
                 int.TryParse(reader.ReadToEnd(), out result);
-                UpdateTab1(false);
             }
-            Thread.Sleep(150);
+            Thread.Sleep(200);
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
+
+        private void SaveData_tab2 ()
+        {
+            dtProductDetail selectedProductDetail = (ProductDetailsListDg.SelectedItem as dtProductDetail);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
+            request.Method = "POST";
+            request.ContentType = @"application/json";
+
+            dtProductDetail productDetail = new dtProductDetail();
+            productDetail.productId = ((ProductsListDg.SelectedItem) as dtProduct).productId;
+            productDetail.productDetailId = selectedProductDetail.productDetailId;
+            productDetail.productDetailName = selectedProductDetail.productDetailName;
+            productDetail.creUsrId = selectedProductDetail.creUsrId;
+            productDetail.updUsrId = selectedProductDetail.updUsrId;
+
+            string jsonData = JsonConvert.SerializeObject(productDetail);
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                string result = reader.ReadToEnd();
+            }
+
+            Thread.Sleep(200);
+        }
+
         private dtDevice GetDataSave()
         {
             dtDevice deviceData = new dtDevice();
@@ -186,6 +229,7 @@ namespace MapViewPallet.MiniForm
             deviceData.deviceBuffers = deviceBuffers;
             return deviceData;
         }
+
         public void UpdateTab1(bool isAddDevice)
         {
             managementModel.UpdateDataStatus("Đang cập nhật...");
@@ -204,14 +248,9 @@ namespace MapViewPallet.MiniForm
                     }
                     else
                     {
-                        if (!DeviceProductsListDg.HasItems)
-                        {
-                            managementModel.ReloadListDeviceProducts((DevicesListDg.SelectedItem as dtDevice).deviceId);
-                        }
-                        if (!DeviceBuffersListDg.HasItems)
-                        {
-                            managementModel.ReloadListDeviceBuffers((DevicesListDg.SelectedItem as dtDevice).deviceId);
-                        }
+                        managementModel.ReloadListDeviceProducts((DevicesListDg.SelectedItem as dtDevice).deviceId);
+                        managementModel.ReloadListDeviceBuffers((DevicesListDg.SelectedItem as dtDevice).deviceId);
+
                     }
                 }
                 else
@@ -221,6 +260,36 @@ namespace MapViewPallet.MiniForm
             }
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
+
+        public void UpdateTab2(bool isAddProduct)
+        {
+            managementModel.UpdateDataStatus("Đang cập nhật...");
+            if (isAddProduct)
+            {
+                managementModel.ReloadListProducts();
+            }
+            else
+            {
+                if (ProductsListDg.HasItems)
+                {
+                    if (ProductsListDg.SelectedItem == null)
+                    {
+                        ProductsListDg.SelectedItem = ProductsListDg.Items[0];
+                        ProductsListDg.ScrollIntoView(ProductsListDg.SelectedItem);
+                    }
+                    else
+                    {
+                        managementModel.ReloadListProductDetails((ProductsListDg.SelectedItem as dtProduct).productId);
+                    }
+                }
+                else
+                {
+                    managementModel.ReloadListProducts();
+                }
+            }
+            managementModel.UpdateDataStatus("Sẵn sàng");
+        }
+
         public void UpdateTab3(bool isAddBuffer)
         {
             managementModel.UpdateDataStatus("Đang cập nhật...");
@@ -239,10 +308,8 @@ namespace MapViewPallet.MiniForm
                     }
                     else
                     {
-                        if (!PalletsListDg.HasItems)
-                        {
-                            managementModel.ReloadListPallets((BuffersListDg.SelectedItem as dtBuffer).bufferId);
-                        }
+                        managementModel.ReloadListPallets((BuffersListDg.SelectedItem as dtBuffer).bufferId);
+
                     }
                 }
                 else
@@ -255,31 +322,6 @@ namespace MapViewPallet.MiniForm
 
         //****************************************************************************************
 
-        private void DeviceProductCbRow_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (DevicesListDg.SelectedItem != null)
-            {
-                System.Windows.Controls.CheckBox temp = e.Source as System.Windows.Controls.CheckBox;
-                if (DevicesListDg.SelectedItem != null)
-                {
-                    SaveData(true);
-                }
-            }
-            UpdateTab1(false);
-
-        }
-        private void DeviceBufferCbRow_Click(object sender, RoutedEventArgs e)
-        {
-            if (DevicesListDg.SelectedItem != null)
-            {
-                SaveData(false);
-            }
-            UpdateTab1(false);
-        }
-
-        //****************************************************************************************
-        
         private void Btn_Save_tab1_Click(object sender, RoutedEventArgs e)
         {
             managementModel.UpdateDataStatus("Đang cập nhật...");
@@ -350,51 +392,13 @@ namespace MapViewPallet.MiniForm
             }
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
+
         private void Btn_Exit_tab1_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        //****************************************************************************************
 
-        private void Btn_Refresh_Device_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateTab1(true);
-        }
-        private void Btn_Refresh_DeviceProduct_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateTab1(false);
-        }
-        private void Btn_Refresh_DeviceBuffer_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateTab1(false);
-        }
-
-        //****************************************************************************************
-
-        private void Btn_Test_DeviceBuffer_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (DeviceBuffer item in managementModel.deviceBuffersList)
-            {
-                Console.WriteLine(item.bufferName + "-" + item.checkStatus + "-" + item.bufferSort);
-            }
-        }
-        private void Btn_Test_DeviceProduct_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (dtDeviceProduct item in managementModel.deviceProductsList)
-            {
-                Console.WriteLine(item.productName + "-" + item.checkStatus);
-            }
-        }
-        private void Btn_Test_Device_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (dtDevice item in managementModel.devicesList)
-            {
-                Console.WriteLine(item.deviceName);
-            }
-        }
-
-        //****************************************************************************************
 
         private void Btn_Add_Device_Click(object sender, RoutedEventArgs e)
         {
@@ -403,29 +407,208 @@ namespace MapViewPallet.MiniForm
             UpdateTab1(true);
         }
 
-        private void Btn_Add_Buffer_Click(object sender, RoutedEventArgs e)
-        {
-            //AddBufferForm form = new AddBufferForm();
-            //form.ShowDialog();
-            //UpdateTab1(true);
-        }
-        //****************************************************************************************
-
-        private void Btn_Save_DeviceProduct_Click(object sender, RoutedEventArgs e)
-        {
-            SaveData(true);
-            UpdateTab1(false);
-        }
-        private void Btn_Save_DeviceBuffer_Click(object sender, RoutedEventArgs e)
-        {
-            SaveData(false);
-            UpdateTab1(false);
-        }
-        private void Btn_Save_Device_Click(object sender, RoutedEventArgs e)
+        private void Btn_Refresh_Device_Click(object sender, RoutedEventArgs e)
         {
             UpdateTab1(true);
         }
 
-        
+        private void Btn_Refresh_DeviceProduct_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTab1(false);
+        }
+
+        private void Btn_Refresh_DeviceBuffer_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTab1(false);
+        }
+
+        private void Btn_Save_DeviceProduct_Click(object sender, RoutedEventArgs e)
+        {
+            SaveData_tab1(true);
+            UpdateTab1(false);
+        }
+
+        private void Btn_Save_DeviceBuffer_Click(object sender, RoutedEventArgs e)
+        {
+            SaveData_tab1(false);
+            UpdateTab1(false);
+        }
+
+        private void DeviceProductCbRow_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (DevicesListDg.SelectedItem != null)
+            {
+                if (DevicesListDg.SelectedItem != null)
+                {
+                    SaveData_tab1(true);
+                }
+            }
+            UpdateTab1(false);
+
+        }
+
+        private void DeviceBufferCbRow_Click(object sender, RoutedEventArgs e)
+        {
+            if (DevicesListDg.SelectedItem != null)
+            {
+                SaveData_tab1(false);
+            }
+            UpdateTab1(false);
+        }
+
+        //****************************************************************************************
+
+        private void Btn_Save_tab2_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Exit_tab2_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Btn_Add_Product_Click(object sender, RoutedEventArgs e)
+        {
+            AddProductForm form = new AddProductForm();
+            form.ShowDialog();
+            UpdateTab2(true);
+        }
+
+        private void Btn_Add_ProductDetail_Click(object sender, RoutedEventArgs e)
+        {
+            AddProductDetailForm form = new AddProductDetailForm(this);
+            form.ShowDialog();
+            UpdateTab2(false);
+        }
+
+
+        private void Btn_Refresh_Product_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTab2(true);
+        }
+
+        private void Btn_Refresh_ProductDetail_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTab2(false);
+        }
+
+
+        //****************************************************************************************
+
+        private void Btn_Save_tab3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Exit_tab3_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Btn_Add_Buffer_Click(object sender, RoutedEventArgs e)
+        {
+            AddBufferForm form = new AddBufferForm(this);
+            form.ShowDialog();
+            UpdateTab3(true);
+        }
+
+        private void Btn_Add_Pallet_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Refresh_Buffer_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateTab3(true);
+        }
+
+        private void Btn_Refresh_Pallet_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Save_Pallet_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Save_Buffer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Btn_Save_ProductDetail_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ProductDetailsListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            string productDetailName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
+            if (ProductsListDg.SelectedItem != null)
+            {
+                dtProductDetail selectedProductDetail = (ProductDetailsListDg.SelectedItem as dtProductDetail);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+
+                dtProductDetail productDetail = new dtProductDetail();
+                productDetail.productId = ((ProductsListDg.SelectedItem) as dtProduct).productId;
+                productDetail.productDetailId = selectedProductDetail.productDetailId;
+                productDetail.productDetailName = productDetailName;
+                productDetail.creUsrId = selectedProductDetail.creUsrId;
+                productDetail.updUsrId = selectedProductDetail.updUsrId;
+
+                string jsonData = JsonConvert.SerializeObject(productDetail);
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+                }
+            }
+            UpdateTab2(false);
+        }
+
+        private void Btn_Delete_Product_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProductsListDg.SelectedItem != null)
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/deleteProduct");
+                request.Method = "DELETE";
+                request.ContentType = @"application/json";
+
+                dynamic postApiBody = new JObject();
+                postApiBody.productId = (ProductsListDg.SelectedItem as dtProduct).productId;
+                string jsonData = JsonConvert.SerializeObject(postApiBody);
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+                }
+            }
+            UpdateTab2(true);
+        }
     }
 }

@@ -116,22 +116,24 @@ namespace MapViewPallet.MiniForm
                 {
                     foreach (dtDeviceProduct product in device.deviceProducts)
                     {
-                        Plan tempOpe = new Plan()
+                        Plan tempOpe = new Plan();
+                        tempOpe.planId = 0;
+                        tempOpe.deviceProductId = product.deviceProductId;
+                        tempOpe.timeWorkId = selectedShift;
+                        if (product.productDetails.Count >0)
                         {
-                            planId = 0,
-                            deviceProductId = product.deviceProductId,
-                            timeWorkId = selectedShift,
-                            productDetailId = product.productDetails.First().productDetailId,
-                            listProductDetails = product.productDetails,
-                            palletAmount = 0,
-                            palletUse = 0,
-                            palletMiss = 0,
-                            activeDate = date,
-                            deviceId = device.deviceId,
-                            deviceName = device.deviceName,
-                            productId = product.productId,
-                            productName = product.productName
-                        };
+                            tempOpe.productDetailId = product.productDetails.First().productDetailId;
+                        }
+                        tempOpe.listProductDetails = product.productDetails;
+                        tempOpe.palletAmount = 0;
+                        tempOpe.palletUse = 0;
+                        tempOpe.palletMiss = 0;
+                        tempOpe.activeDate = date;
+                        tempOpe.deviceId = device.deviceId;
+                        tempOpe.deviceName = device.deviceName;
+                        tempOpe.productId = product.productId;
+                        tempOpe.productName = product.productName;
+
                         if (checkPlansList.Count != 0)
                         {
                             foreach (Plan tempPlan in checkPlansList)

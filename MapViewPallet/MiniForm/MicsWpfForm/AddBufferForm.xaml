@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
         Title="AddBufferForm" 
-        Height="130" 
-        Width="350" 
-        MaxHeight="130" 
-        MaxWidth="350" 
-        MinHeight="130" 
-        MinWidth="350">
+        Height="310" 
+        Width="320" 
+        MaxHeight="310" 
+        MaxWidth="320" 
+        MinHeight="310" 
+        MinWidth="320">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -33,15 +33,55 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                <StackPanel Orientation="Horizontal" 
+                <StackPanel Orientation="Vertical" 
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             Margin="0,6,0,0">
-                    <TextBox Name="bufferNametb" 
-                             Width="250" 
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Label VerticalAlignment="Center" 
+                               Content="Tên buffer"
+                               FontSize="14"></Label>
+                        <TextBox Name="bufferNametb" 
+                             Width="200" 
                              Height="25" 
-                             Margin="11,0"
+                             Margin="10"
                              ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Label VerticalAlignment="Center" 
+                               Content="Bay"
+                               FontSize="14"></Label>
+                        <TextBox Name="bufferMaxBaytb" 
+                             Width="200" 
+                             Height="25" 
+                             Margin="10"
+                             PreviewTextInput="BufferMaxBaytb_PreviewTextInput"
+                             ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Label VerticalAlignment="Center" 
+                               Content="Row"
+                               FontSize="14"></Label>
+                        <TextBox Name="bufferMaxRowtb" 
+                             Width="200" 
+                             Height="25" 
+                             Margin="10"
+                                 PreviewTextInput ="BufferMaxRowtb_PreviewTextInput"
+                             ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <CheckBox Name="bufferReturnCb" 
+                             Width="200" 
+                             Height="25" 
+                             Margin="10"
+                                  FontSize="14"
+                             Content="Buffer return"
+                             ></CheckBox>
+                    </StackPanel>
                     <Button Width="60" 
                             Height="25" 
                             Margin="0,0,11,0"
@@ -51,11 +91,13 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel Orientation="Vertical"
+            <Border BorderThickness="1" BorderBrush="Gray">
+                <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <TextBlock Foreground="Red" Text="{Binding deviceNameDuplicate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            </StackPanel>
+                    <TextBlock Foreground="Red" Text="{Binding deviceNameDuplicate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </StackPanel>
+            </Border>
         </Grid>
     </Grid>
 </Window>

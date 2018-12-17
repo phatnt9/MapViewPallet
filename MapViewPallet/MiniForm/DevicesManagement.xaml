@@ -53,23 +53,8 @@
                                             <StackPanel Orientation="Horizontal" 
                                                         HorizontalAlignment="Right" 
                                                         VerticalAlignment="Center">
-                                                <Button Name="btn_Test_Device" 
-                                                        Margin="5,0,0,5" 
-                                                        Width="Auto" 
-                                                        FontSize="14" 
-                                                        Click="Btn_Test_Device_Click" 
-                                                        Content="Test"/>
-                                                <Button Name="btn_Save_Device" 
-                                                        Margin="5,0,0,5" 
-                                                        Width="Auto" 
-                                                        FontSize="14" 
-                                                        Click="Btn_Save_Device_Click">
-                                                    <StackPanel>
-                                                        <Image Width="20" 
-                                                               Height="20" 
-                                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
-                                                    </StackPanel>
-                                                </Button>
+                                                
+                                                
                                                 <Button Name="btn_Refresh_Device" 
                                                         Margin="5,0,0,5" 
                                                         Width="Auto" 
@@ -164,13 +149,6 @@
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
 
-                                                <Button Name="btn_Test_DeviceProduct" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14" 
-                                        Click="Btn_Test_DeviceProduct_Click" 
-                                        Content="Test"/>
-
                                                 <Button Name="btn_Save_DeviceProduct" 
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
@@ -194,26 +172,8 @@
                                                Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
                                                     </StackPanel>
                                                 </Button>
-                                                <Button Name="btn_Add_DeviceProduct" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14">
-                                                    <StackPanel>
-                                                        <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
-                                                    </StackPanel>
-                                                </Button>
-                                                <Button Name="btn_Delete_DeviceProduct" 
-                                        Margin="5,0,0,5"
-                                        Width="Auto" 
-                                        FontSize="14">
-                                                    <StackPanel>
-                                                        <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
-                                                    </StackPanel>
-                                                </Button>
+                                                
+                                                
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
@@ -275,12 +235,7 @@
                                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
-                                                <Button Name="btn_Test_DeviceBuffer" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14" 
-                                        Content="Test"
-                                        Click="Btn_Test_DeviceBuffer_Click"/>
+                                                
                                                 <Button Name="btn_Save_DeviceBuffer" 
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
@@ -301,26 +256,6 @@
                                                         <Image Width="20" 
                                                Height="20" 
                                                Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
-                                                    </StackPanel>
-                                                </Button>
-                                                <Button Name="btn_Add_DeviceBuffer" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14">
-                                                    <StackPanel>
-                                                        <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
-                                                    </StackPanel>
-                                                </Button>
-                                                <Button Name="btn_Delete_DeviceBuffer" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14">
-                                                    <StackPanel>
-                                                        <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
                                                     </StackPanel>
                                                 </Button>
                                             </StackPanel>
@@ -413,28 +348,12 @@
                                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
-
-                                                <Button Name="btn_Test_Product" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14"
-                                        Content="Test"/>
-
-                                                <Button Name="btn_Save_Product" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14" >
-                                                    <StackPanel>
-                                                        <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
-                                                    </StackPanel>
-                                                </Button>
-
+                                                
                                                 <Button Name="btn_Refresh_Product"
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Refresh_Product_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -444,7 +363,8 @@
                                                 <Button Name="btn_Add_Product" 
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Add_Product_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -454,7 +374,8 @@
                                                 <Button Name="btn_Delete_Product" 
                                         Margin="5,0,0,5"
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Delete_Product_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -473,17 +394,22 @@
                                       CanUserDeleteRows="False" 
                                       CanUserSortColumns="False"
                                       AutoGenerateColumns="False">
+                                                <DataGrid.ColumnHeaderStyle>
+                                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment" 
+                                                Value="Center" />
+                                                    </Style>
+                                                </DataGrid.ColumnHeaderStyle>
+                                                <DataGrid.RowStyle>
+                                                    <Style TargetType="DataGridRow">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsSelected" 
+                                                     Value="True">
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </DataGrid.RowStyle>
                                                 <DataGrid.Columns>
-                                                    <!--<DataGridTemplateColumn>
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <CheckBox
-                                                          HorizontalAlignment="Center"
-                                                          IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                          />
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>-->
                                                     <DataGridTextColumn Header="Tên sản phẩm" 
                                                         Width="*" 
                                                         IsReadOnly="True"
@@ -500,7 +426,7 @@
                                 <GroupBox >
                                     <GroupBox.Header>
                                         <StackPanel>
-                                            <TextBlock FontSize="20" FontWeight="Bold">Chi tiết sản phẩm</TextBlock>
+                                            <TextBlock FontSize="20" FontWeight="Bold">Mã sản phẩm</TextBlock>
                                         </StackPanel>
                                     </GroupBox.Header>
                                     <Grid>
@@ -513,16 +439,11 @@
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
 
-                                                <Button Name="btn_Test_ProductDetail" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14"
-                                        Content="Test"/>
-
                                                 <Button Name="btn_Save_ProductDetail" 
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Save_ProductDetail_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -533,7 +454,8 @@
                                                 <Button Name="btn_Refresh_ProductDetail"
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Refresh_ProductDetail_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -543,7 +465,8 @@
                                                 <Button Name="btn_Add_ProductDetail" 
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Add_ProductDetail_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -571,21 +494,28 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
                                       CanUserSortColumns="False"
-                                      AutoGenerateColumns="False">
+                                      AutoGenerateColumns="False"
+                                                      CellEditEnding="ProductDetailsListDg_CellEditEnding"
+                                                      >
+                                                <DataGrid.ColumnHeaderStyle>
+                                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                        <Setter Property="HorizontalContentAlignment" 
+                                                Value="Center" />
+                                                    </Style>
+                                                </DataGrid.ColumnHeaderStyle>
+                                                <DataGrid.RowStyle>
+                                                    <Style TargetType="DataGridRow">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsSelected" 
+                                                     Value="True">
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </DataGrid.RowStyle>
                                                 <DataGrid.Columns>
-                                                    <!--<DataGridTemplateColumn>
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <CheckBox
-                                                          HorizontalAlignment="Center"
-                                                          IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                          />
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>-->
-                                                    <DataGridTextColumn Header="Mã sản phẩm" 
+                                                    <DataGridTextColumn Header="Mã" 
                                                         Width="*" 
-                                                        IsReadOnly="True"
+                                                        IsReadOnly="False"
                                                         Binding="{Binding Path=productDetailName}">
 
                                                     </DataGridTextColumn>
@@ -602,11 +532,13 @@
                                 <Button Name="Btn_Save_tab2" 
                         Width="70" 
                         Content="Lưu" 
-                        Margin="30,5"/>
+                        Margin="30,5"
+                                        Click="Btn_Save_tab2_Click"/>
                                 <Button Name="Btn_Exit_tab2" 
                         Width="70" 
                         Content="Thoát" 
-                        Margin="30,5"/>
+                        Margin="30,5"
+                                        Click="Btn_Exit_tab2_Click"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -639,16 +571,11 @@
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
 
-                                                <Button Name="btn_Test_Buffer" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14"
-                                        Content="Test"/>
-
                                                 <Button Name="btn_Save_Buffer" 
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14" >
+                                        FontSize="14"
+                                                        Click="Btn_Save_Buffer_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -659,7 +586,8 @@
                                                 <Button Name="btn_Refresh_Buffer"
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Refresh_Buffer_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -716,18 +644,29 @@
                                                         Binding="{Binding Path=bufferName}">
 
                                                     </DataGridTextColumn>
-                                                    <DataGridTextColumn Header="Bays" 
+                                                    <DataGridTextColumn Header="Cột" 
                                                                         Width="*" 
                                                                         IsReadOnly="True"
                                                                         Binding="{Binding Path=maxBay}">
 
                                                     </DataGridTextColumn>
-                                                    <DataGridTextColumn Header="Rows" 
+                                                    <DataGridTextColumn Header="Hàng" 
                                                                         Width="*" 
                                                                         IsReadOnly="True"
                                                                         Binding="{Binding Path=maxRow}">
 
                                                     </DataGridTextColumn>
+                                                    <DataGridTemplateColumn Header="Return" Width="Auto">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox Name="BufferReturnCbRow" 
+                                                          HorizontalAlignment="Center"
+                                                          IsChecked="{Binding Path=bufferReturn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                          
+                                                          />
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -751,16 +690,11 @@
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
 
-                                                <Button Name="btn_Test_Pallet" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14"
-                                        Content="Test"/>
-
                                                 <Button Name="btn_Save_Pallet" 
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Save_Pallet_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -771,7 +705,8 @@
                                                 <Button Name="btn_Refresh_Pallet"
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Refresh_Pallet_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -781,7 +716,8 @@
                                                 <Button Name="btn_Add_Pallet" 
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Add_Pallet_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -840,11 +776,13 @@
                                 <Button Name="Btn_Save_tab3" 
                         Width="70" 
                         Content="Lưu" 
-                        Margin="30,5"/>
+                        Margin="30,5"
+                                        Click="Btn_Save_tab3_Click"/>
                                 <Button Name="Btn_Exit_tab3" 
                         Width="70" 
                         Content="Thoát" 
-                        Margin="30,5"/>
+                        Margin="30,5"
+                                        Click="Btn_Exit_tab3_Click"/>
                             </StackPanel>
                         </Grid>
                     </Grid>

@@ -1,4 +1,5 @@
-﻿using MapViewPallet.Shape;
+﻿using MapViewPallet.MiniForm;
+using MapViewPallet.Shape;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,7 +38,10 @@ namespace MapViewPallet
 
 
         public static string url = @"http://localhost:8081/robot/rest/";
+
+
         public static int userLogin = 1;
+        
 
         public static string messageDuplicated = "{0} is duplicated.";
         public static string messageSaveSucced = "Save operation succeeded.";

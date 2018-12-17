@@ -8,6 +8,6 @@
 
         public int productDetailId { get => pProductDetailId; set => pProductDetailId = value; }
         public int productId { get => pProductId; set => pProductId = value; }
-        public string productDetailName { get => pProductDetailName; set => pProductDetailName = value; }
+        public string productDetailName { get => pProductDetailName; set { pProductDetailName = value; RaisePropertyChanged("productDetailName"); } }
     }
 }

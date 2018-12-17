@@ -16,6 +16,9 @@ namespace MapViewPallet.MiniForm
     {
         private int pDeviceId;
         private string pDeviceName;
+        private string pDeviceNameOld;
+        private int pMaxRow;
+        private int pMaxBay;
         private List<dtDeviceProduct> pDeviceProducts;
         private List<dtDeviceBuffer> pDeviceBuffers;
 
@@ -23,10 +26,14 @@ namespace MapViewPallet.MiniForm
         public string deviceName { get => pDeviceName; set => pDeviceName = value; }
         public List<dtDeviceProduct> deviceProducts { get => pDeviceProducts; set => pDeviceProducts = value; }
         public List<dtDeviceBuffer> deviceBuffers { get => pDeviceBuffers; set => pDeviceBuffers = value; }
+        public string deviceNameOld { get => pDeviceNameOld; set => pDeviceNameOld = value; }
+        public int maxRow { get => pMaxRow; set => pMaxRow = value; }
+        public int maxBay { get => pMaxBay; set => pMaxBay = value; }
 
         public dtDevice()
         {
             deviceProducts = new List<dtDeviceProduct>();
+            deviceBuffers = new List<dtDeviceBuffer>();
         }
 
         public void GetDeviceProductsList()

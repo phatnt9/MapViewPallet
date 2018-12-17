@@ -54,7 +54,7 @@
             <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <TextBlock Foreground="Red" Text="{Binding deviceNameDuplicate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBlock Foreground="Red" Text="{Binding productNameDuplicate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </StackPanel>
         </Grid>
     </Grid>

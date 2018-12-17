@@ -65,6 +65,7 @@
     <Compile Include="DataGridView\DgvModel.cs" />
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
+    <Compile Include="MiniForm\Database\dtDevicePallet.cs" />
     <Compile Include="MiniForm\DeviceBuffer.cs" />
     <Compile Include="MiniForm\DeviceList.cs" />
     <Compile Include="MiniForm\Database\dtBuffer.cs" />
@@ -87,6 +88,9 @@
     </Compile>
     <Compile Include="MiniForm\MicsWpfForm\AddDeviceForm.xaml.cs">
       <DependentUpon>AddDeviceForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MiniForm\MicsWpfForm\AddProductDetailForm.xaml.cs">
+      <DependentUpon>AddProductDetailForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="MiniForm\MicsWpfForm\AddProductForm.xaml.cs">
       <DependentUpon>AddProductForm.xaml</DependentUpon>
@@ -139,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MiniForm\MicsWpfForm\AddDeviceForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiniForm\MicsWpfForm\AddProductDetailForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
