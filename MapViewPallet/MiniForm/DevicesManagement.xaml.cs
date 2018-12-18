@@ -33,6 +33,12 @@ namespace MapViewPallet.MiniForm
             BuffersListDg.SelectedCellsChanged += BuffersListDg_SelectedCellsChanged;
             DevicesListDg2.SelectedCellsChanged += DevicesListDg2_SelectedCellsChanged;
 
+            ProductsListDg.CellEditEnding += ProductsListDg_CellEditEnding;
+            ProductDetailsListDg.CellEditEnding += ProductDetailsListDg_CellEditEnding;
+            BuffersListDg.CellEditEnding += BuffersListDg_CellEditEnding; ;
+            DeviceBuffersListDg.CellEditEnding += DeviceBuffersListDg_CellEditEnding;
+            DevicesListDg2.CellEditEnding += DevicesListDg2_CellEditEnding;
+
             //*****************************************************************
 
             managementModel = new ManagementModel(this);
@@ -62,12 +68,14 @@ namespace MapViewPallet.MiniForm
                 DataGridSelectionUnit.FullRow;
 
         }
+        
 
+        
         private void DevicesListDg2_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             if (DevicesListDg2.SelectedItem != null)
             {
-                Console.WriteLine(managementModel.devicesList);
+                //Console.WriteLine(managementModel.devicesList);
                 dtDevice temp = DevicesListDg2.SelectedItem as dtDevice;
                 MaxBaytb.Text = temp.maxBay.ToString();
                 MaxRowtb.Text = temp.maxRow.ToString();
@@ -122,17 +130,17 @@ namespace MapViewPallet.MiniForm
                         }
                     case 1:
                         {
-                            managementModel.ReloadListProducts();
+                            managementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
                             break;
                         }
                     case 2:
                         {
-                            managementModel.ReloadListBuffers();
+                            managementModel.ReloadListProducts();
                             break;
                         }
                     case 3:
                         {
-                            managementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                            managementModel.ReloadListBuffers();
                             break;
                         }
                 }
@@ -147,6 +155,227 @@ namespace MapViewPallet.MiniForm
             }
             UpdateTab1(false);
         }
+
+        private void ProductDetailsListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            try
+            {
+                string productDetailName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
+                if (ProductsListDg.SelectedItem != null)
+                {
+                    dtProductDetail selectedProductDetail = (ProductDetailsListDg.SelectedItem as dtProductDetail);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
+                    request.Method = "POST";
+                    request.ContentType = @"application/json";
+
+                    dtProductDetail productDetail = new dtProductDetail();
+                    productDetail.productId = ((ProductsListDg.SelectedItem) as dtProduct).productId;
+                    productDetail.productDetailId = selectedProductDetail.productDetailId;
+                    productDetail.productDetailName = productDetailName;
+                    productDetail.creUsrId = selectedProductDetail.creUsrId;
+                    productDetail.updUsrId = selectedProductDetail.updUsrId;
+
+                    string jsonData = JsonConvert.SerializeObject(productDetail);
+
+                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                    Byte[] byteArray = encoding.GetBytes(jsonData);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
+                    {
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        dataStream.Flush();
+                    }
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    using (Stream responseStream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        string result = reader.ReadToEnd();
+                    }
+                }
+                UpdateTab3(false);
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void DevicesListDg2_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            try
+            {
+                dtDevice temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtDevice;
+                string deviceName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
+                List<dtDevice> devices = new List<dtDevice>();
+                temp.deviceName = deviceName;
+                devices.Add(temp);
+
+                if (devices.Count == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(devices);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateListNameDevice");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                    }
+                    else if (result == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Devices Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                UpdateTab2(true);
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void BuffersListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            //http://localhost:8081/robot/rest/buffer/updateListBuffer
+            try
+            {
+                dtBuffer temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtBuffer;
+                string bufferName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
+                List<dtBuffer> buffers = new List<dtBuffer>();
+                temp.bufferName = bufferName;
+                buffers.Add(temp);
+
+                if (buffers.Count == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(buffers);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Buffers Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                UpdateTab4(true);
+            }
+            catch
+            {
+
+            }
+
+        }
+
+        private void ProductsListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            try
+            {
+                string productName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
+                if (ProductsListDg.SelectedItem != null)
+                {
+                    dtProduct selectedProduct = (ProductsListDg.SelectedItem as dtProduct);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProduct");
+                    request.Method = "POST";
+                    request.ContentType = @"application/json";
+
+                    dtProduct product = new dtProduct();
+                    product.productId = ((ProductsListDg.SelectedItem) as dtProduct).productId;
+                    product.productName = productName;
+                    product.productDetails = new List<dtProductDetail>();
+                    product.creUsrId = selectedProduct.creUsrId;
+                    product.updUsrId = selectedProduct.updUsrId;
+
+                    string jsonData = JsonConvert.SerializeObject(product);
+
+                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                    Byte[] byteArray = encoding.GetBytes(jsonData);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
+                    {
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        dataStream.Flush();
+                    }
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    using (Stream responseStream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        int result = 0;
+                        int.TryParse(reader.ReadToEnd(), out result);
+                        if (result == 1)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else if (result == -2)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Product Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                UpdateTab3(true);
+            }
+            catch
+            {
+
+            }
+        }
+
 
         //****************************************************************************************
 
@@ -178,40 +407,7 @@ namespace MapViewPallet.MiniForm
             }
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
-
-        private void SaveData_tab2()
-        {
-            dtProductDetail selectedProductDetail = (ProductDetailsListDg.SelectedItem as dtProductDetail);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
-            request.Method = "POST";
-            request.ContentType = @"application/json";
-
-            dtProductDetail productDetail = new dtProductDetail();
-            productDetail.productId = ((ProductsListDg.SelectedItem) as dtProduct).productId;
-            productDetail.productDetailId = selectedProductDetail.productDetailId;
-            productDetail.productDetailName = selectedProductDetail.productDetailName;
-            productDetail.creUsrId = selectedProductDetail.creUsrId;
-            productDetail.updUsrId = selectedProductDetail.updUsrId;
-
-            string jsonData = JsonConvert.SerializeObject(productDetail);
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                int result = 0;
-                int.TryParse(reader.ReadToEnd(), out result);
-            }
-        }
-
+        
         private dtDevice GetDataSave()
         {
             dtDevice deviceData = new dtDevice();
@@ -263,7 +459,7 @@ namespace MapViewPallet.MiniForm
             managementModel.UpdateDataStatus("Đang cập nhật...");
             if (isAddDevice)
             {
-                managementModel.ReloadListDevices(-1);
+                managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
             }
             else
             {
@@ -282,13 +478,42 @@ namespace MapViewPallet.MiniForm
                 }
                 else
                 {
-                    managementModel.ReloadListDevices(0);
+                    managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                 }
             }
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
 
-        public void UpdateTab2(bool isAddProduct)
+        public void UpdateTab2(bool isAddDevice)
+        {
+            managementModel.UpdateDataStatus("Đang cập nhật...");
+            if (isAddDevice)
+            {
+                managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+            }
+            else
+            {
+                if (DevicesListDg2.HasItems)
+                {
+                    if (DevicesListDg2.SelectedItem == null)
+                    {
+                        DevicesListDg2.SelectedItem = DevicesListDg2.Items[0];
+                        DevicesListDg2.ScrollIntoView(DevicesListDg2.SelectedItem);
+                    }
+                    else
+                    {
+                        managementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
+                    }
+                }
+                else
+                {
+                    managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                }
+            }
+            managementModel.UpdateDataStatus("Sẵn sàng");
+        }
+
+        public void UpdateTab3(bool isAddProduct)
         {
             managementModel.UpdateDataStatus("Đang cập nhật...");
             if (isAddProduct)
@@ -317,7 +542,7 @@ namespace MapViewPallet.MiniForm
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
 
-        public void UpdateTab3(bool isAddBuffer)
+        public void UpdateTab4(bool isAddBuffer)
         {
             managementModel.UpdateDataStatus("Đang cập nhật...");
             if (isAddBuffer)
@@ -447,12 +672,7 @@ namespace MapViewPallet.MiniForm
         {
             UpdateTab1(false);
         }
-
-        private void Btn_Save_DeviceProduct_Click(object sender, RoutedEventArgs e)
-        {
-            SaveData_tab1(true);
-            UpdateTab1(false);
-        }
+        
 
         private void Btn_Save_DeviceBuffer_Click(object sender, RoutedEventArgs e)
         {
@@ -502,12 +722,12 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Refresh_Product_Click(object sender, RoutedEventArgs e)
         {
-            UpdateTab2(true);
+            UpdateTab3(true);
         }
 
         private void Btn_Refresh_ProductDetail_Click(object sender, RoutedEventArgs e)
         {
-            UpdateTab2(false);
+            UpdateTab3(false);
         }
 
 
@@ -529,53 +749,22 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Refresh_Buffer_Click(object sender, RoutedEventArgs e)
         {
-            UpdateTab3(true);
+            UpdateTab4(true);
         }
 
         private void Btn_Refresh_Pallet_Click(object sender, RoutedEventArgs e)
         {
-            UpdateTab3(false);
+            UpdateTab4(false);
         }
 
 
+        //****************************************************************************************
 
-
-        private void ProductDetailsListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        private void Btn_Refresh_Device2_Click(object sender, RoutedEventArgs e)
         {
-            string productDetailName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
-            if (ProductsListDg.SelectedItem != null)
-            {
-                dtProductDetail selectedProductDetail = (ProductDetailsListDg.SelectedItem as dtProductDetail);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
-                request.Method = "POST";
-                request.ContentType = @"application/json";
-
-                dtProductDetail productDetail = new dtProductDetail();
-                productDetail.productId = ((ProductsListDg.SelectedItem) as dtProduct).productId;
-                productDetail.productDetailId = selectedProductDetail.productDetailId;
-                productDetail.productDetailName = productDetailName;
-                productDetail.creUsrId = selectedProductDetail.creUsrId;
-                productDetail.updUsrId = selectedProductDetail.updUsrId;
-
-                string jsonData = JsonConvert.SerializeObject(productDetail);
-
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonData);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
-                }
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    string result = reader.ReadToEnd();
-                }
-            }
-            UpdateTab2(false);
+            UpdateTab1(true);
         }
+
 
         private void Btn_Delete_Product_Click(object sender, RoutedEventArgs e)
         {
@@ -604,7 +793,7 @@ namespace MapViewPallet.MiniForm
                     string result = reader.ReadToEnd();
                 }
             }
-            UpdateTab2(true);
+            UpdateTab3(true);
         }
 
         private void Btn_Delete_ProductDetail_Click(object sender, RoutedEventArgs e)
@@ -634,12 +823,12 @@ namespace MapViewPallet.MiniForm
                     string result = reader.ReadToEnd();
                 }
             }
-            UpdateTab2(false);
+            UpdateTab3(false);
         }
 
         private void Btn_Delete_Device_Click(object sender, RoutedEventArgs e)
         {
-            if (DevicesListDg.SelectedItem != null)
+            if (DevicesListDg2.SelectedItem != null)
             {
                 if (System.Windows.Forms.MessageBox.Show
                     (
@@ -650,7 +839,7 @@ namespace MapViewPallet.MiniForm
                 {
 
                     List<dtDevice> listDelete = new List<dtDevice>();
-                    dtDevice device = DevicesListDg.SelectedItem as dtDevice;
+                    dtDevice device = DevicesListDg2.SelectedItem as dtDevice;
                     listDelete.Add(device);
                     string jsonData = JsonConvert.SerializeObject(listDelete);
 
@@ -676,7 +865,7 @@ namespace MapViewPallet.MiniForm
                         if (result == 1)
                         {
                             System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            managementModel.ReloadListDevices(0);
+                            managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                         }
                         else if (result == 2)
                         {
@@ -689,59 +878,8 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
+            UpdateTab2(true);
         }
 
-        private void DevicesListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            dtDevice temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtDevice;
-            string deviceName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
-            List<dtDevice> devices = new List<dtDevice>();
-            temp.deviceName = deviceName;
-            devices.Add(temp);
-
-            if (devices.Count == 0)
-            {
-                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            string jsonData = JsonConvert.SerializeObject(devices);
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateListNameDevice");
-            request.Method = "POST";
-            request.ContentType = "application/json";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
-
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                int result = 0;
-                int.TryParse(reader.ReadToEnd(), out result);
-                if (result == 1)
-                {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    managementModel.ReloadListDevices(0);
-                }
-                else if (result == -2)
-                {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Devices Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-        }
     }
 }

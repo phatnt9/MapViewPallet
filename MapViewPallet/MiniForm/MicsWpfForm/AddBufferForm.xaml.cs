@@ -154,7 +154,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            devicesManagement.UpdateTab3(true);
+            devicesManagement.UpdateTab4(true);
         }
         
 

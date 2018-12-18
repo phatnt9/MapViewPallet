@@ -88,7 +88,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                         }
                 }
             }
-            devicesManagement.UpdateTab2(true);
+            devicesManagement.UpdateTab3(true);
         }
     }
 }

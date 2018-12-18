@@ -91,6 +91,7 @@ namespace MapViewPallet.MiniForm
 
         public void ReloadListDevices(int tabIndex)
         {
+            Console.WriteLine("ReloadListDevices tab:" + tabIndex);
             //try
             {
                 UpdateDataStatus("Đang cập nhật...");
@@ -145,6 +146,11 @@ namespace MapViewPallet.MiniForm
                         }
                     case 1:
                         {
+                            if (devicesManagement.DevicesListDg2.HasItems)
+                            {
+                                devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
+                                devicesManagement.DevicesListDg2.ScrollIntoView(devicesManagement.DevicesListDg2.SelectedItem);
+                            }
                             break;
                         }
                     case 2:
@@ -153,11 +159,6 @@ namespace MapViewPallet.MiniForm
                         }
                     case 3:
                         {
-                            if (devicesManagement.DevicesListDg2.HasItems)
-                            {
-                                devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
-                                devicesManagement.DevicesListDg2.ScrollIntoView(devicesManagement.DevicesListDg2.SelectedItem);
-                            }
                             break;
                         }
                     default:
