@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapViewPallet.MiniForm;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -19,7 +20,10 @@ namespace MapViewPallet.Shape
     {
         private double palletMargin = 0.05; //metters
 
-        
+        private dtPallet pPallet;
+        public dtPallet pallet { get => pPallet; set => pPallet = value; }
+
+
 
         public PalletShape(string name)
         {

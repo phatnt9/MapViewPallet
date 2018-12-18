@@ -29,12 +29,15 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             }
         }
 
+        DevicesManagement devicesManagement;
+
         public AddDeviceModel addDeviceModel;
 
-        public AddDeviceForm()
+        public AddDeviceForm(DevicesManagement devicesManagement)
         {
             InitializeComponent();
-            addDeviceModel = new AddDeviceModel { deviceNameDuplicate = "Ready" };
+            this.devicesManagement = devicesManagement;
+            addDeviceModel = new AddDeviceModel();
             DataContext = addDeviceModel;
         }
 
@@ -68,16 +71,16 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                         }
                     default:
                         {
-                            CreateNewDeivce(deviceNametb.Text.Trim());
+                            CreateNewDevice(deviceNametb.Text.Trim());
                             MessageBox.Show("Thêm thiết bị thành công!","Hoàn tất", MessageBoxButton.OK);
-                            Close();
                             break;
                         }
                 }
             }
+            devicesManagement.UpdateTab1(true);
         }
 
-        public void CreateNewDeivce(string deviceName)
+        public void CreateNewDevice(string deviceName)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/insertDevice");
             request.Method = "POST";

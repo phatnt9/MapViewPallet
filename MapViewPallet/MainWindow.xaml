@@ -109,7 +109,18 @@
                         BorderThickness="1" Click="btn_DevicesManagement_Click" 
                         ToolTip="Lap Lich" Content="Quản lý" Margin="2,0,0,0"
                         Height="25"/>
+                        <Button Name="btn_ReloadMap" BorderBrush="Black"
+                        BorderThickness="1" Click="btn_DevicesManagement_Click" 
+                        ToolTip="Lap Lich" Margin="2,0,0,0"
+                        Height="25">
+                            <StackPanel>
+                                <Image Width="23" 
+                                       Height="23"
+                                       Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
+                            </StackPanel>
+                        </Button>
                         
+
                     </ToolBar>
                 </Grid>
                 <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">

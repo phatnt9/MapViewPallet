@@ -30,12 +30,15 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 }
             }
         }
+        
+        DevicesManagement devicesManagement;
 
         public AddProductModel addProductModel;
 
-        public AddProductForm()
+        public AddProductForm(DevicesManagement devicesManagement)
         {
             InitializeComponent();
+            this.devicesManagement = devicesManagement;
             addProductModel = new AddProductModel { productNameDuplicate = "Ready" };
             DataContext = addProductModel;
         }
@@ -76,7 +79,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     case "1":
                         {
                             MessageBox.Show("Thêm sản phẩm thành công!", "Hoàn tất", MessageBoxButton.OK);
-                            Close();
                             break;
                         }
                     default:
@@ -86,6 +88,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                         }
                 }
             }
+            devicesManagement.UpdateTab2(true);
         }
     }
 }

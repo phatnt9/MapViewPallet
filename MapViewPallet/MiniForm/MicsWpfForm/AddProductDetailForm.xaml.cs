@@ -81,12 +81,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                         }
                     default:
                         {
-                            //CreateNewProduct(productNametb.Text.Trim());
-                            Close();
                             break;
                         }
                 }
             }
+            devicesManagement.UpdateTab2(false);
         }
     }
 }

@@ -28,6 +28,13 @@ namespace MapViewPallet.MiniForm
 
             //*****************************************************************
 
+            DevicesListDg.SelectedCellsChanged += DevicesListDg_SelectedCellsChanged;
+            ProductsListDg.SelectedCellsChanged += ProductsListDg_SelectedCellsChanged;
+            BuffersListDg.SelectedCellsChanged += BuffersListDg_SelectedCellsChanged;
+            DevicesListDg2.SelectedCellsChanged += DevicesListDg2_SelectedCellsChanged;
+
+            //*****************************************************************
+
             managementModel = new ManagementModel(this);
             DataContext = managementModel;
 
@@ -38,39 +45,63 @@ namespace MapViewPallet.MiniForm
                 DeviceBuffersListDg.SelectionMode =
                 ProductsListDg.SelectionMode =
                 ProductDetailsListDg.SelectionMode =
-                BuffersListDg.SelectionMode = DataGridSelectionMode.Single;
+                BuffersListDg.SelectionMode =
+                PalletsListDg.SelectionMode =
+                DevicesListDg2.SelectionMode = 
+                DevicePalletsListDg.SelectionMode = 
+                DataGridSelectionMode.Single;
             DevicesListDg.SelectionUnit =
                 DeviceProductsListDg.SelectionUnit =
                 DeviceBuffersListDg.SelectionUnit =
                 ProductsListDg.SelectionUnit =
                 ProductDetailsListDg.SelectionUnit =
-                BuffersListDg.SelectionUnit = DataGridSelectionUnit.FullRow;
+                BuffersListDg.SelectionUnit =
+                PalletsListDg.SelectionUnit =
+                DevicesListDg2.SelectionUnit = 
+                DevicePalletsListDg.SelectionUnit = 
+                DataGridSelectionUnit.FullRow;
 
-            //*****************************************************************
+        }
 
-            DevicesListDg.SelectedCellsChanged += DevicesListDg_SelectedCellsChanged;
-            ProductsListDg.SelectedCellsChanged += ProductsListDg_SelectedCellsChanged;
-            BuffersListDg.SelectedCellsChanged += BuffersListDg_SelectedCellsChanged;
+        private void DevicesListDg2_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            if (DevicesListDg2.SelectedItem != null)
+            {
+                Console.WriteLine(managementModel.devicesList);
+                dtDevice temp = DevicesListDg2.SelectedItem as dtDevice;
+                MaxBaytb.Text = temp.maxBay.ToString();
+                MaxRowtb.Text = temp.maxRow.ToString();
+                managementModel.ReloadListDevicePallets(temp.deviceId);
 
+            }
         }
 
         private void BuffersListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            dtBuffer temp = BuffersListDg.SelectedItem as dtBuffer;
-            managementModel.ReloadListPallets(temp.bufferId);
+            if (BuffersListDg.SelectedItem != null)
+            {
+                dtBuffer temp = BuffersListDg.SelectedItem as dtBuffer;
+                managementModel.ReloadListPallets(temp.bufferId);
+            }
         }
 
         private void ProductsListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            dtProduct temp = ProductsListDg.SelectedItem as dtProduct;
-            managementModel.ReloadListProductDetails(temp.productId);
+            if (ProductsListDg.SelectedItem != null)
+            {
+                dtProduct temp = ProductsListDg.SelectedItem as dtProduct;
+                managementModel.ReloadListProductDetails(temp.productId);
+            }
         }
 
         private void DevicesListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            dtDevice temp = DevicesListDg.SelectedItem as dtDevice;
-            managementModel.ReloadListDeviceProducts(temp.deviceId);
-            managementModel.ReloadListDeviceBuffers(temp.deviceId);
+            if (DevicesListDg.SelectedItem != null)
+            {
+                dtDevice temp = DevicesListDg.SelectedItem as dtDevice;
+                managementModel.ReloadListDeviceProducts(temp.deviceId);
+                managementModel.ReloadListDeviceBuffers(temp.deviceId);
+            }
         }
 
 
@@ -86,23 +117,22 @@ namespace MapViewPallet.MiniForm
                 {
                     case 0:
                         {
-                            //Console.WriteLine("Thiết bị");
-                            //Console.WriteLine(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
-                            managementModel.ReloadListDevices();
+                            managementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
                             break;
                         }
                     case 1:
                         {
-                            //Console.WriteLine("Sản phẩm");
-                            //Console.WriteLine(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
                             managementModel.ReloadListProducts();
                             break;
                         }
                     case 2:
                         {
-                            //Console.WriteLine("Buffer");
-                            //Console.WriteLine(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
                             managementModel.ReloadListBuffers();
+                            break;
+                        }
+                    case 3:
+                        {
+                            managementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
                             break;
                         }
                 }
@@ -120,7 +150,7 @@ namespace MapViewPallet.MiniForm
 
         //****************************************************************************************
 
-        private void SaveData_tab1(bool isProduct)
+        private void SaveData_tab1(bool isDeviceProduct)
         {
             managementModel.UpdateDataStatus("Đang cập nhật...");
             dtDevice device = GetDataSave();
@@ -146,11 +176,10 @@ namespace MapViewPallet.MiniForm
                 int result = 0;
                 int.TryParse(reader.ReadToEnd(), out result);
             }
-            Thread.Sleep(200);
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
 
-        private void SaveData_tab2 ()
+        private void SaveData_tab2()
         {
             dtProductDetail selectedProductDetail = (ProductDetailsListDg.SelectedItem as dtProductDetail);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
@@ -178,10 +207,9 @@ namespace MapViewPallet.MiniForm
             using (Stream responseStream = response.GetResponseStream())
             {
                 StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                string result = reader.ReadToEnd();
+                int result = 0;
+                int.TryParse(reader.ReadToEnd(), out result);
             }
-
-            Thread.Sleep(200);
         }
 
         private dtDevice GetDataSave()
@@ -214,7 +242,7 @@ namespace MapViewPallet.MiniForm
             deviceData.deviceProducts = deviceProducts;
 
             List<dtDeviceBuffer> deviceBuffers = new List<dtDeviceBuffer>();
-            foreach (DeviceBuffer item in managementModel.deviceBuffersList)
+            foreach (dtDeviceBuffer item in managementModel.deviceBuffersList)
             {
                 if (item.checkStatus)
                 {
@@ -235,7 +263,7 @@ namespace MapViewPallet.MiniForm
             managementModel.UpdateDataStatus("Đang cập nhật...");
             if (isAddDevice)
             {
-                managementModel.ReloadListDevices();
+                managementModel.ReloadListDevices(-1);
             }
             else
             {
@@ -250,12 +278,11 @@ namespace MapViewPallet.MiniForm
                     {
                         managementModel.ReloadListDeviceProducts((DevicesListDg.SelectedItem as dtDevice).deviceId);
                         managementModel.ReloadListDeviceBuffers((DevicesListDg.SelectedItem as dtDevice).deviceId);
-
                     }
                 }
                 else
                 {
-                    managementModel.ReloadListDevices();
+                    managementModel.ReloadListDevices(0);
                 }
             }
             managementModel.UpdateDataStatus("Sẵn sàng");
@@ -402,9 +429,8 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Device_Click(object sender, RoutedEventArgs e)
         {
-            AddDeviceForm form = new AddDeviceForm();
+            AddDeviceForm form = new AddDeviceForm(this);
             form.ShowDialog();
-            UpdateTab1(true);
         }
 
         private void Btn_Refresh_Device_Click(object sender, RoutedEventArgs e)
@@ -439,10 +465,7 @@ namespace MapViewPallet.MiniForm
 
             if (DevicesListDg.SelectedItem != null)
             {
-                if (DevicesListDg.SelectedItem != null)
-                {
-                    SaveData_tab1(true);
-                }
+                SaveData_tab1(true);
             }
             UpdateTab1(false);
 
@@ -459,11 +482,6 @@ namespace MapViewPallet.MiniForm
 
         //****************************************************************************************
 
-        private void Btn_Save_tab2_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Btn_Exit_tab2_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -471,16 +489,14 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Product_Click(object sender, RoutedEventArgs e)
         {
-            AddProductForm form = new AddProductForm();
+            AddProductForm form = new AddProductForm(this);
             form.ShowDialog();
-            UpdateTab2(true);
         }
 
         private void Btn_Add_ProductDetail_Click(object sender, RoutedEventArgs e)
         {
             AddProductDetailForm form = new AddProductDetailForm(this);
             form.ShowDialog();
-            UpdateTab2(false);
         }
 
 
@@ -497,10 +513,6 @@ namespace MapViewPallet.MiniForm
 
         //****************************************************************************************
 
-        private void Btn_Save_tab3_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void Btn_Exit_tab3_Click(object sender, RoutedEventArgs e)
         {
@@ -511,13 +523,9 @@ namespace MapViewPallet.MiniForm
         {
             AddBufferForm form = new AddBufferForm(this);
             form.ShowDialog();
-            UpdateTab3(true);
-        }
-
-        private void Btn_Add_Pallet_Click(object sender, RoutedEventArgs e)
-        {
 
         }
+
 
         private void Btn_Refresh_Buffer_Click(object sender, RoutedEventArgs e)
         {
@@ -526,23 +534,11 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Refresh_Pallet_Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateTab3(false);
         }
 
-        private void Btn_Save_Pallet_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
 
-        private void Btn_Save_Buffer_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_Save_ProductDetail_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void ProductDetailsListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -609,6 +605,143 @@ namespace MapViewPallet.MiniForm
                 }
             }
             UpdateTab2(true);
+        }
+
+        private void Btn_Delete_ProductDetail_Click(object sender, RoutedEventArgs e)
+        {
+            if (ProductDetailsListDg.SelectedItem != null)
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/deleteProductDetail");
+                request.Method = "DELETE";
+                request.ContentType = @"application/json";
+
+                dynamic postApiBody = new JObject();
+                postApiBody.productDetailId = (ProductDetailsListDg.SelectedItem as dtProductDetail).productDetailId;
+                string jsonData = JsonConvert.SerializeObject(postApiBody);
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+                }
+            }
+            UpdateTab2(false);
+        }
+
+        private void Btn_Delete_Device_Click(object sender, RoutedEventArgs e)
+        {
+            if (DevicesListDg.SelectedItem != null)
+            {
+                if (System.Windows.Forms.MessageBox.Show
+                    (
+                    string.Format(Global_Object.messageDeleteConfirm, "Device"),
+                    Global_Object.messageTitileWarning, MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
+                    )
+                {
+
+                    List<dtDevice> listDelete = new List<dtDevice>();
+                    dtDevice device = DevicesListDg.SelectedItem as dtDevice;
+                    listDelete.Add(device);
+                    string jsonData = JsonConvert.SerializeObject(listDelete);
+
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/deleteDevice");
+                    request.Method = "DELETE";
+                    request.ContentType = "application/json";
+
+                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                    Byte[] byteArray = encoding.GetBytes(jsonData);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
+                    {
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        dataStream.Flush();
+                    }
+
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    using (Stream responseStream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        int result = 0;
+                        int.TryParse(reader.ReadToEnd(), out result);
+                        if (result == 1)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            managementModel.ReloadListDevices(0);
+                        }
+                        else if (result == 2)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "Devices", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void DevicesListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            dtDevice temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtDevice;
+            string deviceName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
+            List<dtDevice> devices = new List<dtDevice>();
+            temp.deviceName = deviceName;
+            devices.Add(temp);
+
+            if (devices.Count == 0)
+            {
+                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string jsonData = JsonConvert.SerializeObject(devices);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateListNameDevice");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                int result = 0;
+                int.TryParse(reader.ReadToEnd(), out result);
+                if (result == 1)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    managementModel.ReloadListDevices(0);
+                }
+                else if (result == -2)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Devices Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
         }
     }
 }

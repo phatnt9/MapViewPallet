@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MapViewPallet.MiniForm.Database;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -30,12 +31,15 @@ namespace MapViewPallet.MiniForm
         public ListCollectionView GroupedBuffers { get; private set; }
         public ListCollectionView GroupedPallets { get; private set; }
 
+        public ListCollectionView GroupedDevicePallets { get; private set; }
+
 
         //***************VARIABLES*********************
 
         public List<dtDevice> devicesList;
-        public List<DeviceBuffer> deviceBuffersList;
+        public List<dtDeviceBuffer> deviceBuffersList;
         public List<dtDeviceProduct> deviceProductsList;
+
 
         public List<dtProduct> productsList;
         public List<dtProductDetail> productDetailsList;
@@ -43,6 +47,9 @@ namespace MapViewPallet.MiniForm
 
         public List<dtBuffer> buffersList;
         public List<dtPallet> palletsList;
+
+
+        public List<dtDevicePallet> devicePalletsList;
 
         public ManagementModel(DevicesManagement devicesManagement)
         {
@@ -52,13 +59,15 @@ namespace MapViewPallet.MiniForm
 
             devicesList = new List<dtDevice>();
             deviceProductsList = new List<dtDeviceProduct>();
-            deviceBuffersList = new List<DeviceBuffer>();
-            
+            deviceBuffersList = new List<dtDeviceBuffer>();
+
             productsList = new List<dtProduct>();
             productDetailsList = new List<dtProductDetail>();
 
             buffersList = new List<dtBuffer>();
             palletsList = new List<dtPallet>();
+
+            devicePalletsList = new List<dtDevicePallet>();
 
             //********************************************************************
 
@@ -67,21 +76,22 @@ namespace MapViewPallet.MiniForm
             GroupedDeviceBuffers = (ListCollectionView)CollectionViewSource.GetDefaultView(deviceBuffersList);
 
             GroupedProducts = (ListCollectionView)CollectionViewSource.GetDefaultView(productsList);
-            GroupedProductDetails= (ListCollectionView)CollectionViewSource.GetDefaultView(productDetailsList);
+            GroupedProductDetails = (ListCollectionView)CollectionViewSource.GetDefaultView(productDetailsList);
             
-            
-
             GroupedBuffers = (ListCollectionView)CollectionViewSource.GetDefaultView(buffersList);
             GroupedPallets = (ListCollectionView)CollectionViewSource.GetDefaultView(palletsList);
+
+
+            GroupedDevicePallets = (ListCollectionView)CollectionViewSource.GetDefaultView(devicePalletsList);
 
         }
 
 
         //*********************************************************************************************
-        
-        public void ReloadListDevices()
+
+        public void ReloadListDevices(int tabIndex)
         {
-            try
+            //try
             {
                 UpdateDataStatus("Đang cập nhật...");
                 devicesList.Clear();
@@ -104,7 +114,10 @@ namespace MapViewPallet.MiniForm
                             updUsrId = int.Parse(dr["updUsrId"].ToString()),
                             updDt = dr["updDt"].ToString(),
                             deviceId = int.Parse(dr["deviceId"].ToString()),
-                            deviceName = dr["deviceName"].ToString()
+                            deviceName = dr["deviceName"].ToString(),
+                            deviceNameOld = dr["deviceNameOld"].ToString(),
+                            maxRow = int.Parse(dr["maxRow"].ToString()),
+                            maxBay = int.Parse(dr["maxBay"].ToString()),
                         };
                         if (!ContainDevice(tempDevice, devicesList))
                         {
@@ -112,28 +125,69 @@ namespace MapViewPallet.MiniForm
                         }
                     }
                 }
+
                 if (GroupedDevices.IsEditingItem)
                     GroupedDevices.CommitEdit();
                 if (GroupedDevices.IsAddingNew)
                     GroupedDevices.CommitNew();
+
                 GroupedDevices.Refresh();
-                if (devicesManagement.DevicesListDg.HasItems)
+                switch (tabIndex)
                 {
-                    devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
-                    devicesManagement.DevicesListDg.ScrollIntoView(devicesManagement.DevicesListDg.SelectedItem);
+                    case 0:
+                        {
+                            if (devicesManagement.DevicesListDg.HasItems)
+                            {
+                                devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
+                                devicesManagement.DevicesListDg.ScrollIntoView(devicesManagement.DevicesListDg.SelectedItem);
+                            }
+                            break;
+                        }
+                    case 1:
+                        {
+                            break;
+                        }
+                    case 2:
+                        {
+                            break;
+                        }
+                    case 3:
+                        {
+                            if (devicesManagement.DevicesListDg2.HasItems)
+                            {
+                                devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
+                                devicesManagement.DevicesListDg2.ScrollIntoView(devicesManagement.DevicesListDg2.SelectedItem);
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            if (devicesManagement.DevicesListDg.HasItems)
+                            {
+                                devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
+                                devicesManagement.DevicesListDg.ScrollIntoView(devicesManagement.DevicesListDg.SelectedItem);
+                            }
+                            if (devicesManagement.DevicesListDg2.HasItems)
+                            {
+                                devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
+                                devicesManagement.DevicesListDg2.ScrollIntoView(devicesManagement.DevicesListDg2.SelectedItem);
+                            }
+                            break;
+                        }
                 }
+                
                 UpdateDataStatus("Sẵn sàng");
 
             }
-            catch
+            //catch
             {
-                UpdateDataStatus("Lỗi");
+                //UpdateDataStatus("Lỗi");
             }
         }
-        
+
         public void ReloadListProducts()
         {
-            try
+            //try
             {
                 UpdateDataStatus("Đang cập nhật...");
                 productsList.Clear();
@@ -177,16 +231,16 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateDataStatus("Sẵn sàng");
             }
-            catch
+            //catch
             {
-                UpdateDataStatus("Lỗi");
+                //UpdateDataStatus("Lỗi");
                 //Không có device nào
             }
         }
 
         public void ReloadListBuffers()
         {
-            try
+            //try
             {
                 buffersList.Clear();
                 UpdateDataStatus("Đang cập nhật...");
@@ -237,16 +291,16 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateDataStatus("Sẵn sàng");
             }
-            catch
+            //catch
             {
-                UpdateDataStatus("Lỗi");
+                //UpdateDataStatus("Lỗi");
                 //Không có device nào
             }
         }
 
         public void ReloadListDeviceProducts(int deviceId)
         {
-            try
+            //try
             {
                 UpdateDataStatus("Đang cập nhật...");
                 deviceProductsList.Clear();
@@ -303,9 +357,9 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateDataStatus("Sẵn sàng");
             }
-            catch
+            //catch
             {
-                UpdateDataStatus("Lỗi");
+                //UpdateDataStatus("Lỗi");
             }
         }
 
@@ -338,7 +392,7 @@ namespace MapViewPallet.MiniForm
                     DataTable deviceBuffers = JsonConvert.DeserializeObject<DataTable>(result);
                     foreach (DataRow dr in deviceBuffers.Rows)
                     {
-                        DeviceBuffer tempDeviceBuffer = new DeviceBuffer
+                        dtDeviceBuffer tempDeviceBuffer = new dtDeviceBuffer
                         {
                             creUsrId = int.Parse(dr["creUsrId"].ToString()),
                             creDt = dr["creDt"].ToString(),
@@ -371,10 +425,10 @@ namespace MapViewPallet.MiniForm
             }
             //catch
             {
-                UpdateDataStatus("Lỗi");
+                //UpdateDataStatus("Lỗi");
             }
         }
-        
+
         public void ReloadListProductDetails(int productId)
         {
             //try
@@ -439,15 +493,142 @@ namespace MapViewPallet.MiniForm
 
         public void ReloadListPallets(int bufferId)
         {
+            //try
+            {
+                palletsList.Clear();
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+                dynamic postApiBody = new JObject();
+                postApiBody.bufferId = bufferId;
+                string jsonData = JsonConvert.SerializeObject(postApiBody);
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
 
+                    DataTable pallets = JsonConvert.DeserializeObject<DataTable>(result);
+                    foreach (DataRow dr in pallets.Rows)
+                    {
+                        dtPallet tempPallet = new dtPallet
+                        {
+                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                            creDt = dr["creDt"].ToString(),
+                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                            updDt = dr["updDt"].ToString(),
+                            palletId = int.Parse(dr["palletId"].ToString()),
+                            deviceBufferId = int.Parse(dr["deviceBufferId"].ToString()),
+                            bufferId = int.Parse(dr["bufferId"].ToString()),
+                            planId = int.Parse(dr["planId"].ToString()),
+                            row = int.Parse(dr["row"].ToString()),
+                            bay = int.Parse(dr["bay"].ToString()),
+                            dataPallet = dr["dataPallet"].ToString(),
+                            palletStatus = dr["palletStatus"].ToString(),
+                            deviceId = int.Parse(dr["deviceId"].ToString()),
+                        };
+                        if (!ContainPallet(tempPallet, palletsList))
+                        {
+                            palletsList.Add(tempPallet);
+                        }
+                    }
+                }
+                if (GroupedPallets.IsEditingItem)
+                    GroupedPallets.CommitEdit();
+                if (GroupedPallets.IsAddingNew)
+                    GroupedPallets.CommitNew();
+                GroupedPallets.Refresh();
+                if (devicesManagement.PalletsListDg.HasItems)
+                {
+                    devicesManagement.PalletsListDg.SelectedItem = devicesManagement.PalletsListDg.Items[0];
+                    devicesManagement.PalletsListDg.ScrollIntoView(devicesManagement.PalletsListDg.SelectedItem);
+                }
+                UpdateDataStatus("Sẵn sàng");
+            }
+            //catch
+            {
+                UpdateDataStatus("Lỗi");
+            }
         }
-        
+
+        public void ReloadListDevicePallets (int deviceId)
+        {
+            //try
+            {
+                devicePalletsList.Clear();
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevicePallet");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+                dtDevice device = new dtDevice();
+                device.deviceId = deviceId;
+                string jsonData = JsonConvert.SerializeObject(device);
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+
+                    DataTable pallets = JsonConvert.DeserializeObject<DataTable>(result);
+                    foreach (DataRow dr in pallets.Rows)
+                    {
+                        dtDevicePallet tempDevicePallet = new dtDevicePallet
+                        {
+                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                            creDt = dr["creDt"].ToString(),
+                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                            updDt = dr["updDt"].ToString(),
+                            devicePalletId = int.Parse(dr["devicePalletId"].ToString()),
+                            devicePalletName = dr["devicePalletName"].ToString(),
+                            row = int.Parse(dr["row"].ToString()),
+                            bay = int.Parse(dr["bay"].ToString()),
+                            dataPallet = dr["dataPallet"].ToString()
+                        };
+                        if (!ContainDevicePallet(tempDevicePallet, devicePalletsList))
+                        {
+                            devicePalletsList.Add(tempDevicePallet);
+                        }
+                    }
+                }
+                if (GroupedDevicePallets.IsEditingItem)
+                    GroupedDevicePallets.CommitEdit();
+                if (GroupedDevicePallets.IsAddingNew)
+                    GroupedDevicePallets.CommitNew();
+                GroupedDevicePallets.Refresh();
+                if (devicesManagement.DevicePalletsListDg.HasItems)
+                {
+                    devicesManagement.DevicePalletsListDg.SelectedItem = devicesManagement.DevicePalletsListDg.Items[0];
+                    devicesManagement.DevicePalletsListDg.ScrollIntoView(devicesManagement.DevicePalletsListDg.SelectedItem);
+                }
+                UpdateDataStatus("Sẵn sàng");
+            }
+            //catch
+            {
+                UpdateDataStatus("Lỗi");
+            }
+        }
+
         //*********************************************************************************************
 
-        
-        public bool ContainDevice(dtDevice tempOpe, List<dtDevice> Base)
+
+        public bool ContainDevice(dtDevice tempOpe, List<dtDevice> List)
         {
-            foreach (dtDevice temp in Base)
+            foreach (dtDevice temp in List)
             {
                 if (temp.deviceId > 0)
                 {
@@ -482,7 +663,7 @@ namespace MapViewPallet.MiniForm
             }
             return false;
         }
-        
+
         public bool ContainBuffer(dtBuffer tempOpe, List<dtBuffer> List)
         {
             foreach (dtBuffer temp in List)
@@ -502,9 +683,9 @@ namespace MapViewPallet.MiniForm
             return false;
         }
 
-        public bool ContainDeviceProduct(dtDeviceProduct tempOpe, List<dtDeviceProduct> Base)
+        public bool ContainDeviceProduct(dtDeviceProduct tempOpe, List<dtDeviceProduct> List)
         {
-            foreach (dtDeviceProduct temp in Base)
+            foreach (dtDeviceProduct temp in List)
             {
                 if (temp.deviceProductId > 0)
                 {
@@ -521,9 +702,9 @@ namespace MapViewPallet.MiniForm
             return false;
         }
 
-        public bool ContainDeviceBuffer(DeviceBuffer tempOpe, List<DeviceBuffer> Base)
+        public bool ContainDeviceBuffer(dtDeviceBuffer tempOpe, List<dtDeviceBuffer> List)
         {
-            foreach (DeviceBuffer temp in Base)
+            foreach (dtDeviceBuffer temp in List)
             {
                 if (temp.deviceBufferId > 0)
                 {
@@ -540,9 +721,9 @@ namespace MapViewPallet.MiniForm
             return false;
         }
 
-        public bool ContainProductDetail(dtProductDetail tempOpe, List<dtProductDetail> Base)
+        public bool ContainProductDetail(dtProductDetail tempOpe, List<dtProductDetail> List)
         {
-            foreach (dtProductDetail temp in Base)
+            foreach (dtProductDetail temp in List)
             {
                 if (temp.productDetailId > 0)
                 {
@@ -558,7 +739,45 @@ namespace MapViewPallet.MiniForm
             }
             return false;
         }
-        
+
+        public bool ContainPallet(dtPallet tempOpe, List<dtPallet> List)
+        {
+            foreach (dtPallet temp in List)
+            {
+                if (temp.palletId > 0)
+                {
+                    if (temp.palletId == tempOpe.palletId)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        public bool ContainDevicePallet(dtDevicePallet tempOpe, List<dtDevicePallet> List)
+        {
+            foreach (dtDevicePallet temp in List)
+            {
+                if (temp.devicePalletId > 0)
+                {
+                    if (temp.devicePalletId == tempOpe.devicePalletId)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
         //*********************************************************************************************
 
         public void UpdateDataStatus(string status)

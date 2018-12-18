@@ -266,11 +266,11 @@ namespace MapViewPallet.MiniForm
                 (planControl.TabControlShift.SelectedIndex >= 0) &&
                 (planControl.TabControlShift.IsLoaded))
             {
-                switch(planControl.TabControlShift.SelectedIndex+1)
+                switch(planControl.TabControlShift.SelectedIndex)
                 {
-                    case 1: { UpdatePlansToDb(BasePlans1); break; }
-                    case 2: { UpdatePlansToDb(BasePlans2); break; }
-                    case 3: { UpdatePlansToDb(BasePlans3); break; }
+                    case 0: { UpdatePlansToDb(BasePlans1); break; }
+                    case 1: { UpdatePlansToDb(BasePlans2); break; }
+                    case 2: { UpdatePlansToDb(BasePlans3); break; }
                     default: {  break; }
                 }
                 System.Windows.Forms.MessageBox.Show(

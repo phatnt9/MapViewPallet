@@ -66,7 +66,6 @@
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
     <Compile Include="MiniForm\Database\dtDevicePallet.cs" />
-    <Compile Include="MiniForm\DeviceBuffer.cs" />
     <Compile Include="MiniForm\DeviceList.cs" />
     <Compile Include="MiniForm\Database\dtBuffer.cs" />
     <Compile Include="MiniForm\Database\dtDevice.cs" />

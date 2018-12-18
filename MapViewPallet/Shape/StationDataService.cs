@@ -12,6 +12,7 @@ namespace MapViewPallet.Shape
     {
         public StationDataService()
         {
+
         }
 
         public override void ReceiveResponseHandler(string msg)

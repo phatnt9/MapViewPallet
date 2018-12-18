@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using static MapViewPallet.Global_Object;
-using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 
 namespace MapViewPallet.Shape
 {
@@ -87,6 +86,7 @@ namespace MapViewPallet.Shape
             MenuItem removeItem = new MenuItem();
             removeItem.Header = "Xóa";
             removeItem.Click += RemoveMenu;
+            //===================================
             ContextMenu.Items.Add(propertiesItem);
             ContextMenu.Items.Add(editItem);
             //ContextMenu.Items.Add(rotateItem);
@@ -177,15 +177,6 @@ namespace MapViewPallet.Shape
             //Get list pallet
         }
 
-        private void RecievedErrorListPallet(int obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void RecievedListPallet(string obj)
-        {
-            throw new NotImplementedException();
-        }
 
         public void ReDraw(Point position)
         {
@@ -213,6 +204,7 @@ namespace MapViewPallet.Shape
 
         public void EditMenu(object sender, RoutedEventArgs e)
         {
+
         }
 
         public void PropertiesMenu(object sender, RoutedEventArgs e)

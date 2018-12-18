@@ -140,11 +140,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
                 if (result > 0)
                 {
-                    //bufferNametb.Text = buffer.bufferName;
-                    //if(devicesManagement.BuffersListDg.SelectedItem != null)
-                    //{
-
-                    //}
                     devicesManagement.managementModel.ReloadListBuffers();
                     System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -159,48 +154,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            Close();
+            devicesManagement.UpdateTab3(true);
         }
-
-        public void CreateNewBuffer(string bufferName)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/insertBuffer");
-            request.Method = "POST";
-            request.ContentType = @"application/json";
-
-            dynamic postApiBody = new JObject();
-            postApiBody.bufferName = bufferName;
-            
-            string jsonData = JsonConvert.SerializeObject(postApiBody);
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                string result = reader.ReadToEnd();
-                switch (result)
-                {
-                    case "-2":
-                        {
-                            addBufferModel.bufferNameDuplicate = "Tên buffer đã tồn tại!";
-                            break;
-                        }
-                    default:
-                        {
-                            //CreateNewProduct(productNametb.Text.Trim());
-                            Close();
-                            break;
-                        }
-                }
-            }
-        }
+        
 
         private static bool IsTextAllowed(string text)
         {
