@@ -103,7 +103,7 @@
                                     <DataGrid Name="Shift1Dgv"
                                               ItemsSource="{Binding GroupedDevices_S1}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="False" CanUserResizeRows="False"
+                                  CanUserResizeColumns="True" CanUserResizeRows="False"
                                   CanUserDeleteRows="False" CanUserSortColumns="False"
                                               AutoGenerateColumns="False">
                                         <DataGrid.Resources>
@@ -141,6 +141,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
                                             <DataGridTextColumn Header="Machine" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
                                             <DataGridTextColumn Header="Material" Binding="{Binding Path=productName}" IsReadOnly="True"/>
                                             <DataGridTemplateColumn  Header="Serials"  >
@@ -165,7 +167,7 @@
                                     <DataGrid Name="Shift2Dgv"
                                   ItemsSource="{Binding GroupedDevices_S2}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="False" CanUserResizeRows="False"
+                                  CanUserResizeColumns="True" CanUserResizeRows="False"
                                   CanUserDeleteRows="False" CanUserSortColumns="False"
                                               AutoGenerateColumns="False">
                                         <DataGrid.Resources>
@@ -203,6 +205,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
                                             <DataGridTextColumn Header="Machine" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
                                             <DataGridTextColumn Header="Material" Binding="{Binding Path=productName}" IsReadOnly="True"/>
                                             <DataGridTemplateColumn  Header="Serials"  >
@@ -227,7 +231,7 @@
                                     <DataGrid Name="Shift3Dgv"
                                   ItemsSource="{Binding GroupedDevices_S3}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="False" CanUserResizeRows="False"
+                                  CanUserResizeColumns="True" CanUserResizeRows="False"
                                   CanUserDeleteRows="False" CanUserSortColumns="False"
                                               AutoGenerateColumns="False">
                                         <DataGrid.Resources>
@@ -265,6 +269,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
                                             <DataGridTextColumn Header="Machine" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
                                             <DataGridTextColumn Header="Material" Binding="{Binding Path=productName}" IsReadOnly="True"/>
                                             <DataGridTemplateColumn  Header="Serials"  >

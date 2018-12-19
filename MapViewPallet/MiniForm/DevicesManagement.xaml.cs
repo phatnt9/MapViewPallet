@@ -1,8 +1,10 @@
-﻿using MapViewPallet.MiniForm.MicsWpfForm;
+﻿using MapViewPallet.MiniForm.Database;
+using MapViewPallet.MiniForm.MicsWpfForm;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -53,8 +55,8 @@ namespace MapViewPallet.MiniForm
                 ProductDetailsListDg.SelectionMode =
                 BuffersListDg.SelectionMode =
                 PalletsListDg.SelectionMode =
-                DevicesListDg2.SelectionMode = 
-                DevicePalletsListDg.SelectionMode = 
+                DevicesListDg2.SelectionMode =
+                DevicePalletsListDg.SelectionMode =
                 DataGridSelectionMode.Single;
             DevicesListDg.SelectionUnit =
                 DeviceProductsListDg.SelectionUnit =
@@ -63,14 +65,14 @@ namespace MapViewPallet.MiniForm
                 ProductDetailsListDg.SelectionUnit =
                 BuffersListDg.SelectionUnit =
                 PalletsListDg.SelectionUnit =
-                DevicesListDg2.SelectionUnit = 
-                DevicePalletsListDg.SelectionUnit = 
+                DevicesListDg2.SelectionUnit =
+                DevicePalletsListDg.SelectionUnit =
                 DataGridSelectionUnit.FullRow;
 
         }
-        
 
-        
+
+
         private void DevicesListDg2_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             if (DevicesListDg2.SelectedItem != null)
@@ -407,7 +409,7 @@ namespace MapViewPallet.MiniForm
             }
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
-        
+
         private dtDevice GetDataSave()
         {
             dtDevice deviceData = new dtDevice();
@@ -672,7 +674,7 @@ namespace MapViewPallet.MiniForm
         {
             UpdateTab1(false);
         }
-        
+
 
         private void Btn_Save_DeviceBuffer_Click(object sender, RoutedEventArgs e)
         {
@@ -701,11 +703,7 @@ namespace MapViewPallet.MiniForm
         }
 
         //****************************************************************************************
-
-        private void Btn_Exit_tab2_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        
 
         private void Btn_Add_Product_Click(object sender, RoutedEventArgs e)
         {
@@ -734,7 +732,7 @@ namespace MapViewPallet.MiniForm
         //****************************************************************************************
 
 
-        private void Btn_Exit_tab3_Click(object sender, RoutedEventArgs e)
+        private void Btn_Exit_Buffer_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -770,27 +768,49 @@ namespace MapViewPallet.MiniForm
         {
             if (ProductsListDg.SelectedItem != null)
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/deleteProduct");
-                request.Method = "DELETE";
-                request.ContentType = @"application/json";
-
-                dynamic postApiBody = new JObject();
-                postApiBody.productId = (ProductsListDg.SelectedItem as dtProduct).productId;
-                string jsonData = JsonConvert.SerializeObject(postApiBody);
-
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonData);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
+                if (System.Windows.Forms.MessageBox.Show
+                    (
+                    string.Format(Global_Object.messageDeleteConfirm, "Product"),
+                    Global_Object.messageTitileWarning, MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
+                    )
                 {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
-                }
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    string result = reader.ReadToEnd();
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/deleteProduct");
+                    request.Method = "DELETE";
+                    request.ContentType = @"application/json";
+
+                    dynamic postApiBody = new JObject();
+                    postApiBody.productId = (ProductsListDg.SelectedItem as dtProduct).productId;
+                    string jsonData = JsonConvert.SerializeObject(postApiBody);
+
+                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                    Byte[] byteArray = encoding.GetBytes(jsonData);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
+                    {
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        dataStream.Flush();
+                    }
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    using (Stream responseStream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        int result = 0;
+                        int.TryParse(reader.ReadToEnd(), out result);
+                        if (result == 1)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                        }
+                        else if (result == 2)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "Products", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
             }
             UpdateTab3(true);
@@ -800,27 +820,49 @@ namespace MapViewPallet.MiniForm
         {
             if (ProductDetailsListDg.SelectedItem != null)
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/deleteProductDetail");
-                request.Method = "DELETE";
-                request.ContentType = @"application/json";
-
-                dynamic postApiBody = new JObject();
-                postApiBody.productDetailId = (ProductDetailsListDg.SelectedItem as dtProductDetail).productDetailId;
-                string jsonData = JsonConvert.SerializeObject(postApiBody);
-
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonData);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
+                if (System.Windows.Forms.MessageBox.Show
+                    (
+                    string.Format(Global_Object.messageDeleteConfirm, "Product Detail"),
+                    Global_Object.messageTitileWarning, MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
+                    )
                 {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
-                }
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    string result = reader.ReadToEnd();
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/deleteProductDetail");
+                    request.Method = "DELETE";
+                    request.ContentType = @"application/json";
+
+                    dynamic postApiBody = new JObject();
+                    postApiBody.productDetailId = (ProductDetailsListDg.SelectedItem as dtProductDetail).productDetailId;
+                    string jsonData = JsonConvert.SerializeObject(postApiBody);
+
+                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                    Byte[] byteArray = encoding.GetBytes(jsonData);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
+                    {
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        dataStream.Flush();
+                    }
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    using (Stream responseStream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        int result = 0;
+                        int.TryParse(reader.ReadToEnd(), out result);
+                        if (result == 1)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                        }
+                        else if (result == 2)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "Product Details", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 }
             }
             UpdateTab3(false);
@@ -881,5 +923,215 @@ namespace MapViewPallet.MiniForm
             UpdateTab2(true);
         }
 
+        private void Btn_Delete_Buffer_Click(object sender, RoutedEventArgs e)
+        {
+            if (BuffersListDg.SelectedItem == null)
+            {
+                System.Windows.Forms.MessageBox.Show
+                    (
+                    String.Format(Global_Object.messageNothingSelected),
+                    Global_Object.messageTitileWarning,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                    );
+                return;
+            }
+
+            if (System.Windows.Forms.MessageBox.Show(
+                String.Format(Global_Object.messageDeleteConfirm, "Buffer"),
+                Global_Object.messageTitileWarning,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+            {
+                List<dtBuffer> listDelete = new List<dtBuffer>();
+                dtBuffer buffer = BuffersListDg.SelectedItem as dtBuffer;
+                listDelete.Add(buffer);
+
+                string jsonData = JsonConvert.SerializeObject(listDelete);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/deleteListBuffer");
+                request.Method = "DELETE";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        managementModel.ReloadListBuffers();
+                    }
+                    else if (result == 2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "Buffer", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+            }
+        }
+
+        private void Btn_Apply_Click(object sender, RoutedEventArgs e)
+        {
+            if (DevicesListDg2.SelectedItem != null)
+            {
+                int maxBay = 0;
+                int.TryParse(this.MaxBaytb.Text, out maxBay);
+                int maxRow = 0;
+                int.TryParse(this.MaxRowtb.Text, out maxRow);
+
+                List<dtDevicePallet> devicePalletsListOld = new List<dtDevicePallet>();
+
+                foreach (dtDevicePallet item in managementModel.devicePalletsList)
+                {
+                    devicePalletsListOld.Add(item);
+                }
+
+
+                dtDevice selectedDevice = DevicesListDg2.SelectedItem as dtDevice;
+
+                if (maxBay != int.Parse(selectedDevice.maxBay.ToString()) ||
+                   maxRow != int.Parse(selectedDevice.maxRow.ToString()))
+                {
+                    if (managementModel.devicePalletsList != null)
+                    {
+                        managementModel.devicePalletsList.Clear();
+                    }
+                    for (int i = 0; i < maxRow; i++)
+                    {
+                        for (int j = 0; j < maxBay; j++)
+                        {
+                            dtDevicePallet dr = new dtDevicePallet
+                            {
+                                devicePalletName = "Pallet-" + i + "-" + j,
+                                row = i,
+                                bay = j,
+                                deviceId = selectedDevice.deviceId,
+                                creUsrId = selectedDevice.creUsrId,
+                                updUsrId = selectedDevice.updUsrId
+                            };
+                            
+                            foreach (dtDevicePallet drOld in devicePalletsListOld)
+                            {
+                                int rowOld = 0;
+                                int bayOld = 0;
+
+                                int.TryParse(drOld.row.ToString(), out rowOld);
+                                int.TryParse(drOld.bay.ToString(), out bayOld);
+
+                                if (i <= rowOld)
+                                {
+                                    if (bayOld == j)
+                                    {
+                                        dr.dataPallet = drOld.dataPallet;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            managementModel.devicePalletsList.Add(dr);
+                        }
+                    }
+                    if (managementModel.GroupedDevicePallets.IsEditingItem)
+                        managementModel.GroupedDevicePallets.CommitEdit();
+                    if (managementModel.GroupedDevicePallets.IsAddingNew)
+                        managementModel.GroupedDevicePallets.CommitNew();
+                    managementModel.GroupedDevicePallets.Refresh();
+                }
+            }
+        }
+
+        private void Btn_Exit_DevicePallet_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Btn_Save_DevicePallet_Click(object sender, RoutedEventArgs e)
+        {
+            if (DeviceManagementTabControl.SelectedIndex == 1)
+            {
+                List<dtDevicePallet> devicePallets = new List<dtDevicePallet>();
+                foreach (dtDevicePallet dr in managementModel.devicePalletsList)
+                {
+                    dtDevicePallet devicePallet = new dtDevicePallet();
+
+                    devicePallet.devicePalletId = int.Parse(dr.devicePalletId.ToString());
+                    devicePallet.devicePalletName = dr.devicePalletName.ToString();
+                    devicePallet.deviceId = int.Parse(dr.deviceId.ToString());
+                    devicePallet.row = int.Parse(dr.row.ToString());
+                    devicePallet.bay = int.Parse(dr.bay.ToString());
+                    devicePallet.dataPallet = (dr.dataPallet != null) ? dr.dataPallet.ToString():"" ;
+                    devicePallet.creUsrId = Global_Object.userLogin;
+                    devicePallet.updUsrId = Global_Object.userLogin;
+
+                    devicePallets.Add(devicePallet);
+                }
+
+                if (devicePallets.Count == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(devicePallets);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/insertUpdateDevicePallet");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void Btn_Exit_Product_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

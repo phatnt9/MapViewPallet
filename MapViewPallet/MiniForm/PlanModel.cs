@@ -117,48 +117,52 @@ namespace MapViewPallet.MiniForm
                     foreach (dtDeviceProduct product in device.deviceProducts)
                     {
                         Plan tempOpe = new Plan();
+
+                        tempOpe.creUsrId = Global_Object.userLogin;
+                        tempOpe.creDt = "";
+                        tempOpe.updUsrId = Global_Object.userLogin;
+                        tempOpe.updDt = "";
+
                         tempOpe.planId = 0;
-                        tempOpe.deviceProductId = product.deviceProductId;
-                        tempOpe.timeWorkId = selectedShift;
-                        if (product.productDetails.Count >0)
+                        if (product.productDetails.Count > 0)
                         {
                             tempOpe.productDetailId = product.productDetails.First().productDetailId;
                         }
-                        tempOpe.listProductDetails = product.productDetails;
                         tempOpe.palletAmount = 0;
                         tempOpe.palletUse = 0;
                         tempOpe.palletMiss = 0;
+
+                        tempOpe.deviceProductId = product.deviceProductId;
+                        tempOpe.timeWorkId = selectedShift;
                         tempOpe.activeDate = date;
                         tempOpe.deviceId = device.deviceId;
                         tempOpe.deviceName = device.deviceName;
                         tempOpe.productId = product.productId;
                         tempOpe.productName = product.productName;
+                        tempOpe.listProductDetails = product.productDetails;
 
                         if (checkPlansList.Count != 0)
                         {
                             foreach (Plan tempPlan in checkPlansList)
                             {
-                                if (ComparePlan(tempOpe, tempPlan))
+                                if (EqualPlan(tempOpe, tempPlan))
                                 {
-                                    tempOpe.creUsrId = tempPlan.creUsrId;
+                                    //tempOpe.creUsrId = tempPlan.creUsrId;
                                     tempOpe.creDt = tempPlan.creDt;
                                     tempOpe.updUsrId = tempPlan.updUsrId;
-                                    tempOpe.updDt = tempPlan.updDt;
+                                    //tempOpe.updDt = tempPlan.updDt;
 
                                     tempOpe.planId = tempPlan.planId;
                                     tempOpe.productDetailId = tempPlan.productDetailId;
                                     tempOpe.palletAmount = tempPlan.palletAmount;
                                     tempOpe.palletUse = tempPlan.palletUse;
                                     tempOpe.palletMiss = tempPlan.palletMiss;
-
-                                    //**************************************
-                                    //tempOpe.deviceProductId = tempPlan.deviceProductId;
-                                    //tempOpe.timeWorkId = tempPlan.timeWorkId;
-                                    //tempOpe.activeDate = tempPlan.activeDate;
+                                    
+                                    tempOpe.deviceProductId = tempPlan.deviceProductId;
+                                    tempOpe.timeWorkId = tempPlan.timeWorkId;
+                                    tempOpe.activeDate = tempPlan.activeDate;
                                     tempOpe.deviceId = tempPlan.deviceId;
                                     tempOpe.productId = tempPlan.productId;
-                                    //tempOpe.buffers = pl.buffers;
-                                    //tempOpe.buffers = pl.buffers;
                                     //**************************************
                                 }
                             }
@@ -181,7 +185,7 @@ namespace MapViewPallet.MiniForm
             }
         }
 
-        public bool ComparePlan (Plan pl0, Plan pl1)
+        public bool EqualPlan (Plan pl0, Plan pl1)
         {
             if ((pl0.deviceProductId == pl1.deviceProductId) &&
                         //(pl0.productDetailId == pl1.productDetailId) &&
@@ -237,17 +241,21 @@ namespace MapViewPallet.MiniForm
                             creDt = (string)item.creDt,
                             updUsrId = (int)item.updUsrId,
                             updDt = (string)item.updDt,
+
                             planId = (int)item.planId,
                             deviceProductId = (int)item.deviceProductId,
                             timeWorkId = (int)item.timeWorkId,
                             productDetailId = (int)item.productDetailId,
+
                             palletAmount = (int)item.palletAmount,
                             palletUse = (int)item.palletUse,
                             palletMiss = (int)item.palletMiss,
                             activeDate = (string)item.activeDate,
 
-                            deviceId = deviceList.GetDeviceIdByDeviceProductId((int)item.deviceProductId),
-                            productId = deviceList.GetProductIdByDeviceProductId((int)item.deviceProductId)
+                            deviceId = (int)item.deviceId,
+                            productId = (int)item.productId
+                            //deviceId = deviceList.GetDeviceIdByDeviceProductId((int)item.deviceProductId),
+                            //productId = deviceList.GetProductIdByDeviceProductId((int)item.deviceProductId)
                         };
                         AddPlan(tempPlan, returnList);
                     }
@@ -305,10 +313,10 @@ namespace MapViewPallet.MiniForm
                 postApiBody.productDetailId = plan.productDetailId;
                 postApiBody.palletAmount = plan.palletAmount;
                 postApiBody.activeDate = plan.activeDate;
-                postApiBody.creUsrId = plan.creUsrId;
-                postApiBody.updUsrId =  plan.updUsrId;
-                //postApiBody.deviceId =  plan.deviceId;
-                //postApiBody.productId =  plan.productId;
+                postApiBody.deviceId = plan.deviceId;
+                postApiBody.productId = plan.productId;
+                postApiBody.creUsrId = Global_Object.userLogin;
+                postApiBody.updUsrId = Global_Object.userLogin;
 
                 //********************************
                 string jsonData = "["+JsonConvert.SerializeObject(postApiBody)+"]";

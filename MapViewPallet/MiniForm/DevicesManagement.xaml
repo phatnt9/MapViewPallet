@@ -442,21 +442,10 @@
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
                                                     <DataGridTextColumn Header="Tên thiết bị" 
-                                                        Width="*" 
+                                                        Width="*"
                                                         IsReadOnly="False"
                                                         Binding="{Binding Path=deviceName}">
                                                     </DataGridTextColumn>
-                                                    <!--<DataGridTemplateColumn Width="*" 
-                                                            Header="Tên thiết bị">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                               Text="{Binding Path=deviceName}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>-->
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -478,19 +467,8 @@
                                         <Grid Grid.Row="0">
                                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Center" 
-                                        VerticalAlignment="Center">
-
-
-                                                <StackPanel Orientation="Horizontal" 
-                                                                HorizontalAlignment="Right">
-                                                    <Label VerticalAlignment="Center" 
-                                                               Content="Hàng"
-                                                               FontSize="12"></Label>
-                                                    <TextBox Name="MaxRowtb" 
-                                                                 Width="50" 
-                                                                 Height="20" 
-                                                                 ></TextBox>
-                                                </StackPanel>
+                                        VerticalAlignment="Center"
+                                                        Margin="0,0,0,5">
                                                 <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
                                                     <Label VerticalAlignment="Center" 
@@ -501,14 +479,22 @@
                                                                  Height="20" 
                                                                  ></TextBox>
                                                 </StackPanel>
+                                                <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                    <Label VerticalAlignment="Center" 
+                                                               Content="Hàng"
+                                                               FontSize="12"></Label>
+                                                    <TextBox Name="MaxRowtb" 
+                                                                 Width="50" 
+                                                                 Height="20" 
+                                                                 ></TextBox>
+                                                </StackPanel>
                                                 <Button Name="btn_Apply" 
                                         Margin="20,0,0,0"
                                         Width="Auto" 
-                                        FontSize="14"
+                                        FontSize="13"
                                                         Content="Xác nhận"
-                                                        Click="Btn_Delete_ProductDetail_Click"/>
-
-
+                                                        Click="Btn_Apply_Click"/>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
@@ -538,7 +524,18 @@
                                                     </Style>
                                                 </DataGrid.RowStyle>
                                                 <DataGrid.Columns>
-                                                    <DataGridTemplateColumn Width="Auto" 
+                                                    <DataGridTemplateColumn Width="*" 
+                                                            Header="Id">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=devicePalletId}"/>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn Width="*" 
                                                             Header="Pallet">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
@@ -551,13 +548,13 @@
                                                     </DataGridTemplateColumn>
                                                     <DataGridTextColumn Header="Hàng" 
                                                         Width="*" 
-                                                        IsReadOnly="False"
+                                                        IsReadOnly="True"
                                                         Binding="{Binding Path=row}">
 
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Cột" 
                                                         Width="*" 
-                                                        IsReadOnly="False"
+                                                        IsReadOnly="True"
                                                         Binding="{Binding Path=bay}">
 
                                                     </DataGridTextColumn>
@@ -577,15 +574,16 @@
                         <Grid Grid.Row="1">
                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Center">
-                                <Button Name="Btn_Save_tab2s" 
+                                <Button Name="Btn_Save_DevicePallet" 
                         Width="70" 
                         Content="Lưu" 
-                        Margin="30,5"/>
-                                <Button Name="Btn_Exit_tab2s" 
+                        Margin="30,5"
+                                        Click="Btn_Save_DevicePallet_Click"/>
+                                <Button Name="Btn_Exit_DevicePallet" 
                         Width="70" 
                         Content="Thoát" 
                         Margin="30,5"
-                                        Click="Btn_Exit_tab2_Click"/>
+                                        Click="Btn_Exit_DevicePallet_Click"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -808,15 +806,15 @@
                         <Grid Grid.Row="1">
                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Center">
-                                <Button Name="Btn_Save_tab2" 
+                                <Button Name="Btn_Save_Product" 
                         Width="70" 
                         Content="Lưu" 
                         Margin="30,5"/>
-                                <Button Name="Btn_Exit_tab2" 
+                                <Button Name="Btn_Exit_Product" 
                         Width="70" 
                         Content="Thoát" 
                         Margin="30,5"
-                                        Click="Btn_Exit_tab2_Click"/>
+                                        Click="Btn_Exit_Product_Click"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -886,7 +884,8 @@
                                                 <Button Name="btn_Delete_Buffer" 
                                         Margin="5,0,0,5"
                                         Width="Auto" 
-                                        FontSize="14">
+                                        FontSize="14"
+                                                        Click="Btn_Delete_Buffer_Click">
                                                     <StackPanel>
                                                         <Image Width="20" 
                                                Height="20" 
@@ -906,7 +905,7 @@
                                       CanUserSortColumns="False"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.Columns>
-                                                    <DataGridTemplateColumn Width="Auto" 
+                                                    <DataGridTemplateColumn Width="*" 
                                                             Header="Id">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
@@ -924,13 +923,13 @@
 
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Cột" 
-                                                                        Width="Auto" 
+                                                                        Width="*" 
                                                                         IsReadOnly="True"
                                                                         Binding="{Binding Path=maxBay}">
 
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Hàng" 
-                                                                        Width="Auto" 
+                                                                        Width="*" 
                                                                         IsReadOnly="True"
                                                                         Binding="{Binding Path=maxRow}">
 
@@ -991,17 +990,17 @@
                                       AutoGenerateColumns="False">
                                                 <DataGrid.Columns>
                                                     <DataGridTextColumn Header="Id" 
-                                                        Width="Auto" 
+                                                        Width="*" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=palletId}">
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Hàng" 
-                                                        Width="Auto" 
+                                                        Width="*" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=row}">
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Cột" 
-                                                        Width="Auto" 
+                                                        Width="*" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=bay}">
                                                     </DataGridTextColumn>
@@ -1061,15 +1060,15 @@
                         <Grid Grid.Row="1">
                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Center">
-                                <Button Name="Btn_Save_tab3" 
+                                <Button Name="Btn_Save_Buffer" 
                         Width="70" 
                         Content="Lưu" 
                         Margin="30,5"/>
-                                <Button Name="Btn_Exit_tab3" 
+                                <Button Name="Btn_Exit_Buffer" 
                         Width="70" 
                         Content="Thoát" 
                         Margin="30,5"
-                                        Click="Btn_Exit_tab3_Click"/>
+                                        Click="Btn_Exit_Buffer_Click"/>
                             </StackPanel>
                         </Grid>
                     </Grid>

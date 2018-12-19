@@ -68,7 +68,6 @@ namespace MapViewPallet.MiniForm
             palletsList = new List<dtPallet>();
 
             devicePalletsList = new List<dtDevicePallet>();
-
             //********************************************************************
 
             GroupedDevices = (ListCollectionView)CollectionViewSource.GetDefaultView(devicesList);
@@ -564,6 +563,7 @@ namespace MapViewPallet.MiniForm
         {
             //try
             {
+
                 devicePalletsList.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevicePallet");
                 request.Method = "POST";
@@ -623,6 +623,9 @@ namespace MapViewPallet.MiniForm
                 UpdateDataStatus("Lỗi");
             }
         }
+        
+
+
 
         //*********************************************************************************************
 

@@ -141,6 +141,7 @@ namespace MapViewPallet.MiniForm
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             operation_model.UpdateAllCurrentPlansToDb();
+            operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
         }
         
         private void Btn_Test_Click(object sender, RoutedEventArgs e)
