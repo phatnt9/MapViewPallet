@@ -129,8 +129,8 @@ namespace MapViewPallet.MiniForm
                             tempOpe.productDetailId = product.productDetails.First().productDetailId;
                         }
                         tempOpe.palletAmount = 0;
-                        tempOpe.palletUse = 0;
-                        tempOpe.palletMiss = 0;
+                        //tempOpe.palletUse = 20;
+                        //tempOpe.palletMiss = 11;
 
                         tempOpe.deviceProductId = product.deviceProductId;
                         tempOpe.timeWorkId = selectedShift;
@@ -149,8 +149,8 @@ namespace MapViewPallet.MiniForm
                                 {
                                     //tempOpe.creUsrId = tempPlan.creUsrId;
                                     tempOpe.creDt = tempPlan.creDt;
-                                    tempOpe.updUsrId = tempPlan.updUsrId;
-                                    //tempOpe.updDt = tempPlan.updDt;
+                                    //tempOpe.updUsrId = tempPlan.updUsrId;
+                                    tempOpe.updDt = tempPlan.updDt;
 
                                     tempOpe.planId = tempPlan.planId;
                                     tempOpe.productDetailId = tempPlan.productDetailId;

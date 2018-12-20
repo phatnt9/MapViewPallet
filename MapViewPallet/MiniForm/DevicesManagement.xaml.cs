@@ -35,11 +35,11 @@ namespace MapViewPallet.MiniForm
             BuffersListDg.SelectedCellsChanged += BuffersListDg_SelectedCellsChanged;
             DevicesListDg2.SelectedCellsChanged += DevicesListDg2_SelectedCellsChanged;
 
-            ProductsListDg.CellEditEnding += ProductsListDg_CellEditEnding;
-            ProductDetailsListDg.CellEditEnding += ProductDetailsListDg_CellEditEnding;
-            BuffersListDg.CellEditEnding += BuffersListDg_CellEditEnding; ;
             DeviceBuffersListDg.CellEditEnding += DeviceBuffersListDg_CellEditEnding;
             DevicesListDg2.CellEditEnding += DevicesListDg2_CellEditEnding;
+            ProductsListDg.CellEditEnding += ProductsListDg_CellEditEnding;
+            ProductDetailsListDg.CellEditEnding += ProductDetailsListDg_CellEditEnding;
+            BuffersListDg.CellEditEnding += BuffersListDg_CellEditEnding;
 
             //*****************************************************************
 
@@ -174,8 +174,8 @@ namespace MapViewPallet.MiniForm
                     productDetail.productId = ((ProductsListDg.SelectedItem) as dtProduct).productId;
                     productDetail.productDetailId = selectedProductDetail.productDetailId;
                     productDetail.productDetailName = productDetailName;
-                    productDetail.creUsrId = selectedProductDetail.creUsrId;
-                    productDetail.updUsrId = selectedProductDetail.updUsrId;
+                    productDetail.creUsrId = Global_Object.userLogin;
+                    productDetail.updUsrId = Global_Object.userLogin;
 
                     string jsonData = JsonConvert.SerializeObject(productDetail);
 
@@ -210,6 +210,7 @@ namespace MapViewPallet.MiniForm
                 string deviceName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
                 List<dtDevice> devices = new List<dtDevice>();
                 temp.deviceName = deviceName;
+                temp.updUsrId = Global_Object.userLogin;
                 devices.Add(temp);
 
                 if (devices.Count == 0)
@@ -266,10 +267,30 @@ namespace MapViewPallet.MiniForm
             //http://localhost:8081/robot/rest/buffer/updateListBuffer
             try
             {
+                DataGridCellInfo dgci = (DataGridCellInfo)((System.Windows.Controls.DataGrid)sender).CurrentCell;
+                Console.WriteLine(dgci.Column.SortMemberPath);
+                //.Column.SortMemberPath.ToString();
                 dtBuffer temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtBuffer;
-                string bufferName = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
+                string bufferCellEdit = ((e.EditingElement as System.Windows.Controls.TextBox).Text);
                 List<dtBuffer> buffers = new List<dtBuffer>();
-                temp.bufferName = bufferName;
+                switch(dgci.Column.SortMemberPath)
+                {
+                    case "bufferName":
+                        {
+                            temp.bufferName = bufferCellEdit;
+                            break;
+                        }
+                    case "maxRow":
+                        {
+                            temp.maxRow = int.Parse(bufferCellEdit);
+                            break;
+                        }
+                    case "maxBay":
+                        {
+                            temp.maxBay = int.Parse(bufferCellEdit);
+                            break;
+                        }
+                }
                 buffers.Add(temp);
 
                 if (buffers.Count == 0)
@@ -337,8 +358,8 @@ namespace MapViewPallet.MiniForm
                     product.productId = ((ProductsListDg.SelectedItem) as dtProduct).productId;
                     product.productName = productName;
                     product.productDetails = new List<dtProductDetail>();
-                    product.creUsrId = selectedProduct.creUsrId;
-                    product.updUsrId = selectedProduct.updUsrId;
+                    product.creUsrId = Global_Object.userLogin;
+                    product.updUsrId = Global_Object.userLogin;
 
                     string jsonData = JsonConvert.SerializeObject(product);
 
@@ -996,6 +1017,8 @@ namespace MapViewPallet.MiniForm
                 int.TryParse(this.MaxBaytb.Text, out maxBay);
                 int maxRow = 0;
                 int.TryParse(this.MaxRowtb.Text, out maxRow);
+                
+                managementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
 
                 List<dtDevicePallet> devicePalletsListOld = new List<dtDevicePallet>();
 
@@ -1003,8 +1026,7 @@ namespace MapViewPallet.MiniForm
                 {
                     devicePalletsListOld.Add(item);
                 }
-
-
+                
                 dtDevice selectedDevice = DevicesListDg2.SelectedItem as dtDevice;
 
                 if (maxBay != int.Parse(selectedDevice.maxBay.ToString()) ||
@@ -1024,8 +1046,8 @@ namespace MapViewPallet.MiniForm
                                 row = i,
                                 bay = j,
                                 deviceId = selectedDevice.deviceId,
-                                creUsrId = selectedDevice.creUsrId,
-                                updUsrId = selectedDevice.updUsrId
+                                creUsrId = Global_Object.userLogin,
+                                updUsrId = Global_Object.userLogin
                             };
                             
                             foreach (dtDevicePallet drOld in devicePalletsListOld)
@@ -1036,17 +1058,18 @@ namespace MapViewPallet.MiniForm
                                 int.TryParse(drOld.row.ToString(), out rowOld);
                                 int.TryParse(drOld.bay.ToString(), out bayOld);
 
-                                if (i <= rowOld)
+                                if (i == rowOld)
                                 {
                                     if (bayOld == j)
                                     {
+                                        dr.devicePalletId = drOld.devicePalletId;
                                         dr.dataPallet = drOld.dataPallet;
                                         break;
                                     }
                                 }
                                 else
                                 {
-                                    break;
+                                    //break;
                                 }
                             }
 

@@ -76,7 +76,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.ColumnHeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -169,7 +169,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.ColumnHeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -267,7 +267,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.ColumnHeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -328,11 +328,11 @@
                         <Grid Grid.Row="1">
                             <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Center">
-                                <Button Name="Btn_Save_tab1" 
+                                <!--<Button Name="Btn_Save_tab1" 
                         Width="70" 
                         Content="Lưu" 
                         Margin="30,5" 
-                        Click="Btn_Save_tab1_Click"/>
+                        Click="Btn_Save_tab1_Click"/>-->
                                 <Button Name="Btn_Exit_tab1" 
                         Width="70" 
                         Content="Thoát" 
@@ -412,7 +412,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.ColumnHeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -505,7 +505,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False"
                                                       >
                                                 <DataGrid.ColumnHeaderStyle>
@@ -524,6 +524,17 @@
                                                     </Style>
                                                 </DataGrid.RowStyle>
                                                 <DataGrid.Columns>
+                                                    <DataGridTemplateColumn Width="*" 
+                                                            Header="DeviceId">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=deviceId}"/>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
                                                     <DataGridTemplateColumn Width="*" 
                                                             Header="Id">
                                                         <DataGridTemplateColumn.CellTemplate>
@@ -659,7 +670,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.ColumnHeaderStyle>
                                                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -760,7 +771,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False"
                                                       >
                                                 <DataGrid.ColumnHeaderStyle>
@@ -902,7 +913,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.Columns>
                                                     <DataGridTemplateColumn Width="*" 
@@ -924,13 +935,13 @@
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Cột" 
                                                                         Width="*" 
-                                                                        IsReadOnly="True"
+                                                                        IsReadOnly="False"
                                                                         Binding="{Binding Path=maxBay}">
 
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Hàng" 
                                                                         Width="*" 
-                                                                        IsReadOnly="True"
+                                                                        IsReadOnly="False"
                                                                         Binding="{Binding Path=maxRow}">
 
                                                     </DataGridTextColumn>
@@ -986,7 +997,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.Columns>
                                                     <DataGridTextColumn Header="Id" 
@@ -1043,7 +1054,7 @@
                                       CanUserResizeColumns="True" 
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="False"
+                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.Columns>
                                                     <DataGridTextColumn Header="dataPallet" 

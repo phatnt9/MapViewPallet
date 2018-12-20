@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace MapViewPallet.Shape
 {
-    class CanvasControlService
+    public class CanvasControlService
     {
         //=================VARIABLE==================
         private int stationCount = 0;

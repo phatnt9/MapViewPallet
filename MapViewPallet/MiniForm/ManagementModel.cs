@@ -595,6 +595,7 @@ namespace MapViewPallet.MiniForm
                             updUsrId = int.Parse(dr["updUsrId"].ToString()),
                             updDt = dr["updDt"].ToString(),
                             devicePalletId = int.Parse(dr["devicePalletId"].ToString()),
+                            deviceId = int.Parse(dr["deviceId"].ToString()),
                             devicePalletName = dr["devicePalletName"].ToString(),
                             row = int.Parse(dr["row"].ToString()),
                             bay = int.Parse(dr["bay"].ToString()),

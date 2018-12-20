@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -47,27 +48,43 @@ namespace MapViewPallet.Shape
             MouseDown += PalletMouseDown;
         }
 
+
+        /// <summary>
+        /// Free LightGray, Plan OrangeYellow, Wait Green
+        /// </summary>
+        /// <param name="status"></param>
         public void StatusChanged (string status)
         {
-            switch (status)
-            {
-                case "normal":
-                    {
-                        Background = new SolidColorBrush(Colors.Lime);
-                        break;
-                    }
-                case "":
-                    {
-                        Background = new SolidColorBrush(Colors.Lime);
-                        break;
-                    }
-                default:
-                    {
-                        Background = new SolidColorBrush(Colors.Transparent);
-                        break;
-                    }
+            /*Dispatcher.BeginInvoke(
+        new ThreadStart(() => EmployeesDataGrid.DataContext = employeesView));*/
+            Dispatcher.BeginInvoke(
+           new ThreadStart(() => 
+           {
+               switch (status)
+               {
+                   case "F":
+                       {
+                           Background = new SolidColorBrush(Colors.LightGray);
+                           break;
+                       }
+                   case "P":
+                       {
+                           Background = new SolidColorBrush(Colors.LightGoldenrodYellow);
+                           break;
+                       }
+                   case "W":
+                       {
+                           Background = new SolidColorBrush(Colors.Lime);
+                           break;
+                       }
+                   default:
+                       {
+                           Background = new SolidColorBrush(Colors.Black);
+                           break;
+                       }
 
-            }
+               }
+           }));
         }
 
         private void PalletMouseDown(object sender, MouseButtonEventArgs e)

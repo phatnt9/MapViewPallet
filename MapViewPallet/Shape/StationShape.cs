@@ -6,15 +6,30 @@ using System.Collections.Generic;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using static MapViewPallet.Global_Object;
+using System.Net;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.IO;
+using System.Text;
+using System.Data;
+using MapViewPallet.MiniForm;
+using System.Timers;
+using System.Threading;
 
 namespace MapViewPallet.Shape
 {
     public class StationShape : Border
     {
+        string statuspallet = "F";
+
+
+        public System.Timers.Timer aTimer;
+
         public event Action<string> RemoveHandle;
         public StationDataService dataControl;
-        public struct Props
+        public class Props
         {
+            public int bufferId;
             public bool isSelected;
             public bool isHovering;
             //private StationState _status;
@@ -61,6 +76,10 @@ namespace MapViewPallet.Shape
         //#############---METHOD---############
         public StationShape(Canvas pCanvas, string stationName, int bays, int rows, double rotate)
         {
+            
+
+            props = new Props();
+            //===============================================
             Background = new SolidColorBrush(Colors.Transparent);
             //ToolTip = "";
             //ToolTipOpening += ChangeToolTipContent;
@@ -112,8 +131,8 @@ namespace MapViewPallet.Shape
             BorderThickness = new Thickness(1);
             CornerRadius = new CornerRadius(1.2);
             props._stationGrid = new Grid();
-            
 
+           
 
             //Add Pallet to Grid
             for (int lineIndex = 0; lineIndex < props.Bays; lineIndex++) //Column Index
@@ -145,7 +164,8 @@ namespace MapViewPallet.Shape
                     gridLine.RowDefinitions.Add(rowTemp);
                     //=============
 
-                    PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
+                    //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
+                    PalletShape palletTemp = new PalletShape("Pallet" + "x" + lineIndex + "x" + palletIndex);
                     Grid.SetRow(palletTemp, palletIndex);
                     gridLine.Children.Add(palletTemp);
                     props._palletList.Add(palletTemp.Name, palletTemp);
@@ -174,9 +194,19 @@ namespace MapViewPallet.Shape
             props._canvas.Children.Add(this);
             //
             dataControl = new StationDataService();
+
+            aTimer = new System.Timers.Timer();
+            aTimer.Interval = 2000;
+            aTimer.Elapsed += OnTimedRedrawStationEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
             //Get list pallet
         }
 
+        private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
+        {
+            ReDraw(props._posision);
+        }
 
         public void ReDraw(Point position)
         {
@@ -187,19 +217,77 @@ namespace MapViewPallet.Shape
 
         public void Draw()
         {
-            props._myTranslate = new TranslateTransform(props._posision.X, props._posision.Y);
-            props._myTransformGroup.Children[1] = props._myTranslate;
-            // SPECIAL POINTS
-            double width = 0.11285714 * props.Bays;
-            double height = 0.11285714 * props.Bays;
-            props._eightCorner[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
-            props._eightCorner[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left
-            props._eightCorner[2] = CoorPointAtBorder(new Point((Width / 2), (0)));           //top-mid
-            props._eightCorner[3] = CoorPointAtBorder(new Point((Width), (0)));             //top-right
-            props._eightCorner[4] = CoorPointAtBorder(new Point((Width), (Height / 2)));      //mid-right
-            props._eightCorner[5] = CoorPointAtBorder(new Point((Width), (Height)));        //bot-right
-            props._eightCorner[6] = CoorPointAtBorder(new Point((Width / 2), (Height)));      //bot-mid
-            props._eightCorner[7] = CoorPointAtBorder(new Point((0), (Height)));            //bot-left
+            Dispatcher.BeginInvoke(new ThreadStart(() => 
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+                dynamic postApiBody = new JObject();
+                postApiBody.bufferId = props.bufferId;
+                string jsonData = JsonConvert.SerializeObject(postApiBody);
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+
+                    DataTable pallets = JsonConvert.DeserializeObject<DataTable>(result);
+                    foreach (DataRow dr in pallets.Rows)
+                    {
+                        dtPallet tempPallet = new dtPallet
+                        {
+                            //    creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                            //    creDt = dr["creDt"].ToString(),
+                            //    updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                            //    updDt = dr["updDt"].ToString(),
+                            //    palletId = int.Parse(dr["palletId"].ToString()),
+                            //    deviceBufferId = int.Parse(dr["deviceBufferId"].ToString()),
+                            //    bufferId = int.Parse(dr["bufferId"].ToString()),
+                            //    planId = int.Parse(dr["planId"].ToString()),
+                            row = int.Parse(dr["row"].ToString()),
+                            bay = int.Parse(dr["bay"].ToString()),
+                            //    dataPallet = dr["dataPallet"].ToString(),
+                            palletStatus = dr["palletStatus"].ToString(),
+                            //   deviceId = int.Parse(dr["deviceId"].ToString()),
+                        };
+                        //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet.palletStatus);
+                        props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(statuspallet);
+                        
+
+
+                    }
+                }
+
+                props._myTranslate = new TranslateTransform(props._posision.X, props._posision.Y);
+                props._myTransformGroup.Children[1] = props._myTranslate;
+                // SPECIAL POINTS
+                double width = 0.11285714 * props.Bays;
+                double height = 0.11285714 * props.Bays;
+                props._eightCorner[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
+                props._eightCorner[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left
+                props._eightCorner[2] = CoorPointAtBorder(new Point((Width / 2), (0)));           //top-mid
+                props._eightCorner[3] = CoorPointAtBorder(new Point((Width), (0)));             //top-right
+                props._eightCorner[4] = CoorPointAtBorder(new Point((Width), (Height / 2)));      //mid-right
+                props._eightCorner[5] = CoorPointAtBorder(new Point((Width), (Height)));        //bot-right
+                props._eightCorner[6] = CoorPointAtBorder(new Point((Width / 2), (Height)));      //bot-mid
+                props._eightCorner[7] = CoorPointAtBorder(new Point((0), (Height)));            //bot-left
+            }));
+            if (statuspallet == "F")
+            {
+                statuspallet = "W";
+            }
+            else
+            {
+                statuspallet = "F";
+            }
         }
 
         public void EditMenu(object sender, RoutedEventArgs e)
