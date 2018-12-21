@@ -15,7 +15,9 @@ namespace MapViewPallet.MiniForm
         private int pDeviceId;
         private int pProductId;
         private string pDeviceName;
+        private string pImageDeviceUrl;
         private string pProductName;
+        private string pImageProductUrl;
         private string pProductDetailName;
         private string pPalletStatus;
         private List<dtBuffer> pBuffers;
@@ -35,7 +37,8 @@ namespace MapViewPallet.MiniForm
         public string productName { get => pProductName; set => pProductName = value; }
         public string productDetailName { get => pProductDetailName; set => pProductDetailName = value; }
         public string palletStatus { get => pPalletStatus; set => pPalletStatus = value; }
-
+        public string imageDeviceUrl { get => pImageDeviceUrl; set => pImageDeviceUrl = value; }
+        public string imageProductUrl { get => pImageProductUrl; set => pImageProductUrl = value; }
 
 
 

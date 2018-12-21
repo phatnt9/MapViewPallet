@@ -29,7 +29,7 @@ namespace MapViewPallet.Shape
         public StationDataService dataControl;
         public class Props
         {
-            public int bufferId;
+            public dtBuffer bufferDb;
             public bool isSelected;
             public bool isHovering;
             //private StationState _status;
@@ -74,7 +74,7 @@ namespace MapViewPallet.Shape
         public Props props;
         
         //#############---METHOD---############
-        public StationShape(Canvas pCanvas, string stationName, int bays, int rows, double rotate)
+        public StationShape(Canvas pCanvas, string stationName, dtBuffer buffer)
         {
             
 
@@ -83,6 +83,7 @@ namespace MapViewPallet.Shape
             Background = new SolidColorBrush(Colors.Transparent);
             //ToolTip = "";
             //ToolTipOpening += ChangeToolTipContent;
+            props.bufferDb = buffer;
             props.Status = StationState.Normal;
             props._stationInfomation = new Border();
             props._stationInfomation.Background = new SolidColorBrush(Colors.Red);
@@ -117,8 +118,8 @@ namespace MapViewPallet.Shape
             //MouseRightButtonDown += MouseRightButtonDownStation;
             //===================CREATE=====================
             props.NameID = stationName; //label
-            props.Bays = bays;
-            props.Rows = rows;
+            props.Bays = props.bufferDb.maxBay;
+            props.Rows = props.bufferDb.maxRow;
             Width = 11 * props.Bays;
             Height = 13 * props.Rows;
             props._palletList = new SortedDictionary<string, PalletShape>();
@@ -186,7 +187,14 @@ namespace MapViewPallet.Shape
             props._myTransformGroup.Children.Add(props._myRotateTransform);
             props._myTransformGroup.Children.Add(props._myTranslate);
             RenderTransform = props._myTransformGroup;
-            props._rotate = rotate;
+            //props._rotate = rotate;
+            dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
+            if (bufferData != null)
+            {
+                props._posision = Global_Object.CoorCanvas(new Point((double)bufferData.x, (double)bufferData.y));
+                props._rotate = (double)bufferData.a;
+            }
+            //props._rotate = props.bufferDb.bufferData;
             props._myRotateTransform.Angle = props._rotate;
             props._myTranslate = new TranslateTransform(props._posision.X, props._posision.Y);
             props._myTransformGroup.Children[1] = props._myTranslate;
@@ -196,7 +204,7 @@ namespace MapViewPallet.Shape
             dataControl = new StationDataService();
 
             aTimer = new System.Timers.Timer();
-            aTimer.Interval = 2000;
+            aTimer.Interval = 1000;
             aTimer.Elapsed += OnTimedRedrawStationEvent;
             aTimer.AutoReset = true;
             aTimer.Enabled = true;
@@ -210,8 +218,51 @@ namespace MapViewPallet.Shape
 
         public void ReDraw(Point position)
         {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+            request.Method = "GET";
+            request.ContentType = @"application/json";
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                string result = reader.ReadToEnd();
 
-            props._posision = new Point(position.X, position.Y);
+                DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
+                foreach (DataRow dr in buffers.Rows)
+                {
+                    dtBuffer tempBuffer = new dtBuffer
+                    {
+                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                        creDt = dr["creDt"].ToString(),
+                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                        updDt = dr["updDt"].ToString(),
+                        bufferId = int.Parse(dr["bufferId"].ToString()),
+                        bufferName = dr["bufferName"].ToString(),
+                        maxBay = int.Parse(dr["maxBay"].ToString()),
+                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+                        maxRow = int.Parse(dr["maxRow"].ToString()),
+                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
+                        bufferNameOld = dr["bufferNameOld"].ToString(),
+                        bufferData = dr["bufferData"].ToString(),
+                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                    };
+                    if (tempBuffer.bufferId == this.props.bufferDb.bufferId)
+                    {
+                        this.props.bufferDb = tempBuffer;
+                    }
+                }
+            }
+            dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
+            //bufferX.Text = (bufferData != null) ? (((double)bufferData.x).ToString()) : "";
+            //bufferY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "";
+            //bufferA.Text = (bufferData != null) ? (((double)bufferData.a).ToString()) : "";
+            props._posision = Global_Object.CoorCanvas
+                (new Point(((bufferData != null) ? (((double)bufferData.x)) : 0), ((bufferData != null) ? (((double)bufferData.y)) : 0))
+                );
+            props._rotate = (bufferData != null) ? (((double)bufferData.a)) : 0;
+            //props._posision = new Point(position.X, position.Y);
             Draw();
         }
 
@@ -223,7 +274,7 @@ namespace MapViewPallet.Shape
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
-                postApiBody.bufferId = props.bufferId;
+                postApiBody.bufferId = props.bufferDb.bufferId;
                 string jsonData = JsonConvert.SerializeObject(postApiBody);
                 System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
                 Byte[] byteArray = encoding.GetBytes(jsonData);
@@ -244,19 +295,19 @@ namespace MapViewPallet.Shape
                     {
                         dtPallet tempPallet = new dtPallet
                         {
-                            //    creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                            //    creDt = dr["creDt"].ToString(),
-                            //    updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                            //    updDt = dr["updDt"].ToString(),
-                            //    palletId = int.Parse(dr["palletId"].ToString()),
-                            //    deviceBufferId = int.Parse(dr["deviceBufferId"].ToString()),
-                            //    bufferId = int.Parse(dr["bufferId"].ToString()),
-                            //    planId = int.Parse(dr["planId"].ToString()),
+                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                            creDt = dr["creDt"].ToString(),
+                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                            updDt = dr["updDt"].ToString(),
+                            palletId = int.Parse(dr["palletId"].ToString()),
+                            deviceBufferId = int.Parse(dr["deviceBufferId"].ToString()),
+                            bufferId = int.Parse(dr["bufferId"].ToString()),
+                            planId = int.Parse(dr["planId"].ToString()),
                             row = int.Parse(dr["row"].ToString()),
                             bay = int.Parse(dr["bay"].ToString()),
-                            //    dataPallet = dr["dataPallet"].ToString(),
+                            dataPallet = dr["dataPallet"].ToString(),
                             palletStatus = dr["palletStatus"].ToString(),
-                            //   deviceId = int.Parse(dr["deviceId"].ToString()),
+                            deviceId = int.Parse(dr["deviceId"].ToString()),
                         };
                         //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet.palletStatus);
                         props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(statuspallet);
@@ -266,8 +317,13 @@ namespace MapViewPallet.Shape
                     }
                 }
 
+
+                props._myRotateTransform.Angle = props._rotate;
                 props._myTranslate = new TranslateTransform(props._posision.X, props._posision.Y);
+
+                props._myTransformGroup.Children[0] = props._myRotateTransform;
                 props._myTransformGroup.Children[1] = props._myTranslate;
+
                 // SPECIAL POINTS
                 double width = 0.11285714 * props.Bays;
                 double height = 0.11285714 * props.Bays;

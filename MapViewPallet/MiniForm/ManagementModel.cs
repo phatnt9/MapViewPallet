@@ -116,6 +116,8 @@ namespace MapViewPallet.MiniForm
                             deviceId = int.Parse(dr["deviceId"].ToString()),
                             deviceName = dr["deviceName"].ToString(),
                             deviceNameOld = dr["deviceNameOld"].ToString(),
+                            imageUrl = dr["imageUrl"].ToString(),
+                            imageUrlOld = dr["imageUrlOld"].ToString(),
                             maxRow = int.Parse(dr["maxRow"].ToString()),
                             maxBay = int.Parse(dr["maxBay"].ToString()),
                         };
@@ -270,7 +272,9 @@ namespace MapViewPallet.MiniForm
                             maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
                             bufferCheckIn = dr["bufferCheckIn"].ToString(),
                             bufferNameOld = dr["bufferNameOld"].ToString(),
+                            bufferData = dr["bufferData"].ToString(),
                             bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                            bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
                         };
                         if (!ContainBuffer(tempBuffer, buffersList))
                         {

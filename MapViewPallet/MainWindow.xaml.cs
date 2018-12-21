@@ -196,7 +196,15 @@ namespace MapViewPallet
                 0,0,270,270
             };
 
-            int i = 0;
+            string[] bufferData = new string[] 
+            {
+                "{\"x\":\"-9\",\"y\":\"-8.23\",\"a\":\"0\"}",
+                "{\"x\":\"1\",\"y\":\"-8.30\",\"a\":\"0\"}",
+                "{\"x\":\"9.63\",\"y\":\"-7.11\",\"a\":\"270\"}",
+                "{\"x\":\"9.63\",\"y\":\"4.12\",\"a\":\"270\"}"
+            };
+
+            //int i = 0;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
             request.Method = "GET";
             request.ContentType = @"application/json";
@@ -210,18 +218,37 @@ namespace MapViewPallet
 
                 foreach (DataRow dr in buffers.Rows)
                 {
+                    dtBuffer tempBuffer = new dtBuffer
+                    {
+                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                        creDt = dr["creDt"].ToString(),
+                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                        updDt = dr["updDt"].ToString(),
+                        bufferId = int.Parse(dr["bufferId"].ToString()),
+                        bufferName = dr["bufferName"].ToString(),
+                        maxBay = int.Parse(dr["maxBay"].ToString()),
+                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+                        maxRow = int.Parse(dr["maxRow"].ToString()),
+                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
+                        bufferNameOld = dr["bufferNameOld"].ToString(),
+                        bufferData = dr["bufferData"].ToString(),
+                        //bufferData = bufferData[i],
+                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                    };
+
                     StationShape tempStation;
                     string stationName = dr["bufferName"].ToString();
-                    Point ori = Global_Object.CoorCanvas(points[i]);
-                    
-                    int maxBays = int.Parse(dr["maxBay"].ToString());
-                    int maxRows = int.Parse(dr["maxRow"].ToString());
-                    tempStation = new StationShape(map, stationName, maxBays, maxRows, rotates[i]);
-                    tempStation.props.bufferId = int.Parse(dr["bufferId"].ToString());
-                    if (i < 3)
-                    {
-                        i++;
-                    }
+                    Point ori = Global_Object.CoorCanvas(new Point(0,0));
+
+                    int maxBays = tempBuffer.maxBay;
+                    int maxRows = tempBuffer.maxRow;
+                    tempStation = new StationShape(map, stationName, tempBuffer);
+                    //if (i < 3)
+                    //{
+                    //    i++;
+                    //}
                     tempStation.ReDraw(ori);
                     tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                     palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
@@ -236,10 +263,7 @@ namespace MapViewPallet
                     });
                 }
             }
-
-
             
-
             //try
             //{
             //    DataTable data = new DataTable();
@@ -310,28 +334,28 @@ namespace MapViewPallet
 
         private void btn_LoadExcel2_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                DataTable data = new DataTable();
-                data = Global_Object.LoadExcelFile();
-                foreach (DataRow row in data.Rows)
-                {
-                    StationShape tempStation;
-                    string stationName = row.Field<string>("NAME");
-                    double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
-                    double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
-                    Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY)); // Change Laser Metter to Canvas Position
-                    int lines = int.Parse(row.Field<string>("LINES"));
-                    int pallets = int.Parse(row.Field<string>("PALLETS"));
-                    double rotate = double.Parse(row.Field<string>("ROTATE"));
-                    tempStation = new StationShape(map, stationName, lines, pallets, rotate);
-                    tempStation.ReDraw(ori);
-                    tempStation.RemoveHandle += palletViewEventControl.StationRemove;
-                    palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
-                    stationGroup.Items.Add(new TrvStation(tempStation));
-                }
-            }
-            catch { }
+            //try
+            //{
+            //    DataTable data = new DataTable();
+            //    data = Global_Object.LoadExcelFile();
+            //    foreach (DataRow row in data.Rows)
+            //    {
+            //        StationShape tempStation;
+            //        string stationName = row.Field<string>("NAME");
+            //        double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
+            //        double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
+            //        Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY)); // Change Laser Metter to Canvas Position
+            //        int lines = int.Parse(row.Field<string>("LINES"));
+            //        int pallets = int.Parse(row.Field<string>("PALLETS"));
+            //        double rotate = double.Parse(row.Field<string>("ROTATE"));
+            //        tempStation = new StationShape(map, stationName, lines, pallets, rotate);
+            //        tempStation.ReDraw(ori);
+            //        tempStation.RemoveHandle += palletViewEventControl.StationRemove;
+            //        palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
+            //        stationGroup.Items.Add(new TrvStation(tempStation));
+            //    }
+            //}
+            //catch { }
         }
 
 

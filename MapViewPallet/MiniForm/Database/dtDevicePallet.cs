@@ -14,6 +14,7 @@ namespace MapViewPallet.MiniForm.Database
         private int pRow;
         private int pBay;
         private string pDataPallet;
+        private string pImageDeviceUrl;
 
         public int devicePalletId { get => pDevicePalletId; set => pDevicePalletId = value; }
         public int deviceId { get => pDeviceId; set => pDeviceId = value; }
@@ -21,5 +22,6 @@ namespace MapViewPallet.MiniForm.Database
         public int row { get => pRow; set => pRow = value; }
         public int bay { get => pBay; set => pBay = value; }
         public string dataPallet { get => pDataPallet; set => pDataPallet = value; }
+        public string imageDeviceUrl { get => pImageDeviceUrl; set => pImageDeviceUrl = value; }
     }
 }

@@ -17,8 +17,11 @@ namespace MapViewPallet.MiniForm
         private int pDeviceId;
         private string pDeviceName;
         private string pDeviceNameOld;
+        private string pImageUrl;
+        private string pImageUrlOld;
         private int pMaxRow;
         private int pMaxBay;
+        private string pPathFile;
         private List<dtDeviceProduct> pDeviceProducts;
         private List<dtDeviceBuffer> pDeviceBuffers;
 
@@ -29,6 +32,11 @@ namespace MapViewPallet.MiniForm
         public string deviceNameOld { get => pDeviceNameOld; set => pDeviceNameOld = value; }
         public int maxRow { get => pMaxRow; set => pMaxRow = value; }
         public int maxBay { get => pMaxBay; set => pMaxBay = value; }
+        public string imageUrl { get => pImageUrl; set => pImageUrl = value; }
+        public string pathFile { get => pPathFile; set { pPathFile = value; RaisePropertyChanged("pathFile"); } }
+        public string imageUrlOld { get => pImageUrlOld; set => pImageUrlOld = value; }
+
+        
 
         public dtDevice()
         {

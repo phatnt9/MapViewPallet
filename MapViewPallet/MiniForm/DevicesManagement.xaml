@@ -446,6 +446,39 @@
                                                         IsReadOnly="False"
                                                         Binding="{Binding Path=deviceName}">
                                                     </DataGridTextColumn>
+                                                    <DataGridTemplateColumn Width="Auto" 
+                                                            Header="ImageURL">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=imageUrl}"/>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn Width="Auto" 
+                                                            Header="ImageUrlOld">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=imageUrlOld}"/>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn Width="Auto" 
+                                                            Header="pathFile">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -589,7 +622,7 @@
                         Width="70" 
                         Content="Lưu" 
                         Margin="30,5"
-                                        Click="Btn_Save_DevicePallet_Click"/>
+                                        Click="Btn_Save_Devices_Click"/>
                                 <Button Name="Btn_Exit_DevicePallet" 
                         Width="70" 
                         Content="Thoát" 
@@ -705,6 +738,39 @@
                                                         Binding="{Binding Path=productName}">
 
                                                     </DataGridTextColumn>
+                                                    <DataGridTemplateColumn Width="Auto" 
+                                                            Header="ImageURL">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=imageUrl}"/>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn Width="Auto" 
+                                                            Header="ImageUrlOld">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=imageUrlOld}"/>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn Width="Auto" 
+                                                            Header="pathFile">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel>
+                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -820,7 +886,8 @@
                                 <Button Name="Btn_Save_Product" 
                         Width="70" 
                         Content="Lưu" 
-                        Margin="30,5"/>
+                        Margin="30,5"
+                                        Click="Btn_Save_Product_Click"/>
                                 <Button Name="Btn_Exit_Product" 
                         Width="70" 
                         Content="Thoát" 
@@ -853,6 +920,7 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30"></RowDefinition>
                                             <RowDefinition ></RowDefinition>
+                                            <RowDefinition Height="30"></RowDefinition>
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
                                             <StackPanel Orientation="Horizontal" 
@@ -927,7 +995,7 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <DataGridTextColumn Header="Tên Buffer" 
+                                                    <DataGridTextColumn Header="Tên" 
                                                         Width="*" 
                                                         IsReadOnly="False"
                                                         Binding="{Binding Path=bufferName}">
@@ -956,6 +1024,55 @@
                                                     </DataGridTemplateColumn>
                                                 </DataGrid.Columns>
                                             </DataGrid>
+                                        </Grid>
+                                        <Grid Grid.Row="2">
+                                            <Grid Grid.Row="0">
+                                                <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"
+                                                        Margin="0,0,0,5">
+                                                    <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                        <Label VerticalAlignment="Center" 
+                                                               Content="X"
+                                                               FontSize="12"></Label>
+                                                        <TextBox Name="bufferX" 
+                                                                 Width="45" 
+                                                                 Height="20" 
+                                                                 PreviewTextInput="BufferX_PreviewTextInput"
+                                                                 ></TextBox>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                        <Label VerticalAlignment="Center" 
+                                                               Content="Y"
+                                                               FontSize="12"></Label>
+                                                        <TextBox Name="bufferY" 
+                                                                 Width="45" 
+                                                                 Height="20" 
+                                                                 PreviewTextInput ="BufferY_PreviewTextInput"
+                                                                 ></TextBox>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                        <Label VerticalAlignment="Center" 
+                                                               Content="A"
+                                                               FontSize="12"></Label>
+                                                        <TextBox Name="bufferA" 
+                                                                 Width="45" 
+                                                                 Height="20"
+                                                                 PreviewTextInput="BufferA_PreviewTextInput"
+                                                                 ></TextBox>
+                                                    </StackPanel>
+                                                    <Button Name="btn_SetBufferData" 
+                                        Margin="20,0,0,0"
+                                        Width="35" 
+                                                        Height="20" 
+                                        FontSize="12"
+                                                        Content="Lưu"
+                                                        Click="Btn_SetBufferData_Click"/>
+                                                </StackPanel>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </GroupBox>

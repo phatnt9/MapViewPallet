@@ -19,12 +19,17 @@ namespace MapViewPallet.MiniForm
         private int pProductId;
         private string pProductName;
         private bool pcheckStatus;
+        private string pImageDeviceUrl;
+        private string pImageProductUrl;
 
         public int deviceProductId { get => pDeviceProductId; set => pDeviceProductId = value; }
         public int deviceId { get => pDeviceId; set => pDeviceId = value; }
         public int productId { get => pProductId; set => pProductId = value; }
         public string productName { get => pProductName; set => pProductName = value; }
         public bool checkStatus { get => pcheckStatus; set => pcheckStatus = value; }
+        public string imageDeviceUrl { get => pImageDeviceUrl; set => pImageDeviceUrl = value; }
+        public string imageProductUrl { get => pImageProductUrl; set => pImageProductUrl = value; }
+
 
         private List<dtProductDetail> pProductDetails;
         public List<dtProductDetail> productDetails { get => pProductDetails; set => pProductDetails = value; }
