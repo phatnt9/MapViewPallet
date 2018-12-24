@@ -306,7 +306,11 @@
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                             <Grid Name="Cursorhehe" VerticalAlignment="Bottom">
-                                <Label Name="MouseCoor" Foreground="Black" Content="X:Y" FontSize="11"></Label>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Name="MouseCoor" Foreground="Black" Content="X:Y" FontSize="11"></Label>
+                                    <Label Name="MouseCoor2" Foreground="Black" Content="X:Y" FontSize="11"></Label>
+
+                                </StackPanel>
                             </Grid>
                         </Grid>
                     </Grid>

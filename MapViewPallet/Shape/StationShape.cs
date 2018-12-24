@@ -22,77 +22,97 @@ namespace MapViewPallet.Shape
     {
         string statuspallet = "F";
 
-
-        public System.Timers.Timer aTimer;
+        //public System.Timers.Timer aTimer;
 
         public event Action<string> RemoveHandle;
-        public StationDataService dataControl;
+
         public class Props
         {
-            public dtBuffer bufferDb;
             public bool isSelected;
             public bool isHovering;
-            //private StationState _status;
+
+
+            public dtBuffer bufferDb;
             public Canvas _canvas;
+
+
+            public Border _stationInfoBorder;
             public Grid _stationGrid; // Grid to hold all Pallet in Station
             public Point _posision; // Where station will be render,only accept Cavnas Coordinate
             public double _rotate; // Station rotate
-            public Border _stationInfomation;
-            public TranslateTransform _myTranslate;
+
+
             public TransformGroup _myTransformGroup;
+            public TranslateTransform _myTranslateTransform;
             public RotateTransform _myRotateTransform;
+
+
             public List<Point> _eightCorner;
             public SortedDictionary<string, PalletShape> _palletList;
-            //##########################
+
+
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID { get; set; }
 
-            [ReadOnlyAttribute(true)]
-            public StationState Status { get; set; }
-            
+
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public Point Position
             {
-                get{return Global_Object.CoorLaser(_posision);}
+                get { return Global_Object.CoorLaser(_posision); }
             }
+
 
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public double Rotation
             {
-                get {return _rotate;}
-                set{_rotate = value;}
+                get { return _rotate; }
+                set { _rotate = value; }
             }
 
-            [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public int Bays { get; set; }
 
-            [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public int Rows { get; set; }
+            //[CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
+            //public int Bays { get; set; }
+
+
+            //[CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
+            //public int Rows { get; set; }
 
         }
         public Properties stationProperties;
         public Props props;
-        
+
         //#############---METHOD---############
-        public StationShape(Canvas pCanvas, string stationName, dtBuffer buffer)
+        public StationShape(Canvas pCanvas, dtBuffer buffer)
         {
-            
-
             props = new Props();
-            //===============================================
-            Background = new SolidColorBrush(Colors.Transparent);
-            //ToolTip = "";
-            //ToolTipOpening += ChangeToolTipContent;
             props.bufferDb = buffer;
-            props.Status = StationState.Normal;
-            props._stationInfomation = new Border();
-            props._stationInfomation.Background = new SolidColorBrush(Colors.Red);
-            props._stationInfomation.CornerRadius = new CornerRadius(1.3);
-            props._stationInfomation.Height = 5;
-            Grid.SetColumn(props._stationInfomation, 0);
 
-            Name = "Stationx" + Global_Mouse.EncodeTransmissionTimestamp(); //Object name
-            //Name = stationName; //Object name
+
+            BorderBrush = new SolidColorBrush(Colors.Transparent);
+            BorderThickness = new Thickness(1);
+            CornerRadius = new CornerRadius(1.2);
+            RenderTransformOrigin = new Point(0, 0);
+            props._stationGrid = new Grid();
+
+
+            Background = new SolidColorBrush(Colors.Transparent);
+
+
+            ToolTip = "";
+            ToolTipOpening += ChangeToolTipContent;
+
+
+            props._stationInfoBorder = new Border();
+            props._stationInfoBorder.Background = new SolidColorBrush(Colors.Red);
+            props._stationInfoBorder.CornerRadius = new CornerRadius(1.3);
+            props._stationInfoBorder.Height = 5;
+            Grid.SetColumn(props._stationInfoBorder, 0);
+
+
+            //Name = "Stationx" + Global_Mouse.EncodeTransmissionTimestamp(); //Object name
+            Name = props.bufferDb.bufferName.Replace(" ", ""); //Object name
+
+
             ContextMenu = new ContextMenu();
             //===================================
             MenuItem propertiesItem = new MenuItem();
@@ -117,59 +137,59 @@ namespace MapViewPallet.Shape
             //MouseLeftButtonDown += MouseLeftButtonDownStation;
             //MouseRightButtonDown += MouseRightButtonDownStation;
             //===================CREATE=====================
-            props.NameID = stationName; //label
-            props.Bays = props.bufferDb.maxBay;
-            props.Rows = props.bufferDb.maxRow;
-            Width = 11 * props.Bays;
-            Height = 13 * props.Rows;
-            props._palletList = new SortedDictionary<string, PalletShape>();
-            props._myRotateTransform = new RotateTransform();
-            props._myTranslate = new TranslateTransform();
-            props._myTransformGroup = new TransformGroup();
-            RenderTransformOrigin = new Point(0, 0);
-            stationProperties = new Properties(this);
-            BorderBrush = new SolidColorBrush(Colors.Transparent);
-            BorderThickness = new Thickness(1);
-            CornerRadius = new CornerRadius(1.2);
-            props._stationGrid = new Grid();
+            props.NameID = props.bufferDb.bufferName; //label
+            //props.Bays = props.bufferDb.maxBay;
+            //props.Rows = props.bufferDb.maxRow;
+            Width = 11 * props.bufferDb.maxBay;
+            Height = 13 * props.bufferDb.maxRow;
 
-           
+
+            props._palletList = new SortedDictionary<string, PalletShape>();
+
+
+            props._myTransformGroup = new TransformGroup();
+            props._myRotateTransform = new RotateTransform();
+            props._myTranslateTransform = new TranslateTransform();
+
+
+            stationProperties = new Properties(this);
+
 
             //Add Pallet to Grid
-            for (int lineIndex = 0; lineIndex < props.Bays; lineIndex++) //Column Index
+            for (int bayIndex = 0; bayIndex < props.bufferDb.maxBay; bayIndex++) //Column Index
             {
                 //Create a Col
                 ColumnDefinition colTemp = new ColumnDefinition();
-                colTemp.Name = Name + "xL" + lineIndex;
+                colTemp.Name = Name + "xL" + bayIndex;
                 props._stationGrid.ColumnDefinitions.Add(colTemp);
                 //Create GridLine
                 Grid gridLine = new Grid();
                 // Create BorderLine
                 Border borderLine = new Border();
-                Grid.SetColumn(borderLine, lineIndex);
+                Grid.SetColumn(borderLine, bayIndex);
                 borderLine.Child = gridLine;
                 //
                 props._stationGrid.Children.Add(borderLine);
-                if (lineIndex > 0)
+                if (bayIndex > 0)
                 {
                     borderLine.BorderBrush = new SolidColorBrush(Colors.Black);
                     borderLine.BorderThickness = new Thickness(0.3, 0, 0, 0);
                 }
                 //Add Pallet to GridPallet ==> add GridPallet to BorderLine
-                for (int palletIndex = 0; palletIndex < props.Rows; palletIndex++) //Row Index, start from 1, Row 0 use for Infomation
+                for (int rowIndex = 0; rowIndex < props.bufferDb.maxRow; rowIndex++) //Row Index, start from 1, Row 0 use for Infomation
                 {
                     //Create Rows for Col
                     RowDefinition rowTemp = new RowDefinition();
-                    rowTemp.Name = Name + "xR" + palletIndex;
+                    rowTemp.Name = Name + "xR" + rowIndex;
                     //rowTemp.MinHeight = 10;
                     gridLine.RowDefinitions.Add(rowTemp);
                     //=============
 
                     //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
-                    PalletShape palletTemp = new PalletShape("Pallet" + "x" + lineIndex + "x" + palletIndex);
-                    Grid.SetRow(palletTemp, palletIndex);
+                    PalletShape palletTemp = new PalletShape("Pallet" + "x" + bayIndex + "x" + rowIndex);
+                    Grid.SetRow(palletTemp, rowIndex);
                     gridLine.Children.Add(palletTemp);
-                    props._palletList.Add(palletTemp.Name, palletTemp);
+                    props._palletList.Add(palletTemp.name, palletTemp);
 
                 }
             }
@@ -185,97 +205,159 @@ namespace MapViewPallet.Shape
             //props.stationGrid.Children.Add(props.stationInfomation);
             Child = props._stationGrid;
             props._myTransformGroup.Children.Add(props._myRotateTransform);
-            props._myTransformGroup.Children.Add(props._myTranslate);
+            props._myTransformGroup.Children.Add(props._myTranslateTransform);
             RenderTransform = props._myTransformGroup;
-            //props._rotate = rotate;
+
             dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
             if (bufferData != null)
             {
                 props._posision = Global_Object.CoorCanvas(new Point((double)bufferData.x, (double)bufferData.y));
                 props._rotate = (double)bufferData.a;
             }
-            //props._rotate = props.bufferDb.bufferData;
+
             props._myRotateTransform.Angle = props._rotate;
-            props._myTranslate = new TranslateTransform(props._posision.X, props._posision.Y);
-            props._myTransformGroup.Children[1] = props._myTranslate;
+            props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
+
+            props._myTransformGroup.Children[0] = props._myRotateTransform;
+            props._myTransformGroup.Children[1] = props._myTranslateTransform;
+
+
             props._canvas = pCanvas;
             props._canvas.Children.Add(this);
-            //
-            dataControl = new StationDataService();
 
-            aTimer = new System.Timers.Timer();
-            aTimer.Interval = 1000;
-            aTimer.Elapsed += OnTimedRedrawStationEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+
+            //aTimer = new System.Timers.Timer();
+            //aTimer.Interval = 1000;
+            //aTimer.Elapsed += OnTimedRedrawStationEvent;
+            //aTimer.AutoReset = true;
+            //aTimer.Enabled = true;
             //Get list pallet
         }
 
-        private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
-        {
-            ReDraw(props._posision);
-        }
 
-        public void ReDraw(Point position)
+
+        //private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
+        //{
+        //    ReDraw(props._posision);
+        //}
+
+        public void ReDraw()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
-            request.Method = "GET";
-            request.ContentType = @"application/json";
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                string result = reader.ReadToEnd();
-
-                DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
-                foreach (DataRow dr in buffers.Rows)
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                request.Method = "GET";
+                request.ContentType = @"application/json";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
                 {
-                    dtBuffer tempBuffer = new dtBuffer
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+
+                    DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
+                    foreach (DataRow dr in buffers.Rows)
                     {
-                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                        creDt = dr["creDt"].ToString(),
-                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                        updDt = dr["updDt"].ToString(),
-                        bufferId = int.Parse(dr["bufferId"].ToString()),
-                        bufferName = dr["bufferName"].ToString(),
-                        maxBay = int.Parse(dr["maxBay"].ToString()),
-                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
-                        maxRow = int.Parse(dr["maxRow"].ToString()),
-                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
-                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
-                        bufferNameOld = dr["bufferNameOld"].ToString(),
-                        bufferData = dr["bufferData"].ToString(),
-                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
-                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
-                    };
-                    if (tempBuffer.bufferId == this.props.bufferDb.bufferId)
-                    {
-                        this.props.bufferDb = tempBuffer;
+                        dtBuffer tempBuffer = new dtBuffer
+                        {
+                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                            creDt = dr["creDt"].ToString(),
+                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                            updDt = dr["updDt"].ToString(),
+
+                            bufferId = int.Parse(dr["bufferId"].ToString()),
+                            bufferName = dr["bufferName"].ToString(),
+                            bufferNameOld = dr["bufferNameOld"].ToString(),
+                            bufferCheckIn = dr["bufferCheckIn"].ToString(),
+                            bufferData = dr["bufferData"].ToString(),
+                            maxRow = int.Parse(dr["maxRow"].ToString()),
+                            maxBay = int.Parse(dr["maxBay"].ToString()),
+                            maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                            maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+                            bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                            bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                            //pallets
+                        };
+                        if ((tempBuffer.bufferId == this.props.bufferDb.bufferId) && (tempBuffer.bufferName == this.props.bufferDb.bufferName))
+                        {
+                            if ((this.props.bufferDb.maxBay != tempBuffer.maxBay) || ((this.props.bufferDb.maxRow != tempBuffer.maxRow)))
+                            {
+                                props.bufferDb = tempBuffer;
+
+                                props._stationGrid.Children.Clear();
+                                props._stationGrid.ColumnDefinitions.Clear();
+                                props._stationGrid.RowDefinitions.Clear();
+                                props._palletList.Clear();
+
+                                Width = 11 * props.bufferDb.maxBay;
+                                Height = 13 * props.bufferDb.maxRow;
+
+                                for (int bayIndex = 0; bayIndex < props.bufferDb.maxBay; bayIndex++) //Column Index
+                                {
+                                    //Create a Col
+                                    ColumnDefinition colTemp = new ColumnDefinition();
+                                    colTemp.Name = Name + "xL" + bayIndex;
+                                    props._stationGrid.ColumnDefinitions.Add(colTemp);
+                                    //Create GridLine
+                                    Grid gridLine = new Grid();
+                                    // Create BorderLine
+                                    Border borderLine = new Border();
+                                    Grid.SetColumn(borderLine, bayIndex);
+                                    borderLine.Child = gridLine;
+                                    //
+                                    props._stationGrid.Children.Add(borderLine);
+                                    if (bayIndex > 0)
+                                    {
+                                        borderLine.BorderBrush = new SolidColorBrush(Colors.Black);
+                                        borderLine.BorderThickness = new Thickness(0.3, 0, 0, 0);
+                                    }
+                                    //Add Pallet to GridPallet ==> add GridPallet to BorderLine
+                                    for (int rowIndex = 0; rowIndex < props.bufferDb.maxRow; rowIndex++) //Row Index, start from 1, Row 0 use for Infomation
+                                    {
+                                        //Create Rows for Col
+                                        RowDefinition rowTemp = new RowDefinition();
+                                        rowTemp.Name = Name + "xR" + rowIndex;
+                                        //rowTemp.MinHeight = 10;
+                                        gridLine.RowDefinitions.Add(rowTemp);
+                                        //=============
+
+                                        //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
+                                        PalletShape palletTemp = new PalletShape("Pallet" + "x" + bayIndex + "x" + rowIndex);
+                                        Grid.SetRow(palletTemp, rowIndex);
+                                        gridLine.Children.Add(palletTemp);
+                                        props._palletList.Add(palletTemp.name, palletTemp);
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                props.bufferDb = tempBuffer;
+                            }
+
+                        }
                     }
                 }
-            }
-            dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
-            //bufferX.Text = (bufferData != null) ? (((double)bufferData.x).ToString()) : "";
-            //bufferY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "";
-            //bufferA.Text = (bufferData != null) ? (((double)bufferData.a).ToString()) : "";
-            props._posision = Global_Object.CoorCanvas
-                (new Point(((bufferData != null) ? (((double)bufferData.x)) : 0), ((bufferData != null) ? (((double)bufferData.y)) : 0))
-                );
-            props._rotate = (bufferData != null) ? (((double)bufferData.a)) : 0;
-            //props._posision = new Point(position.X, position.Y);
-            Draw();
+                dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
+                props._posision = Global_Object.CoorCanvas(new Point(((bufferData != null) ? (((double)bufferData.x)) : 0), ((bufferData != null) ? (((double)bufferData.y)) : 0)));
+                props._rotate = (bufferData != null) ? (((double)bufferData.a)) : 0;
+                Draw();
+            }));
         }
 
         public void Draw()
         {
-            Dispatcher.BeginInvoke(new ThreadStart(() => 
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
+
+
                 dynamic postApiBody = new JObject();
                 postApiBody.bufferId = props.bufferDb.bufferId;
                 string jsonData = JsonConvert.SerializeObject(postApiBody);
+
+
                 System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
                 Byte[] byteArray = encoding.GetBytes(jsonData);
                 request.ContentLength = byteArray.Length;
@@ -310,8 +392,12 @@ namespace MapViewPallet.Shape
                             deviceId = int.Parse(dr["deviceId"].ToString()),
                         };
                         //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet.palletStatus);
-                        props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(statuspallet);
-                        
+                        if (props._palletList.ContainsKey("Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row))
+                        {
+                            //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(statuspallet);
+                            props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet.palletStatus);
+                        }
+
 
 
                     }
@@ -319,14 +405,14 @@ namespace MapViewPallet.Shape
 
 
                 props._myRotateTransform.Angle = props._rotate;
-                props._myTranslate = new TranslateTransform(props._posision.X, props._posision.Y);
+                props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
 
                 props._myTransformGroup.Children[0] = props._myRotateTransform;
-                props._myTransformGroup.Children[1] = props._myTranslate;
+                props._myTransformGroup.Children[1] = props._myTranslateTransform;
 
                 // SPECIAL POINTS
-                double width = 0.11285714 * props.Bays;
-                double height = 0.11285714 * props.Bays;
+                double width = 0.11285714 * props.bufferDb.maxBay;
+                double height = 0.11285714 * props.bufferDb.maxRow;
                 props._eightCorner[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
                 props._eightCorner[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left
                 props._eightCorner[2] = CoorPointAtBorder(new Point((Width / 2), (0)));           //top-mid
@@ -336,6 +422,7 @@ namespace MapViewPallet.Shape
                 props._eightCorner[6] = CoorPointAtBorder(new Point((Width / 2), (Height)));      //bot-mid
                 props._eightCorner[7] = CoorPointAtBorder(new Point((0), (Height)));            //bot-left
             }));
+
             if (statuspallet == "F")
             {
                 statuspallet = "W";
@@ -392,9 +479,9 @@ namespace MapViewPallet.Shape
 
         public void Move(Point pos)
         {
-            props._myTranslate = new TranslateTransform(pos.X, pos.Y);
+            props._myTranslateTransform = new TranslateTransform(pos.X, pos.Y);
             props._myRotateTransform = new RotateTransform(0);
-            props._myTransformGroup.Children[1] = props._myTranslate;
+            props._myTransformGroup.Children[1] = props._myTranslateTransform;
         }
 
         public Point CoorPointAtBorder(Point pointOnBorder)
@@ -409,7 +496,7 @@ namespace MapViewPallet.Shape
             return new Point(x1, y1);
         }
 
-        public void SelectedStyle ()
+        public void SelectedStyle()
         {
             BorderBrush = new SolidColorBrush(Colors.Red);
         }
@@ -419,6 +506,6 @@ namespace MapViewPallet.Shape
         }
 
 
-        
+
     }
 }

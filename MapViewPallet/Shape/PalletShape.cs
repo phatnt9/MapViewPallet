@@ -24,11 +24,12 @@ namespace MapViewPallet.Shape
         private dtPallet pPallet;
         public dtPallet pallet { get => pPallet; set => pPallet = value; }
 
+        public string name = "";
 
 
         public PalletShape(string name)
         {
-            Name = name;
+            this.name = name;
             // Specific Size of Pallet
             Margin = new Thickness(palletMargin / Global_Object.resolution);
             //Padding = new Thickness(palletPadding / Global_Object.resolution);
@@ -64,22 +65,22 @@ namespace MapViewPallet.Shape
                {
                    case "F":
                        {
-                           Background = new SolidColorBrush(Colors.LightGray);
+                           Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8FFE5"));
                            break;
                        }
                    case "P":
                        {
-                           Background = new SolidColorBrush(Colors.LightGoldenrodYellow);
+                           Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1B9AAA"));
                            break;
                        }
                    case "W":
                        {
-                           Background = new SolidColorBrush(Colors.Lime);
+                           Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00FF99"));
                            break;
                        }
                    default:
                        {
-                           Background = new SolidColorBrush(Colors.Black);
+                           Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#EF476F"));
                            break;
                        }
 

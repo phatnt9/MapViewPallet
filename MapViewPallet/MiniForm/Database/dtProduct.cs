@@ -13,17 +13,17 @@ namespace MapViewPallet.MiniForm
     {
         private int pProductId;
         private string pProductName;
-        private string pImageUrl;
-        private string pImageUrlOld;
+        private string pImageProductUrl;
+        private string pImageProductUrlOld;
         private List<dtProductDetail> pProductDetails;
         private string pPathFile;
 
         public int productId { get => pProductId; set => pProductId = value; }
         public string productName { get => pProductName; set => pProductName = value; }
         public List<dtProductDetail> productDetails { get => pProductDetails; set => pProductDetails = value; }
-        public string imageUrl { get => pImageUrl; set { pImageUrl = value; RaisePropertyChanged("imageUrl"); } }
+        public string imageProductUrl { get => pImageProductUrl; set { pImageProductUrl = value; RaisePropertyChanged("imageProductUrl"); } }
         public string pathFile { get => pPathFile; set { pPathFile = value; RaisePropertyChanged("pathFile"); } }
-        public string imageUrlOld { get => pImageUrlOld; set => pImageUrlOld = value; }
+        public string imageProductUrlOld { get => pImageProductUrlOld; set { pImageProductUrlOld = value; RaisePropertyChanged("imageProductUrlOld"); } }
 
 
         public dtProduct()

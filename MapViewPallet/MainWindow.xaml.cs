@@ -10,6 +10,8 @@ using System.Data;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,9 +24,6 @@ namespace MapViewPallet
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-
-
-
     public class TrvStationGroup
     {
         public TrvStationGroup()
@@ -59,6 +58,8 @@ namespace MapViewPallet
     {
 
         //=================VARIABLE==================
+        public System.Timers.Timer stationTimer;
+        public System.Timers.Timer robotTimer;
         //bool play = false;
         public Point renderTransformOrigin = new Point(0, 0);
         public bool drag = true;
@@ -82,9 +83,8 @@ namespace MapViewPallet
 
 
             InitializeComponent();
-            RobotShape rbot = new RobotShape(map);
-            rbot.ReDraw(new Point(600, 400), -45);
-            rbot.ChangeTask("22");
+
+
             //==============TreeView=============
             trvGroups = new List<dynamic>();
             stationGroup = new TrvStationGroup();
@@ -100,6 +100,10 @@ namespace MapViewPallet
             map.Background = img;
             palletViewEventControl = new CanvasControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
+
+
+
+
 
 
             //GiaoDienLapLich.Show();
@@ -120,6 +124,51 @@ namespace MapViewPallet
             previousStationNameIdDgv = "";
             previousStationNameIdTrv = "";
             DataContext = dgv_model;
+
+
+            stationTimer = new System.Timers.Timer();
+            stationTimer.Interval = 1000;
+            stationTimer.Elapsed += OnTimedRedrawStationEvent;
+            stationTimer.AutoReset = true;
+            stationTimer.Enabled = true;
+
+
+            robotTimer = new System.Timers.Timer();
+            robotTimer.Interval = 50;
+            robotTimer.Elapsed += OnTimedRedrawRobotEvent;
+            robotTimer.AutoReset = true;
+            robotTimer.Enabled = true;
+
+            //==================================
+            string fileName2 = "StationMain.xls";
+            string path2 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName2);
+            LoadStation(path2);
+            //==================================
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                for (int i = 1; i < 5; i++)
+                {
+                    Random posX = new Random();
+                    RobotShape rbot = new RobotShape(map);
+                    rbot.rad = posX.Next(50, 120);
+                    rbot.org = new Point(600+posX.Next(10, 50), 386+posX.Next(10, 50));
+                    rbot.anglestep = posX.NextDouble()+0.2;
+                    rbot.ReDraw(new Point(0, 0), 0);
+                    //rbot.ChangeTask("22");
+                    palletViewEventControl.list_Robot.Add(i.ToString(), rbot);
+                    Thread.Sleep(100);
+                }
+            }));
+        }
+
+        private void OnTimedRedrawRobotEvent(object sender, ElapsedEventArgs e)
+        {
+            palletViewEventControl.RedrawAllRobot();
+        }
+
+        private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
+        {
+            palletViewEventControl.RedrawAllStation();
         }
 
         private void testinout(object sender, DependencyPropertyChangedEventArgs e)
@@ -183,26 +232,26 @@ namespace MapViewPallet
 
         public void LoadStation(string Path)
         {
-            Point[] points = new Point[] 
-            {
-                new Point { X = -9, Y = -8.23 },
-                new Point { X = 1, Y = -8.30 },
-                new Point { X = 9.63, Y = -7.11 },
-                new Point { X = 9.63, Y = 4.12 }
-            };
+            //Point[] points = new Point[] 
+            //{
+            //    new Point { X = -9, Y = -8.23 },
+            //    new Point { X = 1, Y = -8.30 },
+            //    new Point { X = 9.63, Y = -7.11 },
+            //    new Point { X = 9.63, Y = 4.12 }
+            //};
 
-            double[] rotates = new double[]
-            {
-                0,0,270,270
-            };
+            //double[] rotates = new double[]
+            //{
+            //    0,0,270,270
+            //};
 
-            string[] bufferData = new string[] 
-            {
-                "{\"x\":\"-9\",\"y\":\"-8.23\",\"a\":\"0\"}",
-                "{\"x\":\"1\",\"y\":\"-8.30\",\"a\":\"0\"}",
-                "{\"x\":\"9.63\",\"y\":\"-7.11\",\"a\":\"270\"}",
-                "{\"x\":\"9.63\",\"y\":\"4.12\",\"a\":\"270\"}"
-            };
+            //string[] bufferData = new string[] 
+            //{
+            //    "{\"x\":\"-9\",\"y\":\"-8.23\",\"a\":\"0\"}",
+            //    "{\"x\":\"1\",\"y\":\"-8.30\",\"a\":\"0\"}",
+            //    "{\"x\":\"9.63\",\"y\":\"-7.11\",\"a\":\"270\"}",
+            //    "{\"x\":\"9.63\",\"y\":\"4.12\",\"a\":\"270\"}"
+            //};
 
             //int i = 0;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
@@ -237,33 +286,28 @@ namespace MapViewPallet
                         bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
                         bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
                     };
-
-                    StationShape tempStation;
-                    string stationName = dr["bufferName"].ToString();
-                    Point ori = Global_Object.CoorCanvas(new Point(0,0));
-
-                    int maxBays = tempBuffer.maxBay;
-                    int maxRows = tempBuffer.maxRow;
-                    tempStation = new StationShape(map, stationName, tempBuffer);
-                    //if (i < 3)
-                    //{
-                    //    i++;
-                    //}
-                    tempStation.ReDraw(ori);
-                    tempStation.RemoveHandle += palletViewEventControl.StationRemove;
-                    palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
-                    stationGroup.Items.Add(new TrvStation(tempStation));
-                    dgv_model.AddItem(new DgvStation
+                    if (!palletViewEventControl.list_Station.ContainsKey(tempBuffer.bufferId.ToString()))
                     {
-                        Name = tempStation.Name,
-                        Bays = tempStation.props.Bays,
-                        Rows = tempStation.props.Rows,
-                        Position = tempStation.props._posision,
-                        Angle = tempStation.props._rotate
-                    });
+                        StationShape tempStation = new StationShape(map, tempBuffer);
+
+                        tempStation.ReDraw();
+                        tempStation.RemoveHandle += palletViewEventControl.StationRemove;
+                        palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Replace(" ",""), tempStation);
+                        stationGroup.Items.Add(new TrvStation(tempStation));
+
+                        dgv_model.AddItem(new DgvStation
+                        {
+                            Name = tempStation.Name,
+                            Bays = tempStation.props.bufferDb.maxBay,
+                            Rows = tempStation.props.bufferDb.maxRow,
+                            Position = tempStation.props._posision,
+                            Angle = tempStation.props._rotate
+                        });
+                    }
+
                 }
             }
-            
+
             //try
             //{
             //    DataTable data = new DataTable();
@@ -404,11 +448,11 @@ namespace MapViewPallet
             //LoadPath(@"C:\Users\LI\Desktop\Path.xls");
             //LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
             string fileName1 = "Path.xls";
-            string fileName2 = "StationMain.xls";
+            //string fileName2 = "StationMain.xls";
             string path1 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName1);
-            string path2 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName2);
+            //string path2 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName2);
             LoadPath(path1);
-            LoadStation(path2);
+            //LoadStation(path2);
         }
 
         private void StationsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)

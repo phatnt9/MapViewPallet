@@ -79,8 +79,7 @@ namespace MapViewPallet.MiniForm
             
             GroupedBuffers = (ListCollectionView)CollectionViewSource.GetDefaultView(buffersList);
             GroupedPallets = (ListCollectionView)CollectionViewSource.GetDefaultView(palletsList);
-
-
+            
             GroupedDevicePallets = (ListCollectionView)CollectionViewSource.GetDefaultView(devicePalletsList);
 
         }
@@ -90,7 +89,7 @@ namespace MapViewPallet.MiniForm
 
         public void ReloadListDevices(int tabIndex)
         {
-            Console.WriteLine("ReloadListDevices tab:" + tabIndex);
+            //Console.WriteLine("ReloadListDevices tab:" + tabIndex);
             //try
             {
                 UpdateDataStatus("Đang cập nhật...");
@@ -113,13 +112,17 @@ namespace MapViewPallet.MiniForm
                             creDt = dr["creDt"].ToString(),
                             updUsrId = int.Parse(dr["updUsrId"].ToString()),
                             updDt = dr["updDt"].ToString(),
+
                             deviceId = int.Parse(dr["deviceId"].ToString()),
                             deviceName = dr["deviceName"].ToString(),
                             deviceNameOld = dr["deviceNameOld"].ToString(),
-                            imageUrl = dr["imageUrl"].ToString(),
-                            imageUrlOld = dr["imageUrlOld"].ToString(),
+                            imageDeviceUrl = dr["imageDeviceUrl"].ToString(),
+                            imageDeviceUrlOld = dr["imageDeviceUrlOld"].ToString(),
                             maxRow = int.Parse(dr["maxRow"].ToString()),
                             maxBay = int.Parse(dr["maxBay"].ToString()),
+                            //deviceProducts
+                            //deviceBuffers
+                            pathFile = dr["pathFile"].ToString(),
                         };
                         if (!ContainDevice(tempDevice, devicesList))
                         {
@@ -141,7 +144,7 @@ namespace MapViewPallet.MiniForm
                             if (devicesManagement.DevicesListDg.HasItems)
                             {
                                 devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
-                                devicesManagement.DevicesListDg.ScrollIntoView(devicesManagement.DevicesListDg.SelectedItem);
+                                //devicesManagement.DevicesListDg.ScrollIntoView(devicesManagement.DevicesListDg.SelectedItem);
                             }
                             break;
                         }
@@ -150,16 +153,8 @@ namespace MapViewPallet.MiniForm
                             if (devicesManagement.DevicesListDg2.HasItems)
                             {
                                 devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
-                                devicesManagement.DevicesListDg2.ScrollIntoView(devicesManagement.DevicesListDg2.SelectedItem);
+                                //devicesManagement.DevicesListDg2.ScrollIntoView(devicesManagement.DevicesListDg2.SelectedItem);
                             }
-                            break;
-                        }
-                    case 2:
-                        {
-                            break;
-                        }
-                    case 3:
-                        {
                             break;
                         }
                     default:
@@ -167,12 +162,12 @@ namespace MapViewPallet.MiniForm
                             if (devicesManagement.DevicesListDg.HasItems)
                             {
                                 devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
-                                devicesManagement.DevicesListDg.ScrollIntoView(devicesManagement.DevicesListDg.SelectedItem);
+                                //devicesManagement.DevicesListDg.ScrollIntoView(devicesManagement.DevicesListDg.SelectedItem);
                             }
                             if (devicesManagement.DevicesListDg2.HasItems)
                             {
                                 devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
-                                devicesManagement.DevicesListDg2.ScrollIntoView(devicesManagement.DevicesListDg2.SelectedItem);
+                                //devicesManagement.DevicesListDg2.ScrollIntoView(devicesManagement.DevicesListDg2.SelectedItem);
                             }
                             break;
                         }
@@ -211,8 +206,13 @@ namespace MapViewPallet.MiniForm
                             creDt = dr["creDt"].ToString(),
                             updUsrId = int.Parse(dr["updUsrId"].ToString()),
                             updDt = dr["updDt"].ToString(),
+
                             productId = int.Parse(dr["productId"].ToString()),
-                            productName = dr["productName"].ToString()
+                            productName = dr["productName"].ToString(),
+                            imageProductUrl = dr["imageProductUrl"].ToString(),
+                            imageProductUrlOld = dr["imageProductUrlOld"].ToString(),
+                            //productDetails
+                            pathFile = dr["pathFile"].ToString(),
                         };
                         if (!ContainProduct(tempProduct, productsList))
                         {
@@ -229,14 +229,13 @@ namespace MapViewPallet.MiniForm
                 if (devicesManagement.ProductsListDg.HasItems)
                 {
                     devicesManagement.ProductsListDg.SelectedItem = devicesManagement.ProductsListDg.Items[0];
-                    devicesManagement.ProductsListDg.ScrollIntoView(devicesManagement.ProductsListDg.SelectedItem);
+                    //devicesManagement.ProductsListDg.ScrollIntoView(devicesManagement.ProductsListDg.SelectedItem);
                 }
                 UpdateDataStatus("Sẵn sàng");
             }
             //catch
             {
                 //UpdateDataStatus("Lỗi");
-                //Không có device nào
             }
         }
 
@@ -264,17 +263,19 @@ namespace MapViewPallet.MiniForm
                             creDt = dr["creDt"].ToString(),
                             updUsrId = int.Parse(dr["updUsrId"].ToString()),
                             updDt = dr["updDt"].ToString(),
+
                             bufferId = int.Parse(dr["bufferId"].ToString()),
                             bufferName = dr["bufferName"].ToString(),
-                            maxBay = int.Parse(dr["maxBay"].ToString()),
-                            maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
-                            maxRow = int.Parse(dr["maxRow"].ToString()),
-                            maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
-                            bufferCheckIn = dr["bufferCheckIn"].ToString(),
                             bufferNameOld = dr["bufferNameOld"].ToString(),
+                            bufferCheckIn = dr["bufferCheckIn"].ToString(),
                             bufferData = dr["bufferData"].ToString(),
+                            maxRow = int.Parse(dr["maxRow"].ToString()),
+                            maxBay = int.Parse(dr["maxBay"].ToString()),
+                            maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                            maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
                             bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
                             bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                            //pallets
                         };
                         if (!ContainBuffer(tempBuffer, buffersList))
                         {
@@ -291,14 +292,13 @@ namespace MapViewPallet.MiniForm
                 if (devicesManagement.BuffersListDg.HasItems)
                 {
                     devicesManagement.BuffersListDg.SelectedItem = devicesManagement.BuffersListDg.Items[0];
-                    devicesManagement.BuffersListDg.ScrollIntoView(devicesManagement.BuffersListDg.SelectedItem);
+                    //devicesManagement.BuffersListDg.ScrollIntoView(devicesManagement.BuffersListDg.SelectedItem);
                 }
                 UpdateDataStatus("Sẵn sàng");
             }
             //catch
             {
                 //UpdateDataStatus("Lỗi");
-                //Không có device nào
             }
         }
 
@@ -337,11 +337,15 @@ namespace MapViewPallet.MiniForm
                             creDt = dr["creDt"].ToString(),
                             updUsrId = int.Parse(dr["updUsrId"].ToString()),
                             updDt = dr["updDt"].ToString(),
+
                             deviceProductId = int.Parse(dr["deviceProductId"].ToString()),
                             deviceId = int.Parse(dr["deviceId"].ToString()),
                             productId = int.Parse(dr["productId"].ToString()),
                             productName = dr["productName"].ToString(),
-                            checkStatus = bool.Parse(dr["checkStatus"].ToString())
+                            checkStatus = bool.Parse(dr["checkStatus"].ToString()),
+
+                            imageDeviceUrl = dr["imageDeviceUrl"].ToString(),
+                            imageProductUrl = dr["imageProductUrl"].ToString(),
                         };
                         if (!ContainDeviceProduct(tempDeviceProduct, deviceProductsList))
                         {
@@ -357,7 +361,7 @@ namespace MapViewPallet.MiniForm
                 if (devicesManagement.DeviceProductsListDg.HasItems)
                 {
                     devicesManagement.DeviceProductsListDg.SelectedItem = devicesManagement.DeviceProductsListDg.Items[0];
-                    devicesManagement.DeviceProductsListDg.ScrollIntoView(devicesManagement.DeviceProductsListDg.SelectedItem);
+                    //devicesManagement.DeviceProductsListDg.ScrollIntoView(devicesManagement.DeviceProductsListDg.SelectedItem);
                 }
                 UpdateDataStatus("Sẵn sàng");
             }
@@ -407,6 +411,10 @@ namespace MapViewPallet.MiniForm
                             bufferId = int.Parse(dr["bufferId"].ToString()),
                             bufferName = dr["bufferName"].ToString(),
                             bufferSort = int.Parse(dr["bufferSort"].ToString()),
+
+                            maxRow = int.Parse(dr["maxRow"].ToString()),
+                            maxBay  = int.Parse(dr["maxBay"].ToString()),
+
                             checkStatus = bool.Parse(dr["checkStatus"].ToString())
                         };
                         if (!ContainDeviceBuffer(tempDeviceBuffer, deviceBuffersList))
@@ -423,7 +431,7 @@ namespace MapViewPallet.MiniForm
                 if (devicesManagement.DeviceBuffersListDg.HasItems)
                 {
                     devicesManagement.DeviceBuffersListDg.SelectedItem = devicesManagement.DeviceBuffersListDg.Items[0];
-                    devicesManagement.DeviceBuffersListDg.ScrollIntoView(devicesManagement.DeviceBuffersListDg.SelectedItem);
+                    //devicesManagement.DeviceBuffersListDg.ScrollIntoView(devicesManagement.DeviceBuffersListDg.SelectedItem);
                 }
                 UpdateDataStatus("Sẵn sàng");
             }
@@ -485,7 +493,7 @@ namespace MapViewPallet.MiniForm
                 if (devicesManagement.ProductDetailsListDg.HasItems)
                 {
                     devicesManagement.ProductDetailsListDg.SelectedItem = devicesManagement.ProductDetailsListDg.Items[0];
-                    devicesManagement.ProductDetailsListDg.ScrollIntoView(devicesManagement.ProductDetailsListDg.SelectedItem);
+                    //devicesManagement.ProductDetailsListDg.ScrollIntoView(devicesManagement.ProductDetailsListDg.SelectedItem);
                 }
                 UpdateDataStatus("Sẵn sàng");
             }
@@ -553,7 +561,7 @@ namespace MapViewPallet.MiniForm
                 if (devicesManagement.PalletsListDg.HasItems)
                 {
                     devicesManagement.PalletsListDg.SelectedItem = devicesManagement.PalletsListDg.Items[0];
-                    devicesManagement.PalletsListDg.ScrollIntoView(devicesManagement.PalletsListDg.SelectedItem);
+                    //devicesManagement.PalletsListDg.ScrollIntoView(devicesManagement.PalletsListDg.SelectedItem);
                 }
                 UpdateDataStatus("Sẵn sàng");
             }
@@ -603,6 +611,9 @@ namespace MapViewPallet.MiniForm
                             devicePalletName = dr["devicePalletName"].ToString(),
                             row = int.Parse(dr["row"].ToString()),
                             bay = int.Parse(dr["bay"].ToString()),
+
+                            imageDeviceUrl = dr["imageDeviceUrl"].ToString(),
+
                             dataPallet = dr["dataPallet"].ToString()
                         };
                         if (!ContainDevicePallet(tempDevicePallet, devicePalletsList))
@@ -619,7 +630,7 @@ namespace MapViewPallet.MiniForm
                 if (devicesManagement.DevicePalletsListDg.HasItems)
                 {
                     devicesManagement.DevicePalletsListDg.SelectedItem = devicesManagement.DevicePalletsListDg.Items[0];
-                    devicesManagement.DevicePalletsListDg.ScrollIntoView(devicesManagement.DevicePalletsListDg.SelectedItem);
+                    //devicesManagement.DevicePalletsListDg.ScrollIntoView(devicesManagement.DevicePalletsListDg.SelectedItem);
                 }
                 UpdateDataStatus("Sẵn sàng");
             }

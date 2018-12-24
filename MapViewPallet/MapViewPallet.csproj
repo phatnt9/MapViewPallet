@@ -118,7 +118,6 @@
     </Compile>
     <Compile Include="Shape\CanvasPath.cs" />
     <Compile Include="Shape\RobotShape.cs" />
-    <Compile Include="Shape\StationDataService.cs" />
     <Compile Include="Shape\StationShape.cs" />
     <Compile Include="Shape\StraightShape.cs" />
     <Page Include="MainWindow.xaml">

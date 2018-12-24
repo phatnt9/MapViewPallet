@@ -19,19 +19,6 @@ namespace MapViewPallet
     
     public static class Global_Object
     {
-        public enum StationState
-        {
-            Normal,
-            Warning,
-            Error
-        }
-
-        public enum PalletState
-        {
-            Occupied,
-            Unoccupied,
-            Holding
-        }
 
         //#######################################
         public static bool IsEngLish = false;

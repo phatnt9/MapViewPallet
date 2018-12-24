@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,6 +36,7 @@ namespace MapViewPallet.Shape
         //---------------OBJECT-------------------
         public SortedDictionary<string, CanvasPath> list_Path;
         public SortedDictionary<string, StationShape> list_Station;
+        public SortedDictionary<string, RobotShape> list_Robot;
         //double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
         //---------------MICS-------------------
         //private Ellipse cursorPoint = new Ellipse();
@@ -48,6 +50,7 @@ namespace MapViewPallet.Shape
             translateTransform = mainWindow.canvasTranslateTransform;
             list_Path = new SortedDictionary<string, CanvasPath>();
             list_Station = new SortedDictionary<string, StationShape>();
+            list_Robot = new SortedDictionary<string, RobotShape>();
             //==========EVENT==========
             map.MouseDown += Map_MouseDown;
             map.MouseWheel += Map_Zoom;
@@ -191,6 +194,7 @@ namespace MapViewPallet.Shape
             hoveringItemName = mouseWasDownOn.Name;
             //mainWindow.MouseCoor.Content = (mousePos.X- Global_Object.OriginPoint.X).ToString("0.0") + " " + (Global_Object.OriginPoint.Y - mousePos.Y ).ToString("0.0");
             mainWindow.MouseCoor.Content = (Global_Object.CoorLaser(mousePos).X).ToString("0.00") + " " + (Global_Object.CoorLaser(mousePos).Y).ToString("0.00");
+            mainWindow.MouseCoor2.Content = ((mousePos).X).ToString("0.00") + " " + ((mousePos).Y).ToString("0.00");
             //mainWindow.MouseCoor.Content = ((mousePos).X.ToString("0.0") + " " + (mousePos).Y.ToString("0.0"));
 
             //Console.WriteLine("============================================");
@@ -562,6 +566,24 @@ namespace MapViewPallet.Shape
                     }
             }
         }
+
+        public void RedrawAllStation ()
+        {
+            for (int i = 0; i < list_Station.Count; i++)
+            {
+                list_Station.ElementAt(i).Value.ReDraw();
+            }
+        }
+
+        public void RedrawAllRobot()
+        {
+            for (int i = 0; i < list_Robot.Count; i++)
+            {
+                list_Robot.ElementAt(i).Value.DrawCircle();
+                //Thread.Sleep(500);
+            }
+        }
+
     }
 }
 
