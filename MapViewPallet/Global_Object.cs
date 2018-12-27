@@ -27,8 +27,10 @@ namespace MapViewPallet
         public static string url = @"http://localhost:8081/robot/rest/";
 
 
-        public static int userLogin = 1;
-        
+        public static int userLogin = -2;
+        public static string userName = "";
+        public static int userAuthor = -2;
+
 
         public static string messageDuplicated = "{0} is duplicated.";
         public static string messageSaveSucced = "Save operation succeeded.";

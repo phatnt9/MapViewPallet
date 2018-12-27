@@ -113,6 +113,16 @@ namespace MapViewPallet.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_edit {
+            get {
+                object obj = ResourceManager.GetObject("icon_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_refresh {
             get {
                 object obj = ResourceManager.GetObject("icon_refresh", resourceCulture);

@@ -143,9 +143,9 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
                                             <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Machine" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Material" Binding="{Binding Path=productName}" IsReadOnly="True"/>
-                                            <DataGridTemplateColumn  Header="Serials"  >
+                                            <DataGridTextColumn Header="Thiết bị" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Sản phẩm" Binding="{Binding Path=productName}" IsReadOnly="True"/>
+                                            <DataGridTemplateColumn  Header="Mã"  >
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <ComboBox 
@@ -158,8 +158,8 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn Header="Request" Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                            <DataGridTextColumn Header="Buffered" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Yêu cầu" Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <DataGridTextColumn Header="Đã cấp" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
@@ -207,9 +207,9 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
                                             <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Machine" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Material" Binding="{Binding Path=productName}" IsReadOnly="True"/>
-                                            <DataGridTemplateColumn  Header="Serials"  >
+                                            <DataGridTextColumn Header="Thiết bị" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Sản phẩm" Binding="{Binding Path=productName}" IsReadOnly="True"/>
+                                            <DataGridTemplateColumn  Header="Mã"  >
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <ComboBox 
@@ -222,8 +222,8 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn Header="Request" Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                            <DataGridTextColumn Header="Buffered" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Yêu cầu" Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <DataGridTextColumn Header="Đã cấp" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
@@ -271,9 +271,9 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
                                             <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Machine" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Material" Binding="{Binding Path=productName}" IsReadOnly="True"/>
-                                            <DataGridTemplateColumn  Header="Serials"  >
+                                            <DataGridTextColumn Header="Thiết bị" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Sản phẩm" Binding="{Binding Path=productName}" IsReadOnly="True"/>
+                                            <DataGridTemplateColumn  Header="Mã"  >
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <ComboBox 
@@ -286,8 +286,8 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn Header="Request" Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                            <DataGridTextColumn Header="Buffered" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Yêu cầu" Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <DataGridTextColumn Header="Đã cấp" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>

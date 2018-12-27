@@ -212,7 +212,7 @@ namespace MapViewPallet.Shape
             if (bufferData != null)
             {
                 props._posision = Global_Object.CoorCanvas(new Point((double)bufferData.x, (double)bufferData.y));
-                props._rotate = (double)bufferData.a;
+                props._rotate = (double)bufferData.angle;
             }
 
             props._myRotateTransform.Angle = props._rotate;
@@ -339,7 +339,7 @@ namespace MapViewPallet.Shape
                 }
                 dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
                 props._posision = Global_Object.CoorCanvas(new Point(((bufferData != null) ? (((double)bufferData.x)) : 0), ((bufferData != null) ? (((double)bufferData.y)) : 0)));
-                props._rotate = (bufferData != null) ? (((double)bufferData.a)) : 0;
+                props._rotate = (bufferData != null) ? (((double)bufferData.angle)) : 0;
                 Draw();
             }));
         }
@@ -435,7 +435,8 @@ namespace MapViewPallet.Shape
 
         public void EditMenu(object sender, RoutedEventArgs e)
         {
-
+            StationEditor stationEditor = new StationEditor(this);
+            stationEditor.ShowDialog();
         }
 
         public void PropertiesMenu(object sender, RoutedEventArgs e)
@@ -464,11 +465,11 @@ namespace MapViewPallet.Shape
 
         private void ChangeToolTipContent(object sender, ToolTipEventArgs e)
         {
-            ToolTip = "Name: " + props.NameID +
-                "\n Position: " + Global_Object.CoorLaser(props._posision).X.ToString("0.00") + "," + Global_Object.CoorLaser(props._posision).Y.ToString("0.00") +
-                " \n Width: " + Width.ToString("0.00") + "m" +
-                " \n Height: " + Height.ToString("0.00") + "m" +
-                " \n Rotate: " + props._rotate;
+            ToolTip = "Tên: " + props.NameID +
+                "\n Vị trí: " + Global_Object.CoorLaser(props._posision).X.ToString("0.00") + "," + Global_Object.CoorLaser(props._posision).Y.ToString("0.00") +
+                " \n Dài: " + Height.ToString("0.00") + "m" +
+                " \n Rộng: " + Width.ToString("0.00") + "m" +
+                " \n Góc quay: " + props._rotate;
         }
 
         public void Remove()

@@ -53,7 +53,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             dtProductDetail productDetail = new dtProductDetail();
             productDetail.productId = ((devicesManagement.ProductsListDg.SelectedItem) as dtProduct).productId;
             productDetail.productDetailId = 0;
-            productDetail.productDetailName = this.productDetailNametb.Text;
+            productDetail.productDetailName = this.productDetailNametb.Text.Trim().Replace(" ", "");
             productDetail.creUsrId = Global_Object.userLogin;
             productDetail.updUsrId = Global_Object.userLogin;
 

@@ -17,7 +17,7 @@
         public int planId { get => pPlanId; set => pPlanId = value; }
         public int row { get => pRow; set => pRow = value; }
         public int bay { get => pBay; set => pBay = value; }
-        public string dataPallet { get => pDataPallet; set => pDataPallet = value; }
+        public string dataPallet { get => pDataPallet; set { pDataPallet = value; RaisePropertyChanged("dataPallet"); } }
         public string palletStatus { get => pPalletStatus; set => pPalletStatus = value; }
         public int bufferId { get => pBufferId; set => pBufferId = value; }
         public int deviceId { get => pDeviceId; set => pDeviceId = value; }

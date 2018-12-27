@@ -26,5 +26,6 @@ namespace MapViewPallet.MiniForm
         public int deviceId { get => pDeviceId; set => pDeviceId = value; }
         public string deviceName { get => pDeviceName; set => pDeviceName = value; }
         public string userPasswordOld { get => pUserPasswordOld; set => pUserPasswordOld = value; }
+        
     }
 }

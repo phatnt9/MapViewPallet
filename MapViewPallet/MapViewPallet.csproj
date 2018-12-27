@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\thanhhau89\seldatui\SeldatRobot\bin\Debug\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -62,9 +65,12 @@
     </ApplicationDefinition>
     <Compile Include="Communication\HttpBridge\BridgeClientRequest.cs" />
     <Compile Include="DataGridView\DgvStation.cs" />
-    <Compile Include="DataGridView\DgvModel.cs" />
+    <Compile Include="DataGridView\MainWindowModel.cs" />
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
+    <Compile Include="MiniForm\ChangePassForm.xaml.cs">
+      <DependentUpon>ChangePassForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MiniForm\Database\dtDevicePallet.cs" />
     <Compile Include="MiniForm\DeviceList.cs" />
     <Compile Include="MiniForm\Database\dtBuffer.cs" />
@@ -81,7 +87,10 @@
     <Compile Include="MiniForm\DevicesManagement.xaml.cs">
       <DependentUpon>DevicesManagement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MiniForm\ManagementModel.cs" />
+    <Compile Include="MiniForm\LoginForm.xaml.cs">
+      <DependentUpon>LoginForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MiniForm\DevicesManagementModel.cs" />
     <Compile Include="MiniForm\MicsWpfForm\AddBufferForm.xaml.cs">
       <DependentUpon>AddBufferForm.xaml</DependentUpon>
     </Compile>
@@ -94,16 +103,29 @@
     <Compile Include="MiniForm\MicsWpfForm\AddProductForm.xaml.cs">
       <DependentUpon>AddProductForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiniForm\MicsWpfForm\AddUserForm.xaml.cs">
+      <DependentUpon>AddUserForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MiniForm\NotifyUIBase.cs" />
     <Compile Include="MiniForm\Plan.cs" />
     <Compile Include="MiniForm\PlanControl.xaml.cs">
       <DependentUpon>PlanControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MiniForm\PlanModel.cs" />
+    <Compile Include="MiniForm\PlanControlModel.cs" />
     <Compile Include="MiniForm\Database\RptProcessChargeDTO.cs" />
     <Compile Include="MiniForm\Database\RptProcessRobotDTO.cs" />
     <Compile Include="MiniForm\ReverseValueConverter.cs" />
     <Compile Include="MiniForm\Database\userModel.cs" />
+    <Compile Include="MiniForm\SimpleUser.cs" />
+    <Compile Include="MiniForm\StationEditor.xaml.cs">
+      <DependentUpon>StationEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MiniForm\StationEditorModel.cs" />
+    <Compile Include="MiniForm\UserAuthorCollection.cs" />
+    <Compile Include="MiniForm\UserManagement.xaml.cs">
+      <DependentUpon>UserManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MiniForm\UserModel.cs" />
     <Compile Include="Shape\CurveShape.cs" />
     <Compile Include="Shape\Edit.xaml.cs">
       <DependentUpon>Edit.xaml</DependentUpon>
@@ -132,7 +154,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MiniForm\ChangePassForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MiniForm\DevicesManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiniForm\LoginForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,7 +182,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MiniForm\MicsWpfForm\AddUserForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MiniForm\PlanControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiniForm\StationEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiniForm\UserManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -341,6 +383,8 @@
   <ItemGroup>
     <None Include="Resources\icon_add.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\icon_edit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

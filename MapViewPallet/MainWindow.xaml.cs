@@ -64,7 +64,7 @@ namespace MapViewPallet
         public Point renderTransformOrigin = new Point(0, 0);
         public bool drag = true;
         //Data Grid View
-        DgvModel dgv_model;
+        MainWindowModel mainWindowModel;
         string previousStationNameIdDgv;
         string previousStationNameIdTrv;
         //Tree View
@@ -73,17 +73,17 @@ namespace MapViewPallet
         Point transform = new Point(0, 0);
         public CanvasControlService palletViewEventControl;
         System.Media.SoundPlayer snd;
-        PlanControl planControl;
-        DevicesManagement devicesManagement;
+        //PlanControl planControl;
+        //DevicesManagement devicesManagement;
+        //UserManagement userManagement;
 
 
 
         public MainWindow()
         {
-
-
             InitializeComponent();
 
+            Loaded += MainWindow_Loaded;
 
             //==============TreeView=============
             trvGroups = new List<dynamic>();
@@ -100,13 +100,6 @@ namespace MapViewPallet
             map.Background = img;
             palletViewEventControl = new CanvasControlService(this, mainTreeView);
             snd = new System.Media.SoundPlayer();
-
-
-
-
-
-
-            //GiaoDienLapLich.Show();
             //===============DataGridView========
             StationsDataGrid.CanUserAddRows = false;
             StationsDataGrid.CanUserDeleteRows = false;
@@ -120,10 +113,10 @@ namespace MapViewPallet
 
             StationsDataGrid.GotFocus += StationsDataGrid_GotFocus;
             StationsDataGrid.LostFocus += StationsDataGrid_LostFocus;
-            dgv_model = new DgvModel(this);
+            mainWindowModel = new MainWindowModel(this);
             previousStationNameIdDgv = "";
             previousStationNameIdTrv = "";
-            DataContext = dgv_model;
+            DataContext = mainWindowModel;
 
 
             stationTimer = new System.Timers.Timer();
@@ -138,12 +131,9 @@ namespace MapViewPallet
             robotTimer.Elapsed += OnTimedRedrawRobotEvent;
             robotTimer.AutoReset = true;
             robotTimer.Enabled = true;
+            
+            LoadStation();
 
-            //==================================
-            string fileName2 = "StationMain.xls";
-            string path2 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName2);
-            LoadStation(path2);
-            //==================================
             Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
                 for (int i = 1; i < 5; i++)
@@ -151,14 +141,31 @@ namespace MapViewPallet
                     Random posX = new Random();
                     RobotShape rbot = new RobotShape(map);
                     rbot.rad = posX.Next(50, 120);
-                    rbot.org = new Point(600+posX.Next(10, 50), 386+posX.Next(10, 50));
-                    rbot.anglestep = posX.NextDouble()+0.2;
+                    rbot.org = new Point(600 + posX.Next(10, 50), 386 + posX.Next(10, 50));
+                    rbot.anglestep = posX.NextDouble() + 0.2;
                     rbot.ReDraw(new Point(0, 0), 0);
                     //rbot.ChangeTask("22");
                     palletViewEventControl.list_Robot.Add(i.ToString(), rbot);
                     Thread.Sleep(100);
                 }
             }));
+        }
+
+        private void CenterWindowOnScreen()
+        {
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+            this.Left = (screenWidth / 2) - (windowWidth / 2);
+            this.Top = (screenHeight / 2) - (windowHeight / 2);
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            CenterWindowOnScreen();
+            LoginForm frm = new LoginForm();
+            frm.ShowDialog();
         }
 
         private void OnTimedRedrawRobotEvent(object sender, ElapsedEventArgs e)
@@ -230,30 +237,8 @@ namespace MapViewPallet
         }
 
 
-        public void LoadStation(string Path)
+        public void LoadStation()
         {
-            //Point[] points = new Point[] 
-            //{
-            //    new Point { X = -9, Y = -8.23 },
-            //    new Point { X = 1, Y = -8.30 },
-            //    new Point { X = 9.63, Y = -7.11 },
-            //    new Point { X = 9.63, Y = 4.12 }
-            //};
-
-            //double[] rotates = new double[]
-            //{
-            //    0,0,270,270
-            //};
-
-            //string[] bufferData = new string[] 
-            //{
-            //    "{\"x\":\"-9\",\"y\":\"-8.23\",\"a\":\"0\"}",
-            //    "{\"x\":\"1\",\"y\":\"-8.30\",\"a\":\"0\"}",
-            //    "{\"x\":\"9.63\",\"y\":\"-7.11\",\"a\":\"270\"}",
-            //    "{\"x\":\"9.63\",\"y\":\"4.12\",\"a\":\"270\"}"
-            //};
-
-            //int i = 0;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
             request.Method = "GET";
             request.ContentType = @"application/json";
@@ -295,7 +280,7 @@ namespace MapViewPallet
                         palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Replace(" ",""), tempStation);
                         stationGroup.Items.Add(new TrvStation(tempStation));
 
-                        dgv_model.AddItem(new DgvStation
+                        mainWindowModel.AddItem(new DgvStation
                         {
                             Name = tempStation.Name,
                             Bays = tempStation.props.bufferDb.maxBay,
@@ -307,39 +292,6 @@ namespace MapViewPallet
 
                 }
             }
-
-            //try
-            //{
-            //    DataTable data = new DataTable();
-            //    data = Global_Object.LoadExcelFile(Path);
-            //    foreach (DataRow row in data.Rows)
-            //    {
-            //        StationShape tempStation;
-            //        string stationName = row.Field<string>("NAME");
-            //        double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
-            //        double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
-            //        Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY)); // Change Laser Metter to Canvas Position
-            //        int lines = int.Parse(row.Field<string>("LINES"));
-            //        int pallets = int.Parse(row.Field<string>("PALLETS"));
-            //        double rotate = double.Parse(row.Field<string>("ROTATE"));
-            //        tempStation = new StationShape(map, stationName, lines, pallets, rotate);
-            //        tempStation.ReDraw(ori);
-            //        tempStation.RemoveHandle += palletViewEventControl.StationRemove;
-            //        palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
-            //        stationGroup.Items.Add(new TrvStation(tempStation));
-            //        dgv_model.AddItem(new DgvStation
-            //        {
-            //            Name = tempStation.Name,
-            //            Bays = tempStation.props.Bays,
-            //            Rows = tempStation.props.Rows,
-            //            Position = tempStation.props._posision,
-            //            Angle = tempStation.props._rotate
-            //        });
-            //    }
-            //}
-            //catch
-            //{
-            //}
         }
 
         private void btn_LoadExcel_Click(object sender, RoutedEventArgs e)
@@ -402,13 +354,7 @@ namespace MapViewPallet
             //catch { }
         }
 
-
-        private void ChangeMapSize(object sender, RoutedEventArgs e)
-        {
-            //MapResize resizeForm = new MapResize(map.Width, map.Height);
-            //resizeForm.ResizeHandle += CanvasResizeHandle;
-            //resizeForm.Show();
-        }
+        
 
 
 
@@ -531,14 +477,26 @@ namespace MapViewPallet
 
         private void btn_PlanControl_Click(object sender, RoutedEventArgs e)
         {
-            planControl = new PlanControl();
+            PlanControl planControl = new PlanControl();
             planControl.ShowDialog();
         }
 
         private void btn_DevicesManagement_Click(object sender, RoutedEventArgs e)
         {
-            devicesManagement = new DevicesManagement();
+            DevicesManagement devicesManagement = new DevicesManagement();
             devicesManagement.ShowDialog();
+        }
+
+        private void btn_UsersManagement_Click(object sender, RoutedEventArgs e)
+        {
+            UserManagement userManagement = new UserManagement();
+            userManagement.ShowDialog();
+        }
+
+        private void btn_ChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePassForm changePassForm = new ChangePassForm();
+            changePassForm.ShowDialog();
         }
     }
 

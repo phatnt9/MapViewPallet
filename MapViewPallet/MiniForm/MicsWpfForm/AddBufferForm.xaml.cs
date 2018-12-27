@@ -93,8 +93,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             int maxRow = 0;
             int maxBay = 0;
 
-            int.TryParse(this.bufferMaxRowtb.Text, out maxRow);
-            int.TryParse(this.bufferMaxBaytb.Text, out maxBay);
+            int.TryParse(this.bufferMaxRowtb.Text.Trim().Replace(" ", ""), out maxRow);
+            int.TryParse(this.bufferMaxBaytb.Text.Trim().Replace(" ", ""), out maxBay);
 
             if (maxRow == 0)
             {
@@ -114,11 +114,12 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             request.Method = "POST";
             request.ContentType = @"application/json";
             dtBuffer buffer = new dtBuffer();
-            buffer.bufferName = this.bufferNametb.Text;
+            buffer.bufferName = this.bufferNametb.Text.Trim().Replace(" ", "");
             buffer.maxRow = maxRow;
             buffer.maxBay = maxBay;
             buffer.bufferReturn = (bool)bufferReturnCb.IsChecked;
-            buffer.bufferData = "{\"x\":\"0\",\"y\":\"0\",\"a\":\"0\"}";
+            buffer.bufferData = "{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"}";
+            buffer.bufferCheckIn = "{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"}";
             buffer.creUsrId = Global_Object.userLogin;
             buffer.updUsrId = Global_Object.userLogin;
 

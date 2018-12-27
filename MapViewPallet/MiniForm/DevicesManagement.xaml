@@ -342,8 +342,9 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <GroupBox >
@@ -461,7 +462,8 @@
                                                     </DataGridTemplateColumn>
                                                     
                                                     <DataGridTemplateColumn Width="*" 
-                                                            Header="ImageUrlOld">
+                                                            Header="ImageUrlOld"
+                                                                            Visibility="Hidden">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -473,7 +475,8 @@
                                                     </DataGridTemplateColumn>
                                                     
                                                     <DataGridTemplateColumn Width="*" 
-                                                            Header="pathFile">
+                                                            Header="pathFile"
+                                                                            Visibility="Hidden">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -513,7 +516,7 @@
                                                                Content="Cột"
                                                                FontSize="12"></Label>
                                                     <TextBox Name="MaxBaytb" 
-                                                                 Width="50" 
+                                                                 Width="40" 
                                                                  Height="20" CharacterCasing="Upper"
                                                                  PreviewTextInput="MaxBaytb_PreviewTextInput"></TextBox>
                                                 </StackPanel>
@@ -523,7 +526,7 @@
                                                                Content="Hàng"
                                                                FontSize="12"></Label>
                                                     <TextBox Name="MaxRowtb" 
-                                                                 Width="50" 
+                                                                 Width="40" 
                                                                  Height="20" 
                                                              CharacterCasing="Upper"
                                                                  PreviewTextInput ="MaxRowtb_PreviewTextInput"></TextBox>
@@ -569,7 +572,7 @@
                                                     </Style>
                                                 </DataGrid.RowStyle>
                                                 <DataGrid.Columns>
-                                                    <DataGridTemplateColumn Width="*" 
+                                                    <DataGridTemplateColumn Width="Auto" 
                                                             Header="DeviceId">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
@@ -580,7 +583,7 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn Width="*" 
+                                                    <DataGridTemplateColumn Width="Auto" 
                                                             Header="Id">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
@@ -591,7 +594,7 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn Width="*" 
+                                                    <DataGridTemplateColumn Width="Auto" 
                                                             Header="Pallet">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
@@ -603,7 +606,7 @@
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
                                                     <DataGridTextColumn Header="Hàng" 
-                                                        Width="*" 
+                                                        Width="Auto" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=row}">
                                                         <DataGridTextColumn.EditingElementStyle>
@@ -613,7 +616,7 @@
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Cột" 
-                                                        Width="*" 
+                                                        Width="Auto" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=bay}">
                                                         <DataGridTextColumn.EditingElementStyle>
@@ -623,18 +626,138 @@
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Dữ liệu" 
-                                                        Width="*" 
+                                                        Width="Auto" 
                                                         IsReadOnly="False"
                                                         Binding="{Binding Path=dataPallet}">
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
                                                         <DataGridTextColumn.EditingElementStyle>
                                                             <Style TargetType="TextBox">
-                                                                <Setter Property="CharacterCasing" Value="Upper"/>
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                                <Setter Property="AcceptsReturn" Value="true" />
                                                             </Style>
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <GroupBox Margin="20,0,0,0">
+                                    <GroupBox.Header>
+                                        <StackPanel>
+                                            <TextBlock FontSize="14" FontWeight="Bold" Text="Tọa độ:"></TextBlock>
+                                        </StackPanel>
+                                    </GroupBox.Header>
+                                    <Grid>
+                                        <StackPanel Orientation="Vertical">
+                                            <Grid>
+                                                <StackPanel Orientation="Vertical" 
+                                        HorizontalAlignment="Stretch">
+                                                    <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Left">
+                                                        <Label VerticalAlignment="Center"
+                                           Content="Line: "
+                                               Width="50"
+                                           FontSize="12"></Label>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Center">
+                                                            <Label VerticalAlignment="Center" 
+                                           Content="X"
+                                           FontSize="12"></Label>
+                                                            <TextBox Name="palletLineX" 
+                                             Width="35" 
+                                             Height="20" 
+                                             CharacterCasing="Upper"
+                                                                     PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Center">
+                                                            <Label VerticalAlignment="Center" 
+                                           Content="Y"
+                                           FontSize="12"></Label>
+                                                            <TextBox Name="palletLineY" 
+                                             Width="35" 
+                                             Height="20" 
+                                             CharacterCasing="Upper"
+                                                                     PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Center">
+                                                        <Label VerticalAlignment="Center" 
+                                           Content="A"
+                                           FontSize="12"></Label>
+                                                        <TextBox Name="palletLineA" 
+                                             Width="35" 
+                                             Height="20"
+                                             CharacterCasing="Upper"
+                                                                 PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid>
+                                                <StackPanel Orientation="Vertical" 
+                                        HorizontalAlignment="Stretch" 
+                                        Margin="0,0,0,0">
+                                                    <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Left">
+                                                        <Label VerticalAlignment="Center" 
+                                           Content="Pallet: "
+                                               Width="50"
+                                           FontSize="12"></Label>
+                                                    </StackPanel>
+                                                    <!--<StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Right">
+                                                    <Label VerticalAlignment="Center" 
+                                           Content="Hàng"
+                                           FontSize="12"></Label>
+                                                    <TextBox Name="palletR" 
+                                             Width="35" 
+                                             Height="20" 
+                                             CharacterCasing="Upper"></TextBox>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Right">
+                                                    <Label VerticalAlignment="Center" 
+                                           Content="Cột"
+                                           FontSize="12"></Label>
+                                                    <TextBox Name="palletB" 
+                                             Width="35" 
+                                             Height="20" 
+                                             CharacterCasing="Upper"></TextBox>
+                                                </StackPanel>-->
+                                                    <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Center">
+                                                        <Label VerticalAlignment="Center" 
+                                           Content="D"
+                                           FontSize="12"></Label>
+                                                        <TextBox Name="palletPalletD" 
+                                             Width="35" 
+                                             Height="20"
+                                             CharacterCasing="Upper"
+                                                                 PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <StackPanel>
+                                                <Button Name="btn_SetPalletDataPallet"
+                                        Width="35" 
+                                        Height="20" 
+                                        FontSize="12"
+                                        Content="Lưu"
+                                                        Margin="0,30,0,0"
+                                                        Click="Btn_SetPalletDataPallet_Click"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        
                                     </Grid>
                                 </GroupBox>
                             </Grid>
@@ -937,9 +1060,8 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <GroupBox >
@@ -959,7 +1081,7 @@
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
 
-                                                <Button Name="btn_Save_Buffer" 
+                                                <!--<Button Name="btn_Save_Buffer" 
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
                                         FontSize="14">
@@ -968,7 +1090,7 @@
                                                Height="20" 
                                                Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
                                                     </StackPanel>
-                                                </Button>
+                                                </Button>-->
 
                                                 <Button Name="btn_Refresh_Buffer"
                                         Margin="5,0,0,5" 
@@ -1016,7 +1138,7 @@
                                       CanUserSortColumns="True"
                                       AutoGenerateColumns="False">
                                                 <DataGrid.Columns>
-                                                    <DataGridTemplateColumn Width="*" 
+                                                    <DataGridTemplateColumn Width="Auto" 
                                                             Header="Id">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
@@ -1028,7 +1150,7 @@
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
                                                     <DataGridTextColumn Header="Tên" 
-                                                        Width="*" 
+                                                        Width="Auto" 
                                                         IsReadOnly="False"
                                                         Binding="{Binding Path=bufferName}">
                                                         <DataGridTextColumn.EditingElementStyle>
@@ -1038,7 +1160,7 @@
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Cột" 
-                                                                        Width="*" 
+                                                                        Width="Auto" 
                                                                         IsReadOnly="False"
                                                                         Binding="{Binding Path=maxBay}">
                                                         <DataGridTextColumn.EditingElementStyle>
@@ -1048,7 +1170,7 @@
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Hàng" 
-                                                                        Width="*" 
+                                                                        Width="Auto" 
                                                                         IsReadOnly="False"
                                                                         Binding="{Binding Path=maxRow}">
                                                         <DataGridTextColumn.EditingElementStyle>
@@ -1057,20 +1179,37 @@
                                                             </Style>
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
-                                                    <DataGridTemplateColumn Header="Return" Width="*">
+                                                    <DataGridTemplateColumn Header="Return" Width="Auto">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
                                                                 <CheckBox Name="BufferReturnCbRow" 
                                                           HorizontalAlignment="Center"
+                                                                          Click="BufferReturnCbRow_Click"
                                                           IsChecked="{Binding Path=bufferReturn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
+                                                    <DataGridTextColumn Header="Dữ liệu" 
+                                                        Width="*" 
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=bufferCheckIn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                        <DataGridTextColumn.EditingElementStyle>
+                                                            <Style TargetType="TextBox">
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                                <Setter Property="AcceptsReturn" Value="true" />
+                                                            </Style>
+                                                        </DataGridTextColumn.EditingElementStyle>
+                                                    </DataGridTextColumn>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
                                         <Grid Grid.Row="2">
-                                            <Grid Grid.Row="0">
+                                            <Grid>
                                                 <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Center" 
                                         VerticalAlignment="Center"
@@ -1137,6 +1276,17 @@
                                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
+                                                <Button Name="btn_Save_Pallet"
+                                        Margin="5,0,0,5" 
+                                        Width="Auto" 
+                                        FontSize="14"
+                                                        Click="Btn_Save_Pallet_Click">
+                                                    <StackPanel>
+                                                        <Image Width="20" 
+                                               Height="20" 
+                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
+                                                    </StackPanel>
+                                                </Button>
                                                 <Button Name="btn_Refresh_Pallet"
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
@@ -1162,7 +1312,7 @@
                                       AutoGenerateColumns="False">
                                                 <DataGrid.Columns>
                                                     <DataGridTextColumn Header="Id" 
-                                                        Width="*" 
+                                                        Width="Auto" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=palletId}">
                                                         <DataGridTextColumn.EditingElementStyle>
@@ -1172,7 +1322,7 @@
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Hàng" 
-                                                        Width="*" 
+                                                        Width="Auto" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=row}">
                                                         <DataGridTextColumn.EditingElementStyle>
@@ -1182,7 +1332,7 @@
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Cột" 
-                                                        Width="*" 
+                                                        Width="Auto" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=bay}">
                                                         <DataGridTextColumn.EditingElementStyle>
@@ -1192,12 +1342,28 @@
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
                                                     <DataGridTextColumn Header="Trạng thái" 
-                                                        Width="*" 
+                                                        Width="Auto" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=palletStatus}">
                                                         <DataGridTextColumn.EditingElementStyle>
                                                             <Style TargetType="TextBox">
                                                                 <Setter Property="CharacterCasing" Value="Upper"/>
+                                                            </Style>
+                                                        </DataGridTextColumn.EditingElementStyle>
+                                                    </DataGridTextColumn>
+                                                    <DataGridTextColumn Header="Dữ liệu" 
+                                                        Width="*" 
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=dataPallet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                        <DataGridTextColumn.EditingElementStyle>
+                                                            <Style TargetType="TextBox">
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                                <Setter Property="AcceptsReturn" Value="true" />
                                                             </Style>
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
@@ -1207,7 +1373,7 @@
                                     </Grid>
                                 </GroupBox>
                             </Grid>
-                            <Grid Grid.Column="2">
+                            <!--<Grid Grid.Column="2">
                                 <GroupBox >
                                     <GroupBox.Header>
                                         <StackPanel>
@@ -1223,11 +1389,12 @@
                                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
-
-                                                
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
+                                            <TextBlock Name="dataPalletTextBlock"/>
+
+
                                             <DataGrid Name="DataPalletsListDg" 
                                       ItemsSource="{Binding GroupedPallets}"
                                       CanUserReorderColumns="False" 
@@ -1247,7 +1414,7 @@
                                         </Grid>
                                     </Grid>
                                 </GroupBox>
-                            </Grid>
+                            </Grid>-->
                         </Grid>
                         <Grid Grid.Row="1">
                             <StackPanel Orientation="Horizontal" 
@@ -1255,7 +1422,8 @@
                                 <Button Name="Btn_Save_Buffer" 
                         Width="70" 
                         Content="Lưu" 
-                        Margin="30,5"/>
+                        Margin="30,5"
+                                        Click="Btn_Save_Buffer_Click"/>
                                 <Button Name="Btn_Exit_Buffer" 
                         Width="70" 
                         Content="Thoát" 

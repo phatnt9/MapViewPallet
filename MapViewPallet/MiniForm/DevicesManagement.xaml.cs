@@ -24,7 +24,7 @@ namespace MapViewPallet.MiniForm
     {
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
 
-        public ManagementModel managementModel;
+        public DevicesManagementModel managementModel;
 
         public DevicesManagement()
         {
@@ -37,6 +37,7 @@ namespace MapViewPallet.MiniForm
             DevicesListDg2.SelectedCellsChanged += DevicesListDg2_SelectedCellsChanged;
             ProductsListDg.SelectedCellsChanged += ProductsListDg_SelectedCellsChanged;
             BuffersListDg.SelectedCellsChanged += BuffersListDg_SelectedCellsChanged;
+            DevicePalletsListDg.SelectedCellsChanged += DevicePalletsListDg_SelectedCellsChanged;
 
 
             DevicesListDg2.MouseDoubleClick += DevicesListDg2_MouseDoubleClick;
@@ -51,7 +52,7 @@ namespace MapViewPallet.MiniForm
 
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-            managementModel = new ManagementModel(this);
+            managementModel = new DevicesManagementModel(this);
             DataContext = managementModel;
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             DevicesListDg.SelectionMode =
@@ -76,6 +77,10 @@ namespace MapViewPallet.MiniForm
                 DataGridSelectionUnit.FullRow;
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         }
+
+
+
+
 
         //**********************************************
 
@@ -120,7 +125,7 @@ namespace MapViewPallet.MiniForm
                 managementModel.ReloadListDeviceBuffers(temp.deviceId);
             }
         }
-        
+
         private void DeviceBuffersListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             if (DevicesListDg.SelectedItem != null)
@@ -172,10 +177,10 @@ namespace MapViewPallet.MiniForm
             }
 
             managementModel.UpdateDataStatus("Đang cập nhật...");
-            
+
             dtDevice device = GetDataSave();
             string jsonData = JsonConvert.SerializeObject(device);
-            
+
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateDevice");
 
@@ -197,7 +202,7 @@ namespace MapViewPallet.MiniForm
                 int result = 0;
                 int.TryParse(reader.ReadToEnd(), out result);
             }
-            
+
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
 
@@ -211,7 +216,7 @@ namespace MapViewPallet.MiniForm
             int deviceID = 0;
             int.TryParse((DevicesListDg.SelectedItem as dtDevice).deviceId.ToString(), out deviceID);
             deviceData.deviceId = deviceID;
-            deviceData.deviceName = (DevicesListDg.SelectedItem as dtDevice).deviceName.ToString().Trim().Replace(" ","");
+            deviceData.deviceName = (DevicesListDg.SelectedItem as dtDevice).deviceName.ToString().Trim().Replace(" ", "");
             deviceData.creUsrId = Global_Object.userLogin;
             deviceData.updUsrId = Global_Object.userLogin;
             List<dtDeviceProduct> deviceProducts = new List<dtDeviceProduct>();
@@ -282,7 +287,7 @@ namespace MapViewPallet.MiniForm
                                     (
                                     String.Format(Global_Object.messageNoDataSave),
                                     Global_Object.messageTitileWarning,
-                                    MessageBoxButtons.OK, 
+                                    MessageBoxButtons.OK,
                                     MessageBoxIcon.Warning
                                     );
                                 return;
@@ -313,9 +318,9 @@ namespace MapViewPallet.MiniForm
                                 {
                                     System.Windows.Forms.MessageBox.Show
                                         (
-                                        String.Format(Global_Object.messageSaveSucced), 
-                                        Global_Object.messageTitileInformation, 
-                                        MessageBoxButtons.OK, 
+                                        String.Format(Global_Object.messageSaveSucced),
+                                        Global_Object.messageTitileInformation,
+                                        MessageBoxButtons.OK,
                                         MessageBoxIcon.Information
                                         );
 
@@ -325,9 +330,9 @@ namespace MapViewPallet.MiniForm
                                 {
                                     System.Windows.Forms.MessageBox.Show
                                         (
-                                        String.Format(Global_Object.messageDuplicated, "Devices Name"), 
-                                        Global_Object.messageTitileError, 
-                                        MessageBoxButtons.OK, 
+                                        String.Format(Global_Object.messageDuplicated, "Devices Name"),
+                                        Global_Object.messageTitileError,
+                                        MessageBoxButtons.OK,
                                         MessageBoxIcon.Error
                                         );
                                 }
@@ -335,9 +340,9 @@ namespace MapViewPallet.MiniForm
                                 {
                                     System.Windows.Forms.MessageBox.Show
                                         (
-                                        String.Format(Global_Object.messageSaveFail), 
-                                        Global_Object.messageTitileError, 
-                                        MessageBoxButtons.OK, 
+                                        String.Format(Global_Object.messageSaveFail),
+                                        Global_Object.messageTitileError,
+                                        MessageBoxButtons.OK,
                                         MessageBoxIcon.Error
                                         );
                                 }
@@ -346,7 +351,7 @@ namespace MapViewPallet.MiniForm
                             break;
                         }
                 }
-                
+
             }
             catch
             {
@@ -376,15 +381,15 @@ namespace MapViewPallet.MiniForm
             {
                 System.Windows.Forms.MessageBox.Show
                     (
-                    String.Format(Global_Object.messageSaveFail), 
-                    Global_Object.messageTitileError, 
-                    MessageBoxButtons.OK, 
+                    String.Format(Global_Object.messageSaveFail),
+                    Global_Object.messageTitileError,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                     );
                 return;
             }
         }
-        
+
         private void Btn_Add_Device_Click(object sender, RoutedEventArgs e)
         {
             AddDeviceForm form = new AddDeviceForm(this);
@@ -445,16 +450,14 @@ namespace MapViewPallet.MiniForm
             }
             UpdateTab2(true);
         }
-        
+
         private void Btn_Save_Devices_Click(object sender, RoutedEventArgs e)
         {
             List<dtDevice> devices = new List<dtDevice>();
             foreach (dtDevice dr in managementModel.devicesList)
             {
                 if (dr.deviceName.ToString().Trim().ToUpper() != dr.deviceNameOld.ToString().Trim().ToUpper()
-                    || (((dr.pathFile != null) ? dr.pathFile.ToString() : "").Trim() != "") 
-                    
-                    )
+                    || (((dr.pathFile != null) ? dr.pathFile.ToString() : "").Trim() != ""))
                 {
                     if (String.IsNullOrEmpty(dr.deviceName.ToString()) || dr.deviceName.ToString().Trim() == "")
                     {
@@ -561,6 +564,8 @@ namespace MapViewPallet.MiniForm
                                 row = r,
                                 bay = b,
                                 deviceId = selectedDevice.deviceId,
+
+                                dataPallet = "{\"line\":{\"x\":0.0,\"y\":0.0,\"angle\":0.0},\"pallet\":{\"row\":0.0,\"bay\":0.0,\"direct\":0.0}}",
                                 creUsrId = Global_Object.userLogin,
                                 updUsrId = Global_Object.userLogin
                             };
@@ -735,15 +740,15 @@ namespace MapViewPallet.MiniForm
             {
                 System.Windows.Forms.MessageBox.Show
                     (
-                    String.Format(Global_Object.messageSaveFail), 
-                    Global_Object.messageTitileError, 
-                    MessageBoxButtons.OK, 
+                    String.Format(Global_Object.messageSaveFail),
+                    Global_Object.messageTitileError,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                     );
                 return;
             }
         }
-        
+
         private void Btn_Add_Product_Click(object sender, RoutedEventArgs e)
         {
             AddProductForm form = new AddProductForm(this);
@@ -940,7 +945,7 @@ namespace MapViewPallet.MiniForm
             }
         }
         //********************************************************TAB 3******************************************************
-        
+
         private void BuffersListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             if (BuffersListDg.SelectedItem != null)
@@ -948,18 +953,20 @@ namespace MapViewPallet.MiniForm
                 dtBuffer temp = BuffersListDg.SelectedItem as dtBuffer;
                 Console.WriteLine(temp.bufferData);
                 dynamic bufferData = JsonConvert.DeserializeObject(temp.bufferData);
-                bufferX.Text = (bufferData != null) ? (((double)bufferData.x).ToString()) : "";
-                bufferY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "";
-                bufferA.Text = (bufferData != null) ? (((double)bufferData.a).ToString()) : "";
+                bufferX.Text = (bufferData != null) ? (((double)bufferData.x).ToString()) : "0";
+                bufferY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "0";
+                bufferA.Text = (bufferData != null) ? (((double)bufferData.angle).ToString()) : "0";
                 managementModel.ReloadListPallets(temp.bufferId);
             }
         }
+
 
         private void BuffersListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             try
             {
                 dtBuffer temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtBuffer;
+                temp.updUsrId = Global_Object.userLogin;
                 string bufferCellEdit = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim().Replace(" ", ""));
                 List<dtBuffer> buffers = new List<dtBuffer>();
                 switch (e.Column.DisplayIndex)
@@ -977,6 +984,11 @@ namespace MapViewPallet.MiniForm
                     case 3:
                         {
                             temp.maxRow = int.Parse(bufferCellEdit);
+                            break;
+                        }
+                    case 5:
+                        {
+                            temp.bufferCheckIn = bufferCellEdit;
                             break;
                         }
                 }
@@ -1011,7 +1023,7 @@ namespace MapViewPallet.MiniForm
                     int.TryParse(reader.ReadToEnd(), out result);
                     if (result == 1)
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (result == -2)
                     {
@@ -1029,6 +1041,20 @@ namespace MapViewPallet.MiniForm
 
             }
 
+        }
+
+
+        private void DevicePalletsListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            if (DevicePalletsListDg.SelectedItem != null)
+            {
+                dtDevicePallet devicePallet = DevicePalletsListDg.SelectedItem as dtDevicePallet;
+                dynamic devicePalletData = JsonConvert.DeserializeObject(devicePallet.dataPallet);
+                palletLineX.Text = (devicePalletData != null) ? (((double)devicePalletData.line.x).ToString()) : "0";
+                palletLineY.Text = (devicePalletData != null) ? (((double)devicePalletData.line.y).ToString()) : "0";
+                palletLineA.Text = (devicePalletData != null) ? (((double)devicePalletData.line.angle).ToString()) : "0";
+                palletPalletD.Text = (devicePalletData != null) ? (((double)devicePalletData.pallet.direct).ToString()) : "0";
+            }
         }
 
         private void Btn_Refresh_Buffer_Click(object sender, RoutedEventArgs e)
@@ -1126,9 +1152,9 @@ namespace MapViewPallet.MiniForm
                 List<dtBuffer> buffers = new List<dtBuffer>();
 
                 dynamic postApiBody = new JObject();
-                postApiBody.x = double.Parse(bufferX.Text);
-                postApiBody.y = double.Parse(bufferY.Text);
-                postApiBody.a = double.Parse(bufferA.Text);
+                postApiBody.x = double.Parse((bufferX.Text != "") ? bufferX.Text : "0");
+                postApiBody.y = double.Parse((bufferY.Text != "") ? bufferY.Text : "0");
+                postApiBody.angle = double.Parse((bufferA.Text != "") ? bufferA.Text : "0");
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 
@@ -1177,6 +1203,77 @@ namespace MapViewPallet.MiniForm
                 UpdateTab4(true);
             }
             //catch
+            {
+
+            }
+        }
+
+
+        private void Btn_Save_Pallet_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //dtPallet temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtPallet;
+                //temp.updUsrId = Global_Object.userLogin;
+                //string palletCellEdit = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
+                List<dtPallet> pallets = new List<dtPallet>();
+                //switch (e.Column.DisplayIndex)
+                //{
+                //    case 4:
+                //        {
+                //            temp.dataPallet = palletCellEdit;
+                //            break;
+                //        }
+                //}
+                foreach (dtPallet pallet in managementModel.palletsList)
+                {
+                    pallet.updUsrId = Global_Object.userLogin;
+                    pallets.Add(pallet);
+                }
+
+                if (pallets.Count == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(pallets);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updateListPalletData");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                UpdateTab4(false);
+            }
+            catch
             {
 
             }
@@ -1307,7 +1404,7 @@ namespace MapViewPallet.MiniForm
         }
 
         //****************************************************************************************
-        
+
         private void Btn_Save_DevicePallet_Click(object sender, RoutedEventArgs e)
         {
             if (DeviceManagementTabControl.SelectedIndex == 1)
@@ -1322,7 +1419,8 @@ namespace MapViewPallet.MiniForm
                     devicePallet.deviceId = int.Parse(dr.deviceId.ToString());
                     devicePallet.row = int.Parse(dr.row.ToString());
                     devicePallet.bay = int.Parse(dr.bay.ToString());
-                    devicePallet.dataPallet = (dr.dataPallet != null) ? dr.dataPallet.ToString() : "";
+                    string initiateDataPallet = "{\"line\":{\"x\":0.0,\"y\":0.0,\"angle\":0.0},\"pallet\":{\"row\":" + (double)dr.row + ",\"bay\":" + (double)dr.bay + ",\"direct\":0.0}}";
+                    devicePallet.dataPallet = (dr.dataPallet != null) ? dr.dataPallet.ToString() : initiateDataPallet;
                     devicePallet.creUsrId = Global_Object.userLogin;
                     devicePallet.updUsrId = Global_Object.userLogin;
 
@@ -1369,7 +1467,7 @@ namespace MapViewPallet.MiniForm
                 }
             }
         }
-        
+
         //*******************************************************************************************************************
         private void Btn_Exit_Device_Click(object sender, RoutedEventArgs e)
         {
@@ -1532,5 +1630,169 @@ namespace MapViewPallet.MiniForm
             return result;
         }
 
+        private void Btn_Save_Buffer_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        private void BufferReturnCbRow_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //temp.updUsrId = Global_Object.userLogin;
+                List<dtBuffer> buffers = new List<dtBuffer>();
+                foreach (dtBuffer buffer in managementModel.buffersList)
+                {
+                    buffer.updUsrId = Global_Object.userLogin;
+                    buffers.Add(buffer);
+                }
+
+                if (buffers.Count == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(buffers);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Buffers Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                UpdateTab4(true);
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void Btn_SetPalletDataPallet_Click(object sender, RoutedEventArgs e)
+        {
+            if ((DeviceManagementTabControl.SelectedIndex == 1) && (DevicePalletsListDg.SelectedItem != null))
+            {
+                if ((palletLineX.Text.Trim() == "") ||
+                    (palletLineY.Text.Trim() == "") ||
+                    (palletLineA.Text.Trim() == "") ||
+                    (palletPalletD.Text.Trim() == ""))
+                {
+                    return;
+                }
+                List<dtDevicePallet> devicePallets = new List<dtDevicePallet>();
+                dtDevicePallet devicePallet = DevicePalletsListDg.SelectedItem as dtDevicePallet;
+
+                string initiateDataPallet =
+                    "{\"line\":{\"x\":" + double.Parse(palletLineX.Text) +
+                    ",\"y\":" + double.Parse(palletLineY.Text) +
+                    ",\"angle\":" + double.Parse(palletLineA.Text) +
+                    "},\"pallet\":{\"row\":" + (double)devicePallet.row +
+                    ",\"bay\":" + (double)devicePallet.bay +
+                    ",\"direct\":" + double.Parse(palletPalletD.Text) +
+                    "}}";
+
+                //devicePallet.dataPallet = (devicePallet.dataPallet != null) ? devicePallet.dataPallet.ToString() : initiateDataPallet;
+                devicePallet.dataPallet = initiateDataPallet;
+
+                devicePallet.creUsrId = Global_Object.userLogin;
+                devicePallet.updUsrId = Global_Object.userLogin;
+
+                foreach (dtDevicePallet dr in managementModel.devicePalletsList)
+                {
+                    dtDevicePallet devicePalletold = new dtDevicePallet();
+
+                    devicePalletold.devicePalletId = int.Parse(dr.devicePalletId.ToString());
+                    devicePalletold.devicePalletName = dr.devicePalletName.ToString();
+                    devicePalletold.deviceId = int.Parse(dr.deviceId.ToString());
+                    devicePalletold.row = int.Parse(dr.row.ToString());
+                    devicePalletold.bay = int.Parse(dr.bay.ToString());
+                    string initiateDataPalletOld = "{\"line\":{\"x\":0.0,\"y\":0.0,\"angle\":0.0},\"pallet\":{\"row\":" + (double)dr.row + ",\"bay\":" + (double)dr.bay + ",\"direct\":0.0}}";
+                    devicePalletold.dataPallet = (dr.dataPallet != null) ? dr.dataPallet.ToString() : initiateDataPalletOld;
+                    devicePalletold.creUsrId = Global_Object.userLogin;
+                    devicePalletold.updUsrId = Global_Object.userLogin;
+
+                    if (devicePalletold.devicePalletId != devicePallet.devicePalletId)
+                    {
+                        devicePallets.Add(devicePalletold);
+                    }
+
+                }
+
+                devicePallets.Add(devicePallet);
+
+                if (devicePallets.Count == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(devicePallets);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/insertUpdateDevicePallet");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+        }
+
+
+        private void PalletLine_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
     }
 }

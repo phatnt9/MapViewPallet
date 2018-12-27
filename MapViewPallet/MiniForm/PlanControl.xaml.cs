@@ -17,7 +17,7 @@ namespace MapViewPallet.MiniForm
     public partial class PlanControl : Window
     {
         //=================VARIABLE==================
-        PlanModel operation_model;
+        PlanControlModel operation_model;
         private int _runningShift;
         public int runningShift { get => _runningShift; set => _runningShift = value; }
         
@@ -34,7 +34,7 @@ namespace MapViewPallet.MiniForm
             Shift1Dgv.SelectionMode = Shift2Dgv.SelectionMode = Shift3Dgv.SelectionMode = DataGridSelectionMode.Single;
             Shift1Dgv.SelectionUnit = Shift2Dgv.SelectionUnit = Shift3Dgv.SelectionUnit = DataGridSelectionUnit.FullRow;
             //===============DataGridView1========
-            operation_model = new PlanModel(this);
+            operation_model = new PlanControlModel(this);
             DataContext = operation_model;
         }
         

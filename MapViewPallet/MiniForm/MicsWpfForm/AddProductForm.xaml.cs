@@ -49,7 +49,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             request.Method = "POST";
             request.ContentType = @"application/json";
             dtProduct productNew = new dtProduct();
-            productNew.productName = productNametb.Text;
+            productNew.productName = productNametb.Text.Trim().Replace(" ", "");
             productNew.productDetails = new List<dtProductDetail>();
             productNew.creUsrId = Global_Object.userLogin;
             productNew.updUsrId = Global_Object.userLogin;
