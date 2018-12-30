@@ -59,8 +59,11 @@ namespace MapViewPallet.MiniForm
                 palletX.Text = (palletData != null) ? (((double)palletData.line.x).ToString()) : "0";
                 palletY.Text = (palletData != null) ? (((double)palletData.line.y).ToString()) : "0";
                 palletA.Text = (palletData != null) ? (((double)palletData.line.angle).ToString()) : "0";
-                palletR.Text = (palletData != null) ? (((double)palletData.pallet.row).ToString()) : "0";
-                palletB.Text = (palletData != null) ? (((double)palletData.pallet.bay).ToString()) : "0";
+                //palletR.Text = (palletData != null) ? (((double)palletData.pallet.row).ToString()) : "0";
+                palletR.Text = pallet.row.ToString();
+                palletRowlb.Content = pallet.row;
+                palletB.Text = pallet.bay.ToString();
+                palletBaylb.Content = pallet.bay;
                 palletD.Text = (palletData != null) ? (((double)palletData.pallet.direct).ToString()) : "0";
             }
         }
@@ -70,12 +73,17 @@ namespace MapViewPallet.MiniForm
             bufferNamelb.Content = stationShape.props.bufferDb.bufferName;
             bufferMaxRowlb.Content = stationShape.props.bufferDb.maxRow;
             bufferMaxBaylb.Content = stationShape.props.bufferDb.maxBay;
-            bufferTypeNamelb.Content = (stationShape.props.bufferDb.bufferReturn == true) ? "Trả hàng":"Lưu hàng" ;
+            bufferTypeNamelb.Content = (stationShape.props.bufferDb.bufferReturn == true) ? "Trả hàng" : "Lưu hàng";
 
             dynamic buffercheckin = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferCheckIn);
             bufferX.Text = (buffercheckin != null) ? (((double)buffercheckin.x).ToString()) : "0";
             bufferY.Text = (buffercheckin != null) ? (((double)buffercheckin.y).ToString()) : "0";
             bufferA.Text = (buffercheckin != null) ? (((double)buffercheckin.angle).ToString()) : "0";
+
+            dynamic bufferdata = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferData);
+            bufferPosX.Text = (bufferdata != null) ? (((double)bufferdata.x).ToString()) : "0";
+            bufferPosY.Text = (bufferdata != null) ? (((double)bufferdata.y).ToString()) : "0";
+            bufferPosA.Text = (bufferdata != null) ? (((double)bufferdata.angle).ToString()) : "0";
 
 
             stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
@@ -93,7 +101,7 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_SetBufferData_Click(object sender, RoutedEventArgs e)
         {
-            //try
+            try
             {
                 dtBuffer buffer = stationShape.props.bufferDb;
                 List<dtBuffer> buffers = new List<dtBuffer>();
@@ -148,7 +156,7 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            //catch
+            catch (Exception ex)
             {
 
             }
@@ -235,7 +243,7 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
 
             }
@@ -249,6 +257,154 @@ namespace MapViewPallet.MiniForm
         private void myPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !IsTextAllowed(e.Text);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (dtPallet pallet in stationEditorModel.palletsList)
+            {
+                pallet.palletStatus = "F";
+                string jsonData = JsonConvert.SerializeObject(pallet);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                
+            }
+            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
+            pallet.palletStatus = "W";
+            string jsonData = JsonConvert.SerializeObject(pallet);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                int result = 0;
+                int.TryParse(reader.ReadToEnd(), out result);
+                if (result == 1)
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (result == -2)
+                {
+                    // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+        }
+
+        private void Btn_SetBufferPosData_Click(object sender, RoutedEventArgs e)
+        {
+            //try
+            {
+                dtBuffer buffer = stationShape.props.bufferDb;
+                List<dtBuffer> buffers = new List<dtBuffer>();
+
+                dynamic postApiBody = new JObject();
+                postApiBody.x = double.Parse((bufferPosX.Text != "") ? bufferPosX.Text : "0");
+                postApiBody.y = double.Parse((bufferPosY.Text != "") ? bufferPosY.Text : "0");
+                postApiBody.angle = double.Parse((bufferPosA.Text != "") ? bufferPosA.Text : "0");
+                string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
+                buffer.bufferData = jsonBufferData;
+
+                buffers.Add(buffer);
+
+                if (buffers.Count == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(buffers);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Buffers Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            //catch
+            {
+
+            }
         }
     }
 }

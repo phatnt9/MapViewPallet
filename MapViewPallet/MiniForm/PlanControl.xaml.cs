@@ -111,28 +111,28 @@ namespace MapViewPallet.MiniForm
                 case DayOfWeek.Sunday: { ngay = "Chủ Nhật"; break; }
                 default: { ngay = "Chủ Nhật"; break; }
             }
-            lb_Date.Text = ngay + ", " + pDate.Day + " Tháng " + pDate.Month + ", " + pDate.Year;
+            lb_Date.Text = ngay + ", " + pDate.Day + "/" + pDate.Month + "/" + pDate.Year;
             if (DateTime.Now.ToShortDateString() == pDate.ToShortDateString())
             {
-                DateTimeBorder.Background = new SolidColorBrush(Colors.LightGreen);
+                //DateTimeBorder.Background = new SolidColorBrush(Colors.LightGreen);
                 pCalendar.Background = new SolidColorBrush(Colors.LightGreen);
-                lb_Date.Foreground = new SolidColorBrush(Colors.Black);
+                //lb_Date.Foreground = new SolidColorBrush(Colors.Black);
                 return 0;
             }
             else
             {
                 if (DateTime.Now.CompareTo(pDate) == 1)
                 {
-                    DateTimeBorder.Background = new SolidColorBrush(Colors.IndianRed);
+                    //DateTimeBorder.Background = new SolidColorBrush(Colors.IndianRed);
                     pCalendar.Background = new SolidColorBrush(Colors.IndianRed);
-                    lb_Date.Foreground = new SolidColorBrush(Colors.Black);
+                    //lb_Date.Foreground = new SolidColorBrush(Colors.Black);
                     return -1;
                 }
                 else
                 {
-                    DateTimeBorder.Background = new SolidColorBrush(Colors.LightGray);
+                    //DateTimeBorder.Background = new SolidColorBrush(Colors.LightGray);
                     pCalendar.Background = new SolidColorBrush(Colors.LightGray);
-                    lb_Date.Foreground = new SolidColorBrush(Colors.Black);
+                    //lb_Date.Foreground = new SolidColorBrush(Colors.Black);
                     return 1;
                 }
             }

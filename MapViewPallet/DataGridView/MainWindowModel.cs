@@ -41,7 +41,11 @@ namespace MapViewPallet.DataGridView
         {
             _stationsDgv.Add(x);
             Stations_DGV.Refresh();
-        }
+        }   
+
+
+
+
 
         
 

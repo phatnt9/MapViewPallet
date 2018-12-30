@@ -47,7 +47,6 @@
                              Width="200" 
                              Height="25" 
                              Margin="10"
-                                 CharacterCasing="Upper"
                              ></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" 
@@ -59,7 +58,6 @@
                              Width="200" 
                              Height="25" 
                              Margin="10"
-                                 CharacterCasing="Upper"
                              ></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" 

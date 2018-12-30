@@ -17,9 +17,9 @@ namespace MapViewPallet.MiniForm
     public class PlanControlModel 
     {
 
-        public ICollectionView GroupedDevices_S1 { get; private set; }
-        public ICollectionView GroupedDevices_S2 { get; private set; }
-        public ICollectionView GroupedDevices_S3 { get; private set; }
+        public ListCollectionView GroupedDevices_S1 { get; private set; }
+        public ListCollectionView GroupedDevices_S2 { get; private set; }
+        public ListCollectionView GroupedDevices_S3 { get; private set; }
 
         public List<Plan> BasePlans1 { get; set; }
         public List<Plan> BasePlans2 { get; set; }
@@ -38,9 +38,9 @@ namespace MapViewPallet.MiniForm
             BasePlans1 = new List<Plan>();
             BasePlans2 = new List<Plan>();
             BasePlans3 = new List<Plan>();
-            GroupedDevices_S1 = new ListCollectionView(BasePlans1);
-            GroupedDevices_S2 = new ListCollectionView(BasePlans2);
-            GroupedDevices_S3 = new ListCollectionView(BasePlans3);
+            GroupedDevices_S1 = (ListCollectionView)CollectionViewSource.GetDefaultView(BasePlans1);
+            GroupedDevices_S2 = (ListCollectionView)CollectionViewSource.GetDefaultView(BasePlans2);
+            GroupedDevices_S3 = (ListCollectionView)CollectionViewSource.GetDefaultView(BasePlans3);
         }
 
         public bool ContainPlan(Plan tempOpe, List<Plan> List)
@@ -177,10 +177,40 @@ namespace MapViewPallet.MiniForm
                 }
                 switch (selectedShift)
                 {
-                    case 1: { BasePlans1.Clear(); AddPlans(plansTemp, BasePlans1); GroupedDevices_S1.Refresh(); break; }
-                    case 2: { BasePlans2.Clear(); AddPlans(plansTemp, BasePlans2); GroupedDevices_S2.Refresh(); break; }
-                    case 3: { BasePlans3.Clear(); AddPlans(plansTemp, BasePlans3); GroupedDevices_S3.Refresh(); break; }
-                    default: { break; }
+                    /*
+                     * Có lỗi ở đây sau khi nhập palletAmount bằng chữ và nhấn save, crash, kết quả không được lưu vào
+                     * */
+                    case 1:
+                        {
+                            BasePlans1.Clear();
+                            AddPlans(plansTemp, BasePlans1);
+                            if (GroupedDevices_S1.IsEditingItem)
+                                GroupedDevices_S1.CommitEdit();
+                            if (GroupedDevices_S1.IsAddingNew)
+                                GroupedDevices_S1.CommitNew();
+                            GroupedDevices_S1.Refresh(); break; }
+                    case 2:
+                        {
+                            BasePlans2.Clear();
+                            AddPlans(plansTemp, BasePlans2);
+                            if (GroupedDevices_S2.IsEditingItem)
+                                GroupedDevices_S2.CommitEdit();
+                            if (GroupedDevices_S2.IsAddingNew)
+                                GroupedDevices_S2.CommitNew();
+                            GroupedDevices_S2.Refresh(); break; }
+                    case 3:
+                        {
+                            BasePlans3.Clear();
+                            AddPlans(plansTemp, BasePlans3);
+                            if (GroupedDevices_S3.IsEditingItem)
+                                GroupedDevices_S3.CommitEdit();
+                            if (GroupedDevices_S3.IsAddingNew)
+                                GroupedDevices_S3.CommitNew();
+                            GroupedDevices_S3.Refresh(); break; }
+                    default:
+                        {
+                            break;
+                        }
                 }
             }
         }

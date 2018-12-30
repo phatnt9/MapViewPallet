@@ -65,8 +65,8 @@ namespace MapViewPallet
         public bool drag = true;
         //Data Grid View
         MainWindowModel mainWindowModel;
-        string previousStationNameIdDgv;
-        string previousStationNameIdTrv;
+        //string previousStationNameIdDgv;
+        //string previousStationNameIdTrv;
         //Tree View
         TrvStationGroup stationGroup;
         List<dynamic> trvGroups;
@@ -89,33 +89,33 @@ namespace MapViewPallet
             trvGroups = new List<dynamic>();
             stationGroup = new TrvStationGroup();
             trvGroups.Add(stationGroup);
-            mainTreeView.ItemsSource = trvGroups;
-            mainTreeView.GotFocus += mainTreeView_GotFocus;
-            mainTreeView.LostFocus += mainTreeView_LostFocus;
+            //mainTreeView.ItemsSource = trvGroups;
+            //mainTreeView.GotFocus += mainTreeView_GotFocus;
+            //mainTreeView.LostFocus += mainTreeView_LostFocus;
             //===================================
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
             ImageBrush img = LoadImage("Map");
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
-            palletViewEventControl = new CanvasControlService(this, mainTreeView);
+            palletViewEventControl = new CanvasControlService(this);
             snd = new System.Media.SoundPlayer();
             //===============DataGridView========
-            StationsDataGrid.CanUserAddRows = false;
-            StationsDataGrid.CanUserDeleteRows = false;
-            StationsDataGrid.CanUserReorderColumns = false;
-            StationsDataGrid.CanUserResizeColumns = false;
-            StationsDataGrid.CanUserResizeRows = false;
-            StationsDataGrid.SelectionMode = DataGridSelectionMode.Single;
-            StationsDataGrid.SelectionUnit = DataGridSelectionUnit.FullRow;
-            StationsDataGrid.SelectedCellsChanged += StationsDataGrid_SelectedCellsChanged;
-            StationsDataGrid.SelectionChanged += StationsDataGrid_SelectionChanged;
+            //StationsDataGrid.CanUserAddRows = false;
+            //StationsDataGrid.CanUserDeleteRows = false;
+            //StationsDataGrid.CanUserReorderColumns = false;
+            //StationsDataGrid.CanUserResizeColumns = false;
+            //StationsDataGrid.CanUserResizeRows = false;
+            //StationsDataGrid.SelectionMode = DataGridSelectionMode.Single;
+            //StationsDataGrid.SelectionUnit = DataGridSelectionUnit.FullRow;
+            //StationsDataGrid.SelectedCellsChanged += StationsDataGrid_SelectedCellsChanged;
+            //StationsDataGrid.SelectionChanged += StationsDataGrid_SelectionChanged;
 
-            StationsDataGrid.GotFocus += StationsDataGrid_GotFocus;
-            StationsDataGrid.LostFocus += StationsDataGrid_LostFocus;
+            //StationsDataGrid.GotFocus += StationsDataGrid_GotFocus;
+            //StationsDataGrid.LostFocus += StationsDataGrid_LostFocus;
             mainWindowModel = new MainWindowModel(this);
-            previousStationNameIdDgv = "";
-            previousStationNameIdTrv = "";
+            //previousStationNameIdDgv = "";
+            //previousStationNameIdTrv = "";
             DataContext = mainWindowModel;
 
 
@@ -131,24 +131,26 @@ namespace MapViewPallet
             robotTimer.Elapsed += OnTimedRedrawRobotEvent;
             robotTimer.AutoReset = true;
             robotTimer.Enabled = true;
-            
-            LoadStation();
 
-            Dispatcher.BeginInvoke(new ThreadStart(() =>
-            {
-                for (int i = 1; i < 5; i++)
-                {
-                    Random posX = new Random();
-                    RobotShape rbot = new RobotShape(map);
-                    rbot.rad = posX.Next(50, 120);
-                    rbot.org = new Point(600 + posX.Next(10, 50), 386 + posX.Next(10, 50));
-                    rbot.anglestep = posX.NextDouble() + 0.2;
-                    rbot.ReDraw(new Point(0, 0), 0);
-                    //rbot.ChangeTask("22");
-                    palletViewEventControl.list_Robot.Add(i.ToString(), rbot);
-                    Thread.Sleep(100);
-                }
-            }));
+            //LoadStation();
+
+            palletViewEventControl.ReloadAllStation();
+
+            //Dispatcher.BeginInvoke(new ThreadStart(() =>
+            //{
+            //    for (int i = 1; i < 5; i++)
+            //    {
+            //        Random posX = new Random();
+            //        RobotShape rbot = new RobotShape(map);
+            //        rbot.rad = posX.Next(50, 120);
+            //        rbot.org = new Point(600 + posX.Next(10, 50), 386 + posX.Next(10, 50));
+            //        rbot.anglestep = posX.NextDouble() + 0.2;
+            //        rbot.ReDraw(new Point(0, 0), 0);
+            //        //rbot.ChangeTask("22");
+            //        palletViewEventControl.list_Robot.Add(i.ToString(), rbot);
+            //        Thread.Sleep(100);
+            //    }
+            //}));
         }
 
         private void CenterWindowOnScreen()
@@ -164,8 +166,13 @@ namespace MapViewPallet
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             CenterWindowOnScreen();
+            myManagementWindow.Visibility = Visibility.Hidden;
             LoginForm frm = new LoginForm();
             frm.ShowDialog();
+            if (Global_Object.userLogin<=2)
+            {
+                myManagementWindow.Visibility = Visibility.Visible;
+            }
         }
 
         private void OnTimedRedrawRobotEvent(object sender, ElapsedEventArgs e)
@@ -276,8 +283,9 @@ namespace MapViewPallet
                         StationShape tempStation = new StationShape(map, tempBuffer);
 
                         tempStation.ReDraw();
-                        tempStation.RemoveHandle += palletViewEventControl.StationRemove;
-                        palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Replace(" ",""), tempStation);
+                        //tempStation.RemoveHandle += palletViewEventControl.StationRemove;
+                        //palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Replace(" ",""), tempStation);
+                        palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
                         stationGroup.Items.Add(new TrvStation(tempStation));
 
                         mainWindowModel.AddItem(new DgvStation
@@ -391,6 +399,7 @@ namespace MapViewPallet
 
         private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
         {
+            palletViewEventControl.ReloadAllStation();
             //LoadPath(@"C:\Users\LI\Desktop\Path.xls");
             //LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
             string fileName1 = "Path.xls";
@@ -401,79 +410,79 @@ namespace MapViewPallet
             //LoadStation(path2);
         }
 
-        private void StationsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
+        //private void StationsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        //{
 
-        }
+        //}
 
-        private void StationsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
+        //private void StationsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //}
 
-        private void StationsDataGrid_GotFocus(object sender, RoutedEventArgs e)
-        {
-            DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
-            if (temp != null)
-            {
-                Console.WriteLine("In: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
-                palletViewEventControl.list_Station[temp.Name].SelectedStyle();
-                previousStationNameIdDgv = temp.Name;
-            }
-            else
-            {
+        //private void StationsDataGrid_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
+        //    if (temp != null)
+        //    {
+        //        Console.WriteLine("In: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
+        //        palletViewEventControl.list_Station[temp.Name].SelectedStyle();
+        //        previousStationNameIdDgv = temp.Name;
+        //    }
+        //    else
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
-        private void StationsDataGrid_LostFocus(object sender, RoutedEventArgs e)
-        {
-            DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
-            if (temp != null)
-            {
-                Console.WriteLine("Out: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
-                palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
-            }
-            else
-            {
-                if (previousStationNameIdDgv != "")
-                {
-                    palletViewEventControl.list_Station[previousStationNameIdDgv].DeselectedStyle();
-                }
-            }
-        }
+        //private void StationsDataGrid_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
+        //    if (temp != null)
+        //    {
+        //        Console.WriteLine("Out: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
+        //        palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
+        //    }
+        //    else
+        //    {
+        //        if (previousStationNameIdDgv != "")
+        //        {
+        //            palletViewEventControl.list_Station[previousStationNameIdDgv].DeselectedStyle();
+        //        }
+        //    }
+        //}
 
-        private void mainTreeView_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TrvStation temp = mainTreeView.SelectedItem as TrvStation;
-            if (temp != null)
-            {
-                //Console.WriteLine("In: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
-                palletViewEventControl.list_Station[temp.Name].SelectedStyle();
-                previousStationNameIdTrv = temp.Name;
-            }
-            else
-            {
+        //private void mainTreeView_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    TrvStation temp = mainTreeView.SelectedItem as TrvStation;
+        //    if (temp != null)
+        //    {
+        //        //Console.WriteLine("In: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
+        //        palletViewEventControl.list_Station[temp.Name].SelectedStyle();
+        //        previousStationNameIdTrv = temp.Name;
+        //    }
+        //    else
+        //    {
 
-            }
+        //    }
 
-        }
+        //}
 
-        private void mainTreeView_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TrvStation temp = mainTreeView.SelectedItem as TrvStation;
-            if (temp != null)
-            {
-                //Console.WriteLine("Out: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
-                palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
-            }
-            else
-            {
-                if (previousStationNameIdTrv != "")
-                {
-                    palletViewEventControl.list_Station[previousStationNameIdTrv].DeselectedStyle();
-                }
-            }
-        }
+        //private void mainTreeView_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    TrvStation temp = mainTreeView.SelectedItem as TrvStation;
+        //    if (temp != null)
+        //    {
+        //        //Console.WriteLine("Out: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
+        //        palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
+        //    }
+        //    else
+        //    {
+        //        if (previousStationNameIdTrv != "")
+        //        {
+        //            palletViewEventControl.list_Station[previousStationNameIdTrv].DeselectedStyle();
+        //        }
+        //    }
+        //}
 
         private void btn_PlanControl_Click(object sender, RoutedEventArgs e)
         {
@@ -483,7 +492,7 @@ namespace MapViewPallet
 
         private void btn_DevicesManagement_Click(object sender, RoutedEventArgs e)
         {
-            DevicesManagement devicesManagement = new DevicesManagement();
+            DevicesManagement devicesManagement = new DevicesManagement(this);
             devicesManagement.ShowDialog();
         }
 
@@ -497,6 +506,27 @@ namespace MapViewPallet
         {
             ChangePassForm changePassForm = new ChangePassForm();
             changePassForm.ShowDialog();
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            myManagementWindow.Visibility = Visibility.Hidden;
+
+            Global_Object.userAuthor = -2;
+            Global_Object.userLogin = -2;
+            Global_Object.userName = "";
+
+            LoginForm frm = new LoginForm();
+            frm.ShowDialog();
+            if (Global_Object.userLogin <= 2)
+            {
+                myManagementWindow.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Reloadallstation_Click(object sender, RoutedEventArgs e)
+        {
+            palletViewEventControl.ReloadAllStation();
         }
     }
 

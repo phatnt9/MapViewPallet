@@ -45,8 +45,28 @@ namespace MapViewPallet.Shape
             //=============================
             StatusChanged("normal");
 
+            Label lbPallet = new Label();
+            lbPallet.Width = this.Width;
+            lbPallet.FontSize = 3;
+            lbPallet.Margin = new Thickness(-4);
+            lbPallet.Content = this.name.Split('x')[1] +"-"+ this.name.Split('x')[2];
+
+            System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+            rectangle.Width = 2;
+            rectangle.Height = 2;
+            rectangle.Fill = new SolidColorBrush(Colors.Red);
+
+
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            stackPanel.VerticalAlignment = VerticalAlignment.Top;
+            stackPanel.Children.Add(lbPallet);
+
+            Child = stackPanel;
+
             // Event handler
             MouseDown += PalletMouseDown;
+          
         }
 
 
@@ -90,6 +110,7 @@ namespace MapViewPallet.Shape
 
         private void PalletMouseDown(object sender, MouseButtonEventArgs e)
         {
+            //MessageBox.Show(""+name);
         }
         
         //\\\\\\\\\\\\Action\\\\\\\\\\\\\\\

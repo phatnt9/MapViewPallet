@@ -7,14 +7,21 @@
         mc:Ignorable="d"
         Title="Thiết Lập Quy Trình" Height="450" Width="800">
     <Window.Resources>
-        <!--<staticData:MachineList x:Key="MachineList"></staticData:MachineList>-->
+        <Style x:Key="MyStyle" TargetType="{x:Type Button}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0 0 0 3"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="Orange" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource pressed}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="26"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -41,10 +48,10 @@
 
                 <Grid Name="MicsDetail" Grid.Row="2" >
                     <Border BorderThickness="0" BorderBrush="Black" Margin="10">
-                        <StackPanel>
+                        <!--<StackPanel>
                             <TextBlock TextAlignment="Center" FontSize="20">Current Shift</TextBlock>
-                            <TextBlock TextAlignment="Center">1</TextBlock>
-                        </StackPanel>
+                            <TextBlock TextAlignment="Center" FontSize="20">1</TextBlock>
+                        </StackPanel>-->
                     </Border>
                 </Grid>
             </Grid>
@@ -53,7 +60,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="90"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
@@ -61,7 +68,7 @@
                             <RowDefinition Height="45"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" HorizontalAlignment="Center" 
-                        Background="#212f6a" CornerRadius="15,15,0,0"
+                        Background="#212f6a" CornerRadius="7"
                         Width="300" Margin="0,10,0,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <TextBlock TextAlignment="Center" VerticalAlignment="Center" 
@@ -72,13 +79,13 @@
                             </StackPanel>
                         </Border>
                         <Border Name="DateTimeBorder" Grid.Row="1" HorizontalAlignment="Center" 
-                        Background="SandyBrown" CornerRadius="0,0,15,15"
+                        
                         Width="300" Margin="0,0,0,15">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <TextBlock Name="lb_Date" TextAlignment="Center" 
                                    VerticalAlignment="Center" FontSize="20" 
-                                   Text="Thứ X, XX Tháng X, XXX" FontWeight="Heavy"
-                                   Foreground="Maroon" Margin="5,0"/>
+                                   Text="Thứ X, xx/ x/ xxxx" FontWeight="Heavy"
+                                   Foreground="Black" Margin="5,0"/>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -297,6 +304,7 @@
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Button Name="RefreshBtn" 
                             Foreground="Black"
+                                        Style="{DynamicResource MyStyle}"
                             Margin="4,7,4,0"  Width="20" Height="20" Click="Btn_Refresh_Click">
                                     <Image Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
                                 </Button>
@@ -310,45 +318,28 @@
                     </Grid>
                     <Grid Grid.Row="2" Background="Ivory">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Name="Btn_Accept" Width="70" Content="Lưu" Margin="5,5" Click="Btn_Accept_Click"/>
+                            <Button Name="Btn_Accept" 
+                                    Width="80" 
+                                    Height="25"
+                                    Content="Lưu" 
+                                    Margin="5,5" 
+                                    Style="{DynamicResource MyStyle}"
+                                    Click="Btn_Accept_Click"/>
                             <!--<Button Name="Btn_Refresh" Width="70" Content="Làm mới" Margin="5,5" Click="Btn_Refresh_Click"/>-->
                             <!--<Button Name="Btn_Clear" Width="70" Content="Dọn" Margin="5,5" Click="Btn_Clear_Click"/>-->
                             <!--<Button Name="Btn_Test2" Width="70" Content="Test2" Margin="5,5" Click="Btn_Test2_Click"/>-->
-                            <Button Name="Btn_Test" Width="70" Content="Test" Margin="5,5" Click="Btn_Test_Click"/>
-                            <Button Name="Btn_Cancel" Width="70" Content="Thoát" Margin="5,5" Click="Btn_Cancel_Click"/>
+                            <!--<Button Name="Btn_Test" Width="70" Content="Test" Margin="5,5" Click="Btn_Test_Click"/>-->
+                            <Button Name="Btn_Cancel" 
+                                    Width="80" 
+                                    Height="25"
+                                    Content="Thoát" 
+                                    Margin="5,5" 
+                                    Style="{DynamicResource MyStyle}"
+                                    Click="Btn_Cancel_Click"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
             </Border>
-        </Grid>
-        <Grid Grid.Row="1">
-            <StatusBar Name="sbar" 
-           VerticalAlignment="Bottom" Background="LemonChiffon" >
-
-                <StatusBarItem>
-                    <TextBlock>Đang cập nhật</TextBlock>
-                </StatusBarItem>
-                <StatusBarItem>
-                    <ProgressBar Minimum="0" Maximum="100" Width="100" Height="20" Name="progressBar">
-                        <!--<ProgressBar.Triggers>
-                            <EventTrigger RoutedEvent="ProgressBar.Loaded">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                Storyboard.TargetName="progressBar" 
-                Storyboard.TargetProperty="Value"
-                From="0" To="100" Duration="0:0:2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </ProgressBar.Triggers>-->
-                    </ProgressBar>
-                </StatusBarItem>
-                <Separator/>
-                <StatusBarItem>
-                    <TextBlock>Online</TextBlock>
-                </StatusBarItem>
-            </StatusBar>
         </Grid>
     </Grid>
 </Window>

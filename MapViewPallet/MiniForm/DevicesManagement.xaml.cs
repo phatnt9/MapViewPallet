@@ -26,9 +26,15 @@ namespace MapViewPallet.MiniForm
 
         public DevicesManagementModel managementModel;
 
-        public DevicesManagement()
+        MainWindow mainWindow;
+
+
+        public DevicesManagement(MainWindow mainWindow)
         {
             InitializeComponent();
+
+            this.mainWindow = mainWindow;
+
             DeviceManagementTabControl.SelectionChanged += DeviceManagementTabControl_SelectionChanged;
 
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -216,7 +222,7 @@ namespace MapViewPallet.MiniForm
             int deviceID = 0;
             int.TryParse((DevicesListDg.SelectedItem as dtDevice).deviceId.ToString(), out deviceID);
             deviceData.deviceId = deviceID;
-            deviceData.deviceName = (DevicesListDg.SelectedItem as dtDevice).deviceName.ToString().Trim().Replace(" ", "");
+            deviceData.deviceName = (DevicesListDg.SelectedItem as dtDevice).deviceName.ToString().Trim();
             deviceData.creUsrId = Global_Object.userLogin;
             deviceData.updUsrId = Global_Object.userLogin;
             List<dtDeviceProduct> deviceProducts = new List<dtDeviceProduct>();
@@ -275,7 +281,7 @@ namespace MapViewPallet.MiniForm
                     case 1:
                         {
                             dtDevice temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtDevice;
-                            string deviceName = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim().Replace(" ", ""));
+                            string deviceName = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
                             List<dtDevice> devices = new List<dtDevice>();
                             temp.deviceName = deviceName;
                             temp.updUsrId = Global_Object.userLogin;
@@ -456,7 +462,7 @@ namespace MapViewPallet.MiniForm
             List<dtDevice> devices = new List<dtDevice>();
             foreach (dtDevice dr in managementModel.devicesList)
             {
-                if (dr.deviceName.ToString().Trim().ToUpper() != dr.deviceNameOld.ToString().Trim().ToUpper()
+                if (dr.deviceName.ToString().Trim() != dr.deviceNameOld.ToString().Trim()
                     || (((dr.pathFile != null) ? dr.pathFile.ToString() : "").Trim() != ""))
                 {
                     if (String.IsNullOrEmpty(dr.deviceName.ToString()) || dr.deviceName.ToString().Trim() == "")
@@ -620,7 +626,7 @@ namespace MapViewPallet.MiniForm
         {
             try
             {
-                string productName = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim().Replace(" ", ""));
+                string productName = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
                 if (ProductsListDg.SelectedItem != null)
                 {
                     dtProduct selectedProduct = (ProductsListDg.SelectedItem as dtProduct);
@@ -631,6 +637,8 @@ namespace MapViewPallet.MiniForm
                     dtProduct product = new dtProduct();
                     product.productId = ((ProductsListDg.SelectedItem) as dtProduct).productId;
                     product.productName = productName;
+                    product.imageProductUrl = (ProductsListDg.SelectedItem as dtProduct).imageProductUrl.ToString();
+                    product.imageProductUrlOld = (ProductsListDg.SelectedItem as dtProduct).imageProductUrlOld.ToString();
                     product.productDetails = new List<dtProductDetail>();
                     product.creUsrId = Global_Object.userLogin;
                     product.updUsrId = Global_Object.userLogin;
@@ -677,7 +685,7 @@ namespace MapViewPallet.MiniForm
         {
             try
             {
-                string productDetailName = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim().Replace(" ", ""));
+                string productDetailName = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
                 if (ProductsListDg.SelectedItem != null)
                 {
                     dtProductDetail selectedProductDetail = (ProductDetailsListDg.SelectedItem as dtProductDetail);
@@ -967,7 +975,7 @@ namespace MapViewPallet.MiniForm
             {
                 dtBuffer temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtBuffer;
                 temp.updUsrId = Global_Object.userLogin;
-                string bufferCellEdit = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim().Replace(" ", ""));
+                string bufferCellEdit = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
                 List<dtBuffer> buffers = new List<dtBuffer>();
                 switch (e.Column.DisplayIndex)
                 {
@@ -1400,6 +1408,7 @@ namespace MapViewPallet.MiniForm
                     managementModel.ReloadListBuffers();
                 }
             }
+            mainWindow.palletViewEventControl.ReloadAllStation();
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
 

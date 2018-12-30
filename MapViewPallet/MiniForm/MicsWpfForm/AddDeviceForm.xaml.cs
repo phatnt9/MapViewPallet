@@ -55,7 +55,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             request.Method = "POST";
             request.ContentType = @"application/json";
             dtDevice device = new dtDevice();
-            device.deviceName = this.deviceNametb.Text.Trim().Replace(" ", "");
+            device.deviceName = this.deviceNametb.Text.Trim();
             device.creUsrId = Global_Object.userLogin;
             device.updUsrId = Global_Object.userLogin;
             string jsonData = JsonConvert.SerializeObject(device);

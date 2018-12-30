@@ -110,7 +110,7 @@ namespace MapViewPallet.Shape
 
 
             //Name = "Stationx" + Global_Mouse.EncodeTransmissionTimestamp(); //Object name
-            Name = props.bufferDb.bufferName.Replace(" ", ""); //Object name
+            //Name = props.bufferDb.bufferName.Replace(" ", ""); //Object name
 
 
             ContextMenu = new ContextMenu();
@@ -475,7 +475,7 @@ namespace MapViewPallet.Shape
         public void Remove()
         {
             props._canvas.Children.Remove(this);
-            RemoveHandle(props.NameID);
+            //RemoveHandle(props.NameID);
         }
 
         public void Move(Point pos)

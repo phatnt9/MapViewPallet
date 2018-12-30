@@ -6,16 +6,45 @@
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
         mc:Ignorable="d"
         Title="Đăng Nhập" 
-        Height="300" 
-        Width="400" 
-        MinHeight="300"
-        MinWidth="400"
-        MaxHeight="300"
-        MaxWidth="400">
+        Height="260" 
+        Width="300" 
+        Background="#f5f5f5"
+        MinHeight="260"
+        MinWidth="300"
+        MaxHeight="260"
+        MaxWidth="300">
+    <Window.Resources>
+        <SolidColorBrush x:Key="pressed" Color="Red" />
+        <Style x:Key="MyStyle" TargetType="{x:Type Button}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0 0 0 3"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="Orange" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource pressed}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="4" Background="LightGray" BorderThickness="1" BorderBrush="DimGray" Padding="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -27,36 +56,46 @@
             <StackPanel Orientation="Vertical" 
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
-                            Margin="0,6,0,0">
-                <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-                    <Label VerticalAlignment="Center" 
+                            Margin="0,0,0,0">
+                <StackPanel Orientation="Vertical" 
+                                HorizontalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Label VerticalAlignment="Center" 
                                Content="Tên đăng nhập"
+                               Margin="0,0,0,-3"
                                FontSize="14"></Label>
+                    </StackPanel>
+                    
                     <TextBox Name="userNametb" 
                              Width="200" 
-                             Height="25" 
-                             Margin="10"
+                             Height="20" 
+                             Margin="0,0,0,0"
                              CharacterCasing="Upper"
-                             PreviewKeyDown="UserNametb_PreviewKeyDown"></TextBox>
+                             PreviewKeyDown="UserNametb_PreviewKeyDown">
+                    </TextBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-                    <Label VerticalAlignment="Center" 
+                <StackPanel Orientation="Vertical" 
+                                HorizontalAlignment="Center">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Label VerticalAlignment="Center" 
                                Content="Mật khẩu"
+                               Margin="0,0,0,-3"
                                FontSize="14"></Label>
+                    </StackPanel>
+                    
                     <PasswordBox Name="passwordtb" 
                              Width="200" 
-                             Height="25" 
-                             Margin="10"
+                             Height="20" 
+                             Margin="0"
                              PasswordChar="*"
                              PreviewKeyDown="Passwordtb_PreviewKeyDown"
-                             ></PasswordBox>
+                             >
+                    </PasswordBox>
                 </StackPanel>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel Width="300" 
+            <StackPanel Width="230" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Grid>
@@ -65,17 +104,20 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Button Name="btn_login" Width="100" 
-                                Height="30" 
-                                FontSize="14"
+                        <Button Name="btn_login" Width="80" 
+                                Height="25" 
+                                FontSize="13"
                                 Content="Đăng nhập"
-                                Click="btn_login_Click"></Button>
+                                Foreground="Black"
+                                Click="btn_login_Click">
+                        </Button>
                     </Grid>
                     <Grid Grid.Column="1">
-                        <Button Name="btn_exit" Width="100" 
-                                Height="30" 
-                                FontSize="14"
+                        <Button Name="btn_exit" Width="80" 
+                                Height="25" 
+                                FontSize="13"
                                 Content="Thoát"
+                                Foreground="Black"
                                 Click="btn_exit_Click"></Button>
                     </Grid>
                 </Grid>

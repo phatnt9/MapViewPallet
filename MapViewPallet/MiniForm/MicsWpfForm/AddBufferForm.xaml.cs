@@ -114,7 +114,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             request.Method = "POST";
             request.ContentType = @"application/json";
             dtBuffer buffer = new dtBuffer();
-            buffer.bufferName = this.bufferNametb.Text.Trim().Replace(" ", "");
+            buffer.bufferName = this.bufferNametb.Text.Trim();
             buffer.maxRow = maxRow;
             buffer.maxBay = maxBay;
             buffer.bufferReturn = (bool)bufferReturnCb.IsChecked;

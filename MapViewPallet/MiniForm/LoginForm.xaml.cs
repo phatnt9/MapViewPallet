@@ -48,6 +48,7 @@ namespace MapViewPallet.MiniForm
             CenterWindowOnScreen();
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+            userNametb.Focus();
         }
 
         private void btn_login_Click(object sender, RoutedEventArgs e)

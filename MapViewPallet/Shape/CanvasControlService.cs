@@ -1,6 +1,11 @@
-﻿using System;
+﻿using MapViewPallet.MiniForm;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,10 +46,11 @@ namespace MapViewPallet.Shape
         //---------------MICS-------------------
         //private Ellipse cursorPoint = new Ellipse();
         //======================MAP======================
-        public CanvasControlService(MainWindow mainWinDowIn, TreeView mainTreeViewIn)
+        //public CanvasControlService(MainWindow mainWinDowIn, TreeView mainTreeViewIn)
+        public CanvasControlService(MainWindow mainWinDowIn)
         {
             mainWindow = mainWinDowIn;
-            mainTreeView = mainTreeViewIn;
+            //mainTreeView = mainTreeViewIn;
             map = mainWindow.map;
             scaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
@@ -504,6 +510,63 @@ namespace MapViewPallet.Shape
             {
                 list_Station.Remove(name);
                 Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Station.Count);
+            }
+        }
+
+        public void ReloadAllStation()
+        {
+            for (int i=0; i< list_Station.Count; i++)
+            {
+                Console.WriteLine(i);
+                StationShape temp = list_Station.ElementAt(i).Value;
+                Console.WriteLine("Remove: "+ list_Station.ElementAt(i).Key);
+                temp.Remove();
+            }
+            list_Station.Clear();
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+            request.Method = "GET";
+            request.ContentType = @"application/json";
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                string result = reader.ReadToEnd();
+
+                DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
+
+                foreach (DataRow dr in buffers.Rows)
+                {
+                    dtBuffer tempBuffer = new dtBuffer
+                    {
+                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                        creDt = dr["creDt"].ToString(),
+                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                        updDt = dr["updDt"].ToString(),
+
+                        bufferId = int.Parse(dr["bufferId"].ToString()),
+                        bufferName = dr["bufferName"].ToString(),
+                        bufferNameOld = dr["bufferNameOld"].ToString(),
+                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
+                        bufferData = dr["bufferData"].ToString(),
+                        maxBay = int.Parse(dr["maxBay"].ToString()),
+                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+                        maxRow = int.Parse(dr["maxRow"].ToString()),
+                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                        //pallets
+                    };
+                    if (!list_Station.ContainsKey(tempBuffer.bufferId.ToString()))
+                    {
+                        StationShape tempStation = new StationShape(map, tempBuffer);
+                        tempStation.ReDraw();
+                        //tempStation.RemoveHandle += StationRemove;
+                        list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+                        //list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+                    }
+
+                }
             }
         }
 

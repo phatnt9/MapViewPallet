@@ -23,284 +23,343 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <GroupBox>
-                        <GroupBox.Header>
-                            <StackPanel>
-                                <TextBlock FontSize="20" FontWeight="Bold">Thông tin Buffer</TextBlock>
-                            </StackPanel>
-                        </GroupBox.Header>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="55"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <StackPanel Orientation="Vertical">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Content="Tên: "></Label>
-                                            <Label Name="bufferNamelb"></Label>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Content="Loại: "></Label>
-                                            <Label Name="bufferTypeNamelb"></Label>
-                                        </StackPanel>
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <GroupBox>
+                                <GroupBox.Header>
+                                    <StackPanel>
+                                        <TextBlock FontSize="20" FontWeight="Bold">Thông tin Buffer</TextBlock>
                                     </StackPanel>
-                                </Grid>
-                                <Grid Grid.Column="1">
-                                    <StackPanel Orientation="Vertical">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Content="Số hàng: "></Label>
-                                            <Label Name="bufferMaxRowlb"></Label>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Content="Số cột: "></Label>
-                                            <Label Name="bufferMaxBaylb"></Label>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <GroupBox Margin="20,0,0,0">
-                                    <GroupBox.Header>
-                                        <StackPanel>
-                                            <TextBlock FontSize="14" FontWeight="Bold" Text="Tọa độ:"></TextBlock>
-                                        </StackPanel>
-                                    </GroupBox.Header>
-                                    <Grid>
-                                        <StackPanel Orientation="Horizontal" 
+                                </GroupBox.Header>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="55"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <StackPanel Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Tên: "></Label>
+                                                    <Label Name="bufferNamelb"></Label>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Loại: "></Label>
+                                                    <Label Name="bufferTypeNamelb"></Label>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <StackPanel Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Số hàng: "></Label>
+                                                    <Label Name="bufferMaxRowlb"></Label>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Số cột: "></Label>
+                                                    <Label Name="bufferMaxBaylb"></Label>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <GroupBox Margin="20,0,0,0">
+                                            <GroupBox.Header>
+                                                <StackPanel>
+                                                    <TextBlock FontSize="14" FontWeight="Bold" Text="Tọa độ:"></TextBlock>
+                                                </StackPanel>
+                                            </GroupBox.Header>
+                                            <Grid>
+                                                <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Left" 
                                         VerticalAlignment="Center"
                                         Margin="0,0,0,0">
-                                            <StackPanel Orientation="Horizontal" 
+                                                    <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                <Label VerticalAlignment="Center" 
+                                                        <Label VerticalAlignment="Center" 
                                            Content="Checkin: "
                                            FontSize="12"></Label>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" 
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                <Label VerticalAlignment="Center" 
+                                                        <Label VerticalAlignment="Center" 
                                            Content="X"
                                            FontSize="12"></Label>
-                                                <TextBox Name="bufferX" 
+                                                        <TextBox Name="bufferX" 
                                              Width="35" 
                                              Height="20" 
                                              CharacterCasing="Upper"
                                                          PreviewTextInput="myPreviewTextInput"></TextBox>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" 
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                <Label VerticalAlignment="Center" 
+                                                        <Label VerticalAlignment="Center" 
                                            Content="Y"
                                            FontSize="12"></Label>
-                                                <TextBox Name="bufferY" 
+                                                        <TextBox Name="bufferY" 
                                              Width="35" 
                                              Height="20" 
                                              CharacterCasing="Upper"
                                                          PreviewTextInput="myPreviewTextInput"></TextBox>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" 
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                <Label VerticalAlignment="Center" 
+                                                        <Label VerticalAlignment="Center" 
                                            Content="A"
                                            FontSize="12"></Label>
-                                                <TextBox Name="bufferA" 
+                                                        <TextBox Name="bufferA" 
                                              Width="35" 
                                              Height="20"
                                              CharacterCasing="Upper"
                                                          PreviewTextInput="myPreviewTextInput"></TextBox>
-                                            </StackPanel>
-                                            <Button Name="btn_SetBufferData" 
+                                                    </StackPanel>
+                                                    <Button Name="btn_SetBufferData" 
                                         Margin="20,0,0,0"
                                         Width="35" 
                                         Height="20" 
                                         FontSize="12"
                                         Content="Lưu"
                                                     Click="Btn_SetBufferData_Click"/>
-                                        </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                        </GroupBox>
                                     </Grid>
-                                </GroupBox>
-                            </Grid>
+                                </Grid>
+                            </GroupBox>
                         </Grid>
-                    </GroupBox>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <GroupBox>
-                        <GroupBox.Header>
-                            <StackPanel>
-                                <TextBlock FontSize="20" FontWeight="Bold">Thông tin Pallet</TextBlock>
-                            </StackPanel>
-                        </GroupBox.Header>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <StackPanel Orientation="Vertical">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Content="Hàng: "></Label>
-                                            <Label Name="palletRowlb"></Label>
-                                        </StackPanel>
+                        <Grid Grid.Row="1">
+                            <GroupBox>
+                                <GroupBox.Header>
+                                    <StackPanel>
+                                        <TextBlock FontSize="20" FontWeight="Bold">Thông tin Pallet</TextBlock>
                                     </StackPanel>
-                                </Grid>
-                                <Grid Grid.Column="1">
-                                    <StackPanel Orientation="Vertical">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Label Content="Cột: "></Label>
-                                            <Label Name="palletBaylb"></Label>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <GroupBox Margin="20,0,0,0">
-                                    <GroupBox.Header>
-                                        <StackPanel>
-                                            <TextBlock FontSize="14" FontWeight="Bold" Text="Tọa độ:"></TextBlock>
-                                        </StackPanel>
-                                    </GroupBox.Header>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0">
-                                            <StackPanel Orientation="Horizontal" 
+                                </GroupBox.Header>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <StackPanel Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Hàng: "></Label>
+                                                    <Label Name="palletRowlb"></Label>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <StackPanel Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label Content="Cột: "></Label>
+                                                    <Label Name="palletBaylb"></Label>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <GroupBox Margin="20,0,0,0">
+                                            <GroupBox.Header>
+                                                <StackPanel>
+                                                    <TextBlock FontSize="14" FontWeight="Bold" Text="Tọa độ:"></TextBlock>
+                                                </StackPanel>
+                                            </GroupBox.Header>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition></RowDefinition>
+                                                    <RowDefinition></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Left" 
                                         VerticalAlignment="Center"
                                         Margin="0,0,0,0">
-                                                <StackPanel Orientation="Horizontal" 
+                                                        <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                    <Label VerticalAlignment="Center" 
+                                                            <Label VerticalAlignment="Center" 
                                            Content="Line: "
                                                Width="50"
                                            FontSize="12"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal" 
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                    <Label VerticalAlignment="Center" 
+                                                            <Label VerticalAlignment="Center" 
                                            Content="X"
                                            FontSize="12"></Label>
-                                                    <TextBox Name="palletX" 
+                                                            <TextBox Name="palletX" 
                                              Width="35" 
                                              Height="20" 
                                              CharacterCasing="Upper"
                                                              PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal" 
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                    <Label VerticalAlignment="Center" 
+                                                            <Label VerticalAlignment="Center" 
                                            Content="Y"
                                            FontSize="12"></Label>
-                                                    <TextBox Name="palletY" 
+                                                            <TextBox Name="palletY" 
                                              Width="35" 
                                              Height="20" 
                                              CharacterCasing="Upper"
                                                              PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal" 
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                    <Label VerticalAlignment="Center" 
+                                                            <Label VerticalAlignment="Center" 
                                            Content="A"
                                            FontSize="12"></Label>
-                                                    <TextBox Name="palletA" 
+                                                            <TextBox Name="palletA" 
                                              Width="35" 
                                              Height="20"
                                              CharacterCasing="Upper"
                                                              PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                </StackPanel>
-                                                <!--<Button Name="btn_SetPalletDataLine" 
+                                                        </StackPanel>
+                                                        <!--<Button Name="btn_SetPalletDataLine" 
                                         Margin="20,0,0,0"
                                         Width="35" 
                                         Height="20" 
                                         FontSize="12"
                                         Content="Lưu"/>-->
-                                            </StackPanel>
-                                        </Grid>
-                                        <Grid Grid.Row="1">
-                                            <StackPanel Orientation="Horizontal" 
+                                                    </StackPanel>
+                                                </Grid>
+                                                <Grid Grid.Row="1">
+                                                    <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Left" 
                                         VerticalAlignment="Center"
                                         Margin="0,0,0,0">
-                                                <StackPanel Orientation="Horizontal" 
+                                                        <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                    <Label VerticalAlignment="Center" 
+                                                            <Label VerticalAlignment="Center" 
                                            Content="Pallet: "
                                                Width="50"
                                            FontSize="12"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal" 
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                    <Label VerticalAlignment="Center" 
+                                                            <Label VerticalAlignment="Center" 
                                            Content="Hàng"
                                            FontSize="12"></Label>
-                                                    <TextBox Name="palletR" 
+                                                            <TextBox Name="palletR" 
                                              Width="35" 
                                              Height="20" 
                                              CharacterCasing="Upper"
+                                                                     IsEnabled="False"
                                                              PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal" 
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                    <Label VerticalAlignment="Center" 
+                                                            <Label VerticalAlignment="Center" 
                                            Content="Cột"
                                            FontSize="12"></Label>
-                                                    <TextBox Name="palletB" 
+                                                            <TextBox Name="palletB" 
                                              Width="35" 
                                              Height="20" 
                                              CharacterCasing="Upper"
+                                                                     IsEnabled="False"
                                                              PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal" 
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Right">
-                                                    <Label VerticalAlignment="Center" 
+                                                            <Label VerticalAlignment="Center" 
                                            Content="Hướng"
                                            FontSize="12"></Label>
-                                                    <TextBox Name="palletD" 
+                                                            <TextBox Name="palletD" 
                                              Width="35" 
                                              Height="20"
                                              CharacterCasing="Upper"
                                                              PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                </StackPanel>
-                                                <Button Name="btn_SetPalletDataPallet" 
+                                                        </StackPanel>
+                                                        <Button Name="btn_SetPalletDataPallet" 
                                         Margin="20,0,0,0"
                                         Width="35" 
                                         Height="20" 
                                         FontSize="12"
                                         Content="Lưu"
                                                         Click="Btn_SetPalletDataPallet_Click"/>
-                                            </StackPanel>
-                                        </Grid>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Grid>
+                                        </GroupBox>
                                     </Grid>
-                                </GroupBox>
-                            </Grid>
+                                </Grid>
+                            </GroupBox>
                         </Grid>
-                    </GroupBox>
-                </Grid>
-                
+                        <Grid Grid.Row="2">
+                            <GroupBox>
+                                <GroupBox.Header>
+                                    <StackPanel>
+                                        <TextBlock FontSize="20" FontWeight="Bold">Thông tin Pallet</TextBlock>
+                                    </StackPanel>
+                                </GroupBox.Header>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Center" 
+                                        VerticalAlignment="Center"
+                                                        Margin="0,0,0,5">
+                                        <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                            <Label VerticalAlignment="Center" 
+                                                               Content="X"
+                                                               FontSize="12"></Label>
+                                            <TextBox Name="bufferPosX" 
+                                                                 Width="45" 
+                                                                 Height="20" 
+                                                                 PreviewTextInput="myPreviewTextInput"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                            <Label VerticalAlignment="Center" 
+                                                               Content="Y"
+                                                               FontSize="12"></Label>
+                                            <TextBox Name="bufferPosY" 
+                                                                 Width="45" 
+                                                                 Height="20" 
+                                                                 PreviewTextInput ="myPreviewTextInput"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                            <Label VerticalAlignment="Center" 
+                                                               Content="A"
+                                                               FontSize="12"></Label>
+                                            <TextBox Name="bufferPosA" 
+                                                                 Width="45" 
+                                                                 Height="20"
+                                                                 PreviewTextInput="myPreviewTextInput"/>
+                                        </StackPanel>
+                                        <Button Name="btn_SetBufferPosData" 
+                                                            Margin="20,0,0,0"
+                                                            Width="35" 
+                                                            Height="20" 
+                                                            FontSize="12"
+                                                            Content="Lưu"
+                                                            Click="Btn_SetBufferPosData_Click"/>
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+                    </Grid>
+                </ScrollViewer>
             </Grid>
             <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.RowSpan="2">
                     <GroupBox >
                         <GroupBox.Header>
                             <StackPanel>
@@ -316,16 +375,12 @@
                                 <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Right" 
                                         VerticalAlignment="Center">
-                                    <!--<Button Name="btn_Save_Pallet"
+                                    <Button Name="btn_Save_Pallet"
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
-                                        FontSize="14">
-                                        <StackPanel>
-                                            <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_save.png"/>
-                                        </StackPanel>
-                                    </Button>-->
+                                        FontSize="14"
+                                            Click="Button_Click">Clear all
+                                    </Button>
                                     <Button Name="btn_Refresh_Pallet"
                                         Margin="5,0,0,5" 
                                         Width="Auto" 
@@ -361,7 +416,7 @@
                                             </DataGridTextColumn.EditingElementStyle>
                                         </DataGridTextColumn>
                                         <DataGridTextColumn Header="Hàng" 
-                                                        Width="Auto" 
+                                                        Width="*" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=row}">
                                             <DataGridTextColumn.EditingElementStyle>
@@ -371,7 +426,7 @@
                                             </DataGridTextColumn.EditingElementStyle>
                                         </DataGridTextColumn>
                                         <DataGridTextColumn Header="Cột" 
-                                                        Width="Auto" 
+                                                        Width="*" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=bay}">
                                             <DataGridTextColumn.EditingElementStyle>
@@ -381,7 +436,7 @@
                                             </DataGridTextColumn.EditingElementStyle>
                                         </DataGridTextColumn>
                                         <DataGridTextColumn Header="Trạng thái" 
-                                                        Width="Auto" 
+                                                        Width="*" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=palletStatus}">
                                             <DataGridTextColumn.EditingElementStyle>
@@ -393,6 +448,7 @@
                                         <DataGridTextColumn Header="Dữ liệu" 
                                                         Width="*" 
                                                         IsReadOnly="True"
+                                                            Visibility="Hidden"
                                                         Binding="{Binding Path=dataPallet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                             <DataGridTextColumn.ElementStyle>
                                                 <Style TargetType="TextBlock">
@@ -406,13 +462,26 @@
                                                 </Style>
                                             </DataGridTextColumn.EditingElementStyle>
                                         </DataGridTextColumn>
+                                        <DataGridTemplateColumn Header="Set 'W'">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Click="Button_Click_1">Details</Button>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>
                         </Grid>
                     </GroupBox>
                 </Grid>
-                <Grid Grid.Column="1"></Grid>
+                <Grid Grid.Row="1">
+                    <!--<Grid>
+                        <StackPanel>
+                            <Button Width="50" Height="20" Content="Clear All" Click="Button_Click"></Button>
+                        </StackPanel>
+                    </Grid>-->
+                </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
