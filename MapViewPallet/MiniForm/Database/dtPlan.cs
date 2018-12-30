@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MapViewPallet.MiniForm
 {
@@ -10,7 +6,6 @@ namespace MapViewPallet.MiniForm
     {
 
         private int pPlanId;
-        private int pDeviceProductId;
         private int pTimeWorkId;
         private int pProductDetailId;
         private int pPalletAmount;
@@ -19,38 +14,33 @@ namespace MapViewPallet.MiniForm
         private string pActiveDate;
         private int pDeviceId;
         private int pProductId;
+        private string pDeviceName;
+        private string pImageDeviceUrl;
+        private string pProductName;
+        private string pImageProductUrl;
+        private string pProductDetailName;
+        private string pPalletStatus;
+        private List<dtBuffer> pBuffers;
+
+        public int planId { get => pPlanId; set => pPlanId = value; }
+        public int deviceProductId { get; set; }
+        public int timeWorkId { get => pTimeWorkId; set => pTimeWorkId = value; }
+        public int productDetailId { get => pProductDetailId; set => pProductDetailId = value; }
+        public int palletAmount { get => pPalletAmount; set => pPalletAmount = value; }
+        public int palletUse { get => pPalletUse; set => pPalletUse = value; }
+        public int palletMiss { get => pPalletMiss; set => pPalletMiss = value; }
+        public string activeDate { get => pActiveDate; set => pActiveDate = value; }
+        public int deviceId { get => pDeviceId; set => pDeviceId = value; }
+        public int productId { get => pProductId; set => pProductId = value; }
+        public List<dtBuffer> buffers { get => pBuffers; set => pBuffers = value; }
+        public string deviceName { get => pDeviceName; set => pDeviceName = value; }
+        public string productName { get => pProductName; set => pProductName = value; }
+        public string productDetailName { get => pProductDetailName; set => pProductDetailName = value; }
+        public string palletStatus { get => pPalletStatus; set => pPalletStatus = value; }
+        public string imageDeviceUrl { get => pImageDeviceUrl; set => pImageDeviceUrl = value; }
+        public string imageProductUrl { get => pImageProductUrl; set => pImageProductUrl = value; }
 
 
-        public int planId { get => pPlanId; set { pPlanId = value; NotifyPropertyChanged("planId"); } }
-        public int deviceProductId { get => pDeviceProductId; set { pDeviceProductId = value; NotifyPropertyChanged("deviceProductId"); } }
-        public int timeWorkId { get => pTimeWorkId; set { pTimeWorkId = value; NotifyPropertyChanged("timeWorkId"); } }
-        public int productDetailId {get => pProductDetailId;set{pProductDetailId = value;NotifyPropertyChanged("productDetailId");}}
-        public int palletAmount {get => pPalletAmount;set{pPalletAmount = value;NotifyPropertyChanged("palletAmount");}}
-        public int palletUse { get => pPalletUse; set { pPalletUse = value; NotifyPropertyChanged("palletUse"); } }
-        public int palletMiss { get => pPalletMiss; set { pPalletMiss = value; NotifyPropertyChanged("palletMiss"); } }
-        public int deviceId { get => pDeviceId; set { pDeviceId = value; NotifyPropertyChanged("deviceId"); } }
-        public int productId { get => pProductId; set { pProductId = value; NotifyPropertyChanged("productId"); } }
-        public string activeDate { get => pActiveDate; set { pActiveDate = value; NotifyPropertyChanged("activeDate"); } }
 
-
-
-
-
-        #region INotifyPropertyChanged Members
-        public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
-
-        #region Private Helpers
-        private void NotifyPropertyChanged(string propertyName)
-        {
-            //Console.WriteLine(propertyName);
-            if (PropertyChanged != null)
-            {
-                //Console.WriteLine("in");
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                //Console.WriteLine(propertyName);
-            }
-        }
-        #endregion
     }
 }

@@ -1,0 +1,128 @@
+﻿<Window x:Class="MapViewPallet.MiniForm.ChangePassForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapViewPallet.MiniForm"
+        mc:Ignorable="d"
+        Title="ChangePassForm" 
+        Height="330" 
+        Width="400" 
+        MinHeight="330"
+        MinWidth="400"
+        MaxHeight="330"
+        MaxWidth="400">
+    <Window.Resources>
+        <Style x:Key="MyStyle" TargetType="{x:Type Button}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0 0 0 3"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="Orange" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource pressed}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid Margin="0,5,0,5">
+                <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Vertical" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Margin="0,6,0,0">
+                <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                    <Label VerticalAlignment="Center" 
+                               Content="Tên đăng nhập"
+                               FontSize="12"></Label>
+                    <TextBox Name="userNametb" 
+                             Width="200" 
+                             Height="20" 
+                             Margin="10"
+                             IsReadOnly="True"
+                             CharacterCasing="Upper"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                    <Label VerticalAlignment="Center" 
+                               Content="Mật khẩu"
+                               FontSize="12"></Label>
+                    <PasswordBox Name="passwordCurrenttb" 
+                             Width="200" 
+                             Height="20" 
+                             Margin="10"
+                             PasswordChar="*"
+                             PreviewKeyDown="PasswordCurrenttb_PreviewKeyDown"></PasswordBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                    <Label VerticalAlignment="Center" 
+                               Content="Mật khẩu mới"
+                               FontSize="12"></Label>
+                    <PasswordBox Name="passwordNewtb" 
+                             Width="200" 
+                             Height="20" 
+                             Margin="10"
+                             PasswordChar="*"
+                             PreviewKeyDown="PasswordNewtb_PreviewKeyDown"></PasswordBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                    <Label VerticalAlignment="Center" 
+                               Content="Xác nhận mật khẩu"
+                               FontSize="12"></Label>
+                    <PasswordBox Name="passwordNewConfirmtb" 
+                             Width="200" 
+                             Height="20" 
+                             Margin="10"
+                             PasswordChar="*"
+                             PreviewKeyDown="PasswordNewConfirmtb_PreviewKeyDown"></PasswordBox>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel Width="230" 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Button Name="btn_save" Width="80" 
+                                Height="25" 
+                                FontSize="13"
+                                Content="Lưu"
+                                Foreground="Black"
+                                Style="{DynamicResource MyStyle}"
+                                Click="btn_save_Click">
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Button Name="btn_exit" Width="80" 
+                                Height="25" 
+                                FontSize="13"
+                                Content="Thoát"
+                                Foreground="Black"
+                                Style="{DynamicResource MyStyle}"
+                                Click="btn_exit_Click"></Button>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Window>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MapViewPallet.MiniForm
+﻿namespace MapViewPallet.MiniForm
 {
     public class dtProductDetail : userModel
     {
@@ -13,6 +8,6 @@ namespace MapViewPallet.MiniForm
 
         public int productDetailId { get => pProductDetailId; set => pProductDetailId = value; }
         public int productId { get => pProductId; set => pProductId = value; }
-        public string productDetailName { get => pProductDetailName; set => pProductDetailName = value; }
+        public string productDetailName { get => pProductDetailName; set { pProductDetailName = value; RaisePropertyChanged("productDetailName"); } }
     }
 }

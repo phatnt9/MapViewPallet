@@ -1,4 +1,5 @@
-﻿using MapViewPallet.Shape;
+﻿using MapViewPallet.MiniForm;
+using MapViewPallet.Shape;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,22 +19,38 @@ namespace MapViewPallet
     
     public static class Global_Object
     {
-        public enum StationState
-        {
-            Normal,
-            Warning,
-            Error
-        }
 
-        public enum PalletState
-        {
-            Occupied,
-            Unoccupied,
-            Holding
-        }
+        //#######################################
+        public static bool IsEngLish = false;
 
 
         public static string url = @"http://localhost:8081/robot/rest/";
+
+
+        public static int userLogin = -2;
+        public static string userName = "";
+        public static int userAuthor = -2;
+
+
+        public static string messageDuplicated = "{0} is duplicated.";
+        public static string messageSaveSucced = "Save operation succeeded.";
+        public static string messageSaveFail = "Failed to save. Please try again.";
+        public static string messageValidate = "{0} is mandatory. Please enter {1}.";
+        public static string messageNothingSelected = "Nothing selected.";
+        public static string messageDeleteConfirm = "Do you want to delete the selected {0}?";
+        public static string messageDeleteSucced = "Delete operation succeeded.";
+        public static string messageDeleteFail = "Failed to delete. Please try again.";
+        public static string messageDeleteUse = "Can\'t delete {0} because it has been using on {1}.";
+        public static string messageValidateNumber = "{0} must be {1} than {2}.";
+        public static string messageNoDataSave = "There is no updated data to save.";
+
+
+        public static string messageTitileInformation = "Information";
+        public static string messageTitileError = "Error";
+        public static string messageTitileWarning = "Warning";
+
+        //#######################################
+
         public static Point LaserOriginalCoor = new Point(648,378);
         public static Point OriginPoint = new Point(0,0);
         public static Point CoorLaser(Point canvas)

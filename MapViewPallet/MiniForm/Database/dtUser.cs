@@ -1,32 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MapViewPallet.MiniForm
 {
     public class dtUser : userModel
     {
-        private int pPlanId;
-        private int pDeviceProductId;
-        private int pTimeWorkId;
-        private int pProductDetailId;
-        private int pPalletAmount;
-        private int pPalletUse;
-        private int pPalletMiss;
-        private DateTime pActiveDate;
+        private int pUserId;
+        private string pUserName;
+        private string pUserPassword;
+        private int pUserAuthor;
         private List<dtUserDevice> pUserDevices;
         private int pFlagModify;
+        private int pUserDeviceId;
+        private int pDeviceId;
+        private string pDeviceName;
+        private string pUserPasswordOld;
 
-        public int planId { get => pPlanId; set => pPlanId = value; }
-        public int deviceProductId { get => pDeviceProductId; set => pDeviceProductId = value; }
-        public int timeWorkId { get => pTimeWorkId; set => pTimeWorkId = value; }
-        public int productDetailId { get => pProductDetailId; set => pProductDetailId = value; }
-        public int palletAmount { get => pPalletAmount; set => pPalletAmount = value; }
-        public int palletUse { get => pPalletUse; set => pPalletUse = value; }
-        public int palletMiss { get => pPalletMiss; set => pPalletMiss = value; }
-        public DateTime activeDate { get => pActiveDate; set => pActiveDate = value; }
+        public int userId { get => pUserId; set => pUserId = value; }
+        public string userName { get => pUserName; set => pUserName = value; }
+        public string userPassword { get => pUserPassword; set => pUserPassword = value; }
+        public int userAuthor { get => pUserAuthor; set => pUserAuthor = value; }
         public List<dtUserDevice> userDevices { get => pUserDevices; set => pUserDevices = value; }
         public int flagModify { get => pFlagModify; set => pFlagModify = value; }
+        public int userDeviceId { get => pUserDeviceId; set => pUserDeviceId = value; }
+        public int deviceId { get => pDeviceId; set => pDeviceId = value; }
+        public string deviceName { get => pDeviceName; set => pDeviceName = value; }
+        public string userPasswordOld { get => pUserPasswordOld; set => pUserPasswordOld = value; }
+        
     }
 }

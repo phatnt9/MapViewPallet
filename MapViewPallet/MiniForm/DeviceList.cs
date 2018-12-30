@@ -13,17 +13,18 @@ namespace MapViewPallet.MiniForm
 {
     public class DeviceList
     {
-        public List<Device> listDevices;
+        public List<dtDevice> listDevices;
+
         public DeviceList()
         {
-            listDevices = new List<Device>();
-            GetDevicesList();
+            listDevices = new List<dtDevice>();
         }
 
-        public void GetDevicesList()
+        public bool GetDevicesList()
         {
             try
             {
+                listDevices.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
@@ -36,7 +37,7 @@ namespace MapViewPallet.MiniForm
                     DataTable devices = JsonConvert.DeserializeObject<DataTable>(result);
                     foreach (DataRow dr in devices.Rows)
                     {
-                        Device tempDevice = new Device
+                        dtDevice tempDevice = new dtDevice
                         {
                             creUsrId = int.Parse(dr["creUsrId"].ToString()),
                             creDt = dr["creDt"].ToString(),
@@ -51,16 +52,17 @@ namespace MapViewPallet.MiniForm
                         }
                     }
                 }
+                return true;
             }
-            catch (Exception ex)
+            catch 
             {
-
+                return false;
             }
         }
 
-        public bool AddDevice(Device checkDevice)
+        public bool AddDevice(dtDevice checkDevice)
         {
-            foreach (Device item in listDevices)
+            foreach (dtDevice item in listDevices)
             {
                 if (item.deviceId == checkDevice.deviceId)
                 {
@@ -70,84 +72,12 @@ namespace MapViewPallet.MiniForm
             listDevices.Add(checkDevice);
             return true;
         }
-
-
-        public int GetListIndexByDeviceId (int deviceId)
-        {
-            try
-            {
-                for (int i=0;i< listDevices.Count;i++)
-                {
-                    if (listDevices[i].deviceId == deviceId)
-                    {
-                        return i;
-                    }
-                }
-                return -1;
-            }
-            catch
-            {
-                return -1;
-            }
-        }
-
-        public Device Get_Device_By_DeviceId(int deviceId)
-        {
-            foreach (Device device in listDevices)
-            {
-                if (device.deviceId == deviceId)
-                {
-                    return device;
-                }
-            }
-            return null;
-        }
-
-        public DeviceProduct GetDeviceProductByProductId(int deviceId, int productId)
-        {
-            Device deviceTemp = Get_Device_By_DeviceId(deviceId);
-            foreach (DeviceProduct deviceProduct in deviceTemp.listDeviceProduct)
-            {
-                if (deviceProduct.productId == productId)
-                {
-                    return deviceProduct;
-                }
-            }
-            return null;
-        }
-        public ProductDetail GetProductDetailByProductDetailId (int deviceId, int productId, int productDetailId)
-        {
-            DeviceProduct deviceProductTemp = GetDeviceProductByProductId(deviceId, productId);
-            foreach (ProductDetail productDetail in deviceProductTemp.listProductDetails)
-            {
-                if (productDetail.productDetailId == productDetailId)
-                {
-                    return productDetail;
-                }
-            }
-            return null;
-        }
-
-        public Device GetDeviceByDeviceProductId (int deviceProductId)
-        {
-            foreach (Device device in listDevices)
-            {
-                foreach (DeviceProduct deviceProduct in device.listDeviceProduct)
-                {
-                    if (deviceProduct.deviceProductId == deviceProductId)
-                    {
-                        return device;
-                    }
-                }
-            }
-            return null;
-        }
-
+        
         public int GetProductIdByDeviceProductId(int deviceProductId)
         {
-            foreach (Device device in listDevices)
+            foreach (dtDevice device in listDevices)
             {
-                foreach (DeviceProduct deviceProduct in device.listDeviceProduct)
+                foreach (dtDeviceProduct deviceProduct in device.deviceProducts)
                 {
                     if (deviceProduct.deviceProductId == deviceProductId)
                     {
@@ -160,9 +90,9 @@ namespace MapViewPallet.MiniForm
 
         public int GetDeviceIdByDeviceProductId(int deviceProductId)
         {
-            foreach (Device device in listDevices)
+            foreach (dtDevice device in listDevices)
             {
-                foreach (DeviceProduct deviceProduct in device.listDeviceProduct)
+                foreach (dtDeviceProduct deviceProduct in device.deviceProducts)
                 {
                     if (deviceProduct.deviceProductId == deviceProductId)
                     {
@@ -172,7 +102,5 @@ namespace MapViewPallet.MiniForm
             }
             return -1;
         }
-
-
     }
 }

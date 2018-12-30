@@ -6,11 +6,22 @@ using System.ComponentModel;
 using System;
 using System.Windows.Input;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace MapViewPallet.Shape
 {
-    class RobotShape : Border
+    public class RobotShape : Border
     {
+        Thread th;
+
+        double angle = 0.0f;
+        public Point org = new Point(600, 350);
+        public double rad = 0;
+        public double anglestep = 0;
+        Rect area = new Rect(30, 30, 500, 500);
+
+        Point loc = new Point(0, 0);
+
         public event Action<string> RemoveHandle;
         public struct Props
         {
@@ -41,6 +52,11 @@ namespace MapViewPallet.Shape
 
         public RobotShape(Canvas pCanvas)
         {
+            //th = new Thread(DrawCircle);
+            //DrawCircle();
+            //th.IsBackground = true;
+            //th.Start();
+
             ToolTip = "";
             ToolTipOpening += ChangeToolTipContent;
             props.isSelected = false;
@@ -174,7 +190,7 @@ namespace MapViewPallet.Shape
 
         public void ChangeTask (string taskID)
         {
-            props.rbTask.Content = taskID;
+            //props.rbTask.Content = taskID;
         }
 
 
@@ -186,25 +202,87 @@ namespace MapViewPallet.Shape
             Draw();
         }
 
+        public void DrawCircle()
+        {
+
+            //while (true)
+            {
+                loc = CirclePoint(rad, angle, org);
+                props.position.X = loc.X + area.X;
+                props.position.Y = loc.Y + area.Y;
+
+                ReDraw(props.position, angle-90);
+
+                if (angle < 360)
+                {
+                    angle += anglestep;
+                }
+                else
+                {
+                    angle = 0;
+                }
+            }
+        }
+
+        public Point CirclePoint (double radius, double angleInDegrees, Point origin)
+        {
+            double x = (double)(radius * Math.Cos(angleInDegrees * Math.PI / 180)) + origin.X;
+            double y = (double)(radius * Math.Sin(angleInDegrees * Math.PI / 180)) + origin.Y;
+
+            return new Point(x,y);
+        }
+        
+
+        public void ReDraw() //random
+        {
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                //Random rotate = new Random();
+                //int rotateInt = rotate.Next(0, 360); //for ints
+                //int rotateRange = 360;
+                //double rotateDouble = rotate.NextDouble() * rotateRange; //for doubles
+
+                //Random posX = new Random();
+                //int posIntX = posX.Next(20, 1200); //for ints
+                //int posRangeX = 1180;
+                //double posDoubleX = posX.NextDouble() * posRangeX; //for doubles
+
+                //Random posY = new Random();
+                //int posIntY = posX.Next(20, 700); //for ints
+                //int posRangeY = 680;
+                //double posDoubleY = posY.NextDouble() * posRangeY; //for doubles
+
+                
+                //props.rotate = roro1;
+                //props.position = new Point(roro2,roro3);
+
+                ChangeTask("22");
+                Draw();
+            }));
+        }
+
         public void Draw()
         {
-            //Render Robot
-            props.rbRotateTransform.Angle = props.rotate;
-            props.rbTranslate = new TranslateTransform(props.position.X - (Width / 2), props.position.Y - (Height / 2));
-            props.rbTransformGroup.Children[1] = props.rbTranslate;
-            //Render Status
-            props.contentRotateTransform.Angle = -(props.rotate);
-            props.contentTranslate = new TranslateTransform(0,0);
-            props.contentTransformGroup.Children[1] = props.contentTranslate;
-            // SPECIAL POINTS
-            //props.eightCorner[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
-            //props.eightCorner[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left
-            //props.eightCorner[2] = CoorPointAtBorder(new Point((Width / 2), (0)));           //top-mid
-            //props.eightCorner[3] = CoorPointAtBorder(new Point((Width), (0)));             //top-right
-            //props.eightCorner[4] = CoorPointAtBorder(new Point((Width), (Height / 2)));      //mid-right
-            //props.eightCorner[5] = CoorPointAtBorder(new Point((Width), (Height)));        //bot-right
-            //props.eightCorner[6] = CoorPointAtBorder(new Point((Width / 2), (Height)));      //bot-mid
-            //props.eightCorner[7] = CoorPointAtBorder(new Point((0), (Height)));            //bot-left
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                //Render Robot
+                props.rbRotateTransform.Angle = props.rotate;
+                props.rbTranslate = new TranslateTransform(props.position.X - (Width / 2), props.position.Y - (Height / 2));
+                props.rbTransformGroup.Children[1] = props.rbTranslate;
+                //Render Status
+                props.contentRotateTransform.Angle = -(props.rotate);
+                props.contentTranslate = new TranslateTransform(0, 0);
+                props.contentTransformGroup.Children[1] = props.contentTranslate;
+                // SPECIAL POINTS
+                //props.eightCorner[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
+                //props.eightCorner[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left
+                //props.eightCorner[2] = CoorPointAtBorder(new Point((Width / 2), (0)));           //top-mid
+                //props.eightCorner[3] = CoorPointAtBorder(new Point((Width), (0)));             //top-right
+                //props.eightCorner[4] = CoorPointAtBorder(new Point((Width), (Height / 2)));      //mid-right
+                //props.eightCorner[5] = CoorPointAtBorder(new Point((Width), (Height)));        //bot-right
+                //props.eightCorner[6] = CoorPointAtBorder(new Point((Width / 2), (Height)));      //bot-mid
+                //props.eightCorner[7] = CoorPointAtBorder(new Point((0), (Height)));            //bot-left
+            }));
         }
 
         public Point CoorPointAtBorder(Point pointOnBorder)

@@ -33,7 +33,7 @@ namespace SelDatUnilever_Ver1._00.Communication.HttpBridge
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                
             }
@@ -57,7 +57,7 @@ namespace SelDatUnilever_Ver1._00.Communication.HttpBridge
                     }
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 Console.WriteLine(url+"  "+ jsonObject);
             }
@@ -79,7 +79,7 @@ namespace SelDatUnilever_Ver1._00.Communication.HttpBridge
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
 
             }

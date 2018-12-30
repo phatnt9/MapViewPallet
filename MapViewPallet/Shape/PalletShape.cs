@@ -1,9 +1,11 @@
-﻿using System;
+﻿using MapViewPallet.MiniForm;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,14 +20,16 @@ namespace MapViewPallet.Shape
     public class PalletShape : Border
     {
         private double palletMargin = 0.05; //metters
-        private PalletState _status = PalletState.Unoccupied; //metters
 
-        
-        //private double palletPadding = 0.5; //metters
+        private dtPallet pPallet;
+        public dtPallet pallet { get => pPallet; set => pPallet = value; }
+
+        public string name = "";
+
 
         public PalletShape(string name)
         {
-            Name = name;
+            this.name = name;
             // Specific Size of Pallet
             Margin = new Thickness(palletMargin / Global_Object.resolution);
             //Padding = new Thickness(palletPadding / Global_Object.resolution);
@@ -41,35 +45,72 @@ namespace MapViewPallet.Shape
             //=============================
             StatusChanged("normal");
 
+            Label lbPallet = new Label();
+            lbPallet.Width = this.Width;
+            lbPallet.FontSize = 3;
+            lbPallet.Margin = new Thickness(-4);
+            lbPallet.Content = this.name.Split('x')[1] +"-"+ this.name.Split('x')[2];
+
+            System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+            rectangle.Width = 2;
+            rectangle.Height = 2;
+            rectangle.Fill = new SolidColorBrush(Colors.Red);
+
+
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            stackPanel.VerticalAlignment = VerticalAlignment.Top;
+            stackPanel.Children.Add(lbPallet);
+
+            Child = stackPanel;
+
             // Event handler
             MouseDown += PalletMouseDown;
+          
         }
 
+
+        /// <summary>
+        /// Free LightGray, Plan OrangeYellow, Wait Green
+        /// </summary>
+        /// <param name="status"></param>
         public void StatusChanged (string status)
         {
-            switch (status)
-            {
-                case "normal":
-                    {
-                        Background = new SolidColorBrush(Colors.Lime);
-                        break;
-                    }
-                case "":
-                    {
-                        Background = new SolidColorBrush(Colors.Lime);
-                        break;
-                    }
-                default:
-                    {
-                        Background = new SolidColorBrush(Colors.Transparent);
-                        break;
-                    }
+            /*Dispatcher.BeginInvoke(
+        new ThreadStart(() => EmployeesDataGrid.DataContext = employeesView));*/
+            Dispatcher.BeginInvoke(
+           new ThreadStart(() => 
+           {
+               switch (status)
+               {
+                   case "F":
+                       {
+                           Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8FFE5"));
+                           break;
+                       }
+                   case "P":
+                       {
+                           Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1B9AAA"));
+                           break;
+                       }
+                   case "W":
+                       {
+                           Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00FF99"));
+                           break;
+                       }
+                   default:
+                       {
+                           Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#EF476F"));
+                           break;
+                       }
 
-            }
+               }
+           }));
         }
 
         private void PalletMouseDown(object sender, MouseButtonEventArgs e)
         {
+            //MessageBox.Show(""+name);
         }
         
         //\\\\\\\\\\\\Action\\\\\\\\\\\\\\\
