@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MahApps.Metro.Controls;
 
 namespace MapViewPallet
 {
@@ -71,19 +72,17 @@ namespace MapViewPallet
         TrvStationGroup stationGroup;
         List<dynamic> trvGroups;
         Point transform = new Point(0, 0);
-        public CanvasControlService palletViewEventControl;
+        public CanvasControlService canvasControlService;
         System.Media.SoundPlayer snd;
         //PlanControl planControl;
         //DevicesManagement devicesManagement;
         //UserManagement userManagement;
 
 
-
         public MainWindow()
         {
             InitializeComponent();
-
-            Loaded += MainWindow_Loaded;
+            ApplyLanguage();
 
             //==============TreeView=============
             trvGroups = new List<dynamic>();
@@ -98,7 +97,7 @@ namespace MapViewPallet
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
-            palletViewEventControl = new CanvasControlService(this);
+            canvasControlService = new CanvasControlService(this);
             snd = new System.Media.SoundPlayer();
             //===============DataGridView========
             //StationsDataGrid.CanUserAddRows = false;
@@ -133,9 +132,9 @@ namespace MapViewPallet
             robotTimer.Enabled = true;
 
             //LoadStation();
+            Loaded += MainWindow_Loaded;
 
-            palletViewEventControl.ReloadAllStation();
-
+            canvasControlService.ReloadAllStation();
             //Dispatcher.BeginInvoke(new ThreadStart(() =>
             //{
             //    for (int i = 1; i < 5; i++)
@@ -153,6 +152,44 @@ namespace MapViewPallet
             //}));
         }
 
+
+        private void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
+
+            // check/uncheck the language menu items based on the current culture
+            foreach (var item in languageMenuItem.Items)
+            {
+                MenuItem menuItem = item as MenuItem;
+                if (menuItem.Tag.ToString() == Thread.CurrentThread.CurrentCulture.Name)
+                    menuItem.IsChecked = true;
+                else
+                    menuItem.IsChecked = false;
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem menuItem = sender as MenuItem;
+
+            ApplyLanguage(menuItem.Tag.ToString());
+        }
+        
+
         private void CenterWindowOnScreen()
         {
             double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
@@ -166,10 +203,12 @@ namespace MapViewPallet
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             CenterWindowOnScreen();
+            //TEST frm1 = new TEST();
+            //frm1.ShowDialog();
             myManagementWindow.Visibility = Visibility.Hidden;
-            LoginForm frm = new LoginForm();
+            LoginForm frm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
             frm.ShowDialog();
-            if (Global_Object.userLogin<=2)
+            if (Global_Object.userLogin <= 2)
             {
                 myManagementWindow.Visibility = Visibility.Visible;
             }
@@ -177,12 +216,12 @@ namespace MapViewPallet
 
         private void OnTimedRedrawRobotEvent(object sender, ElapsedEventArgs e)
         {
-            palletViewEventControl.RedrawAllRobot();
+            canvasControlService.RedrawAllRobot();
         }
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
         {
-            palletViewEventControl.RedrawAllStation();
+            canvasControlService.RedrawAllStation();
         }
 
         private void testinout(object sender, DependencyPropertyChangedEventArgs e)
@@ -235,8 +274,8 @@ namespace MapViewPallet
                     {
                         tempPath = new StraightShape(map, ori, des);
                     }
-                    tempPath.RemoveHandle += palletViewEventControl.PathRemove;
-                    palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
+                    tempPath.RemoveHandle += canvasControlService.PathRemove;
+                    canvasControlService.list_Path.Add(tempPath.Name, tempPath);
 
                 }
             }
@@ -278,14 +317,14 @@ namespace MapViewPallet
                         bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
                         bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
                     };
-                    if (!palletViewEventControl.list_Station.ContainsKey(tempBuffer.bufferId.ToString()))
+                    if (!canvasControlService.list_Station.ContainsKey(tempBuffer.bufferId.ToString()))
                     {
                         StationShape tempStation = new StationShape(map, tempBuffer);
 
                         tempStation.ReDraw();
                         //tempStation.RemoveHandle += palletViewEventControl.StationRemove;
                         //palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Replace(" ",""), tempStation);
-                        palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+                        canvasControlService.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
                         stationGroup.Items.Add(new TrvStation(tempStation));
 
                         mainWindowModel.AddItem(new DgvStation
@@ -329,8 +368,8 @@ namespace MapViewPallet
                     {
                         tempPath = new StraightShape(map, ori, des);
                     }
-                    tempPath.RemoveHandle += palletViewEventControl.PathRemove;
-                    palletViewEventControl.list_Path.Add(tempPath.Name, tempPath);
+                    tempPath.RemoveHandle += canvasControlService.PathRemove;
+                    canvasControlService.list_Path.Add(tempPath.Name, tempPath);
                 }
             }
             catch { }
@@ -399,7 +438,7 @@ namespace MapViewPallet
 
         private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
         {
-            palletViewEventControl.ReloadAllStation();
+            canvasControlService.ReloadAllStation();
             //LoadPath(@"C:\Users\LI\Desktop\Path.xls");
             //LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
             string fileName1 = "Path.xls";
@@ -486,25 +525,25 @@ namespace MapViewPallet
 
         private void btn_PlanControl_Click(object sender, RoutedEventArgs e)
         {
-            PlanControl planControl = new PlanControl();
+            PlanControl planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
             planControl.ShowDialog();
         }
 
         private void btn_DevicesManagement_Click(object sender, RoutedEventArgs e)
         {
-            DevicesManagement devicesManagement = new DevicesManagement(this);
+            DevicesManagement devicesManagement = new DevicesManagement(this,0, Thread.CurrentThread.CurrentCulture.ToString());
             devicesManagement.ShowDialog();
         }
 
         private void btn_UsersManagement_Click(object sender, RoutedEventArgs e)
         {
-            UserManagement userManagement = new UserManagement();
+            UserManagement userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
             userManagement.ShowDialog();
         }
 
         private void btn_ChangePassword_Click(object sender, RoutedEventArgs e)
         {
-            ChangePassForm changePassForm = new ChangePassForm();
+            ChangePassForm changePassForm = new ChangePassForm(Thread.CurrentThread.CurrentCulture.ToString());
             changePassForm.ShowDialog();
         }
 
@@ -516,7 +555,7 @@ namespace MapViewPallet
             Global_Object.userLogin = -2;
             Global_Object.userName = "";
 
-            LoginForm frm = new LoginForm();
+            LoginForm frm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
             frm.ShowDialog();
             if (Global_Object.userLogin <= 2)
             {
@@ -526,7 +565,53 @@ namespace MapViewPallet
 
         private void Reloadallstation_Click(object sender, RoutedEventArgs e)
         {
-            palletViewEventControl.ReloadAllStation();
+            canvasControlService.ReloadAllStation();
+        }
+
+        private void Btn_MapOnOff_Click(object sender, RoutedEventArgs e)
+        {
+            if (map.Background.Opacity == 0)
+            {
+                map.Background.Opacity = 100;
+                return;
+            }
+            map.Background.Opacity = 0;
+        }
+
+        private void Btn_PlanManagement_Click(object sender, RoutedEventArgs e)
+        {
+            PlanControl planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
+            planControl.ShowDialog();
+        }
+
+        private void Btn_OperationManagement_Click(object sender, RoutedEventArgs e)
+        {
+            DevicesManagement devicesManagement = new DevicesManagement(this, 0, Thread.CurrentThread.CurrentCulture.ToString());
+            devicesManagement.ShowDialog();
+        }
+
+        private void Btn_DeviceManagement_Click(object sender, RoutedEventArgs e)
+        {
+            DevicesManagement devicesManagement = new DevicesManagement(this, 1, Thread.CurrentThread.CurrentCulture.ToString());
+            devicesManagement.ShowDialog();
+        }
+        
+        private void Btn_ProductManagement_Click(object sender, RoutedEventArgs e)
+        {
+            DevicesManagement devicesManagement = new DevicesManagement(this, 2, Thread.CurrentThread.CurrentCulture.ToString());
+            devicesManagement.ShowDialog();
+        }
+
+        private void Btn_BufferManagement_Click(object sender, RoutedEventArgs e)
+        {
+            DevicesManagement devicesManagement = new DevicesManagement(this, 3, Thread.CurrentThread.CurrentCulture.ToString());
+            devicesManagement.ShowDialog();
+        }
+
+        private void Btn_UserManagement_Click(object sender, RoutedEventArgs e)
+        {
+            UserManagement userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
+            userManagement.ShowDialog();
         }
     }
 

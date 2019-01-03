@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,9 +37,11 @@ namespace MapViewPallet.MiniForm
             InitializeComponent();
         }
 
-        public StationEditor(StationShape stationShape)
+        public StationEditor(StationShape stationShape, string cultureName = null)
         {
             InitializeComponent();
+            ApplyLanguage(cultureName);
+
             this.stationShape = stationShape;
 
 
@@ -48,6 +51,25 @@ namespace MapViewPallet.MiniForm
             stationEditorModel = new StationEditorModel(this);
             DataContext = stationEditorModel;
             PalletsListDg.SelectedCellsChanged += PalletsListDg_SelectedCellsChanged;
+        }
+
+        public void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
         }
 
         private void PalletsListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)

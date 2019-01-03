@@ -108,7 +108,7 @@ namespace MapViewPallet.MiniForm
         {
             if (deviceList.GetDevicesList())
             {
-                string date = selectedDate.Year + "-" + selectedDate.Month + "-" + selectedDate.Day.ToString("00.");
+                string date = selectedDate.Year + "-" + selectedDate.Month.ToString("00.") + "-" + selectedDate.Day.ToString("00.");
                 List<Plan> plansTemp = new List<Plan>();
                 List<Plan> checkPlansList = CheckPlans(selectedShift, selectedDate);
 
@@ -240,7 +240,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 List<Plan> returnList = new List<Plan>();
-                string activeDate = selectedDate.Year + "-" + selectedDate.Month + "-" + selectedDate.Day.ToString("00.");
+                string activeDate = selectedDate.Year + "-" + selectedDate.Month.ToString("00.") + "-" + selectedDate.Day.ToString("00.");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/getPlanByShift");
                 request.Method = "POST";
                 request.ContentType = @"application/json";

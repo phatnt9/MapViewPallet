@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,9 +31,10 @@ namespace MapViewPallet.MiniForm
 
         public UserModel userModel;
 
-        public UserManagement()
+        public UserManagement(string cultureName = null)
         {
             InitializeComponent();
+            ApplyLanguage(cultureName);
             userModel = new UserModel(this);
             DataContext = userModel;
             Loaded += UserManagement_Loaded;
@@ -43,6 +45,25 @@ namespace MapViewPallet.MiniForm
 
         }
 
+        public void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
+        }
+
         private void UserManagement_Loaded(object sender, RoutedEventArgs e)
         {
             userModel.ReloadListUsers();
@@ -50,7 +71,7 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Click(object sender, RoutedEventArgs e)
         {
-            AddUserForm frm = new AddUserForm(this);
+            AddUserForm frm = new AddUserForm(this, Thread.CurrentThread.CurrentCulture.ToString());
             frm.flgEdit = false;
             frm.ShowDialog();
         }
@@ -62,7 +83,7 @@ namespace MapViewPallet.MiniForm
                 System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNothingSelected), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            AddUserForm frm = new AddUserForm(this, UsersListDg.SelectedItem as dtUser);
+            AddUserForm frm = new AddUserForm(this, UsersListDg.SelectedItem as dtUser, Thread.CurrentThread.CurrentCulture.ToString());
             frm.flgEdit = true;
             frm.ShowDialog();
         }

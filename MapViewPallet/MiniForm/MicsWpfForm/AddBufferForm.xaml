@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
-        Title="AddBufferForm" 
+        Title="{DynamicResource AddBufferForm_Title1}" 
         Height="310" 
         Width="320" 
         MaxHeight="310" 
@@ -27,7 +27,7 @@
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center"
                             >
-                    <TextBlock Text="Tên buffer"
+                    <TextBlock Text="{DynamicResource AddBufferForm_Title1}" 
                                FontSize="20"
                                FontWeight="DemiBold"/>
                 </StackPanel>
@@ -40,7 +40,7 @@
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
-                               Content="Tên buffer"
+                               Content="{DynamicResource AddBufferForm_BufferName}" 
                                FontSize="14"></Label>
                         <TextBox Name="bufferNametb" 
                              Width="200" 
@@ -52,7 +52,7 @@
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
-                               Content="Bay"
+                               Content="{DynamicResource AddBufferForm_Bay}" 
                                FontSize="14"></Label>
                         <TextBox Name="bufferMaxBaytb" 
                              Width="200" 
@@ -65,7 +65,7 @@
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
-                               Content="Row"
+                               Content="{DynamicResource AddBufferForm_Row}" 
                                FontSize="14"></Label>
                         <TextBox Name="bufferMaxRowtb" 
                              Width="200" 
@@ -82,13 +82,12 @@
                              Height="25" 
                              Margin="10"
                                   FontSize="14"
-                             Content="Buffer return"
+                             Content="{DynamicResource AddBufferForm_BufferReturn}" 
                              ></CheckBox>
                     </StackPanel>
-                    <Button Width="60" 
-                            Height="25" 
+                    <Button Width="100" 
                             Margin="0,0,11,0"
-                            Content="Thêm"
+                            Content="{DynamicResource AddBufferForm_ButtonAccept}" 
                             Click="Button_Click"/>
                 </StackPanel>
             </Grid>

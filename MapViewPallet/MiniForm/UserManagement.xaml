@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="UserManagement" 
+        Title="{DynamicResource UserManagement_Title}" 
         Height="500" 
         Width="600" 
         MinHeight="500"
@@ -24,15 +25,10 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <GroupBox >
-                <GroupBox.Header>
-                    <StackPanel>
-                        <TextBlock FontSize="20" FontWeight="Bold" Text="Tài khoản"/>
-                    </StackPanel>
-                </GroupBox.Header>
+            <GroupBox Header="{DynamicResource UserManagement_AccountList}" FontSize="20" FontWeight="DemiBold" >
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition ></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
@@ -41,48 +37,32 @@
                                         VerticalAlignment="Center">
 
                             <Button Name="btn_Refresh"
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14"
-                                    Click="Btn_Refresh_Click">
-                                <StackPanel>
-                                    <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_refresh.png"/>
-                                </StackPanel>
+                                    Click="Btn_Refresh_Click"
+                                    Margin="5 0 0 0"
+                                    Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                                        Width="24" Height="24">
+                                <materialDesign:PackIcon Kind="Refresh"/>
                             </Button>
-                            <Button Name="btn_Add" 
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14"
-                                    Click="Btn_Add_Click">
-                                <StackPanel>
-                                    <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_add.png"/>
-                                </StackPanel>
+                            <Button Name="btn_Add"
+                                    Click="Btn_Add_Click"
+                                    Margin="5 0 0 0"
+                                    Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                                        Width="24" Height="24">
+                                <materialDesign:PackIcon Kind="Add"/>
                             </Button>
                             <Button Name="btn_Edit"
-                                        Margin="5,0,0,5" 
-                                        Width="Auto" 
-                                        FontSize="14"
-                                    Click="Btn_Edit_Click">
-                                <StackPanel>
-                                    <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_edit.png"/>
-                                </StackPanel>
+                                    Click="Btn_Edit_Click"
+                                    Margin="5 0 0 0"
+                                    Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                                        Width="24" Height="24">
+                                <materialDesign:PackIcon Kind="Edit"/>
                             </Button>
-                            <Button Name="btn_Delete" 
-                                        Margin="5,0,0,5"
-                                        Width="Auto" 
-                                        FontSize="14"
-                                    Click="Btn_Delete_Click">
-                                <StackPanel>
-                                    <Image Width="20" 
-                                               Height="20" 
-                                               Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
-                                </StackPanel>
+                            <Button Name="btn_Delete"
+                                    Click="Btn_Delete_Click"
+                                    Margin="5 0 0 0"
+                                    Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                                        Width="24" Height="24">
+                                <materialDesign:PackIcon Kind="Delete"/>
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -91,27 +71,11 @@
                                       ItemsSource="{Binding GroupedUsers}"
                                       CanUserReorderColumns="False" 
                                       CanUserAddRows="False"
-                                      CanUserResizeColumns="True" 
                                       CanUserResizeRows="True"
                                       CanUserDeleteRows="False" 
-                                      CanUserSortColumns="True"
                                       AutoGenerateColumns="False"
-                                                      >
-                            <DataGrid.ColumnHeaderStyle>
-                                <Style TargetType="{x:Type DataGridColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" 
-                                                Value="Center" />
-                                </Style>
-                            </DataGrid.ColumnHeaderStyle>
-                            <DataGrid.RowStyle>
-                                <Style TargetType="DataGridRow">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" 
-                                                     Value="True">
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DataGrid.RowStyle>
+                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
+                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Width="Auto" 
                                                         Visibility="Hidden"
@@ -125,23 +89,47 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Tên đăng nhập" 
+                                <DataGridTextColumn
                                                         Width="*" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=userName}">
+                                    <DataGridTextColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock
+                                                               Text="{DynamicResource UserManagement_AccountList_Column_UserName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTextColumn.HeaderTemplate>
                                 </DataGridTextColumn>
-                                <DataGridComboBoxColumn Header="Phân quyền"
+                                <DataGridComboBoxColumn
                     IsReadOnly="True"
                     ItemsSource="{DynamicResource UserAuthorSource}"
                     SelectedValueBinding="{Binding userAuthor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     SelectedValuePath="Id"
                     DisplayMemberPath="UserString"
                     >
+                                    <DataGridComboBoxColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock
+                                                               Text="{DynamicResource UserManagement_AccountList_Column_Author}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridComboBoxColumn.HeaderTemplate>
                                 </DataGridComboBoxColumn>
-                                <DataGridTextColumn Header="Thiết bị" 
+                                <DataGridTextColumn
                                                         Width="*" 
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=deviceName}">
+                                    <DataGridTextColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock
+                                                               Text="{DynamicResource UserManagement_AccountList_Column_Device}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTextColumn.HeaderTemplate>
                                 </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -158,10 +146,8 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <Button Name="btn_exit" Width="80" 
-                                Height="25" 
-                                FontSize="14"
-                                Content="Thoát"
+                        <Button Name="btn_exit" Width="80"
+                                Content="{DynamicResource UserManagement_Button_Exit}"
                                 Click="Btn_exit_Click"></Button>
                     </Grid>
                 </Grid>

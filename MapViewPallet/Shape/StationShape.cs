@@ -435,7 +435,7 @@ namespace MapViewPallet.Shape
 
         public void EditMenu(object sender, RoutedEventArgs e)
         {
-            StationEditor stationEditor = new StationEditor(this);
+            StationEditor stationEditor = new StationEditor(this, Thread.CurrentThread.CurrentCulture.ToString());
             stationEditor.ShowDialog();
         }
 

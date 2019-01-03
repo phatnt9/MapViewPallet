@@ -5,26 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
         mc:Ignorable="d"
-        Title="ChangePassForm" 
-        Height="330" 
-        Width="400" 
-        MinHeight="330"
-        MinWidth="400"
-        MaxHeight="330"
-        MaxWidth="400">
+        Title="{DynamicResource ChangePassForm_Title}"
+        Height="350" 
+        Width="400"
+        ResizeMode="NoResize">
     <Window.Resources>
-        <Style x:Key="MyStyle" TargetType="{x:Type Button}">
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0 0 0 3"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="Orange" />
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="BorderBrush" Value="{DynamicResource pressed}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -45,11 +31,10 @@
                 <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                     <Label VerticalAlignment="Center" 
-                               Content="Tên đăng nhập"
+                               Content="{DynamicResource ChangePassForm_UserName}"
                                FontSize="12"></Label>
                     <TextBox Name="userNametb" 
-                             Width="200" 
-                             Height="20" 
+                             Width="200"
                              Margin="10"
                              IsReadOnly="True"
                              CharacterCasing="Upper"></TextBox>
@@ -57,37 +42,31 @@
                 <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                     <Label VerticalAlignment="Center" 
-                               Content="Mật khẩu"
+                               Content="{DynamicResource ChangePassForm_Password}"
                                FontSize="12"></Label>
                     <PasswordBox Name="passwordCurrenttb" 
                              Width="200" 
-                             Height="20" 
                              Margin="10"
-                             PasswordChar="*"
                              PreviewKeyDown="PasswordCurrenttb_PreviewKeyDown"></PasswordBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                     <Label VerticalAlignment="Center" 
-                               Content="Mật khẩu mới"
+                               Content="{DynamicResource ChangePassForm_NewPassword}"
                                FontSize="12"></Label>
                     <PasswordBox Name="passwordNewtb" 
                              Width="200" 
-                             Height="20" 
                              Margin="10"
-                             PasswordChar="*"
                              PreviewKeyDown="PasswordNewtb_PreviewKeyDown"></PasswordBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                     <Label VerticalAlignment="Center" 
-                               Content="Xác nhận mật khẩu"
+                               Content="{DynamicResource ChangePassForm_ConfirmNewPassword}"
                                FontSize="12"></Label>
                     <PasswordBox Name="passwordNewConfirmtb" 
                              Width="200" 
-                             Height="20" 
                              Margin="10"
-                             PasswordChar="*"
                              PreviewKeyDown="PasswordNewConfirmtb_PreviewKeyDown"></PasswordBox>
                 </StackPanel>
             </StackPanel>
@@ -103,21 +82,17 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Button Name="btn_save" Width="80" 
-                                Height="25" 
                                 FontSize="13"
-                                Content="Lưu"
+                                Content="{DynamicResource ChangePassForm_Save}"
                                 Foreground="Black"
-                                Style="{DynamicResource MyStyle}"
                                 Click="btn_save_Click">
                         </Button>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Button Name="btn_exit" Width="80" 
-                                Height="25" 
                                 FontSize="13"
-                                Content="Thoát"
+                                Content="{DynamicResource ChangePassForm_Exit}"
                                 Foreground="Black"
-                                Style="{DynamicResource MyStyle}"
                                 Click="btn_exit_Click"></Button>
                     </Grid>
                 </Grid>

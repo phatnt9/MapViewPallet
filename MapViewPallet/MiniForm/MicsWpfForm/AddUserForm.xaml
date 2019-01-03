@@ -5,13 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
-        Title="AddUserForm" 
+        Title="{DynamicResource AddUserForm_Title1}" 
         Height="310" 
-        Width="350" 
-        MaxHeight="310" 
-        MaxWidth="350" 
-        MinHeight="310" 
-        MinWidth="350">
+        Width="380"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -27,7 +24,7 @@
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center"
                             >
-                    <TextBlock Text="Tạo mới người dùng"
+                    <TextBlock Text="{DynamicResource AddUserForm_Title1}" 
                                Name="functionTextBlock"
                                FontSize="20"
                                FontWeight="DemiBold"/>
@@ -41,10 +38,10 @@
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
-                               Content="Tên đăng nhập"
+                               Content="{DynamicResource AddUserForm_UserName}" 
                                FontSize="14"></Label>
                         <TextBox Name="userNametb" 
-                             Width="200" 
+                             Width="180" 
                              Height="25" 
                              Margin="10"
                              ></TextBox>
@@ -52,10 +49,10 @@
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
-                               Content="Mật khẩu"
+                               Content="{DynamicResource AddUserForm_Password}" 
                                FontSize="14"></Label>
                         <TextBox Name="userPasswordtb" 
-                             Width="200" 
+                             Width="180" 
                              Height="25" 
                              Margin="10"
                              ></TextBox>
@@ -63,9 +60,9 @@
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
-                               Content="Phân quyền"
+                               Content="{DynamicResource AddUserForm_Author}" 
                                FontSize="14"></Label>
-                        <ComboBox Width="200" 
+                        <ComboBox Width="180" 
                                   Height="25" 
                                   Margin="10"
                                   Name="cmbAuthor"
@@ -80,9 +77,9 @@
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
-                               Content="Thiết bị"
+                               Content="{DynamicResource AddUserForm_Device}"
                                FontSize="14"></Label>
-                        <ComboBox Width="200" 
+                        <ComboBox Width="180" 
                                   Height="25" 
                                   Margin="10"
                                   Name="cmbDevice"
@@ -106,16 +103,14 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Button Name="btn_save" Width="90" 
-                                Height="25" 
                                 FontSize="13"
-                                Content="Lưu"
+                                Content="{DynamicResource AddUserForm_Save}" 
                                 Click="Btn_save_Click"></Button>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Button Name="btn_exit" Width="90" 
-                                Height="25" 
                                 FontSize="13"
-                                Content="Thoát"
+                                Content="{DynamicResource AddUserForm_Exit}" 
                                 Click="Btn_exit_Click"></Button>
                     </Grid>
                 </Grid>

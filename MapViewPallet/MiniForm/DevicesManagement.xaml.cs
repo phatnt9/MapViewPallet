@@ -27,14 +27,16 @@ namespace MapViewPallet.MiniForm
         public DevicesManagementModel managementModel;
 
         MainWindow mainWindow;
+        int loadTab = 0;
 
 
-        public DevicesManagement(MainWindow mainWindow)
+        public DevicesManagement(MainWindow mainWindow, int loadtab, string cultureName = null)
         {
             InitializeComponent();
-
+            ApplyLanguage(cultureName);
+            Loaded += DevicesManagement_Loaded;
             this.mainWindow = mainWindow;
-
+            loadTab = loadtab;
             DeviceManagementTabControl.SelectionChanged += DeviceManagementTabControl_SelectionChanged;
 
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -84,6 +86,30 @@ namespace MapViewPallet.MiniForm
             //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         }
 
+        public void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
+        }
+
+        private void DevicesManagement_Loaded(object sender, RoutedEventArgs e)
+        {
+            ChangeTabIndex(loadTab);
+        }
+
 
 
 
@@ -119,6 +145,13 @@ namespace MapViewPallet.MiniForm
                 }
             }
         }
+
+        public void ChangeTabIndex(int x)
+        {
+            Dispatcher.BeginInvoke((Action)(() => DeviceManagementTabControl.SelectedIndex = x));
+        }
+
+
 
         //********************************************************TAB 0******************************************************
 
@@ -398,7 +431,7 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Device_Click(object sender, RoutedEventArgs e)
         {
-            AddDeviceForm form = new AddDeviceForm(this);
+            AddDeviceForm form = new AddDeviceForm(this, Thread.CurrentThread.CurrentCulture.ToString());
             form.ShowDialog();
         }
 
@@ -759,7 +792,7 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Product_Click(object sender, RoutedEventArgs e)
         {
-            AddProductForm form = new AddProductForm(this);
+            AddProductForm form = new AddProductForm(this, Thread.CurrentThread.CurrentCulture.ToString());
             form.ShowDialog();
         }
 
@@ -827,7 +860,7 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_ProductDetail_Click(object sender, RoutedEventArgs e)
         {
-            AddProductDetailForm form = new AddProductDetailForm(this);
+            AddProductDetailForm form = new AddProductDetailForm(this, Thread.CurrentThread.CurrentCulture.ToString());
             form.ShowDialog();
         }
 
@@ -1072,7 +1105,7 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Buffer_Click(object sender, RoutedEventArgs e)
         {
-            AddBufferForm form = new AddBufferForm(this);
+            AddBufferForm form = new AddBufferForm(this, Thread.CurrentThread.CurrentCulture.ToString());
             form.ShowDialog();
 
         }
@@ -1408,7 +1441,7 @@ namespace MapViewPallet.MiniForm
                     managementModel.ReloadListBuffers();
                 }
             }
-            mainWindow.palletViewEventControl.ReloadAllStation();
+            mainWindow.canvasControlService.ReloadAllStation();
             managementModel.UpdateDataStatus("Sẵn sàng");
         }
 
@@ -1803,5 +1836,10 @@ namespace MapViewPallet.MiniForm
         {
             e.Handled = !IsTextAllowed(e.Text);
         }
+
+
+        
+
+
     }
 }

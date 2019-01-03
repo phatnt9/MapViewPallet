@@ -22,10 +22,11 @@ namespace MapViewPallet.MiniForm
         public int runningShift { get => _runningShift; set => _runningShift = value; }
         
 
-        public PlanControl()
+        public PlanControl(string cultureName = null)
         {
             runningShift = 1;
             InitializeComponent();
+            ApplyLanguage(cultureName);
             pCalendar.Loaded += pCalendarLoaded;
             //===============TabControlShift========
             TabControlShift.SelectionChanged += TabControlShift_SelectionChanged;
@@ -37,7 +38,26 @@ namespace MapViewPallet.MiniForm
             operation_model = new PlanControlModel(this);
             DataContext = operation_model;
         }
-        
+
+        public void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
+        }
+
         private void pCalendarLoaded(object sender, RoutedEventArgs e)
         {
             //Console.WriteLine("pCalendarLoaded");
@@ -111,7 +131,7 @@ namespace MapViewPallet.MiniForm
                 case DayOfWeek.Sunday: { ngay = "Chủ Nhật"; break; }
                 default: { ngay = "Chủ Nhật"; break; }
             }
-            lb_Date.Text = ngay + ", " + pDate.Day + "/" + pDate.Month + "/" + pDate.Year;
+            //lb_Date.Text = ngay + ", " + pDate.Day + "/" + pDate.Month + "/" + pDate.Year;
             if (DateTime.Now.ToShortDateString() == pDate.ToShortDateString())
             {
                 //DateTimeBorder.Background = new SolidColorBrush(Colors.LightGreen);
