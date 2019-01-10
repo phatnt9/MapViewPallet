@@ -107,7 +107,7 @@
                                               ItemsSource="{Binding GroupedDevices_S1}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
                                   CanUserResizeColumns="True" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False"
+                                  CanUserDeleteRows="False" CanUserSortColumns="True"
                                               AutoGenerateColumns="False"
                                               materialDesign:DataGridAssist.CellPadding="8 4 4 4"
                                       materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
@@ -146,8 +146,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible"/>
                                             <DataGridTextColumn
                                                 Binding="{Binding Path=deviceName}" 
                                                 IsReadOnly="True">
@@ -189,7 +189,8 @@
                                                             DisplayMemberPath="productDetailName"
                                                             SelectedValuePath="productDetailId"
                                                             SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            />
+                                                            >
+                                                        </ComboBox>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -217,6 +218,25 @@
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
                                             </DataGridTextColumn>
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                               Text="{DynamicResource PlanControl_Shift_Column_Delete}"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.HeaderTemplate>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Name="DeletePlan"
+                                                            Background="DarkSlateGray"
+                                                            Click="DeletePlan_Click">
+                                                            <materialDesign:PackIcon Kind="DeleteForever" />
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
@@ -694,6 +714,11 @@
                     </Grid>
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Name="Btn_CreatePlanPallet" 
+                                    Width="150" 
+                                    Content="CreatePlanPallet" 
+                                    Margin="5,0"
+                                    Click="Btn_CreatePlanPallet_Click"/>
                             <Button Name="Btn_Accept" 
                                     Width="80" 
                                     Content="{DynamicResource PlanControl_Save}" 

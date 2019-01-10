@@ -72,6 +72,11 @@ namespace MapViewPallet.MiniForm
                             dataPallet = dr["dataPallet"].ToString(),
                             palletStatus = dr["palletStatus"].ToString(),
                             deviceId = int.Parse(dr["deviceId"].ToString()),
+                            deviceName = dr["deviceName"].ToString(),
+                            productId = int.Parse(dr["productId"].ToString()),
+                            productName = dr["productName"].ToString(),
+                            productDetailId = int.Parse(dr["productDetailId"].ToString()),
+                            productDetailName = dr["productDetailName"].ToString(),
                         };
                         if (!ContainPallet(tempPallet, palletsList))
                         {

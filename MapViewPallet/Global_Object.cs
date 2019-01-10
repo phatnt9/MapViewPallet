@@ -21,8 +21,7 @@ namespace MapViewPallet
     {
 
         //#######################################
-        public static bool IsEngLish = false;
-
+        public static StationShape bufferToMove;
 
         public static string url = @"http://localhost:8081/robot/rest/";
 
@@ -53,6 +52,7 @@ namespace MapViewPallet
 
         public static Point LaserOriginalCoor = new Point(648,378);
         public static Point OriginPoint = new Point(0,0);
+
         public static Point CoorLaser(Point canvas)
         {
             Point laser = new Point();
@@ -68,6 +68,7 @@ namespace MapViewPallet
             canvas.Y = (laser.Y / (resolution * Math.Cos(Math.PI))) + OriginPoint.Y;
             return canvas;
         }
+        
 
         public static DataTable LoadExcelFile()
         {

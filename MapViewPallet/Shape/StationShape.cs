@@ -15,6 +15,7 @@ using System.Data;
 using MapViewPallet.MiniForm;
 using System.Timers;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MapViewPallet.Shape
 {
@@ -88,9 +89,9 @@ namespace MapViewPallet.Shape
             props.bufferDb = buffer;
 
 
-            BorderBrush = new SolidColorBrush(Colors.Transparent);
-            BorderThickness = new Thickness(1);
-            CornerRadius = new CornerRadius(1.2);
+            BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF1F1F"));
+            BorderThickness = new Thickness(1,0,1,1);
+            CornerRadius = new CornerRadius(0);
             RenderTransformOrigin = new Point(0, 0);
             props._stationGrid = new Grid();
 
@@ -110,26 +111,33 @@ namespace MapViewPallet.Shape
 
 
             //Name = "Stationx" + Global_Mouse.EncodeTransmissionTimestamp(); //Object name
-            //Name = props.bufferDb.bufferName.Replace(" ", ""); //Object name
-
+            Name = props.bufferDb.bufferName.Trim().Replace(" ", ""); //Object name
+            this.MouseDown += StationShape_MouseDown;
 
             ContextMenu = new ContextMenu();
             //===================================
             MenuItem propertiesItem = new MenuItem();
             propertiesItem.Header = "Thông tin";
+            propertiesItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Properties");
             propertiesItem.Click += PropertiesMenu;
             //===================================
             MenuItem editItem = new MenuItem();
             editItem.Header = "Tùy chỉnh";
+            editItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Edit");
             editItem.Click += EditMenu;
             //===================================
             MenuItem removeItem = new MenuItem();
             removeItem.Header = "Xóa";
             removeItem.Click += RemoveMenu;
             //===================================
+            MenuItem rotateItem = new MenuItem();
+            rotateItem.Header = "Xoay";
+            rotateItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Rotate");
+            rotateItem.Click += RotateMenu;
+            //===================================
             ContextMenu.Items.Add(propertiesItem);
             ContextMenu.Items.Add(editItem);
-            //ContextMenu.Items.Add(rotateItem);
+            ContextMenu.Items.Add(rotateItem);
             //ContextMenu.Items.Add(removeItem);
             //====================EVENT=====================
             //MouseLeave += MouseLeaveStation;
@@ -160,7 +168,7 @@ namespace MapViewPallet.Shape
             {
                 //Create a Col
                 ColumnDefinition colTemp = new ColumnDefinition();
-                colTemp.Name = Name + "xL" + bayIndex;
+                //colTemp.Name = Name + "xL" + bayIndex;
                 props._stationGrid.ColumnDefinitions.Add(colTemp);
                 //Create GridLine
                 Grid gridLine = new Grid();
@@ -180,16 +188,19 @@ namespace MapViewPallet.Shape
                 {
                     //Create Rows for Col
                     RowDefinition rowTemp = new RowDefinition();
-                    rowTemp.Name = Name + "xR" + rowIndex;
+                    //rowTemp.Name = Name + "xR" + rowIndex;
                     //rowTemp.MinHeight = 10;
                     gridLine.RowDefinitions.Add(rowTemp);
                     //=============
-
-                    //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
-                    PalletShape palletTemp = new PalletShape("Pallet" + "x" + bayIndex + "x" + rowIndex);
-                    Grid.SetRow(palletTemp, rowIndex);
-                    gridLine.Children.Add(palletTemp);
-                    props._palletList.Add(palletTemp.name, palletTemp);
+                    //if(rowIndex>0)
+                    {
+                        //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
+                        PalletShape palletTemp = new PalletShape("Pallet" + "x" + bayIndex + "x" + rowIndex);
+                        Grid.SetRow(palletTemp, rowIndex);
+                        gridLine.Children.Add(palletTemp);
+                        props._palletList.Add(palletTemp.name, palletTemp);
+                    }
+                    
 
                 }
             }
@@ -202,7 +213,7 @@ namespace MapViewPallet.Shape
             }
 
             //==================CHILDREN===================
-            //props.stationGrid.Children.Add(props.stationInfomation);
+            //props._stationGrid.Children.Add(props._stationInfoBorder);
             Child = props._stationGrid;
             props._myTransformGroup.Children.Add(props._myRotateTransform);
             props._myTransformGroup.Children.Add(props._myTranslateTransform);
@@ -232,6 +243,18 @@ namespace MapViewPallet.Shape
             //aTimer.AutoReset = true;
             //aTimer.Enabled = true;
             //Get list pallet
+        }
+
+        private void StationShape_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //MessageBox.Show("" + Name);
+            if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION)
+            {
+                if (Global_Object.bufferToMove == null)
+                {
+                    Global_Object.bufferToMove = this;
+                }
+            }
         }
 
 
@@ -295,7 +318,7 @@ namespace MapViewPallet.Shape
                                 {
                                     //Create a Col
                                     ColumnDefinition colTemp = new ColumnDefinition();
-                                    colTemp.Name = Name + "xL" + bayIndex;
+                                    //colTemp.Name = Name + "xL" + bayIndex;
                                     props._stationGrid.ColumnDefinitions.Add(colTemp);
                                     //Create GridLine
                                     Grid gridLine = new Grid();
@@ -315,7 +338,7 @@ namespace MapViewPallet.Shape
                                     {
                                         //Create Rows for Col
                                         RowDefinition rowTemp = new RowDefinition();
-                                        rowTemp.Name = Name + "xR" + rowIndex;
+                                        //rowTemp.Name = Name + "xR" + rowIndex;
                                         //rowTemp.MinHeight = 10;
                                         gridLine.RowDefinitions.Add(rowTemp);
                                         //=============
@@ -342,6 +365,72 @@ namespace MapViewPallet.Shape
                 props._rotate = (bufferData != null) ? (((double)bufferData.angle)) : 0;
                 Draw();
             }));
+        }
+
+        public void ReDraw(dtBuffer buffer)
+        {
+            if ((buffer.bufferId == this.props.bufferDb.bufferId) && (buffer.bufferName == this.props.bufferDb.bufferName))
+            {
+                if ((this.props.bufferDb.maxBay != buffer.maxBay) || ((this.props.bufferDb.maxRow != buffer.maxRow)))
+                {
+                    props.bufferDb = buffer;
+                    
+                    props._palletList.Clear();
+                    props._stationGrid.Children.Clear();
+                    props._stationGrid.RowDefinitions.Clear();
+                    props._stationGrid.ColumnDefinitions.Clear();
+
+                    Width = 11 * props.bufferDb.maxBay;
+                    Height = 13 * props.bufferDb.maxRow;
+
+
+                    for (int bayIndex = 0; bayIndex < props.bufferDb.maxBay; bayIndex++) //Column Index
+                    {
+                        //Create a Col
+                        ColumnDefinition colTemp = new ColumnDefinition();
+                        //colTemp.Name = Name + "xL" + bayIndex;
+                        props._stationGrid.ColumnDefinitions.Add(colTemp);
+                        //Create GridLine
+                        Grid gridLine = new Grid();
+                        // Create BorderLine
+                        Border borderLine = new Border();
+                        Grid.SetColumn(borderLine, bayIndex);
+                        borderLine.Child = gridLine;
+                        //
+                        props._stationGrid.Children.Add(borderLine);
+                        if (bayIndex > 0)
+                        {
+                            borderLine.BorderBrush = new SolidColorBrush(Colors.Black);
+                            borderLine.BorderThickness = new Thickness(0.3, 0, 0, 0);
+                        }
+                        //Add Pallet to GridPallet ==> add GridPallet to BorderLine
+                        for (int rowIndex = 0; rowIndex < props.bufferDb.maxRow; rowIndex++) //Row Index, start from 1, Row 0 use for Infomation
+                        {
+                            //Create Rows for Col
+                            RowDefinition rowTemp = new RowDefinition();
+                            //rowTemp.Name = Name + "xR" + rowIndex;
+                            //rowTemp.MinHeight = 10;
+                            gridLine.RowDefinitions.Add(rowTemp);
+
+                            //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
+                            PalletShape palletTemp = new PalletShape("Pallet" + "x" + bayIndex + "x" + rowIndex);
+                            Grid.SetRow(palletTemp, rowIndex);
+                            gridLine.Children.Add(palletTemp);
+                            props._palletList.Add(palletTemp.name, palletTemp);
+
+                        }
+                    }
+                }
+                else
+                {
+                    props.bufferDb = buffer;
+                }
+
+            }
+            dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
+            props._posision = Global_Object.CoorCanvas(new Point(((bufferData != null) ? (((double)bufferData.x)) : 0), ((bufferData != null) ? (((double)bufferData.y)) : 0)));
+            props._rotate = (bufferData != null) ? (((double)bufferData.angle)) : 0;
+            Draw(props.bufferDb.pallets);
         }
 
         public void Draw()
@@ -390,12 +479,17 @@ namespace MapViewPallet.Shape
                             dataPallet = dr["dataPallet"].ToString(),
                             palletStatus = dr["palletStatus"].ToString(),
                             deviceId = int.Parse(dr["deviceId"].ToString()),
+                            deviceName = dr["deviceName"].ToString(),
+                            productId = int.Parse(dr["productId"].ToString()),
+                            productName = dr["productName"].ToString(),
+                            productDetailId = int.Parse(dr["productDetailId"].ToString()),
+                            productDetailName = dr["productDetailName"].ToString(),
                         };
                         //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet.palletStatus);
                         if (props._palletList.ContainsKey("Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row))
                         {
                             //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(statuspallet);
-                            props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet.palletStatus);
+                            props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet);
                         }
 
 
@@ -433,6 +527,27 @@ namespace MapViewPallet.Shape
             }
         }
 
+        public void Draw(List<dtPallet> listPallet)
+        {
+            foreach (dtPallet dr in listPallet)
+            {
+                //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet.palletStatus);
+                if (props._palletList.ContainsKey("Pallet" + "x" + dr.bay + "x" + dr.row))
+                {
+                    //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(statuspallet);
+                    props._palletList["Pallet" + "x" + dr.bay + "x" + dr.row].StatusChanged(dr);
+                }
+            }
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                props._myRotateTransform.Angle = props._rotate;
+                props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
+
+                props._myTransformGroup.Children[0] = props._myRotateTransform;
+                props._myTransformGroup.Children[1] = props._myTranslateTransform;
+            }));
+        }
+
         public void EditMenu(object sender, RoutedEventArgs e)
         {
             StationEditor stationEditor = new StationEditor(this, Thread.CurrentThread.CurrentCulture.ToString());
@@ -456,6 +571,68 @@ namespace MapViewPallet.Shape
             props._myRotateTransform.Angle = props._rotate;
             props._myTransformGroup.Children[0] = props._myRotateTransform;
             RenderTransform = props._myTransformGroup;
+
+            //try
+            {
+                dtBuffer buffer = this.props.bufferDb;
+                List<dtBuffer> buffers = new List<dtBuffer>();
+
+                dynamic postApiBody = new JObject();
+                Point coorLader = Global_Object.CoorLaser(props._posision);
+                postApiBody.x = coorLader.X;
+                postApiBody.y = coorLader.Y;
+                postApiBody.angle = props._rotate;
+                string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
+                buffer.bufferData = jsonBufferData;
+
+                buffers.Add(buffer);
+
+                if (buffers.Count == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(buffers);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Buffers Name"), Global_Object.messageTitileError, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    }
+                }
+                //UpdateTab4(true);
+            }
+            //catch
+            {
+
+            }
         }
 
         public void RemoveMenu(object sender, RoutedEventArgs e)

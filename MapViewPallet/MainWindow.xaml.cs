@@ -19,6 +19,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MahApps.Metro.Controls;
+using System.Threading.Tasks;
 
 namespace MapViewPallet
 {
@@ -93,7 +94,7 @@ namespace MapViewPallet
             //mainTreeView.LostFocus += mainTreeView_LostFocus;
             //===================================
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
-            ImageBrush img = LoadImage("Map");
+            ImageBrush img = LoadImage("mapbackground");
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
@@ -115,7 +116,7 @@ namespace MapViewPallet
             mainWindowModel = new MainWindowModel(this);
             //previousStationNameIdDgv = "";
             //previousStationNameIdTrv = "";
-            DataContext = mainWindowModel;
+            DataContext = canvasControlService;
 
 
             stationTimer = new System.Timers.Timer();
@@ -205,6 +206,8 @@ namespace MapViewPallet
             CenterWindowOnScreen();
             //TEST frm1 = new TEST();
             //frm1.ShowDialog();
+
+
             myManagementWindow.Visibility = Visibility.Hidden;
             LoginForm frm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
             frm.ShowDialog();
@@ -221,7 +224,12 @@ namespace MapViewPallet
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
         {
-            canvasControlService.RedrawAllStation();
+            Parallel.Invoke(() =>
+            {
+                //Console.WriteLine("Begin first task...");
+                canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
+            });
+            //canvasControlService.RedrawAllStation();
         }
 
         private void testinout(object sender, DependencyPropertyChangedEventArgs e)
@@ -612,6 +620,24 @@ namespace MapViewPallet
         {
             UserManagement userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
             userManagement.ShowDialog();
+        }
+
+        private void Btn_MapReCenter_Click(object sender, RoutedEventArgs e)
+        {
+            canvasControlService.ReCenterMapCanvas();
+        }
+
+        private void Btn_Statistics_Click(object sender, RoutedEventArgs e)
+        {
+            Statistics statistics = new Statistics();
+            statistics.ShowDialog();
+        }
+
+        private void MoveBuffer_Click(object sender, RoutedEventArgs e)
+        {
+            drag = false;
+            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION;
+            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION;
         }
     }
 

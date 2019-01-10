@@ -18,8 +18,14 @@
     <sys:String x:Key="MainWindow_Menu_Account">_Tài khoản</sys:String>
     <sys:String x:Key="MainWindow_Menu_Account_ChangePass">_Thay đổi mật khẩu</sys:String>
     <sys:String x:Key="MainWindow_Menu_Account_Logout">_Đăng xuất</sys:String>
+    
+    <!--MenuItem-->
+    <sys:String x:Key="Station_Menu_Item_Properties">Thông tin</sys:String>
+    <sys:String x:Key="Station_Menu_Item_Edit">Tùy chỉnh</sys:String>
+    <sys:String x:Key="Station_Menu_Item_Rotate">Xoay</sys:String>
 
     <!--Toolbar-->
+    <sys:String x:Key="MainWindow_Toolbar_MapReCenter">Đặt lại bản đồ</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_MapOnOff">Hiện/Ẩn bản đồ</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_PlanManagement">Thiết lập kế hoạch</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_OperationManagement">Thiết lập quy trình</sys:String>
@@ -94,6 +100,7 @@
     <sys:String x:Key="PlanControl_Shift_Column_ProductDetailName">Mã</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_PalletAmount">Yêu cầu</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_PalletUse">Đã cấp</sys:String>
+    <sys:String x:Key="PlanControl_Shift_Column_Delete">Xóa</sys:String>
     <sys:String x:Key="PlanControl_Save">Lưu</sys:String>
     <sys:String x:Key="PlanControl_Exit">Thoát</sys:String>
 
@@ -140,6 +147,7 @@
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Row">Hàng</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Bay">Cột</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Status">Trạng thái</sys:String>
+    <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_ProductDetailName">Mã hàng</sys:String>
     
     
     <sys:String x:Key="DevicesManagement_Button_Save">Lưu</sys:String>
@@ -187,7 +195,10 @@
     <sys:String x:Key="UserManagement_Button_Exit">Thoát</sys:String>
 
 
-
+    <!--Statistics-->
+    <sys:String x:Key="Statistics_Title">Thống kê quy trình</sys:String>
+    <sys:String x:Key="Statistics_TabItem_RobotProcess">Thống kê tác vụ</sys:String>
+    <sys:String x:Key="Statistics_TabItem_RobotCharge">Thống kê lần sạc</sys:String>
 
 
 

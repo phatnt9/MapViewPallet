@@ -97,6 +97,8 @@
       <DependentUpon>ChangePassForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="MiniForm\Database\dtDevicePallet.cs" />
+    <Compile Include="MiniForm\Database\dtOperationType.cs" />
+    <Compile Include="MiniForm\Database\dtRobotProcess.cs" />
     <Compile Include="MiniForm\DeviceList.cs" />
     <Compile Include="MiniForm\Database\dtBuffer.cs" />
     <Compile Include="MiniForm\Database\dtDevice.cs" />
@@ -116,6 +118,9 @@
       <DependentUpon>LoginForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="MiniForm\DevicesManagementModel.cs" />
+    <Compile Include="MiniForm\MicsWpfForm\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MiniForm\MicsWpfForm\AddBufferForm.xaml.cs">
       <DependentUpon>AddBufferForm.xaml</DependentUpon>
     </Compile>
@@ -146,6 +151,10 @@
       <DependentUpon>StationEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="MiniForm\StationEditorModel.cs" />
+    <Compile Include="MiniForm\Statistics.xaml.cs">
+      <DependentUpon>Statistics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MiniForm\StatisticsModel.cs" />
     <Compile Include="MiniForm\UserAuthorCollection.cs" />
     <Compile Include="MiniForm\UserManagement.xaml.cs">
       <DependentUpon>UserManagement.xaml</DependentUpon>
@@ -202,6 +211,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MiniForm\MicsWpfForm\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MiniForm\MicsWpfForm\AddBufferForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -227,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MiniForm\StationEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiniForm\Statistics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -428,6 +445,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mainIcon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Untitled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

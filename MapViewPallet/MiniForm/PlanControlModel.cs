@@ -112,69 +112,171 @@ namespace MapViewPallet.MiniForm
                 List<Plan> plansTemp = new List<Plan>();
                 List<Plan> checkPlansList = CheckPlans(selectedShift, selectedDate);
 
-                foreach (dtDevice device in deviceList.listDevices)
+                switch (DateTime.Now.Date.CompareTo(selectedDate.Date))
                 {
-                    foreach (dtDeviceProduct product in device.deviceProducts)
-                    {
-                        Plan tempOpe = new Plan();
-
-                        tempOpe.creUsrId = Global_Object.userLogin;
-                        tempOpe.creDt = "";
-                        tempOpe.updUsrId = Global_Object.userLogin;
-                        tempOpe.updDt = "";
-
-                        tempOpe.planId = 0;
-                        if (product.productDetails.Count > 0)
+                    case -1:
                         {
-                            tempOpe.productDetailId = product.productDetails.First().productDetailId;
+                            Console.WriteLine("Ngay hien tai nho hon ngay duoc chon_Aka ngay hom sau");
+                            goto case 0;
                         }
-                        tempOpe.palletAmount = 0;
-                        //tempOpe.palletUse = 20;
-                        //tempOpe.palletMiss = 11;
-
-                        tempOpe.deviceProductId = product.deviceProductId;
-                        tempOpe.timeWorkId = selectedShift;
-                        tempOpe.activeDate = date;
-                        tempOpe.deviceId = device.deviceId;
-                        tempOpe.deviceName = device.deviceName;
-                        tempOpe.productId = product.productId;
-                        tempOpe.productName = product.productName;
-                        tempOpe.listProductDetails = product.productDetails;
-
-                        if (checkPlansList.Count != 0)
+                    case 0:
                         {
-                            foreach (Plan tempPlan in checkPlansList)
+                            Console.WriteLine("Ngay hien tai bang ngay duoc chon_Aka ngay hom nay");
+                            foreach (dtDevice device in deviceList.listDevices)
                             {
-                                if (EqualPlan(tempOpe, tempPlan))
+                                foreach (dtDeviceProduct product in device.deviceProducts)
                                 {
-                                    //tempOpe.creUsrId = tempPlan.creUsrId;
-                                    tempOpe.creDt = tempPlan.creDt;
-                                    //tempOpe.updUsrId = tempPlan.updUsrId;
-                                    tempOpe.updDt = tempPlan.updDt;
+                                    Plan tempOpe = new Plan();
+                                    tempOpe.creUsrId = Global_Object.userLogin;
+                                    tempOpe.creDt = "";
+                                    tempOpe.updUsrId = Global_Object.userLogin;
+                                    tempOpe.updDt = "";
+                                    tempOpe.planId = 0;
+                                    tempOpe.palletAmount = 0;
+                                    tempOpe.deviceProductId = product.deviceProductId;
+                                    tempOpe.timeWorkId = selectedShift;
+                                    tempOpe.activeDate = date;
+                                    tempOpe.deviceId = device.deviceId;
+                                    tempOpe.deviceName = device.deviceName;
+                                    tempOpe.productId = product.productId;
+                                    tempOpe.productName = product.productName;
+                                    tempOpe.listProductDetails = product.productDetails;
+                                    if (product.productDetails.Count > 0)
+                                    {
+                                        tempOpe.productDetailId = product.productDetails.First().productDetailId;
+                                    }
 
-                                    tempOpe.planId = tempPlan.planId;
-                                    tempOpe.productDetailId = tempPlan.productDetailId;
-                                    tempOpe.palletAmount = tempPlan.palletAmount;
-                                    tempOpe.palletUse = tempPlan.palletUse;
-                                    tempOpe.palletMiss = tempPlan.palletMiss;
-                                    
-                                    tempOpe.deviceProductId = tempPlan.deviceProductId;
-                                    tempOpe.timeWorkId = tempPlan.timeWorkId;
-                                    tempOpe.activeDate = tempPlan.activeDate;
-                                    tempOpe.deviceId = tempPlan.deviceId;
-                                    tempOpe.productId = tempPlan.productId;
-                                    //**************************************
+                                    if (checkPlansList.Count != 0)
+                                    {
+                                        bool isPlaned = false;
+                                        foreach (Plan tempPlan in checkPlansList)
+                                        {
+                                            if (EqualPlan(tempOpe, tempPlan))
+                                            {
+                                                //tempOpe.creUsrId = tempPlan.creUsrId;
+                                                //tempOpe.creDt = tempPlan.creDt;
+                                                //tempOpe.updUsrId = tempPlan.updUsrId;
+                                                //tempOpe.updDt = tempPlan.updDt;
+
+                                                tempOpe.planId = tempPlan.planId;
+                                                tempOpe.productDetailId = tempPlan.productDetailId;
+                                                tempOpe.palletAmount = tempPlan.palletAmount;
+                                                tempOpe.palletUse = tempPlan.palletUse;
+                                                tempOpe.palletMiss = tempPlan.palletMiss;
+
+                                                tempOpe.deviceProductId = tempPlan.deviceProductId;
+                                                tempOpe.timeWorkId = tempPlan.timeWorkId;
+                                                tempOpe.activeDate = tempPlan.activeDate;
+                                                tempOpe.deviceId = tempPlan.deviceId;
+                                                tempOpe.productId = tempPlan.productId;
+                                                tempOpe.imageDeviceUrl = tempPlan.imageDeviceUrl;
+                                                tempOpe.imageProductUrl = tempPlan.imageProductUrl;
+                                                ////**************************************
+                                                isPlaned = true;
+                                                //break;
+                                            }
+                                        }
+                                        if(isPlaned)
+                                        {
+                                            plansTemp.Add(tempOpe);
+                                        }
+                                        else if (product.checkStatus)
+                                        {
+                                            plansTemp.Add(tempOpe);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (product.checkStatus)
+                                        {
+                                            plansTemp.Add(tempOpe);
+                                        }
+                                    }
                                 }
-                            }
-                            plansTemp.Add(tempOpe);
-                        }
-                        else
-                        {
-                            plansTemp.Add(tempOpe);
-                        }
-                    }
 
+                            }
+                            break;
+                        }
+                    case 1:
+                        {
+                            Console.WriteLine("Ngay hien tai lon hon ngay duoc chon_Aka ngay hom truoc");
+                            foreach (Plan item in checkPlansList)
+                            {
+                                plansTemp.Add(item);
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("-100");
+                            break;
+                        }
                 }
+
+                //foreach (dtDevice device in deviceList.listDevices)
+                //{
+                //    foreach (dtDeviceProduct product in device.deviceProducts)
+                //    {
+                //        Plan tempOpe = new Plan();
+
+                //        tempOpe.creUsrId = Global_Object.userLogin;
+                //        tempOpe.creDt = "";
+                //        tempOpe.updUsrId = Global_Object.userLogin;
+                //        tempOpe.updDt = "";
+
+                //        tempOpe.planId = 0;
+                //        if (product.productDetails.Count > 0)
+                //        {
+                //            tempOpe.productDetailId = product.productDetails.First().productDetailId;
+                //        }
+                //        tempOpe.palletAmount = 0;
+                //        //tempOpe.palletUse = 20;
+                //        //tempOpe.palletMiss = 11;
+
+                //        tempOpe.deviceProductId = product.deviceProductId;
+                //        tempOpe.timeWorkId = selectedShift;
+                //        tempOpe.activeDate = date;
+                //        tempOpe.deviceId = device.deviceId;
+                //        tempOpe.deviceName = device.deviceName;
+                //        tempOpe.productId = product.productId;
+                //        tempOpe.productName = product.productName;
+                //        tempOpe.listProductDetails = product.productDetails;
+
+                //        if (checkPlansList.Count != 0)
+                //        {
+                //            foreach (Plan tempPlan in checkPlansList)
+                //            {
+                //                if (EqualPlan(tempOpe, tempPlan))
+                //                {
+                //                    //tempOpe.creUsrId = tempPlan.creUsrId;
+                //                    tempOpe.creDt = tempPlan.creDt;
+                //                    //tempOpe.updUsrId = tempPlan.updUsrId;
+                //                    tempOpe.updDt = tempPlan.updDt;
+
+                //                    tempOpe.planId = tempPlan.planId;
+                //                    tempOpe.productDetailId = tempPlan.productDetailId;
+                //                    tempOpe.palletAmount = tempPlan.palletAmount;
+                //                    tempOpe.palletUse = tempPlan.palletUse;
+                //                    tempOpe.palletMiss = tempPlan.palletMiss;
+
+                //                    tempOpe.deviceProductId = tempPlan.deviceProductId;
+                //                    tempOpe.timeWorkId = tempPlan.timeWorkId;
+                //                    tempOpe.activeDate = tempPlan.activeDate;
+                //                    tempOpe.deviceId = tempPlan.deviceId;
+                //                    tempOpe.productId = tempPlan.productId;
+                //                    //**************************************
+                //                }
+                //            }
+                //            plansTemp.Add(tempOpe);
+                //        }
+                //        else
+                //        {
+                //            plansTemp.Add(tempOpe);
+                //        }
+                //    }
+
+                //}
+
                 switch (selectedShift)
                 {
                     /*
@@ -265,28 +367,36 @@ namespace MapViewPallet.MiniForm
                     dynamic listplan = JsonConvert.DeserializeObject(result);
                     foreach (dynamic item in listplan)
                     {
-                        Plan tempPlan = new Plan()
-                        {
-                            creUsrId = (int)item.creUsrId,
-                            creDt = (string)item.creDt,
-                            updUsrId = (int)item.updUsrId,
-                            updDt = (string)item.updDt,
+                        //Plan tempPlan = new Plan()
+                        //{
+                        //    creUsrId = (int)item.creUsrId,
+                        //    creDt = (string)item.creDt,
+                        //    updUsrId = (int)item.updUsrId,
+                        //    updDt = (string)item.updDt,
 
-                            planId = (int)item.planId,
-                            deviceProductId = (int)item.deviceProductId,
-                            timeWorkId = (int)item.timeWorkId,
-                            productDetailId = (int)item.productDetailId,
+                        //    planId = (int)item.planId,
+                        //    deviceProductId = (int)item.deviceProductId,
+                        //    timeWorkId = (int)item.timeWorkId,
+                        //    productDetailId = (int)item.productDetailId,
 
-                            palletAmount = (int)item.palletAmount,
-                            palletUse = (int)item.palletUse,
-                            palletMiss = (int)item.palletMiss,
-                            activeDate = (string)item.activeDate,
+                        //    palletAmount = (int)item.palletAmount,
+                        //    palletUse = (int)item.palletUse,
+                        //    palletMiss = (int)item.palletMiss,
+                        //    activeDate = (string)item.activeDate,
 
-                            deviceId = (int)item.deviceId,
-                            productId = (int)item.productId
-                            //deviceId = deviceList.GetDeviceIdByDeviceProductId((int)item.deviceProductId),
-                            //productId = deviceList.GetProductIdByDeviceProductId((int)item.deviceProductId)
-                        };
+                        //    deviceId = (int)item.deviceId,
+                        //    productId = (int)item.productId,
+                        //    deviceName = (string)item.deviceName,
+                        //    imageDeviceUrl = (string)item.imageDeviceUrl,
+                        //    productName = (string)item.productName,
+                        //    imageProductUrl = (string)item.imageProductUrl,
+                        //    productDetailName = (string)item.productDetailName,
+                        //    //palletStatus = (string)item.palletStatus,
+                        //    //buffers = (string)item.buffers,
+                        //    //deviceId = deviceList.GetDeviceIdByDeviceProductId((int)item.deviceProductId),
+                        //    //productId = deviceList.GetProductIdByDeviceProductId((int)item.deviceProductId)
+                        //};
+                        Plan tempPlan = new Plan(item);
                         AddPlan(tempPlan, returnList);
                     }
                     return returnList;
@@ -323,7 +433,7 @@ namespace MapViewPallet.MiniForm
         {
             foreach (Plan item in listPlan)
             {
-                if(item.palletAmount != 0)
+                //if(item.palletAmount != 0)
                 {
                     SendPlanToDb(item);
                 }

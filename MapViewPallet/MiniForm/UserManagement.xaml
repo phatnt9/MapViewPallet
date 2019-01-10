@@ -90,7 +90,7 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn
-                                                        Width="*" 
+                                                        Width="Auto"  
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=userName}">
                                     <DataGridTextColumn.HeaderTemplate>
@@ -119,7 +119,7 @@
                                     </DataGridComboBoxColumn.HeaderTemplate>
                                 </DataGridComboBoxColumn>
                                 <DataGridTextColumn
-                                                        Width="*" 
+                                                        Width="Auto"  
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=deviceName}">
                                     <DataGridTextColumn.HeaderTemplate>

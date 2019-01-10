@@ -16,7 +16,13 @@
     <sys:String x:Key="MainWindow_Menu_Account_ChangePass">_Change Password</sys:String>
     <sys:String x:Key="MainWindow_Menu_Account_Logout">_Logout</sys:String>
 
+    <!--MenuItem-->
+    <sys:String x:Key="Station_Menu_Item_Properties">Info</sys:String>
+    <sys:String x:Key="Station_Menu_Item_Edit">Edit</sys:String>
+    <sys:String x:Key="Station_Menu_Item_Rotate">Rotate</sys:String>
+
     <!--Toolbar-->
+    <sys:String x:Key="MainWindow_Toolbar_MapReCenter">Recenter map</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_MapOnOff">Hide/Show map</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_PlanManagement">Plan Management</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_OperationManagement">Operation Management</sys:String>
@@ -91,6 +97,7 @@
     <sys:String x:Key="PlanControl_Shift_Column_ProductDetailName">Serials</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_PalletAmount">Require Amount</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_PalletUse">Buffered</sys:String>
+    <sys:String x:Key="PlanControl_Shift_Column_Delete">Delete</sys:String>
     <sys:String x:Key="PlanControl_Save">Save</sys:String>
     <sys:String x:Key="PlanControl_Exit">Close</sys:String>
 
@@ -137,7 +144,7 @@
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Row">Row</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Bay">Bay</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Status">Status</sys:String>
-
+    <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_ProductDetailName">Serial code</sys:String>
 
     <sys:String x:Key="DevicesManagement_Button_Save">Save</sys:String>
     <sys:String x:Key="DevicesManagement_Button_Exit">Close</sys:String>
@@ -182,5 +189,11 @@
     <sys:String x:Key="UserManagement_AccountList_Column_Device">Device</sys:String>
 
     <sys:String x:Key="UserManagement_Button_Exit">Close</sys:String>
+
+    
+    <!--Statistics-->
+    <sys:String x:Key="Statistics_Title">Statistics</sys:String>
+    <sys:String x:Key="Statistics_TabItem_RobotProcess">Robot Process</sys:String>
+    <sys:String x:Key="Statistics_TabItem_RobotCharge">Robot Charge</sys:String>
 
 </ResourceDictionary>

@@ -7,6 +7,7 @@ using System;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MapViewPallet.Shape
 {
@@ -231,7 +232,7 @@ namespace MapViewPallet.Shape
 
             return new Point(x,y);
         }
-        
+
 
         public void ReDraw() //random
         {
@@ -252,13 +253,21 @@ namespace MapViewPallet.Shape
                 //int posRangeY = 680;
                 //double posDoubleY = posY.NextDouble() * posRangeY; //for doubles
 
-                
+
                 //props.rotate = roro1;
                 //props.position = new Point(roro2,roro3);
 
                 ChangeTask("22");
                 Draw();
             }));
+        }
+
+        public void PrintCount(int LowLimit, int UpperLimit)
+        {
+            for (int i = LowLimit; i <= UpperLimit; i++)
+            {
+                Console.WriteLine("> {0}", i);
+            }
         }
 
         public void Draw()
