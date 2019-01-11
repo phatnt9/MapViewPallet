@@ -19,7 +19,7 @@ namespace MapViewPallet
     
     public static class Global_Object
     {
-
+        public static readonly object syncLock = new object();
         //#######################################
         public static StationShape bufferToMove;
 

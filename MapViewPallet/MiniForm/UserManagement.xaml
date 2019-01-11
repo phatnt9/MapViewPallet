@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="{DynamicResource UserManagement_Title}" 
         Height="500" 
@@ -41,28 +41,28 @@
                                     Margin="5 0 0 0"
                                     Style="{StaticResource MaterialDesignFloatingActionButton}"
                                                         Width="24" Height="24">
-                                <materialDesign:PackIcon Kind="Refresh"/>
+                                <iconPacks:PackIconMaterial Kind="Refresh"/>
                             </Button>
                             <Button Name="btn_Add"
                                     Click="Btn_Add_Click"
                                     Margin="5 0 0 0"
                                     Style="{StaticResource MaterialDesignFloatingActionButton}"
                                                         Width="24" Height="24">
-                                <materialDesign:PackIcon Kind="Add"/>
+                                <iconPacks:PackIconMaterial Kind="Add"/>
                             </Button>
                             <Button Name="btn_Edit"
                                     Click="Btn_Edit_Click"
                                     Margin="5 0 0 0"
                                     Style="{StaticResource MaterialDesignFloatingActionButton}"
                                                         Width="24" Height="24">
-                                <materialDesign:PackIcon Kind="Edit"/>
+                                <iconPacks:PackIconMaterial Kind="Edit"/>
                             </Button>
                             <Button Name="btn_Delete"
                                     Click="Btn_Delete_Click"
                                     Margin="5 0 0 0"
                                     Style="{StaticResource MaterialDesignFloatingActionButton}"
                                                         Width="24" Height="24">
-                                <materialDesign:PackIcon Kind="Delete"/>
+                                <iconPacks:PackIconMaterial Kind="Delete"/>
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -73,9 +73,7 @@
                                       CanUserAddRows="False"
                                       CanUserResizeRows="True"
                                       CanUserDeleteRows="False" 
-                                      AutoGenerateColumns="False"
-                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                      AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Width="Auto" 
                                                         Visibility="Hidden"

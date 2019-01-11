@@ -8,10 +8,8 @@
         Title="{DynamicResource AddBufferForm_Title1}" 
         Height="310" 
         Width="320" 
-        MaxHeight="310" 
-        MaxWidth="320" 
-        MinHeight="310" 
-        MinWidth="320">
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -93,7 +91,7 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <Border BorderThickness="1" BorderBrush="Gray">
+            <Border BorderThickness="0" BorderBrush="Gray">
                 <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">

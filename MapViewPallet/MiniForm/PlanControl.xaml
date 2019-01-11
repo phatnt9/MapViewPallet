@@ -4,11 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"        
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        xml:lang="vi-VN"
         Title="{DynamicResource PlanControl_Title}" Height="450" Width="800">
     <Window.Resources>
         <Style x:Key="MyStyle" TargetType="{x:Type Button}">
@@ -57,7 +54,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="90"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
@@ -96,21 +93,15 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
-                            <dragablz:TabablzControl 
-                                FixedHeaderCount="3"
+                            <TabControl
                                 Name="TabControlShift">
-                                <dragablz:TabablzControl.InterTabController>
-                                    <dragablz:InterTabController />
-                                </dragablz:TabablzControl.InterTabController>
                                 <TabItem Name="Plan_Shift1" Header="{DynamicResource PlanControl_Shift1_Label}">
                                     <DataGrid Name="Shift1Dgv"
                                               ItemsSource="{Binding GroupedDevices_S1}"
                                   CanUserReorderColumns="False" CanUserAddRows="False"
                                   CanUserResizeColumns="True" CanUserResizeRows="False"
                                   CanUserDeleteRows="False" CanUserSortColumns="True"
-                                              AutoGenerateColumns="False"
-                                              materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                              AutoGenerateColumns="False">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>
@@ -194,18 +185,17 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <materialDesign:MaterialDataGridTextColumn
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                            <DataGridTextColumn
                                                 Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                                <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
-                                                </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                            </materialDesign:MaterialDataGridTextColumn>
+                                                </DataGridTextColumn.HeaderTemplate>
+                                            </DataGridTextColumn>
                                             <DataGridTextColumn
                                                 Binding="{Binding Path=palletUse}" 
                                                 IsReadOnly="True">
@@ -232,7 +222,7 @@
                                                         <Button Name="DeletePlan"
                                                             Background="DarkSlateGray"
                                                             Click="DeletePlan_Click">
-                                                            <materialDesign:PackIcon Kind="DeleteForever" />
+                                                            <iconPacks:PackIconMaterial Kind="DeleteForever" />
                                                         </Button>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
@@ -246,9 +236,7 @@
                                   CanUserReorderColumns="False" CanUserAddRows="False"
                                   CanUserResizeColumns="True" CanUserResizeRows="False"
                                   CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False"
-                                              materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                              AutoGenerateColumns="False">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>
@@ -331,18 +319,17 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <materialDesign:MaterialDataGridTextColumn
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                            <DataGridTextColumn
                                                 Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                                <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
-                                                </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                            </materialDesign:MaterialDataGridTextColumn>
+                                                </DataGridTextColumn.HeaderTemplate>
+                                            </DataGridTextColumn>
                                             <DataGridTextColumn
                                                 Binding="{Binding Path=palletUse}" 
                                                 IsReadOnly="True">
@@ -364,9 +351,7 @@
                                   CanUserReorderColumns="False" CanUserAddRows="False"
                                   CanUserResizeColumns="True" CanUserResizeRows="False"
                                   CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False"
-                                              materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                              AutoGenerateColumns="False">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>
@@ -449,18 +434,17 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <materialDesign:MaterialDataGridTextColumn 
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                            <DataGridTextColumn 
                                                 Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                                <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
-                                                </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                            </materialDesign:MaterialDataGridTextColumn>
+                                                </DataGridTextColumn.HeaderTemplate>
+                                            </DataGridTextColumn>
                                             <DataGridTextColumn
                                                 Binding="{Binding Path=palletUse}" 
                                                 IsReadOnly="True">
@@ -476,7 +460,7 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
-                            </dragablz:TabablzControl>
+                            </TabControl>
                             <!--<TabControl Name="TabControlShift" Margin="3,5,0,2" >
                                 <TabControl.ItemContainerStyle>
                                     <Style TargetType="TabItem">
@@ -717,12 +701,12 @@
                             <Button Name="Btn_CreatePlanPallet" 
                                     Width="150" 
                                     Content="CreatePlanPallet" 
-                                    Margin="5,0"
+                                    Margin="5"
                                     Click="Btn_CreatePlanPallet_Click"/>
                             <Button Name="Btn_Accept" 
                                     Width="80" 
                                     Content="{DynamicResource PlanControl_Save}" 
-                                    Margin="5,0"
+                                    Margin="5"
                                     Click="Btn_Accept_Click"/>
                             <!--<Button Name="Btn_Refresh" Width="70" Content="Làm mới" Margin="5,5" Click="Btn_Refresh_Click"/>-->
                             <!--<Button Name="Btn_Clear" Width="70" Content="Dọn" Margin="5,5" Click="Btn_Clear_Click"/>-->
@@ -731,7 +715,7 @@
                             <Button Name="Btn_Cancel" 
                                     Width="80" 
                                     Content="{DynamicResource PlanControl_Exit}" 
-                                    Margin="5,0" 
+                                    Margin="5" 
                                     Click="Btn_Cancel_Click"/>
                         </StackPanel>
                     </Grid>

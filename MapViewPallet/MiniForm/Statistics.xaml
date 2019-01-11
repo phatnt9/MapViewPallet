@@ -4,8 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         mc:Ignorable="d"
         Title="{DynamicResource Statistics_Title}" Height="650" Width="1000">
     <Grid>
@@ -142,12 +140,11 @@
                                                 SelectedValuePath="timeWorkId"
                                                 ></ComboBox>
                                         </StackPanel>
-                                        <StackPanel Margin="0 0 30 0">
+                                        <StackPanel Margin="0 0 30 0" VerticalAlignment="Center">
                                             <DatePicker
                                                 Name="dtpActiveDate"
-                                                Width="100"
-                                                materialDesign:HintAssist.Hint="Pick Date"
-                                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                                                Width="100"/>
+                                                <!--Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />-->
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
@@ -160,19 +157,16 @@
                                         Name="Search"
                                         Margin="0 10 0 0"
                                         Width="80"
-                                        Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                         Click="Search_Click"
                                         >Search</Button>
                                     <Button 
                                         Margin="0 10 0 0"
                                         Width="80" 
                                         Click="Button_Click"
-                                        Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                         >Test</Button>
                                     <Button 
                                         Margin="0 10 0 0"
                                         Width="80"
-                                        Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                         >Export</Button>
                                 </StackPanel>
                                 
@@ -192,9 +186,7 @@
                                     CanUserAddRows="False"
                                     CanUserResizeRows="False"
                                     CanUserDeleteRows="False"
-                                    AutoGenerateColumns="False"
-                                    materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                    materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                    AutoGenerateColumns="False">
                                     <DataGrid.Columns>
                                         <!--<DataGridTemplateColumn 
                                             Width="Auto" 
@@ -231,7 +223,7 @@
                                                 <DataTemplate>
                                                     <ComboBox 
                                                         IsHitTestVisible="False"
-                                                        ItemsSource="{Binding DataContext.Robots, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
+                                                        ItemsSource="{Binding DataContext.AllRobots, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="robotName"
                                                         SelectedValuePath="id"
                                                         SelectedValue="{Binding robotId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -320,7 +312,7 @@
                                                 <DataTemplate>
                                                     <ComboBox 
                                                         IsHitTestVisible="False"
-                                                        ItemsSource="{Binding DataContext.Devices, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
+                                                        ItemsSource="{Binding DataContext.AllDevices, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="deviceName"
                                                         SelectedValuePath="deviceId"
                                                         SelectedValue="{Binding deviceId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -365,7 +357,7 @@
                                                 <DataTemplate>
                                                     <ComboBox 
                                                         IsHitTestVisible="False"
-                                                        ItemsSource="{Binding DataContext.Products, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
+                                                        ItemsSource="{Binding DataContext.AllProducts, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="productName"
                                                         SelectedValuePath="productId"
                                                         SelectedValue="{Binding productId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -410,7 +402,7 @@
                                                 <DataTemplate>
                                                     <ComboBox 
                                                         IsHitTestVisible="False"
-                                                        ItemsSource="{Binding DataContext.ProductDetails, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
+                                                        ItemsSource="{Binding DataContext.AllProductDetails, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="productDetailName"
                                                         SelectedValuePath="productDetailId"
                                                         SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -455,7 +447,7 @@
                                                 <DataTemplate>
                                                     <ComboBox 
                                                         IsHitTestVisible="False"
-                                                        ItemsSource="{Binding DataContext.Buffers, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
+                                                        ItemsSource="{Binding DataContext.AllBuffers, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="bufferName"
                                                         SelectedValuePath="bufferId"
                                                         SelectedValue="{Binding bufferId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -523,7 +515,7 @@
                                                 <DataTemplate>
                                                     <ComboBox 
                                                         IsHitTestVisible="False"
-                                                        ItemsSource="{Binding DataContext.OperationTypes, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
+                                                        ItemsSource="{Binding DataContext.AllOperationTypes, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="nameOperationType"
                                                         SelectedValuePath="idOperationType"
                                                         SelectedValue="{Binding operationType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -533,7 +525,7 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <DataGridTemplateColumn 
+                                        <!--<DataGridTemplateColumn 
                                             Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
@@ -551,6 +543,29 @@
                                                                Text="{Binding Path=timeWorkId}">
                                                         </TextBlock>
                                                     </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>-->
+
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                               Text="Shift"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.HeaderTemplate>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ComboBox 
+                                                        IsHitTestVisible="False"
+                                                        ItemsSource="{Binding DataContext.AllTimeWorks, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
+                                                        DisplayMemberPath="timeWorkName"
+                                                        SelectedValuePath="timeWorkId"
+                                                        SelectedValue="{Binding timeWorkId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                            >
+                                                    </ComboBox>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>

@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
         mc:Ignorable="d"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"      
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         Title="{DynamicResource DevicesManagement_Title}" Height="600" Width="800">
     <Window.Resources>
     </Window.Resources>
@@ -21,14 +20,13 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <dragablz:TabablzControl
-                FixedHeaderCount="4"
+            <TabControl
                 Name="DeviceManagementTabControl">
-                <TabItem Header="{DynamicResource DevicesManagement_TabItem_Operation}" FontSize="12">
+                <TabItem Header="{DynamicResource DevicesManagement_TabItem_Operation}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
@@ -49,10 +47,8 @@
                                                         VerticalAlignment="Center">
                                                 <Button Name="btn_Refresh_Device"
                                                         Click="Btn_Refresh_Device_Click"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Refresh"/>
+                                                    <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
@@ -64,8 +60,7 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False"
                                       AutoGenerateColumns="False"
-                                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                                      FontSize="12">
                                                 <DataGrid.Columns>
                                                     <DataGridTemplateColumn 
                                                         Width="Auto" 
@@ -74,13 +69,13 @@
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
+                                                                    <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=deviceId}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn Width="Auto">
+                                                    <DataGridTemplateColumn Width="*">
                                                         <DataGridTemplateColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -122,10 +117,8 @@
                                         VerticalAlignment="Center">
                                                 <Button Name="btn_Refresh_DeviceProduct"
                                                         Click="Btn_Refresh_DeviceProduct_Click"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Refresh"/>
+                                                    <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
@@ -137,8 +130,7 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False"
                                       AutoGenerateColumns="False"
-                                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                                      FontSize="12">
                                                 <DataGrid.Columns>
                                                     <DataGridTemplateColumn>
                                                         <DataGridTemplateColumn.CellTemplate>
@@ -164,7 +156,7 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn Width="Auto" >
+                                                    <DataGridTemplateColumn Width="*" >
                                                         <DataGridTemplateColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -202,10 +194,8 @@
 
                                                 <Button Name="btn_Refresh_DeviceBuffer"
                                                         Click="Btn_Refresh_DeviceBuffer_Click"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Refresh"/>
+                                                    <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
@@ -217,8 +207,7 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False"
                                       AutoGenerateColumns="False"
-                                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                                      FontSize="12">
 
                                                 <DataGrid.Columns>
                                                     <DataGridTemplateColumn>
@@ -244,7 +233,7 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <DataGridTemplateColumn Width="Auto">
+                                                    <DataGridTemplateColumn Width="*">
                                                         <DataGridTemplateColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -262,21 +251,20 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <materialDesign:MaterialDataGridTextColumn
+                                                    <DataGridTextColumn
                                                         Width="Auto" 
                                                         IsReadOnly="False" 
-                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                         Binding="{Binding Path=bufferSort, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                         >
-                                                        <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferSort}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                                    </materialDesign:MaterialDataGridTextColumn>
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -288,10 +276,9 @@
                             <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Center">
                                 <Button Name="Btn_Exit_tab1" 
-                        Width="70" 
+                        Width="70"
                         Content="{DynamicResource DevicesManagement_Button_Exit}" 
-                        Margin="30,5" 
-                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Margin="20,10"
                         Click="Btn_Exit_Device_Click"/>
                             </StackPanel>
                         </Grid>
@@ -301,7 +288,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
@@ -322,30 +309,24 @@
                                                 <Button Name="btn_Add_Device"
                                                         Click="Btn_Add_Device_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Add" 
+                                                    <iconPacks:PackIconMaterial Kind="Plus" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
                                                 <Button Name="btn_Delete_Device"
                                                         Click="Btn_Delete_Device_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Delete" 
+                                                    <iconPacks:PackIconMaterial Kind="Delete" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
                                                 <Button Name="btn_Refresh_Device2"
                                                         Click="Btn_Refresh_Device_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Refresh" 
+                                                    <iconPacks:PackIconMaterial Kind="Refresh" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
@@ -359,8 +340,7 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False"
                                       AutoGenerateColumns="False"
-                                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                                      FontSize="12">
                                                 <DataGrid.Columns>
 
                                                     <DataGridTemplateColumn Width="Auto" 
@@ -377,20 +357,19 @@
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
 
-                                                    <materialDesign:MaterialDataGridTextColumn
-                                                        Width="Auto"
+                                                    <DataGridTextColumn
+                                                        Width="*"
                                                         IsReadOnly="False"
-                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                         Binding="{Binding Path=deviceName}">
-                                                        <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                Text="{DynamicResource DevicesManagement_Groupbox_Device_Column_DeviceName}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                                    </materialDesign:MaterialDataGridTextColumn>
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
 
                                                     <DataGridTemplateColumn Width="Auto">
                                                         <DataGridTemplateColumn.HeaderTemplate>
@@ -464,35 +443,31 @@
                                                                 HorizontalAlignment="Right">
                                                         <Label VerticalAlignment="Center" 
                                                                Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Bay}"
-                                                               FontSize="14"></Label>
+                                                               FontSize="12"></Label>
                                                         <TextBox Name="MaxBaytb" 
-                                                                 Width="40" 
-                                                                 FontSize="14"
+                                                                 Width="40"
                                                                  PreviewTextInput="MaxBaytb_PreviewTextInput"></TextBox>
                                                     </StackPanel>
                                                     <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
                                                         <Label VerticalAlignment="Center" 
                                                                Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Row}"
-                                                               FontSize="14"></Label>
+                                                               FontSize="12"></Label>
                                                         <TextBox Name="MaxRowtb" 
-                                                                 Width="40" 
-                                                                 FontSize="14"
+                                                                 Width="40"
                                                                  PreviewTextInput ="MaxRowtb_PreviewTextInput"></TextBox>
                                                     </StackPanel>
                                                     <Button Name="btn_Apply" 
                                                             Margin="20,0,0,0"
                                                             Height="25" Width="32"
-                                                            Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                                                        Click="Btn_Apply_DeviceBufferData_Click">
-                                                        <materialDesign:PackIcon Kind="Check" Margin="-9"/>
+                                                            Click="Btn_Apply_DeviceBufferData_Click">
+                                                        <iconPacks:PackIconMaterial Kind="Check"/>
                                                     </Button>
                                                     <Button Name="btn_Save_DevicePallet" 
                                                             Margin="20,0,0,0"
                                                             Height="25" Width="32"
-                                                            Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                                                        Click="Btn_Save_DevicePallet_Click">
-                                                        <materialDesign:PackIcon Kind="ContentSave" Margin="-9"/>
+                                                            Click="Btn_Save_DevicePallet_Click">
+                                                        <iconPacks:PackIconMaterial Kind="ContentSave"/>
                                                     </Button>
                                                 </StackPanel>
                                             </Grid>
@@ -504,8 +479,7 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False"
                                       AutoGenerateColumns="False"
-                                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                                      FontSize="12">
                                                     <DataGrid.Columns>
                                                         <DataGridTemplateColumn Width="Auto" 
                                                             Header="DeviceId" Visibility="Hidden">
@@ -529,7 +503,36 @@
                                                                 </DataTemplate>
                                                             </DataGridTemplateColumn.CellTemplate>
                                                         </DataGridTemplateColumn>
-                                                        <DataGridTemplateColumn Width="Auto">
+                                                        
+                                                        <DataGridTextColumn
+                                                        Width="Auto" 
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=row}">
+                                                            <DataGridTextColumn.HeaderTemplate>
+                                                                <DataTemplate>
+                                                                        <StackPanel>
+                                                                            <TextBlock
+                                                               Text="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Column_Row}"/>
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                            </DataGridTextColumn.HeaderTemplate>
+                                                        </DataGridTextColumn>
+                                                        
+                                                        <DataGridTextColumn
+                                                        Width="Auto" 
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=bay}">
+                                                            <DataGridTextColumn.HeaderTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel>
+                                                                        <TextBlock
+                                                               Text="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Column_Bay}"/>
+                                                                    </StackPanel>
+                                                                </DataTemplate>
+                                                            </DataGridTextColumn.HeaderTemplate>
+                                                        </DataGridTextColumn>
+
+                                                        <DataGridTemplateColumn Width="*">
                                                             <DataGridTemplateColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
@@ -547,34 +550,9 @@
                                                                 </DataTemplate>
                                                             </DataGridTemplateColumn.CellTemplate>
                                                         </DataGridTemplateColumn>
+
                                                         <DataGridTextColumn
-                                                        Width="Auto" 
-                                                        IsReadOnly="True"
-                                                        Binding="{Binding Path=row}">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                        <StackPanel>
-                                                                            <TextBlock
-                                                               Text="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Column_Row}"/>
-                                                                        </StackPanel>
-                                                                    </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn
-                                                        Width="Auto" 
-                                                        IsReadOnly="True"
-                                                        Binding="{Binding Path=bay}">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <StackPanel>
-                                                                        <TextBlock
-                                                               Text="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Column_Bay}"/>
-                                                                    </StackPanel>
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn
-                                                        Width="Auto" 
+                                                        Width="*" 
                                                         IsReadOnly="True"
                                                                             Visibility="Visible"
                                                         Binding="{Binding Path=dataPallet}">
@@ -619,25 +597,25 @@
                                                         <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Center">
                                                             <Label VerticalAlignment="Center" 
-                                           Content="X" FontSize="16"/>
+                                           Content="X" FontSize="12"/>
                                                             <TextBox Name="palletLineX" 
-                                             Width="35" FontSize="14"
+                                             Width="35" FontSize="12"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Center">
                                                             <Label VerticalAlignment="Center" 
-                                           Content="Y" FontSize="16"/>
+                                           Content="Y" FontSize="12"/>
                                                             <TextBox Name="palletLineY" 
-                                             Width="35" FontSize="14"
+                                             Width="35" FontSize="12"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Center">
                                                             <Label VerticalAlignment="Center" 
-                                           Content="A" FontSize="16"/>
+                                           Content="A" FontSize="12"/>
                                                             <TextBox Name="palletLineA" 
-                                             Width="35" FontSize="14"
+                                             Width="35" FontSize="12"
                                                                  PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
                                                     </StackPanel>
@@ -648,23 +626,22 @@
                                                         <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Left">
                                                             <Label VerticalAlignment="Center" 
-                                                                   Content="Pallet:" FontSize="16"/>
+                                                                   Content="Pallet:" FontSize="12"/>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal" 
                                             HorizontalAlignment="Center">
                                                             <Label VerticalAlignment="Center" 
-                                           Content="D" FontSize="16"/>
+                                           Content="D" FontSize="12"/>
                                                             <TextBox Name="palletPalletD" 
-                                             Width="35" FontSize="14"
+                                             Width="35" FontSize="12"
                                                                  PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
                                                         <StackPanel VerticalAlignment="Center">
                                                             <Button Name="btn_SetPalletDataPallet"
                                                     Margin="15,0,0,0"
                                                     Height="25" Width="32"
-                                                    Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                                     Click="Btn_SetPalletDataPallet_Click">
-                                                                <materialDesign:PackIcon Kind="ContentSave" Margin="-9"/>
+                                                                <iconPacks:PackIconMaterial Kind="ContentSave"/>
                                                             </Button>
                                                         </StackPanel>
                                                     </StackPanel>
@@ -683,12 +660,12 @@
                                 <Button Name="Btn_Save_DevicePallet" 
                         Width="70" 
                         Content="{DynamicResource DevicesManagement_Button_Save}" 
-                        Margin="30,5"
+                        Margin="20,10"
                                         Click="Btn_Save_Devices_Click"/>
                                 <Button Name="Btn_Exit_DevicePallet" 
                         Width="70" 
                         Content="{DynamicResource DevicesManagement_Button_Exit}" 
-                        Margin="30,5"
+                        Margin="20,10"
                                         Click="Btn_Exit_DevicePallet_Click"/>
                             </StackPanel>
                         </Grid>
@@ -698,7 +675,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
@@ -719,30 +696,24 @@
                                                 <Button Name="btn_Add_Product"
                                                         Click="Btn_Add_Product_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Add" 
+                                                    <iconPacks:PackIconMaterial Kind="Plus" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
                                                 <Button Name="btn_Delete_Product"
                                                         Click="Btn_Delete_Product_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Delete" 
+                                                    <iconPacks:PackIconMaterial Kind="Delete" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
                                                 <Button Name="btn_Refresh_Product"
                                                         Click="Btn_Refresh_Product_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Refresh" 
+                                                    <iconPacks:PackIconMaterial Kind="Refresh" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
@@ -756,8 +727,7 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False"
                                       AutoGenerateColumns="False"
-                                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                                      FontSize="12">
                                                 <DataGrid.Columns>
                                                     <DataGridTemplateColumn Width="Auto" 
                                                             Header="Id" Visibility="Visible">
@@ -770,20 +740,19 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <materialDesign:MaterialDataGridTextColumn
+                                                    <DataGridTextColumn
                                                         Width="Auto" 
                                                         IsReadOnly="False"
-                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                         Binding="{Binding Path=productName}">
-                                                        <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                Text="{DynamicResource DevicesManagement_Groupbox_Product_Column_ProductName}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                                    </materialDesign:MaterialDataGridTextColumn>
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
                                                     <DataGridTemplateColumn Width="Auto">
                                                         <DataGridTemplateColumn.HeaderTemplate>
                                                             <DataTemplate>
@@ -848,30 +817,24 @@
                                                 <Button Name="btn_Add_ProductDetail"
                                                         Click="Btn_Add_ProductDetail_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Add" 
+                                                    <iconPacks:PackIconMaterial Kind="Plus" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
                                                 <Button Name="btn_Delete_ProductDetail"
                                                         Click="Btn_Delete_ProductDetail_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Delete" 
+                                                    <iconPacks:PackIconMaterial Kind="Delete" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
                                                 <Button Name="btn_Refresh_ProductDetail"
                                                         Click="Btn_Refresh_ProductDetail_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Refresh" 
+                                                    <iconPacks:PackIconMaterial Kind="Refresh" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
@@ -885,8 +848,7 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False"
                                       AutoGenerateColumns="False"
-                                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                                      FontSize="12">
                                                 <DataGrid.Columns>
                                                     <DataGridTemplateColumn Width="Auto" 
                                                             Header="Id">
@@ -899,20 +861,19 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <materialDesign:MaterialDataGridTextColumn
+                                                    <DataGridTextColumn
                                                         Width="Auto"  
                                                         IsReadOnly="False"
-                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                         Binding="{Binding Path=productDetailName}">
-                                                        <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                Text="{DynamicResource DevicesManagement_Groupbox_ProductDetail_Column_ProductDetailName}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                                    </materialDesign:MaterialDataGridTextColumn>
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -926,12 +887,12 @@
                                 <Button Name="Btn_Save_Product" 
                         Width="70" 
                         Content="{DynamicResource DevicesManagement_Button_Save}" 
-                        Margin="30,5"
+                        Margin="20,10"
                                         Click="Btn_Save_Products_Click"/>
                                 <Button Name="Btn_Exit_Product" 
                         Width="70" 
                         Content="{DynamicResource DevicesManagement_Button_Exit}" 
-                        Margin="30,5"
+                        Margin="20,10"
                                         Click="Btn_Exit_Product_Click"/>
                             </StackPanel>
                         </Grid>
@@ -941,7 +902,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
-                            <RowDefinition Height="50"></RowDefinition>
+                            <RowDefinition Height="40"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
@@ -965,30 +926,24 @@
                                                 <Button Name="btn_Add_Buffer"
                                                         Click="Btn_Add_Buffer_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Add" 
+                                                    <iconPacks:PackIconMaterial Kind="Plus" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
                                                 <Button Name="btn_Delete_Buffer"
                                                         Click="Btn_Delete_Buffer_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Delete" 
+                                                    <iconPacks:PackIconMaterial Kind="Delete" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
                                                 <Button Name="btn_Refresh_Buffer"
                                                         Click="Btn_Refresh_Buffer_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Refresh" 
+                                                    <iconPacks:PackIconMaterial Kind="Refresh" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
@@ -1002,8 +957,7 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
                                       AutoGenerateColumns="False"
-                                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                                      FontSize="12">
                                                 <DataGrid.Columns>
                                                     <DataGridTemplateColumn Width="Auto"  
                                                             Header="Id" Visibility="Visible">
@@ -1016,48 +970,45 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    <materialDesign:MaterialDataGridTextColumn
+                                                    <DataGridTextColumn
                                                         Width="Auto"  
                                                         IsReadOnly="False"
-                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                         Binding="{Binding Path=bufferName}">
-                                                        <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferName}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                                    </materialDesign:MaterialDataGridTextColumn>
-                                                    <materialDesign:MaterialDataGridTextColumn
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
+                                                    <DataGridTextColumn
                                                                         Width="Auto"  
                                                                         IsReadOnly="False"
-                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                         Binding="{Binding Path=maxBay}">
-                                                        <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferBay}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                                    </materialDesign:MaterialDataGridTextColumn>
-                                                    <materialDesign:MaterialDataGridTextColumn
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
+                                                    <DataGridTextColumn
                                                                         Width="Auto"  
                                                                         IsReadOnly="False"
-                                                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                                                         Binding="{Binding Path=maxRow}">
-                                                        <materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferRow}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </materialDesign:MaterialDataGridTextColumn.HeaderTemplate>
-                                                    </materialDesign:MaterialDataGridTextColumn>
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
                                                     <DataGridTemplateColumn Width="Auto" >
                                                         <DataGridTemplateColumn.HeaderTemplate>
                                                             <DataTemplate>
@@ -1106,38 +1057,37 @@
                                                                 HorizontalAlignment="Right">
                                                         <Label VerticalAlignment="Center" 
                                                                Content="X"
-                                                               FontSize="16"></Label>
+                                                               FontSize="12"></Label>
                                                         <TextBox Name="bufferX" 
                                                                  Width="45" 
-                                                                 FontSize="14"
+                                                                 FontSize="12"
                                                                  PreviewTextInput="BufferX_PreviewTextInput"/>
                                                     </StackPanel>
                                                     <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
                                                         <Label VerticalAlignment="Center" 
                                                                Content="Y"
-                                                               FontSize="16"></Label>
+                                                               FontSize="12"></Label>
                                                         <TextBox Name="bufferY" 
                                                                  Width="45" 
-                                                                 FontSize="14"
+                                                                 FontSize="12"
                                                                  PreviewTextInput ="BufferY_PreviewTextInput"/>
                                                     </StackPanel>
                                                     <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
                                                         <Label VerticalAlignment="Center" 
                                                                Content="A"
-                                                               FontSize="16"></Label>
+                                                               FontSize="12"></Label>
                                                         <TextBox Name="bufferA" 
                                                                  Width="45" 
-                                                                 FontSize="14"
+                                                                 FontSize="12"
                                                                  PreviewTextInput="BufferA_PreviewTextInput"/>
                                                     </StackPanel>
                                                     <Button Name="btn_SetBufferData"
                                                             Click="Btn_SetBufferData_Click"
                                                             Margin="15,0,0,0"
-                                                            Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                                             Height="25" Width="32">
-                                                        <materialDesign:PackIcon Kind="ContentSave" Margin="-9"/>
+                                                        <iconPacks:PackIconMaterial Kind="ContentSave"/>
                                                     </Button>
                                                 </StackPanel>
                                             </Grid>
@@ -1159,20 +1109,16 @@
                                                 <Button Name="btn_Save_Pallet"
                                                         Click="Btn_Save_Pallet_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="ContentSave" 
+                                                    <iconPacks:PackIconMaterial Kind="ContentSave" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
                                                 <Button Name="btn_Refresh_Pallet"
                                                         Click="Btn_Refresh_Pallet_Click"
                                                         Margin="5 0 0 0"
-                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
-                                                    <materialDesign:PackIcon Kind="Refresh" 
+                                                    <iconPacks:PackIconMaterial Kind="Refresh" 
                                                                              Height="15"
                                                                              Width="15" />
                                                 </Button>
@@ -1186,8 +1132,7 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False"
                                       AutoGenerateColumns="False"
-                                                      materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                                      FontSize="12">
                                                 <DataGrid.Columns>
                                                     <DataGridTextColumn Header="Id" Visibility="Visible"
                                                         Width="Auto"  
@@ -1276,18 +1221,18 @@
                                 <Button Name="Btn_Save_Buffer" 
                         Width="70" 
                         Content="{DynamicResource DevicesManagement_Button_Save}" 
-                        Margin="30,5"
+                        Margin="20,10"
                                         Click="Btn_Save_Buffer_Click"/>
                                 <Button Name="Btn_Exit_Buffer" 
                         Width="70" 
                         Content="{DynamicResource DevicesManagement_Button_Exit}" 
-                        Margin="30,5"
+                        Margin="20,10"
                                         Click="Btn_Exit_Buffer_Click"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
                 </TabItem>
-            </dragablz:TabablzControl>
+            </TabControl>
         </Grid>
     </Grid>
 

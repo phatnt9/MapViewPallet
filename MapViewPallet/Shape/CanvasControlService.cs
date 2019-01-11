@@ -778,16 +778,21 @@ namespace MapViewPallet.Shape
         }
         public void RedrawAllStation(List<dtBuffer> listBuffer)
         {
-            for (int i = 0; i < list_Station.Count; i++)
+            //Có lỗi System.InvalidOperationException: 'Collection was modified after the enumerator was instantiated.'
+            lock (Global_Object.syncLock)
             {
-                foreach (dtBuffer buffer in listBuffer)
+                for (int i = 0; i < list_Station.Count; i++)
                 {
-                    if (buffer.bufferId == list_Station.ElementAt(i).Value.props.bufferDb.bufferId)
+                    foreach (dtBuffer buffer in listBuffer)
                     {
-                        list_Station.ElementAt(i).Value.ReDraw(buffer);
+                        if (buffer.bufferId == list_Station.ElementAt(i).Value.props.bufferDb.bufferId)
+                        {
+                            list_Station.ElementAt(i).Value.ReDraw(buffer);
+                        }
                     }
                 }
             }
+                
         }
         public List<dtBuffer> GetDataAllStation()
         {

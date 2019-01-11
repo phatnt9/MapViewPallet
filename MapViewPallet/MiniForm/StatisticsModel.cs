@@ -21,31 +21,41 @@ namespace MapViewPallet.MiniForm
         public string robotName { get => _RobotName; set { _RobotName = value; RaisePropertyChanged("robotName"); } }
     }
 
-    
+    public class dtProcessStatus : userModel
+    {
+        private string _Id;
+        private string _StatusName;
+
+        public string id { get => _Id; set { _Id = value; RaisePropertyChanged("id"); } }
+        public string statusName { get => _StatusName; set { _StatusName = value; RaisePropertyChanged("statusName"); } }
+    }
+
+
 
     public class StatisticsModel
     {
         Statistics statistics;
 
-        private ObservableCollection<dtRobot> _robots;
-        private ObservableCollection<dtDevice> _devices;
-        private ObservableCollection<dtProduct> _products;
-        private ObservableCollection<dtBuffer> _buffers;
-        private ObservableCollection<dtProductDetail> _productDetails;
-        private ObservableCollection<dtOperationType> _operationTypes;
-        private ObservableCollection<dtTimeWork> _timeWorks;
-
         public ListCollectionView GroupedRobotProcess { get; private set; }
 
 
-
-
-
-
+        private ObservableCollection<dtRobot> _robots;
+        private ObservableCollection<dtRobot> _allRobots;
+        private ObservableCollection<dtDevice> _devices;
+        private ObservableCollection<dtDevice> _allDevices;
+        private ObservableCollection<dtProduct> _products;
+        private ObservableCollection<dtProduct> _allProducts;
+        private ObservableCollection<dtBuffer> _buffers;
+        private ObservableCollection<dtBuffer> _allBuffers;
+        private ObservableCollection<dtProductDetail> _productDetails;
+        private ObservableCollection<dtProductDetail> _allProductDetails;
+        private ObservableCollection<dtOperationType> _operationTypes;
+        private ObservableCollection<dtOperationType> _allOperationTypes;
+        private ObservableCollection<dtTimeWork> _timeWorks;
+        private ObservableCollection<dtTimeWork> _allTimeWorks;
+        
 
         public List<dtRobotProcess> listRobotProcess;
-
-
         public List<dtOperationType> listOperationType;
 
         public ObservableCollection<dtRobot> Robots
@@ -54,10 +64,22 @@ namespace MapViewPallet.MiniForm
             set { _robots = value; }
         }
 
+        public ObservableCollection<dtRobot> AllRobots
+        {
+            get { return _allRobots; }
+            set { _allRobots = value; }
+        }
+
         public ObservableCollection<dtOperationType> OperationTypes
         {
             get { return _operationTypes; }
             set { _operationTypes = value; }
+        }
+
+        public ObservableCollection<dtOperationType> AllOperationTypes
+        {
+            get { return _allOperationTypes; }
+            set { _allOperationTypes = value; }
         }
 
 
@@ -67,10 +89,23 @@ namespace MapViewPallet.MiniForm
             set { _devices = value; }
         }
 
+
+        public ObservableCollection<dtDevice> AllDevices
+        {
+            get { return _allDevices; }
+            set { _allDevices = value; }
+        }
+
         public ObservableCollection<dtProduct> Products
         {
             get { return _products; }
             set { _products = value; }
+        }
+
+        public ObservableCollection<dtProduct> AllProducts
+        {
+            get { return _allProducts; }
+            set { _allProducts = value; }
         }
 
         public ObservableCollection<dtBuffer> Buffers
@@ -79,10 +114,22 @@ namespace MapViewPallet.MiniForm
             set { _buffers = value; }
         }
 
+        public ObservableCollection<dtBuffer> AllBuffers
+        {
+            get { return _allBuffers; }
+            set { _allBuffers = value; }
+        }
+
         public ObservableCollection<dtProductDetail> ProductDetails
         {
             get { return _productDetails; }
             set { _productDetails = value; }
+        }
+
+        public ObservableCollection<dtProductDetail> AllProductDetails
+        {
+            get { return _allProductDetails; }
+            set { _allProductDetails = value; }
         }
 
         public ObservableCollection<dtTimeWork> TimeWorks
@@ -91,35 +138,55 @@ namespace MapViewPallet.MiniForm
             set { _timeWorks = value; }
         }
 
+        public ObservableCollection<dtTimeWork> AllTimeWorks
+        {
+            get { return _allTimeWorks; }
+            set { _allTimeWorks = value; }
+        }
+
         public StatisticsModel(Statistics statistics)
         {
             this.statistics = statistics;
             Robots = new ObservableCollection<dtRobot>();
+            AllRobots = new ObservableCollection<dtRobot>();
             Devices = new ObservableCollection<dtDevice>();
+            AllDevices = new ObservableCollection<dtDevice>();
             Products = new ObservableCollection<dtProduct>();
+            AllProducts = new ObservableCollection<dtProduct>();
             Buffers = new ObservableCollection<dtBuffer>();
+            AllBuffers = new ObservableCollection<dtBuffer>();
             ProductDetails = new ObservableCollection<dtProductDetail>();
+            AllProductDetails = new ObservableCollection<dtProductDetail>();
             OperationTypes = new ObservableCollection<dtOperationType>();
+            AllOperationTypes = new ObservableCollection<dtOperationType>();
             TimeWorks = new ObservableCollection<dtTimeWork>();
+            AllTimeWorks = new ObservableCollection<dtTimeWork>();
 
             listRobotProcess = new List<dtRobotProcess>();
             GroupedRobotProcess = (ListCollectionView)CollectionViewSource.GetDefaultView(listRobotProcess);
 
-            listOperationType = new List<dtOperationType>();
+            //listOperationType = new List<dtOperationType>();
         }
 
 
         public void ReloadListRobot()
         {
-            Robots.Add(new dtRobot() { id = "", robotName = "" });
+            Robots.Add(new dtRobot() { id = "", robotName = "No data" });
             Robots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
             Robots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
             Robots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
+
+            AllRobots.Add(new dtRobot() { id = "", robotName = "No data" });
+            AllRobots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
+            AllRobots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
+            AllRobots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
+
+            
         }
 
         public void ReloadListOperationType()
         {
-            OperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "" });
+            OperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
             OperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
             OperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
             OperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
@@ -127,6 +194,17 @@ namespace MapViewPallet.MiniForm
             OperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
             OperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
             OperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
+
+
+            AllOperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
+            AllOperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
+            AllOperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
+            AllOperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
+            AllOperationTypes.Add(new dtOperationType() { idOperationType = 3, nameOperationType = "Machine To Return" });
+            AllOperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
+            AllOperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
+            AllOperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
+            
 
             listOperationType = OperationTypes.ToList();
         }
@@ -143,6 +221,22 @@ namespace MapViewPallet.MiniForm
                 StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                 string result = reader.ReadToEnd();
                 DataTable devices = JsonConvert.DeserializeObject<DataTable>(result);
+                if (devices.Rows.Count > 0)
+                {
+                    dtDevice tempDevice = new dtDevice
+                    {
+                        deviceId = 0,
+                        deviceName = "No data"
+                    };
+                    if (!ContainDevice(tempDevice, Devices))
+                    {
+                        Devices.Add(tempDevice);
+                    }
+                    if (!ContainDevice(tempDevice, AllDevices))
+                    {
+                        AllDevices.Add(tempDevice);
+                    }
+                }
                 foreach (DataRow dr in devices.Rows)
                 {
                     dtDevice tempDevice = new dtDevice
@@ -164,6 +258,10 @@ namespace MapViewPallet.MiniForm
                     {
                         Devices.Add(tempDevice);
                     }
+                    if (!ContainDevice(tempDevice, AllDevices))
+                    {
+                        AllDevices.Add(tempDevice);
+                    }
                 }
             }
         }
@@ -184,6 +282,22 @@ namespace MapViewPallet.MiniForm
                     StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                     string result = reader.ReadToEnd();
                     DataTable products = JsonConvert.DeserializeObject<DataTable>(result);
+                    if (products.Rows.Count > 0)
+                    {
+                        dtProduct tempProduct = new dtProduct
+                        {
+                            productId = 0,
+                            productName = "No data"
+                        };
+                        if (!ContainProduct(tempProduct, Products))
+                        {
+                            Products.Add(tempProduct);
+                        }
+                        if (!ContainProduct(tempProduct, AllProducts))
+                        {
+                            AllProducts.Add(tempProduct);
+                        }
+                    }
                     foreach (DataRow dr in products.Rows)
                     {
                         dtProduct tempProduct = new dtProduct
@@ -201,6 +315,10 @@ namespace MapViewPallet.MiniForm
                         if (!ContainProduct(tempProduct, Products))
                         {
                             Products.Add(tempProduct);
+                        }
+                        if (!ContainProduct(tempProduct, AllProducts))
+                        {
+                            AllProducts.Add(tempProduct);
                         }
                     }
                 }
@@ -229,6 +347,22 @@ namespace MapViewPallet.MiniForm
                     StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                     string result = reader.ReadToEnd();
                     DataTable products = JsonConvert.DeserializeObject<DataTable>(result);
+                    if (products.Rows.Count > 0)
+                    {
+                        dtProduct tempProduct = new dtProduct
+                        {
+                            productId = 0,
+                            productName = "No data"
+                        };
+                        if (!ContainProduct(tempProduct, Products))
+                        {
+                            Products.Add(tempProduct);
+                        }
+                        if (!ContainProduct(tempProduct, AllProducts))
+                        {
+                            AllProducts.Add(tempProduct);
+                        }
+                    }
                     foreach (DataRow dr in products.Rows)
                     {
                         dtProduct tempProduct = new dtProduct
@@ -243,6 +377,10 @@ namespace MapViewPallet.MiniForm
                         if (!ContainProduct(tempProduct, Products))
                         {
                             Products.Add(tempProduct);
+                        }
+                        if (!ContainProduct(tempProduct, AllProducts))
+                        {
+                            AllProducts.Add(tempProduct);
                         }
                     }
                 }
@@ -274,6 +412,22 @@ namespace MapViewPallet.MiniForm
                 StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                 string result = reader.ReadToEnd();
                 DataTable productDetails = JsonConvert.DeserializeObject<DataTable>(result);
+                if (productDetails.Rows.Count > 0)
+                {
+                    dtProductDetail tempProductDetail = new dtProductDetail
+                    {
+                        productDetailId = 0,
+                        productDetailName = "No data"
+                    };
+                    if (!ContainProductDetail(tempProductDetail, ProductDetails))
+                    {
+                        ProductDetails.Add(tempProductDetail);
+                    }
+                    if (!ContainProductDetail(tempProductDetail, AllProductDetails))
+                    {
+                        AllProductDetails.Add(tempProductDetail);
+                    }
+                }
                 foreach (DataRow dr in productDetails.Rows)
                 {
                     dtProductDetail tempProductDetail = new dtProductDetail
@@ -289,6 +443,10 @@ namespace MapViewPallet.MiniForm
                     if (!ContainProductDetail(tempProductDetail, ProductDetails))
                     {
                         ProductDetails.Add(tempProductDetail);
+                    }
+                    if (!ContainProductDetail(tempProductDetail, AllProductDetails))
+                    {
+                        AllProductDetails.Add(tempProductDetail);
                     }
                 }
             }
@@ -306,6 +464,22 @@ namespace MapViewPallet.MiniForm
                 StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                 string result = reader.ReadToEnd();
                 DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
+                if (buffers.Rows.Count > 0)
+                {
+                    dtBuffer tempBuffer = new dtBuffer
+                    {
+                        bufferId = 0,
+                        bufferName = "No data"
+                    };
+                    if (!ContainBuffer(tempBuffer, Buffers))
+                    {
+                        Buffers.Add(tempBuffer);
+                    }
+                    if (!ContainBuffer(tempBuffer, AllBuffers))
+                    {
+                        AllBuffers.Add(tempBuffer);
+                    }
+                }
                 foreach (DataRow dr in buffers.Rows)
                 {
                     dtBuffer tempBuffer = new dtBuffer
@@ -332,6 +506,10 @@ namespace MapViewPallet.MiniForm
                     {
                         Buffers.Add(tempBuffer);
                     }
+                    if (!ContainBuffer(tempBuffer, AllBuffers))
+                    {
+                        AllBuffers.Add(tempBuffer);
+                    }
                 }
             }
         }
@@ -352,9 +530,17 @@ namespace MapViewPallet.MiniForm
                 {
                     dtTimeWork tempTimeWork = new dtTimeWork
                     {
-                        timeWorkId = 0
+                        timeWorkId = 0,
+                        timeWorkName = "No data"
                     };
-                    TimeWorks.Add(tempTimeWork);
+                    if (!ContainTimeWork(tempTimeWork, TimeWorks))
+                    {
+                        TimeWorks.Add(tempTimeWork);
+                    }
+                    if (!ContainTimeWork(tempTimeWork, AllTimeWorks))
+                    {
+                        AllTimeWorks.Add(tempTimeWork);
+                    }
                 }
                 foreach (DataRow dr in timeWorks.Rows)
                 {
@@ -372,6 +558,10 @@ namespace MapViewPallet.MiniForm
                     if (!ContainTimeWork(tempTimeWork, TimeWorks))
                     {
                         TimeWorks.Add(tempTimeWork);
+                    }
+                    if (!ContainTimeWork(tempTimeWork, AllTimeWorks))
+                    {
+                        AllTimeWorks.Add(tempTimeWork);
                     }
                 }
 
@@ -479,7 +669,7 @@ namespace MapViewPallet.MiniForm
                     };
                     if (!ContainRobotProcess(tempRobotProcess, this.listRobotProcess))
                     {
-                        tempRobotProcess.listOperationTypes = listOperationType;
+                        //tempRobotProcess.listOperationTypes = listOperationType;
                         this.listRobotProcess.Add(tempRobotProcess);
                     }
                 }
@@ -593,6 +783,25 @@ namespace MapViewPallet.MiniForm
                 if (temp.timeWorkId > 0)
                 {
                     if (temp.timeWorkId == tempOpe.timeWorkId)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        public bool ContainOperationType(dtOperationType tempOpe, ObservableCollection<dtOperationType> List)
+        {
+            foreach (dtOperationType temp in List)
+            {
+                if (temp.idOperationType > 0)
+                {
+                    if (temp.idOperationType == tempOpe.idOperationType)
                     {
                         return true;
                     }

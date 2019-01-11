@@ -4,12 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         WindowStartupLocation="CenterScreen"
         Title="{DynamicResource LoginForm_Title}"
-        Height="280" 
+        Height="230" 
         Width="300"
         ResizeMode="NoResize">
     
@@ -31,37 +29,27 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             Margin="0,10,0,0">
-                <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Center">
-                    <StackPanel VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="Account" 
-                                                 Width="30" 
-                                                 Height="25"/>
-                    </StackPanel>
+                <StackPanel Margin="0 0 0 10"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="Account" Margin="5 0"/>
                     <TextBox Name="userNametb" 
-                             Width="200"
-                             Height="30"
-                             Margin="5,0,0,10"
-                             materialDesign:HintAssist.Hint="{DynamicResource LoginForm_UserName}"
+                             Width="170"
                              CharacterCasing="Upper"
                              PreviewKeyDown="UserNametb_PreviewKeyDown">
                     </TextBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Center">
-                    <StackPanel VerticalAlignment="Center">
-                        <materialDesign:PackIcon Kind="Key" 
-                                                 Width="30" 
-                                                 Height="20"/>
-                    </StackPanel>
+                <StackPanel Margin="0 0 0 10"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="Key" Margin="5 0"/>
                     <PasswordBox Name="passwordtb" 
-                             Width="200" 
-                             Height="30"
-                             Margin="5,0,0,5"
-                             materialDesign:HintAssist.Hint="{DynamicResource LoginForm_Password}"
+                             Width="170"
                              PreviewKeyDown="Passwordtb_PreviewKeyDown"
                              >
                     </PasswordBox>
+
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -70,24 +58,22 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Grid>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                        <Grid>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Grid Margin="5 0">
                             <Button Name="btn_login"
-                                FontSize="14"
-                                    FontWeight="DemiBold"
-                                Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                                Content="{DynamicResource LoginForm_Enter}"
-                                Width="100"
+                                    Width="70"
+                                    Height="20"
+                                    Content="{DynamicResource LoginForm_Enter}"
                                     Margin="0,0,0,0"
-                                Click="btn_login_Click">
+                                    Click="btn_login_Click">
                             </Button>
                         </Grid>
-                        <Grid Margin="0,5,0,0">
-                            <Button Name="btn_exit" Width="70" 
-                                FontSize="10"
-                                Content="{DynamicResource LoginForm_Exit}"
-                                Style="{StaticResource MaterialDesignFlatButton}"
-                                Click="btn_exit_Click"></Button>
+                        <Grid Margin="5 0">
+                            <Button Name="btn_exit"
+                                    Width="70"
+                                    Height="20"
+                                    Content="{DynamicResource LoginForm_Exit}"
+                                    Click="btn_exit_Click"></Button>
                         </Grid>
                     </StackPanel>
                     
