@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
-        Title="AddProductForm" 
+        Title="{DynamicResource AddProductForm_Title}" 
         Height="130" 
         Width="350" 
         MaxHeight="130" 
@@ -27,7 +27,7 @@
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center"
                             >
-                    <TextBlock Text="Tên sản phẩm"
+                    <TextBlock Text="{DynamicResource AddProductForm_ProductName}" 
                                FontSize="20"
                                FontWeight="DemiBold"/>
                 </StackPanel>
@@ -45,7 +45,7 @@
                     <Button Width="60" 
                             Height="25" 
                             Margin="0,0,11,0"
-                            Content="Thêm"
+                            Content="{DynamicResource AddProductForm_Add}" 
                             Click="Button_Click"/>
                 </StackPanel>
             </Grid>

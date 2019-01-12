@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -27,10 +29,30 @@ namespace MapViewPallet.MiniForm
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
         
 
-        public LoginForm()
+        public LoginForm(string cultureName = null)
         {
             InitializeComponent();
+            ApplyLanguage(cultureName);
             Loaded += LoginForm_Loaded;
+        }
+
+        public void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
         }
 
         private void CenterWindowOnScreen()
@@ -133,5 +155,6 @@ namespace MapViewPallet.MiniForm
                 btn_login_Click(sender, e);
             }
         }
+        
     }
 }

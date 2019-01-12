@@ -1,5 +1,6 @@
 ﻿using MapViewPallet.MiniForm;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,16 +18,47 @@ using System.Windows.Shapes;
 
 namespace MapViewPallet.Shape
 {
-    public class CanvasControlService
+    public class CanvasControlService : NotifyUIBase
     {
         //=================VARIABLE==================
         private int stationCount = 0;
         //---------------MAP-------------------
         private MainWindow mainWindow;
         private Canvas map;
-        private ScaleTransform scaleTransform;
+
+        
+
+        private double pZoomScale;
+        public double zoomScale
+        {
+            get { return pZoomScale; }
+            set
+            {
+                if (pZoomScale != value)
+                {
+                    pZoomScale = value;
+                    pScaleTransform.ScaleX = pScaleTransform.ScaleY = pZoomScale;
+                    RaisePropertyChanged("zoomScale");
+                }
+            }
+        }
+
+        private ScaleTransform pScaleTransform;
+        public ScaleTransform scaleTransform
+        {
+            get { return pScaleTransform; }
+            set
+            {
+                if (pScaleTransform != value)
+                {
+                    pScaleTransform = value;
+                    RaisePropertyChanged("scaleTransform");
+                }
+            }
+        }
+
         private TranslateTransform translateTransform;
-        private TreeView mainTreeView;
+        //private TreeView mainTreeView;
         //---------------DRAW-------------------
         //private Point roundedMousePos = new Point();
         private Point startPoint;
@@ -52,7 +84,7 @@ namespace MapViewPallet.Shape
             mainWindow = mainWinDowIn;
             //mainTreeView = mainTreeViewIn;
             map = mainWindow.map;
-            scaleTransform = mainWindow.canvasScaleTransform;
+            pScaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
             list_Path = new SortedDictionary<string, CanvasPath>();
             list_Station = new SortedDictionary<string, StationShape>();
@@ -83,10 +115,10 @@ namespace MapViewPallet.Shape
 
             }
         }
-        private void ReCenterMapCanvas ()
+        public void ReCenterMapCanvas ()
         {
-            double MapWidthScaled = (map.Width * scaleTransform.ScaleX);
-            double MapHeightScaled = (map.Height * scaleTransform.ScaleY);
+            double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
+            double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
             double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
             double ClipBorderHeight = (mainWindow.clipBorder.ActualHeight);
 
@@ -95,7 +127,7 @@ namespace MapViewPallet.Shape
             //==========================================================
             if (ClipBorderWidth < map.Width)
             {
-                xlim = (map.Width * (scaleTransform.ScaleX - 1)) / 2;
+                xlim = (map.Width * (pScaleTransform.ScaleX - 1)) / 2;
             }
             else
             {
@@ -104,7 +136,7 @@ namespace MapViewPallet.Shape
 
             if (ClipBorderHeight < map.Height)
             {
-                ylim = (map.Height * (scaleTransform.ScaleY - 1)) / 2;
+                ylim = (map.Height * (pScaleTransform.ScaleY - 1)) / 2;
             }
             else
             {
@@ -129,9 +161,9 @@ namespace MapViewPallet.Shape
             }
         }
 
-        //////////////////////////////////////////////////////
+
         //EVENT========EVENT========EVENT========EVENT========
-        //////////////////////////////////////////////////////
+
 
         private void ClipBorder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -155,6 +187,12 @@ namespace MapViewPallet.Shape
                     map.CaptureMouse();
                     startPoint = e.GetPosition(mainWindow.clipBorder);
                     originalPoint = new Point(translateTransform.X, translateTransform.Y);
+
+
+                    Point p1 = e.GetPosition(mainWindow.clipBorder);
+                    Point p2 = e.GetPosition(mainWindow.map);
+                    Console.WriteLine(p1.X.ToString("0.00") +"-"+ p1.Y.ToString("0.00"));
+                    Console.WriteLine(p2.X.ToString("0.00") +"-"+ p2.Y.ToString("0.00"));
                 }
             }
             if (!mainWindow.drag)
@@ -170,15 +208,32 @@ namespace MapViewPallet.Shape
         private void Map_Zoom(object sender, MouseWheelEventArgs e)
         {
             Point mousePos = e.GetPosition(map);
+            
             double zoomDirection = e.Delta > 0 ? 1 : -1;
             slidingScale = 0.1 * zoomDirection;
-            double edgeW = (scaleTransform.ScaleX + slidingScale) * map.Width;
-            double edgeH = (scaleTransform.ScaleY + slidingScale) * map.Height;
-            if (((edgeW>1)||(edgeH>1))&&((edgeW<(map.Width*10))||(edgeH < (map.Height * 10))))
+            double edgeW = (pScaleTransform.ScaleX + slidingScale) * map.Width;
+            double edgeH = (pScaleTransform.ScaleY + slidingScale) * map.Height;
+            if (((edgeW > 1) || (edgeH > 1)) && ((edgeW < (map.Width * 10)) || (edgeH < (map.Height * 10))))
             {
-                scaleTransform.ScaleX = scaleTransform.ScaleY += slidingScale;
+                zoomScale = pScaleTransform.ScaleX = pScaleTransform.ScaleY += slidingScale;
             }
-            ReCenterMapCanvas();
+
+            //Console.WriteLine((map.ActualWidth* pScaleTransform.ScaleX).ToString("0.00")+"-"+ (map.ActualHeight * pScaleTransform.ScaleX).ToString("0.00"));
+
+            //ReCenterMapCanvas();
+
+            //var element = sender as UIElement;
+            //var position = e.GetPosition(element);
+            //var transform = element.RenderTransform as MatrixTransform;
+            ////var matrix = transform.Matrix;
+            //var matrix = mainWindow.canvasMatrixTransform.Matrix;
+            //Console.WriteLine(matrix.ToString());
+            //var scale = e.Delta >= 0 ? 1.1 : (1.0 / 1.1);
+
+            //matrix.ScaleAtPrepend(scale, scale, position.X, position.Y);
+            //matrix.ScaleAtPrepend(2, 4, 100, 100);
+            ////transform.Matrix = matrix;
+            //mainWindow.canvasMatrixTransform.Matrix = matrix;
         }
         private void Map_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -217,8 +272,8 @@ namespace MapViewPallet.Shape
                 double xCoor = originalPoint.X - moveVector.X;
                 double yCoor = originalPoint.Y - moveVector.Y;
                 
-                double MapWidthScaled = (map.Width * scaleTransform.ScaleX);
-                double MapHeightScaled = (map.Height * scaleTransform.ScaleY);
+                double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
+                double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
                 double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
                 double ClipBorderHeight = (mainWindow.clipBorder.ActualHeight);
 
@@ -226,7 +281,7 @@ namespace MapViewPallet.Shape
                 double ylim;
                 if (ClipBorderWidth < map.Width)
                 {
-                    xlim = (map.Width * (scaleTransform.ScaleX - 1)) / 2;
+                    xlim = (map.Width * (pScaleTransform.ScaleX - 1)) / 2;
                 }
                 else
                 {
@@ -235,7 +290,7 @@ namespace MapViewPallet.Shape
 
                 if (ClipBorderHeight < map.Height)
                 {
-                    ylim = (map.Height * (scaleTransform.ScaleY - 1)) / 2;
+                    ylim = (map.Height * (pScaleTransform.ScaleY - 1)) / 2;
                 }
                 else
                 {
@@ -303,9 +358,9 @@ namespace MapViewPallet.Shape
         }
 
         
-        //////////////////////////////////////////////////////
+
         //PROCESS=====PROCESS=====PROCESS=====PROCESS=========
-        //////////////////////////////////////////////////////
+
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -363,25 +418,113 @@ namespace MapViewPallet.Shape
                     {
                         if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
                         {
-                            StationShape stationTemp = null;
-                            //stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0);
-                            stationCount++;
-                            stationTemp.Move(mousePos);
-                            //map.Children.Add(stationTemp);
+                            //StationShape stationTemp = null;
+                            ////stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0);
+                            //stationCount++;
+                            //stationTemp.Move(mousePos);
+                            ////map.Children.Add(stationTemp);
                         }
                         break;
                     }
                 case Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT:
                     if (mouseWasDownOn != null)
                     {
+                        
                         string elementName = mouseWasDownOn.Name;
+                        string type = Global_Object.Foo(mouseWasDownOn);
                         if (elementName != "")
                         {
-                            Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION;
-                            Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._GET_OUT_OBJECT;
+                            //Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION;
+                            //Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._GET_OUT_OBJECT;
                         }
                     }
                     break;
+
+
+
+                case Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION:
+                    if (Global_Object.bufferToMove != null)
+                    {
+                        Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION_START;
+                        Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._GET_OUT_OBJECT_MOVE_STATION;
+                    }
+                    break;
+                case Global_Mouse.STATE_MOUSEDOWN._GET_OUT_OBJECT_MOVE_STATION:
+                    if (Global_Object.bufferToMove != null)
+                    {
+                        // Cap nhat data
+                        //try
+                        {
+                            dtBuffer buffer = Global_Object.bufferToMove.props.bufferDb;
+                            List<dtBuffer> buffers = new List<dtBuffer>();
+
+                            dynamic postApiBody = new JObject();
+                            Point updateBufferDataPoint = Global_Object.CoorLaser(mousePos);
+                            postApiBody.x = updateBufferDataPoint.X;
+                            postApiBody.y = updateBufferDataPoint.Y;
+                            postApiBody.angle = Global_Object.bufferToMove.props._rotate;
+                            string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
+                            buffer.bufferData = jsonBufferData;
+
+                            buffers.Add(buffer);
+
+                            if (buffers.Count == 0)
+                            {
+                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            string jsonData = JsonConvert.SerializeObject(buffers);
+
+                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                            request.Method = "POST";
+                            request.ContentType = "application/json";
+
+                            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                            Byte[] byteArray = encoding.GetBytes(jsonData);
+                            request.ContentLength = byteArray.Length;
+                            using (Stream dataStream = request.GetRequestStream())
+                            {
+                                dataStream.Write(byteArray, 0, byteArray.Length);
+                                dataStream.Flush();
+                            }
+
+                            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                            using (Stream responseStream = response.GetResponseStream())
+                            {
+                                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                                int result = 0;
+                                int.TryParse(reader.ReadToEnd(), out result);
+                                if (result == 1)
+                                {
+                                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                else if (result == -2)
+                                {
+                                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Buffers Name"), Global_Object.messageTitileError, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                }
+                                else
+                                {
+                                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                                }
+                            }
+                            //UpdateTab4(true);
+                        }
+                        //catch
+                        {
+
+                        }
+
+
+                        //
+                        Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION;//Do nothing, ready to move
+                        Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION;
+                        Global_Object.bufferToMove = null;
+                    }
+                    break;
+
+
+
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1:
                     pathTemp = new StraightShape(map, new Point(0, 0), new Point(0, 0));
                     pathTemp.RemoveHandle += PathRemove;
@@ -494,7 +637,6 @@ namespace MapViewPallet.Shape
                     }
             }
         }
-
         public void PathRemove(string name)
         {
             if (list_Path.ContainsKey(name))
@@ -503,7 +645,6 @@ namespace MapViewPallet.Shape
                 Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
             }
         }
-
         public void StationRemove(string name)
         {
             if (list_Station.ContainsKey(name))
@@ -512,7 +653,6 @@ namespace MapViewPallet.Shape
                 Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Station.Count);
             }
         }
-
         public void ReloadAllStation()
         {
             for (int i=0; i< list_Station.Count; i++)
@@ -569,7 +709,6 @@ namespace MapViewPallet.Shape
                 }
             }
         }
-
         void Statectrl_MouseMove(MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(map);
@@ -582,11 +721,12 @@ namespace MapViewPallet.Shape
                     {
                         break;
                     }
-                case Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION:
+                case Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION_START:
                     {
-                        //StationShape x = new StationShape();
-                        //x = (StationShape)map.Children[0];
-                        //x.Move(pp.X, pp.Y);
+                        if (Global_Object.bufferToMove != null)
+                        {
+                            Global_Object.bufferToMove.Move(mousePos);
+                        }
                         break;
                     }
                 case Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_STRAIGHT:
@@ -629,7 +769,6 @@ namespace MapViewPallet.Shape
                     }
             }
         }
-
         public void RedrawAllStation ()
         {
             for (int i = 0; i < list_Station.Count; i++)
@@ -637,7 +776,121 @@ namespace MapViewPallet.Shape
                 list_Station.ElementAt(i).Value.ReDraw();
             }
         }
+        public void RedrawAllStation(List<dtBuffer> listBuffer)
+        {
+            //Có lỗi System.InvalidOperationException: 'Collection was modified after the enumerator was instantiated.'
+            lock (Global_Object.syncLock)
+            {
+                for (int i = 0; i < list_Station.Count; i++)
+                {
+                    foreach (dtBuffer buffer in listBuffer)
+                    {
+                        if (buffer.bufferId == list_Station.ElementAt(i).Value.props.bufferDb.bufferId)
+                        {
+                            list_Station.ElementAt(i).Value.ReDraw(buffer);
+                        }
+                    }
+                }
+            }
+                
+        }
+        public List<dtBuffer> GetDataAllStation()
+        {
+            List<dtBuffer> listBuffer = new List<dtBuffer>();
 
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+            request.Method = "GET";
+            request.ContentType = @"application/json";
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                string result = reader.ReadToEnd();
+
+                DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
+                foreach (DataRow dr in buffers.Rows)
+                {
+                    dtBuffer tempBuffer = new dtBuffer
+                    {
+                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                        creDt = dr["creDt"].ToString(),
+                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                        updDt = dr["updDt"].ToString(),
+
+                        bufferId = int.Parse(dr["bufferId"].ToString()),
+                        bufferName = dr["bufferName"].ToString(),
+                        bufferNameOld = dr["bufferNameOld"].ToString(),
+                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
+                        bufferData = dr["bufferData"].ToString(),
+                        maxRow = int.Parse(dr["maxRow"].ToString()),
+                        maxBay = int.Parse(dr["maxBay"].ToString()),
+                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                        //pallets
+                    };
+                    GetListPallet(tempBuffer);
+                    listBuffer.Add(tempBuffer);
+                }
+            }
+            return listBuffer;
+        }
+        public void GetListPallet (dtBuffer tempBuffer)
+        {
+            HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+            request2.Method = "POST";
+            request2.ContentType = @"application/json";
+
+
+            dynamic postApiBody2 = new JObject();
+            postApiBody2.bufferId = tempBuffer.bufferId;
+            string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
+
+
+            System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
+            Byte[] byteArray2 = encoding2.GetBytes(jsonData2);
+            request2.ContentLength = byteArray2.Length;
+            using (Stream dataStream2 = request2.GetRequestStream())
+            {
+                dataStream2.Write(byteArray2, 0, byteArray2.Length);
+                dataStream2.Flush();
+            }
+            HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse;
+            using (Stream responseStream2 = response2.GetResponseStream())
+            {
+                StreamReader reader2 = new StreamReader(responseStream2, Encoding.UTF8);
+                string result2 = reader2.ReadToEnd();
+
+                DataTable pallets = JsonConvert.DeserializeObject<DataTable>(result2);
+                foreach (DataRow dr2 in pallets.Rows)
+                {
+                    dtPallet tempPallet = new dtPallet
+                    {
+                        creUsrId = int.Parse(dr2["creUsrId"].ToString()),
+                        creDt = dr2["creDt"].ToString(),
+                        updUsrId = int.Parse(dr2["updUsrId"].ToString()),
+                        updDt = dr2["updDt"].ToString(),
+                        palletId = int.Parse(dr2["palletId"].ToString()),
+                        deviceBufferId = int.Parse(dr2["deviceBufferId"].ToString()),
+                        bufferId = int.Parse(dr2["bufferId"].ToString()),
+                        planId = int.Parse(dr2["planId"].ToString()),
+                        row = int.Parse(dr2["row"].ToString()),
+                        bay = int.Parse(dr2["bay"].ToString()),
+                        dataPallet = dr2["dataPallet"].ToString(),
+                        palletStatus = dr2["palletStatus"].ToString(),
+                        deviceId = int.Parse(dr2["deviceId"].ToString()),
+                        deviceName = dr2["deviceName"].ToString(),
+                        productId = int.Parse(dr2["productId"].ToString()),
+                        productName = dr2["productName"].ToString(),
+                        productDetailId = int.Parse(dr2["productDetailId"].ToString()),
+                        productDetailName = dr2["productDetailName"].ToString(),
+                    };
+                    //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet.palletStatus);
+                    tempBuffer.pallets.Add(tempPallet);
+                }
+            }
+        }
         public void RedrawAllRobot()
         {
             for (int i = 0; i < list_Robot.Count; i++)

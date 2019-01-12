@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Windows;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
@@ -35,12 +36,32 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         public AddProductModel addProductModel;
 
-        public AddProductForm(DevicesManagement devicesManagement)
+        public AddProductForm(DevicesManagement devicesManagement, string cultureName = null)
         {
             InitializeComponent();
+            ApplyLanguage(cultureName);
             this.devicesManagement = devicesManagement;
             addProductModel = new AddProductModel { productNameDuplicate = "Ready" };
             DataContext = addProductModel;
+        }
+
+        public void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

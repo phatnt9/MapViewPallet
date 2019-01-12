@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,9 +37,11 @@ namespace MapViewPallet.MiniForm
             InitializeComponent();
         }
 
-        public StationEditor(StationShape stationShape)
+        public StationEditor(StationShape stationShape, string cultureName = null)
         {
             InitializeComponent();
+            ApplyLanguage(cultureName);
+
             this.stationShape = stationShape;
 
 
@@ -48,6 +51,25 @@ namespace MapViewPallet.MiniForm
             stationEditorModel = new StationEditorModel(this);
             DataContext = stationEditorModel;
             PalletsListDg.SelectedCellsChanged += PalletsListDg_SelectedCellsChanged;
+        }
+
+        public void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
         }
 
         private void PalletsListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -231,7 +253,7 @@ namespace MapViewPallet.MiniForm
                     int.TryParse(reader.ReadToEnd(), out result);
                     if (result == 1)
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (result == -2)
                     {
@@ -405,6 +427,88 @@ namespace MapViewPallet.MiniForm
             {
 
             }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
+            pallet.palletStatus = "F";
+            string jsonData = JsonConvert.SerializeObject(pallet);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                int result = 0;
+                int.TryParse(reader.ReadToEnd(), out result);
+                if (result == 1)
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (result == -2)
+                {
+                    // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
+            pallet.palletStatus = "P";
+            string jsonData = JsonConvert.SerializeObject(pallet);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                int result = 0;
+                int.TryParse(reader.ReadToEnd(), out result);
+                if (result == 1)
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (result == -2)
+                {
+                    // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
         }
     }
 }

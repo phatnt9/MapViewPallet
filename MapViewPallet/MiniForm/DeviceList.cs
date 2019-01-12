@@ -43,6 +43,7 @@ namespace MapViewPallet.MiniForm
                             creDt = dr["creDt"].ToString(),
                             updUsrId = int.Parse(dr["updUsrId"].ToString()),
                             updDt = dr["updDt"].ToString(),
+
                             deviceId = int.Parse(dr["deviceId"].ToString()),
                             deviceName = dr["deviceName"].ToString()
                         };

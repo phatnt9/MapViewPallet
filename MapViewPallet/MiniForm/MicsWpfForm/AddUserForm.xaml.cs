@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,19 +47,40 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             InitializeComponent();
         }
 
-        public AddUserForm(UserManagement userManagement)
+        public AddUserForm(UserManagement userManagement, string cultureName = null)
         {
             Loaded += AddUserForm_Loaded;
             InitializeComponent();
+            ApplyLanguage(cultureName);
             this.userManagement = userManagement;
         }
 
-        public AddUserForm(UserManagement userManagement, dtUser userEdit)
+        public AddUserForm(UserManagement userManagement, dtUser userEdit, string cultureName = null)
         {
             Loaded += AddUserForm_Loaded;
             InitializeComponent();
+            ApplyLanguage(cultureName);
             this.userManagement = userManagement;
             this.userEdit = userEdit;
+        }
+
+        public void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
         }
 
         private void CmbAuthor_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -93,8 +115,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
             if (flgEdit)
             {
-                this.Title = "Tùy chỉnh";
-                functionTextBlock.Text = "Tùy chỉnh";
+                //this.Title = "Tùy chỉnh";
+                //functionTextBlock.Text = "Tùy chỉnh";
                 this.userNametb.Text = (userManagement.UsersListDg.SelectedItem as dtUser).userName.ToString();
                 this.userNametb.IsReadOnly = true;
                 cmbAuthor.SelectedValue = int.Parse((userManagement.UsersListDg.SelectedItem as dtUser).userAuthor.ToString());
@@ -103,8 +125,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             else
             {
                 this.userNametb.IsReadOnly = false;
-                this.Title = "Thêm mới";
-                functionTextBlock.Text = "Thêm mới";
+                //this.Title = "Thêm mới";
+                //functionTextBlock.Text = "Thêm mới";
             }
         }
 

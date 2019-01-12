@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -16,10 +17,30 @@ namespace MapViewPallet.MiniForm
     /// </summary>
     public partial class ChangePassForm : Window
     {
-        public ChangePassForm()
+        public ChangePassForm(string cultureName = null)
         {
             Loaded += ChangePassForm_Loaded;
             InitializeComponent();
+            ApplyLanguage(cultureName);
+        }
+
+        public void ApplyLanguage(string cultureName = null)
+        {
+            if (cultureName != null)
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "vi-VN":
+                    dict.Source = new Uri("..\\Lang\\Vietnamese.xaml", UriKind.Relative);
+                    break;
+                // ...
+                default:
+                    dict.Source = new Uri("..\\Lang\\English.xaml", UriKind.Relative);
+                    break;
+            }
+            this.Resources.MergedDictionaries.Add(dict);
         }
 
         private void ChangePassForm_Loaded(object sender, RoutedEventArgs e)
