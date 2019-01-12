@@ -62,28 +62,6 @@ namespace MapViewPallet.MiniForm
 
             managementModel = new DevicesManagementModel(this);
             DataContext = managementModel;
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            DevicesListDg.SelectionMode =
-                DeviceProductsListDg.SelectionMode =
-                DeviceBuffersListDg.SelectionMode =
-                ProductsListDg.SelectionMode =
-                ProductDetailsListDg.SelectionMode =
-                BuffersListDg.SelectionMode =
-                PalletsListDg.SelectionMode =
-                DevicesListDg2.SelectionMode =
-                DevicePalletsListDg.SelectionMode =
-                DataGridSelectionMode.Single;
-            DevicesListDg.SelectionUnit =
-                DeviceProductsListDg.SelectionUnit =
-                DeviceBuffersListDg.SelectionUnit =
-                ProductsListDg.SelectionUnit =
-                ProductDetailsListDg.SelectionUnit =
-                BuffersListDg.SelectionUnit =
-                PalletsListDg.SelectionUnit =
-                DevicesListDg2.SelectionUnit =
-                DevicePalletsListDg.SelectionUnit =
-                DataGridSelectionUnit.FullRow;
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         }
 
         public void ApplyLanguage(string cultureName = null)

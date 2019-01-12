@@ -23,7 +23,7 @@
                 <TabItem Header="Robot Process" FontSize="12">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="140"></RowDefinition>
+                            <RowDefinition Height="100"></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
@@ -144,7 +144,6 @@
                                             <DatePicker
                                                 Name="dtpActiveDate"
                                                 Width="100"/>
-                                                <!--Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />-->
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>

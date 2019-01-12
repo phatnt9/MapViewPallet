@@ -7,20 +7,6 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="{DynamicResource PlanControl_Title}" Height="450" Width="800">
-    <Window.Resources>
-        <Style x:Key="MyStyle" TargetType="{x:Type Button}">
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0 0 0 3"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="Orange" />
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="BorderBrush" Value="{DynamicResource pressed}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -39,11 +25,13 @@
                 </Grid>
                 <Border Name="pCalendarCalendarBorder" Grid.Row="1" BorderThickness="0" 
                         BorderBrush="Black" Background="White">
-                    <StackPanel VerticalAlignment="Top">
-                        <Viewbox Height="300">
+                    <StackPanel VerticalAlignment="Top"
+                                HorizontalAlignment="Center"
+                                Margin="0 30 0 0">
+                        <Viewbox Width="220">
                             <Calendar Name="pCalendar" HorizontalAlignment="Center" 
-                          VerticalAlignment="Center"
-                          SelectedDatesChanged="PCalendar_SelectedDatesChanged"/>
+                                      VerticalAlignment="Center"
+                                      SelectedDatesChanged="PCalendar_SelectedDatesChanged"/>
                         </Viewbox>
                     </StackPanel>
                     
@@ -62,24 +50,24 @@
                             <RowDefinition Height="45"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0" HorizontalAlignment="Center" 
-                        Background="#212f6a" CornerRadius="7"
-                        Width="300" Margin="0,10,0,0">
+                                Background="Transparent" CornerRadius="7"
+                                Width="300" Margin="0,10,0,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <TextBlock TextAlignment="Center" VerticalAlignment="Center" 
-                                   FontSize="25" Text="{DynamicResource PlanControl_MainLabel}" FontWeight="Bold"
-                                   Foreground="White" Margin="5,0"/>
+                                           FontSize="25" Text="{DynamicResource PlanControl_MainLabel}" FontWeight="Bold"
+                                           Foreground="Black" Margin="5,0"/>
 
 
                             </StackPanel>
                         </Border>
                         <Border Name="DateTimeBorder" Grid.Row="1" HorizontalAlignment="Center" 
                         
-                        Width="300" Margin="0,0,0,15">
+                                Width="300" Margin="0,0,0,15">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <!--<TextBlock Name="lb_Date" TextAlignment="Center" 
-                                   VerticalAlignment="Center" FontSize="20" 
-                                   Text="Thứ X, xx/ x/ xxxx" FontWeight="Heavy"
-                                   Foreground="Black" Margin="5,0"/>-->
+                                     VerticalAlignment="Center" FontSize="20" 
+                                     Text="Thứ X, xx/ x/ xxxx" FontWeight="Heavy"
+                                     Foreground="Black" Margin="5,0"/>-->
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -98,9 +86,9 @@
                                 <TabItem Name="Plan_Shift1" Header="{DynamicResource PlanControl_Shift1_Label}">
                                     <DataGrid Name="Shift1Dgv"
                                               ItemsSource="{Binding GroupedDevices_S1}"
-                                  CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="True" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="True"
+                                              CanUserReorderColumns="False" CanUserAddRows="False"
+                                              CanUserResizeColumns="True" CanUserResizeRows="False"
+                                              CanUserDeleteRows="False" CanUserSortColumns="True"
                                               AutoGenerateColumns="False">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
@@ -146,7 +134,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_Deivce}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Deivce}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -158,7 +146,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_Product}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Product}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -168,7 +156,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
@@ -191,7 +179,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -203,7 +191,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_PalletUse}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletUse}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -213,15 +201,15 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_Delete}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Delete}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Name="DeletePlan"
-                                                            Background="DarkSlateGray"
-                                                            Click="DeletePlan_Click">
+                                                                Background="DarkSlateGray"
+                                                                Click="DeletePlan_Click">
                                                             <iconPacks:PackIconMaterial Kind="DeleteForever" />
                                                         </Button>
                                                     </DataTemplate>
@@ -232,10 +220,10 @@
                                 </TabItem>
                                 <TabItem Name="Plan_Shift2" Header="{DynamicResource PlanControl_Shift2_Label}">
                                     <DataGrid Name="Shift2Dgv"
-                                  ItemsSource="{Binding GroupedDevices_S2}"
-                                  CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="True" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False"
+                                              ItemsSource="{Binding GroupedDevices_S2}"
+                                              CanUserReorderColumns="False" CanUserAddRows="False"
+                                              CanUserResizeColumns="True" CanUserResizeRows="False"
+                                              CanUserDeleteRows="False" CanUserSortColumns="False"
                                               AutoGenerateColumns="False">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
@@ -281,7 +269,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_Deivce}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Deivce}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -293,7 +281,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_Product}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Product}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -303,7 +291,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
@@ -325,7 +313,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -337,7 +325,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_PalletUse}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletUse}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -347,10 +335,10 @@
                                 </TabItem>
                                 <TabItem Name="Plan_Shift3" Header="{DynamicResource PlanControl_Shift3_Label}" >
                                     <DataGrid Name="Shift3Dgv"
-                                  ItemsSource="{Binding GroupedDevices_S3}"
-                                  CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="True" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False"
+                                              ItemsSource="{Binding GroupedDevices_S3}"
+                                              CanUserReorderColumns="False" CanUserAddRows="False"
+                                              CanUserResizeColumns="True" CanUserResizeRows="False"
+                                              CanUserDeleteRows="False" CanUserSortColumns="False"
                                               AutoGenerateColumns="False">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
@@ -396,7 +384,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_Deivce}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Deivce}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -408,7 +396,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_Product}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Product}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -418,7 +406,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
@@ -440,7 +428,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -452,7 +440,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                               Text="{DynamicResource PlanControl_Shift_Column_PalletUse}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletUse}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -462,219 +450,219 @@
                                 </TabItem>
                             </TabControl>
                             <!--<TabControl Name="TabControlShift" Margin="3,5,0,2" >
-                                <TabControl.ItemContainerStyle>
-                                    <Style TargetType="TabItem">
-                                        <Setter Property="Padding" Value="10,5,10,0" />
-                                        <Setter Property="FontSize" Value="13" />
-                                    </Style>
-                                </TabControl.ItemContainerStyle>
-                                <TabItem Name="Plan_Shift1" Header="Ca 1">
-                                    <DataGrid Name="Shift1Dgv"
-                                              ItemsSource="{Binding GroupedDevices_S1}"
-                                  CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="True" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False"
-                                              materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
-                                        <DataGrid.Resources>
-                                            <local:ReverseValueConverter x:Key="conv" />
-                                        </DataGrid.Resources>
-                                        <DataGrid.GroupStyle>
-                                            <GroupStyle>
-                                                <GroupStyle.HeaderTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel>
-                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </GroupStyle.HeaderTemplate>
-                                                <GroupStyle.ContainerStyle>
-                                                    <Style TargetType="{x:Type GroupItem}">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                                    <Expander IsExpanded="True">
-                                                                        <Expander.Header>
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <TextBlock Text="{Binding Path=Name}" />
-                                                                                <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
-                                                                                <TextBlock Text="Items"/>
-                                                                            </StackPanel>
-                                                                        </Expander.Header>
-                                                                        <ItemsPresenter />
-                                                                    </Expander>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Style>
-                                                </GroupStyle.ContainerStyle>
-                                            </GroupStyle>
-                                        </DataGrid.GroupStyle>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Thiết bị" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Sản phẩm" Binding="{Binding Path=productName}" IsReadOnly="True"/>
-                                            <DataGridTemplateColumn  Header="Mã"  >
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <ComboBox 
-                                                            IsEnabled="{Binding ElementName=Shift1Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
-                                                            ItemsSource="{Binding Path=listProductDetails}"
-                                                            DisplayMemberPath="productDetailName"
-                                                            SelectedValuePath="productDetailId"
-                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <materialDesign:MaterialDataGridTextColumn 
-                                                Header="Yêu cầu"
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                                                Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                            <DataGridTextColumn Header="Đã cấp" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </TabItem>
-                                <TabItem Name="Plan_Shift2" Header="Ca 2">
-                                    <DataGrid Name="Shift2Dgv"
-                                  ItemsSource="{Binding GroupedDevices_S2}"
-                                  CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="True" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False"
-                                              materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
-                                        <DataGrid.Resources>
-                                            <local:ReverseValueConverter x:Key="conv" />
-                                        </DataGrid.Resources>
-                                        <DataGrid.GroupStyle>
-                                            <GroupStyle>
-                                                <GroupStyle.HeaderTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel>
-                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </GroupStyle.HeaderTemplate>
-                                                <GroupStyle.ContainerStyle>
-                                                    <Style TargetType="{x:Type GroupItem}">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                                    <Expander IsExpanded="True">
-                                                                        <Expander.Header>
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <TextBlock Text="{Binding Path=Name}" />
-                                                                                <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
-                                                                                <TextBlock Text="Items"/>
-                                                                            </StackPanel>
-                                                                        </Expander.Header>
-                                                                        <ItemsPresenter />
-                                                                    </Expander>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Style>
-                                                </GroupStyle.ContainerStyle>
-                                            </GroupStyle>
-                                        </DataGrid.GroupStyle>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Thiết bị" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Sản phẩm" Binding="{Binding Path=productName}" IsReadOnly="True"/>
-                                            <DataGridTemplateColumn  Header="Mã"  >
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <ComboBox 
-                                                            IsEnabled="{Binding ElementName=Shift2Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
-                                                            ItemsSource="{Binding Path=listProductDetails}"
-                                                            DisplayMemberPath="productDetailName"
-                                                            SelectedValuePath="productDetailId"
-                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <materialDesign:MaterialDataGridTextColumn Header="Yêu cầu" 
-                                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                                                                Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                            <DataGridTextColumn Header="Đã cấp" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </TabItem>
-                                <TabItem Name="Plan_Shift3" Header="Ca 3" >
-                                    <DataGrid Name="Shift3Dgv"
-                                  ItemsSource="{Binding GroupedDevices_S3}"
-                                  CanUserReorderColumns="False" CanUserAddRows="False"
-                                  CanUserResizeColumns="True" CanUserResizeRows="False"
-                                  CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False"
-                                              materialDesign:DataGridAssist.CellPadding="8 4 4 4"
-                                      materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
-                                        <DataGrid.Resources>
-                                            <local:ReverseValueConverter x:Key="conv" />
-                                        </DataGrid.Resources>
-                                        <DataGrid.GroupStyle>
-                                            <GroupStyle>
-                                                <GroupStyle.HeaderTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel>
-                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </GroupStyle.HeaderTemplate>
-                                                <GroupStyle.ContainerStyle>
-                                                    <Style TargetType="{x:Type GroupItem}">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                                    <Expander IsExpanded="True">
-                                                                        <Expander.Header>
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <TextBlock Text="{Binding Path=Name}" />
-                                                                                <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
-                                                                                <TextBlock Text="Items"/>
-                                                                            </StackPanel>
-                                                                        </Expander.Header>
-                                                                        <ItemsPresenter />
-                                                                    </Expander>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Style>
-                                                </GroupStyle.ContainerStyle>
-                                            </GroupStyle>
-                                        </DataGrid.GroupStyle>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Thiết bị" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="Sản phẩm" Binding="{Binding Path=productName}" IsReadOnly="True"/>
-                                            <DataGridTemplateColumn  Header="Mã"  >
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <ComboBox 
-                                                            IsEnabled="{Binding ElementName=Shift3Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
-                                                            ItemsSource="{Binding Path=listProductDetails}"
-                                                            DisplayMemberPath="productDetailName"
-                                                            SelectedValuePath="productDetailId"
-                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <materialDesign:MaterialDataGridTextColumn 
-                                                Header="Yêu cầu" 
-                                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                                                Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                            <DataGridTextColumn Header="Đã cấp" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </TabItem>
-                            </TabControl>-->
+                                 <TabControl.ItemContainerStyle>
+                                 <Style TargetType="TabItem">
+                                 <Setter Property="Padding" Value="10,5,10,0" />
+                                 <Setter Property="FontSize" Value="13" />
+                                 </Style>
+                                 </TabControl.ItemContainerStyle>
+                                 <TabItem Name="Plan_Shift1" Header="Ca 1">
+                                 <DataGrid Name="Shift1Dgv"
+                                 ItemsSource="{Binding GroupedDevices_S1}"
+                                 CanUserReorderColumns="False" CanUserAddRows="False"
+                                 CanUserResizeColumns="True" CanUserResizeRows="False"
+                                 CanUserDeleteRows="False" CanUserSortColumns="False"
+                                 AutoGenerateColumns="False"
+                                 materialDesign:DataGridAssist.CellPadding="8 4 4 4"
+                                 materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                 <DataGrid.Resources>
+                                 <local:ReverseValueConverter x:Key="conv" />
+                                 </DataGrid.Resources>
+                                 <DataGrid.GroupStyle>
+                                 <GroupStyle>
+                                 <GroupStyle.HeaderTemplate>
+                                 <DataTemplate>
+                                 <StackPanel>
+                                 <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
+                                 </StackPanel>
+                                 </DataTemplate>
+                                 </GroupStyle.HeaderTemplate>
+                                 <GroupStyle.ContainerStyle>
+                                 <Style TargetType="{x:Type GroupItem}">
+                                 <Setter Property="Template">
+                                 <Setter.Value>
+                                 <ControlTemplate TargetType="{x:Type GroupItem}">
+                                 <Expander IsExpanded="True">
+                                 <Expander.Header>
+                                 <StackPanel Orientation="Horizontal">
+                                 <TextBlock Text="{Binding Path=Name}" />
+                                 <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
+                                 <TextBlock Text="Items"/>
+                                 </StackPanel>
+                                 </Expander.Header>
+                                 <ItemsPresenter />
+                                 </Expander>
+                                 </ControlTemplate>
+                                 </Setter.Value>
+                                 </Setter>
+                                 </Style>
+                                 </GroupStyle.ContainerStyle>
+                                 </GroupStyle>
+                                 </DataGrid.GroupStyle>
+                                 <DataGrid.Columns>
+                                 <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
+                                 <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
+                                 <DataGridTextColumn Header="Thiết bị" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
+                                 <DataGridTextColumn Header="Sản phẩm" Binding="{Binding Path=productName}" IsReadOnly="True"/>
+                                 <DataGridTemplateColumn  Header="Mã"  >
+                                 <DataGridTemplateColumn.CellTemplate>
+                                 <DataTemplate>
+                                 <ComboBox 
+                                 IsEnabled="{Binding ElementName=Shift1Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
+                                 ItemsSource="{Binding Path=listProductDetails}"
+                                 DisplayMemberPath="productDetailName"
+                                 SelectedValuePath="productDetailId"
+                                 SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                 />
+                                 </DataTemplate>
+                                 </DataGridTemplateColumn.CellTemplate>
+                                 </DataGridTemplateColumn>
+                                 <materialDesign:MaterialDataGridTextColumn 
+                                 Header="Yêu cầu"
+                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                 Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                 <DataGridTextColumn Header="Đã cấp" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
+                                 </DataGrid.Columns>
+                                 </DataGrid>
+                                 </TabItem>
+                                 <TabItem Name="Plan_Shift2" Header="Ca 2">
+                                 <DataGrid Name="Shift2Dgv"
+                                 ItemsSource="{Binding GroupedDevices_S2}"
+                                 CanUserReorderColumns="False" CanUserAddRows="False"
+                                 CanUserResizeColumns="True" CanUserResizeRows="False"
+                                 CanUserDeleteRows="False" CanUserSortColumns="False"
+                                 AutoGenerateColumns="False"
+                                 materialDesign:DataGridAssist.CellPadding="8 4 4 4"
+                                 materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                 <DataGrid.Resources>
+                                 <local:ReverseValueConverter x:Key="conv" />
+                                 </DataGrid.Resources>
+                                 <DataGrid.GroupStyle>
+                                 <GroupStyle>
+                                 <GroupStyle.HeaderTemplate>
+                                 <DataTemplate>
+                                 <StackPanel>
+                                 <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
+                                 </StackPanel>
+                                 </DataTemplate>
+                                 </GroupStyle.HeaderTemplate>
+                                 <GroupStyle.ContainerStyle>
+                                 <Style TargetType="{x:Type GroupItem}">
+                                 <Setter Property="Template">
+                                 <Setter.Value>
+                                 <ControlTemplate TargetType="{x:Type GroupItem}">
+                                 <Expander IsExpanded="True">
+                                 <Expander.Header>
+                                 <StackPanel Orientation="Horizontal">
+                                 <TextBlock Text="{Binding Path=Name}" />
+                                 <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
+                                 <TextBlock Text="Items"/>
+                                 </StackPanel>
+                                 </Expander.Header>
+                                 <ItemsPresenter />
+                                 </Expander>
+                                 </ControlTemplate>
+                                 </Setter.Value>
+                                 </Setter>
+                                 </Style>
+                                 </GroupStyle.ContainerStyle>
+                                 </GroupStyle>
+                                 </DataGrid.GroupStyle>
+                                 <DataGrid.Columns>
+                                 <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
+                                 <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
+                                 <DataGridTextColumn Header="Thiết bị" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
+                                 <DataGridTextColumn Header="Sản phẩm" Binding="{Binding Path=productName}" IsReadOnly="True"/>
+                                 <DataGridTemplateColumn  Header="Mã"  >
+                                 <DataGridTemplateColumn.CellTemplate>
+                                 <DataTemplate>
+                                 <ComboBox 
+                                 IsEnabled="{Binding ElementName=Shift2Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
+                                 ItemsSource="{Binding Path=listProductDetails}"
+                                 DisplayMemberPath="productDetailName"
+                                 SelectedValuePath="productDetailId"
+                                 SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                 />
+                                 </DataTemplate>
+                                 </DataGridTemplateColumn.CellTemplate>
+                                 </DataGridTemplateColumn>
+                                 <materialDesign:MaterialDataGridTextColumn Header="Yêu cầu" 
+                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                 Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                 <DataGridTextColumn Header="Đã cấp" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
+                                 </DataGrid.Columns>
+                                 </DataGrid>
+                                 </TabItem>
+                                 <TabItem Name="Plan_Shift3" Header="Ca 3" >
+                                 <DataGrid Name="Shift3Dgv"
+                                 ItemsSource="{Binding GroupedDevices_S3}"
+                                 CanUserReorderColumns="False" CanUserAddRows="False"
+                                 CanUserResizeColumns="True" CanUserResizeRows="False"
+                                 CanUserDeleteRows="False" CanUserSortColumns="False"
+                                 AutoGenerateColumns="False"
+                                 materialDesign:DataGridAssist.CellPadding="8 4 4 4"
+                                 materialDesign:DataGridAssist.ColumnHeaderPadding="8 4 4 4">
+                                 <DataGrid.Resources>
+                                 <local:ReverseValueConverter x:Key="conv" />
+                                 </DataGrid.Resources>
+                                 <DataGrid.GroupStyle>
+                                 <GroupStyle>
+                                 <GroupStyle.HeaderTemplate>
+                                 <DataTemplate>
+                                 <StackPanel>
+                                 <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
+                                 </StackPanel>
+                                 </DataTemplate>
+                                 </GroupStyle.HeaderTemplate>
+                                 <GroupStyle.ContainerStyle>
+                                 <Style TargetType="{x:Type GroupItem}">
+                                 <Setter Property="Template">
+                                 <Setter.Value>
+                                 <ControlTemplate TargetType="{x:Type GroupItem}">
+                                 <Expander IsExpanded="True">
+                                 <Expander.Header>
+                                 <StackPanel Orientation="Horizontal">
+                                 <TextBlock Text="{Binding Path=Name}" />
+                                 <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
+                                 <TextBlock Text="Items"/>
+                                 </StackPanel>
+                                 </Expander.Header>
+                                 <ItemsPresenter />
+                                 </Expander>
+                                 </ControlTemplate>
+                                 </Setter.Value>
+                                 </Setter>
+                                 </Style>
+                                 </GroupStyle.ContainerStyle>
+                                 </GroupStyle>
+                                 </DataGrid.GroupStyle>
+                                 <DataGrid.Columns>
+                                 <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
+                                 <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
+                                 <DataGridTextColumn Header="Thiết bị" Binding="{Binding Path=deviceName}" IsReadOnly="True"/>
+                                 <DataGridTextColumn Header="Sản phẩm" Binding="{Binding Path=productName}" IsReadOnly="True"/>
+                                 <DataGridTemplateColumn  Header="Mã"  >
+                                 <DataGridTemplateColumn.CellTemplate>
+                                 <DataTemplate>
+                                 <ComboBox 
+                                 IsEnabled="{Binding ElementName=Shift3Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
+                                 ItemsSource="{Binding Path=listProductDetails}"
+                                 DisplayMemberPath="productDetailName"
+                                 SelectedValuePath="productDetailId"
+                                 SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                 />
+                                 </DataTemplate>
+                                 </DataGridTemplateColumn.CellTemplate>
+                                 </DataGridTemplateColumn>
+                                 <materialDesign:MaterialDataGridTextColumn 
+                                 Header="Yêu cầu" 
+                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                                 Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                 <DataGridTextColumn Header="Đã cấp" Binding="{Binding Path=palletUse}" IsReadOnly="True"/>
+                                 </DataGrid.Columns>
+                                 </DataGrid>
+                                 </TabItem>
+                                 </TabControl>-->
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
                             <StackPanel Orientation="Horizontal" 
@@ -682,40 +670,42 @@
                                         VerticalAlignment="Center"
                                         Margin="0 10 0 0">
                                 <!--<Button Name="RefreshBtn" 
-                                        Click="Btn_Refresh_Click"
-                                        Margin="5 0 5 0"
-                                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                                        Width="24" Height="24">
-                                    <materialDesign:PackIcon Kind="Refresh"/>
-                                </Button>-->
+                                     Click="Btn_Refresh_Click"
+                                     Margin="5 0 5 0"
+                                     Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                                     Width="24" Height="24">
+                                     <materialDesign:PackIcon Kind="Refresh"/>
+                                     </Button>-->
                                 <!--<Button Name="ClearBtn" 
-                            Foreground="Black"
-                            Margin="5,0,4,0"  Width="20" Height="20" Click="Btn_Clear_Click">
-                                    <Image Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
-                                </Button>-->
+                                     Foreground="Black"
+                                     Margin="5,0,4,0"  Width="20" Height="20" Click="Btn_Clear_Click">
+                                     <Image Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
+                                     </Button>-->
                             </StackPanel>
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Name="Btn_CreatePlanPallet" 
-                                    Width="150" 
+                                    Width="Auto" 
+                                    Height="25"
+                                    Padding="5 0"
+                                    Margin="10 0"
                                     Content="CreatePlanPallet" 
-                                    Margin="5"
                                     Click="Btn_CreatePlanPallet_Click"/>
                             <Button Name="Btn_Accept" 
-                                    Width="80" 
+                                    Width="Auto" 
+                                    Height="25"
+                                    Padding="5 0"
                                     Content="{DynamicResource PlanControl_Save}" 
-                                    Margin="5"
+                                    Margin="10 0"
                                     Click="Btn_Accept_Click"/>
-                            <!--<Button Name="Btn_Refresh" Width="70" Content="Làm mới" Margin="5,5" Click="Btn_Refresh_Click"/>-->
-                            <!--<Button Name="Btn_Clear" Width="70" Content="Dọn" Margin="5,5" Click="Btn_Clear_Click"/>-->
-                            <!--<Button Name="Btn_Test2" Width="70" Content="Test2" Margin="5,5" Click="Btn_Test2_Click"/>-->
-                            <!--<Button Name="Btn_Test" Width="70" Content="Test" Margin="5,5" Click="Btn_Test_Click"/>-->
                             <Button Name="Btn_Cancel" 
-                                    Width="80" 
+                                    Width="Auto" 
+                                    Height="25"
+                                    Padding="5 0"
                                     Content="{DynamicResource PlanControl_Exit}" 
-                                    Margin="5" 
+                                    Margin="10 0" 
                                     Click="Btn_Cancel_Click"/>
                         </StackPanel>
                     </Grid>

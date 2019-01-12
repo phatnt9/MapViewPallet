@@ -134,8 +134,10 @@ namespace MapViewPallet
 
             //LoadStation();
             Loaded += MainWindow_Loaded;
-
-            canvasControlService.ReloadAllStation();
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                canvasControlService.ReloadAllStation();
+            }));
             //Dispatcher.BeginInvoke(new ThreadStart(() =>
             //{
             //    for (int i = 1; i < 5; i++)

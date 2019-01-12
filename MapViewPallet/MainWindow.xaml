@@ -129,10 +129,8 @@
                         Background="#f5f5f5" 
                         ToolBarTray.IsLocked="True">
                             <ToolBar 
-                            Background="#f5f5f5"
-                                 
-                    Style="{DynamicResource MaterialDesignToolBar}"
-                    ClipToBounds="False">
+                                Background="#f5f5f5"
+                                ClipToBounds="False">
 
                                 <Button ToolBar.OverflowMode="Never"
                                 Name="btn_MapOnOff"

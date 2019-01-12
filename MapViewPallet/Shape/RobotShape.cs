@@ -238,25 +238,6 @@ namespace MapViewPallet.Shape
         {
             Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
-                //Random rotate = new Random();
-                //int rotateInt = rotate.Next(0, 360); //for ints
-                //int rotateRange = 360;
-                //double rotateDouble = rotate.NextDouble() * rotateRange; //for doubles
-
-                //Random posX = new Random();
-                //int posIntX = posX.Next(20, 1200); //for ints
-                //int posRangeX = 1180;
-                //double posDoubleX = posX.NextDouble() * posRangeX; //for doubles
-
-                //Random posY = new Random();
-                //int posIntY = posX.Next(20, 700); //for ints
-                //int posRangeY = 680;
-                //double posDoubleY = posY.NextDouble() * posRangeY; //for doubles
-
-
-                //props.rotate = roro1;
-                //props.position = new Point(roro2,roro3);
-
                 ChangeTask("22");
                 Draw();
             }));

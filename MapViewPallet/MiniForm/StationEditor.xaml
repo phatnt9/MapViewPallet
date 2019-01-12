@@ -116,7 +116,6 @@
                                         Margin="20,0,0,0"
                                         Height="25" 
                                         FontSize="12"
-                                        Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                         Content="{DynamicResource StationEditor_Button_Save}"
                                                     Click="Btn_SetBufferData_Click"/>
                                                 </StackPanel>
@@ -258,7 +257,6 @@
                                         Margin="20,0,0,0"
                                         Height="25" 
                                         FontSize="12"
-                                        Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                         Content="{DynamicResource StationEditor_Button_Save}"
                                                         Click="Btn_SetPalletDataPallet_Click"/>
                                                     </StackPanel>
@@ -307,7 +305,6 @@
                                                 Margin="20,0,0,0"
                                                 Height="25" 
                                                 FontSize="12"
-                                                Style="{StaticResource MaterialDesignRaisedAccentButton}"
                                                 Content="{DynamicResource StationEditor_Button_Save}"
                                                 Click="Btn_SetBufferPosData_Click"/>
                                     </StackPanel>
@@ -332,14 +329,12 @@
                                     <Button Name="btn_Save_Pallet"
                                             Click="Button_Click"
                                             Margin="5 0 0 0"
-                                            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
                                         <iconPacks:PackIconMaterial Kind="NotificationClearAll"/>
                                     </Button>
                                     <Button Name="btn_Refresh_Pallet"
                                             Click="Btn_Refresh_Pallet_Click"
                                             Margin="5 0 0 0"
-                                            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                                                         Width="24" Height="24">
                                         <iconPacks:PackIconMaterial Kind="Refresh"/>
                                     </Button>
@@ -354,7 +349,9 @@
                                       CanUserResizeRows="False"
                                       CanUserDeleteRows="False" 
                                       CanUserSortColumns="True"
-                                      AutoGenerateColumns="False">
+                                      AutoGenerateColumns="False"
+                                          FontSize="12"
+                                          FontWeight="Normal">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Id" 
                                                         Width="Auto" 
@@ -482,12 +479,16 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel Width="300" 
+            <StackPanel Width="Auto" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Grid>
                     <Grid Grid.Column="1">
-                        <Button Name="btn_exit" Width="90"
+                        <Button Name="btn_exit" 
+                                Width="Auto" 
+                                    Height="25"
+                                    Padding="5 0"
+                                    Margin="10 0"
                                 Content="{DynamicResource StationEditor_Button_Exit}"
                                 Click="Btn_exit_Click">
                         </Button>
