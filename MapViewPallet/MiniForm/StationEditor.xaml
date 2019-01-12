@@ -6,7 +6,8 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
         mc:Ignorable="d"
-        Title="{DynamicResource StationEditor_Title}" Height="650" Width="900">
+        Title="{DynamicResource StationEditor_Title}" Height="650" Width="900"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"></RowDefinition>

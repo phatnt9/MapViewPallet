@@ -11,7 +11,8 @@
         MaxHeight="130" 
         MaxWidth="350" 
         MinHeight="130" 
-        MinWidth="350">
+        MinWidth="350"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>

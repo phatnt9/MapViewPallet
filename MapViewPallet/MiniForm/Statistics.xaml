@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
         mc:Ignorable="d"
-        Title="{DynamicResource Statistics_Title}" Height="650" Width="1000">
+        Title="{DynamicResource Statistics_Title}"
+        WindowStartupLocation="CenterOwner" Height="650" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"></RowDefinition>

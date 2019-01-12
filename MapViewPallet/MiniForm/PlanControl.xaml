@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="{DynamicResource PlanControl_Title}" Height="450" Width="800">
+        Title="{DynamicResource PlanControl_Title}" Height="450" Width="800"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>

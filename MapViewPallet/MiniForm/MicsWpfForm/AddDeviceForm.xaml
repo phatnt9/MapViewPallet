@@ -8,7 +8,8 @@
         Title="{DynamicResource AddDevicesForm_Title}" 
         Height="140" 
         Width="370" 
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>

@@ -9,10 +9,7 @@
         Title="{DynamicResource UserManagement_Title}" 
         Height="500" 
         Width="600" 
-        MinHeight="500"
-        MinWidth="600"
-        MaxHeight="500"
-        MaxWidth="600">
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"></RowDefinition>

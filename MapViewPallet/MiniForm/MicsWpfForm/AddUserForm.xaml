@@ -8,7 +8,8 @@
         Title="{DynamicResource AddUserForm_Title1}" 
         Height="310" 
         Width="380"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
