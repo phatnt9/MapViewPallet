@@ -30,8 +30,10 @@
                                 HorizontalAlignment="Center"
                                 Margin="0 30 0 0">
                         <Viewbox Width="220">
-                            <Calendar Name="pCalendar" HorizontalAlignment="Center" 
+                            <Calendar Name="pCalendar" 
+                                      HorizontalAlignment="Center" 
                                       VerticalAlignment="Center"
+                                      SelectionMode="SingleDate"
                                       SelectedDatesChanged="PCalendar_SelectedDatesChanged"/>
                         </Viewbox>
                     </StackPanel>
@@ -87,10 +89,15 @@
                                 <TabItem Name="Plan_Shift1" Header="{DynamicResource PlanControl_Shift1_Label}">
                                     <DataGrid Name="Shift1Dgv"
                                               ItemsSource="{Binding GroupedDevices_S1}"
-                                              CanUserReorderColumns="False" CanUserAddRows="False"
-                                              CanUserResizeColumns="True" CanUserResizeRows="False"
-                                              CanUserDeleteRows="False" CanUserSortColumns="True"
-                                              AutoGenerateColumns="False">
+                                              CanUserReorderColumns="False" 
+                                              CanUserAddRows="False"
+                                              CanUserResizeColumns="True" 
+                                              CanUserResizeRows="False"
+                                              CanUserDeleteRows="False" 
+                                              CanUserSortColumns="True"
+                                              AutoGenerateColumns="False"
+                                              SelectionMode="Single"
+                                              SelectionUnit="FullRow">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>
@@ -209,7 +216,7 @@
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Name="DeletePlan"
-                                                                Background="DarkSlateGray"
+                                                                Background="#FFF67F"
                                                                 Click="DeletePlan_Click">
                                                             <iconPacks:PackIconMaterial Kind="DeleteForever" />
                                                         </Button>
@@ -222,10 +229,15 @@
                                 <TabItem Name="Plan_Shift2" Header="{DynamicResource PlanControl_Shift2_Label}">
                                     <DataGrid Name="Shift2Dgv"
                                               ItemsSource="{Binding GroupedDevices_S2}"
-                                              CanUserReorderColumns="False" CanUserAddRows="False"
-                                              CanUserResizeColumns="True" CanUserResizeRows="False"
-                                              CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False">
+                                              CanUserReorderColumns="False" 
+                                              CanUserAddRows="False"
+                                              CanUserResizeColumns="True" 
+                                              CanUserResizeRows="False"
+                                              CanUserDeleteRows="False" 
+                                              CanUserSortColumns="False"
+                                              AutoGenerateColumns="False"
+                                              SelectionMode="Single"
+                                              SelectionUnit="FullRow">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>
@@ -331,16 +343,42 @@
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
                                             </DataGridTextColumn>
+
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Delete}"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.HeaderTemplate>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Name="DeletePlan"
+                                                                Background="#D62839"
+                                                                Click="DeletePlan_Click">
+                                                            <iconPacks:PackIconMaterial Kind="DeleteForever" />
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
                                 <TabItem Name="Plan_Shift3" Header="{DynamicResource PlanControl_Shift3_Label}" >
                                     <DataGrid Name="Shift3Dgv"
                                               ItemsSource="{Binding GroupedDevices_S3}"
-                                              CanUserReorderColumns="False" CanUserAddRows="False"
-                                              CanUserResizeColumns="True" CanUserResizeRows="False"
-                                              CanUserDeleteRows="False" CanUserSortColumns="False"
-                                              AutoGenerateColumns="False">
+                                              CanUserReorderColumns="False" 
+                                              CanUserAddRows="False"
+                                              CanUserResizeColumns="True" 
+                                              CanUserResizeRows="False"
+                                              CanUserDeleteRows="False" 
+                                              CanUserSortColumns="False"
+                                              AutoGenerateColumns="False"
+                                              SelectionMode="Single"
+                                              SelectionUnit="FullRow">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>
@@ -446,6 +484,27 @@
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
                                             </DataGridTextColumn>
+
+                                            <DataGridTemplateColumn>
+                                                <DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Delete}"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.HeaderTemplate>
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Name="DeletePlan"
+                                                                Background="#D62839"
+                                                                Click="DeletePlan_Click">
+                                                            <iconPacks:PackIconMaterial Kind="DeleteForever" />
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>

@@ -107,6 +107,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 }
             }
             devicesManagement.UpdateTab3(false);
+            productDetailNametb.Focus();
         }
     }
 }

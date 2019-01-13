@@ -38,10 +38,6 @@ namespace MapViewPallet.MiniForm
             //===============TabControlShift========
             TabControlShift.SelectionChanged += TabControlShift_SelectionChanged;
             //===============DataGridView1========
-            pCalendar.SelectionMode = CalendarSelectionMode.SingleDate;
-            Shift1Dgv.SelectionMode = Shift2Dgv.SelectionMode = Shift3Dgv.SelectionMode = DataGridSelectionMode.Single;
-            Shift1Dgv.SelectionUnit = Shift2Dgv.SelectionUnit = Shift3Dgv.SelectionUnit = DataGridSelectionUnit.FullRow;
-            //===============DataGridView1========
             operation_model = new PlanControlModel(this);
             DataContext = operation_model;
         }

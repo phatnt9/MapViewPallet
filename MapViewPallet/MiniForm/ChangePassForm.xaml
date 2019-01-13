@@ -10,9 +10,6 @@
         Width="400"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
-    <Window.Resources>
-        
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"></RowDefinition>
@@ -26,54 +23,54 @@
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Orientation="Vertical" 
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Margin="0,6,0,0">
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Margin="0,6,0,0">
                 <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
+                            HorizontalAlignment="Right">
                     <Label VerticalAlignment="Center" 
-                               Content="{DynamicResource ChangePassForm_UserName}"
-                               FontSize="12"></Label>
+                           Content="{DynamicResource ChangePassForm_UserName}"
+                           FontSize="12"/>
                     <TextBox Name="userNametb" 
                              Width="200"
                              Margin="10"
                              IsReadOnly="True"
-                             CharacterCasing="Upper"></TextBox>
+                             CharacterCasing="Upper"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
+                            HorizontalAlignment="Right">
                     <Label VerticalAlignment="Center" 
-                               Content="{DynamicResource ChangePassForm_Password}"
-                               FontSize="12"></Label>
+                           Content="{DynamicResource ChangePassForm_Password}"
+                           FontSize="12"/>
                     <PasswordBox Name="passwordCurrenttb" 
-                             Width="200" 
-                             Margin="10"
-                             PreviewKeyDown="PasswordCurrenttb_PreviewKeyDown"></PasswordBox>
+                                 Width="200" 
+                                 Margin="10"
+                                 PreviewKeyDown="PasswordCurrenttb_PreviewKeyDown"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
+                            HorizontalAlignment="Right">
                     <Label VerticalAlignment="Center" 
-                               Content="{DynamicResource ChangePassForm_NewPassword}"
-                               FontSize="12"></Label>
+                           Content="{DynamicResource ChangePassForm_NewPassword}"
+                           FontSize="12"/>
                     <PasswordBox Name="passwordNewtb" 
-                             Width="200" 
-                             Margin="10"
-                             PreviewKeyDown="PasswordNewtb_PreviewKeyDown"></PasswordBox>
+                                 Width="200" 
+                                 Margin="10"
+                                 PreviewKeyDown="PasswordNewtb_PreviewKeyDown"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
+                            HorizontalAlignment="Right">
                     <Label VerticalAlignment="Center" 
-                               Content="{DynamicResource ChangePassForm_ConfirmNewPassword}"
-                               FontSize="12"></Label>
+                           Content="{DynamicResource ChangePassForm_ConfirmNewPassword}"
+                           FontSize="12"/>
                     <PasswordBox Name="passwordNewConfirmtb" 
-                             Width="200" 
-                             Margin="10"
-                             PreviewKeyDown="PasswordNewConfirmtb_PreviewKeyDown"></PasswordBox>
+                                 Width="200" 
+                                 Margin="10"
+                                 PreviewKeyDown="PasswordNewConfirmtb_PreviewKeyDown"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel Width="230" 
+            <StackPanel Width="Auto" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Grid>
@@ -82,19 +79,23 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Button Name="btn_save" Width="80" 
-                                FontSize="13"
+                        <Button Name="btn_save" 
+                                Width="Auto"
+                                Height="25"
+                                Margin="15 0"
+                                Padding="5 0"
                                 Content="{DynamicResource ChangePassForm_Save}"
-                                Foreground="Black"
-                                Click="btn_save_Click">
-                        </Button>
+                                Click="btn_save_Click"/>
+
                     </Grid>
                     <Grid Grid.Column="1">
-                        <Button Name="btn_exit" Width="80" 
-                                FontSize="13"
+                        <Button Name="btn_exit" 
+                                Width="Auto"
+                                Height="25"
+                                Margin="15 0"
+                                Padding="5 0"
                                 Content="{DynamicResource ChangePassForm_Exit}"
-                                Foreground="Black"
-                                Click="btn_exit_Click"></Button>
+                                Click="btn_exit_Click"/>
                     </Grid>
                 </Grid>
             </StackPanel>

@@ -23,9 +23,7 @@ namespace MapViewPallet.MiniForm
     public partial class DevicesManagement : Window
     {
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
-
-        public DevicesManagementModel managementModel;
-
+        public DevicesManagementModel deviceManagementModel;
         MainWindow mainWindow;
         int loadTab = 0;
 
@@ -38,36 +36,30 @@ namespace MapViewPallet.MiniForm
             this.mainWindow = mainWindow;
             loadTab = loadtab;
             DeviceManagementTabControl.SelectionChanged += DeviceManagementTabControl_SelectionChanged;
-
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+            
             DevicesListDg.SelectedCellsChanged += DevicesListDg_SelectedCellsChanged;
             DevicesListDg2.SelectedCellsChanged += DevicesListDg2_SelectedCellsChanged;
             ProductsListDg.SelectedCellsChanged += ProductsListDg_SelectedCellsChanged;
             BuffersListDg.SelectedCellsChanged += BuffersListDg_SelectedCellsChanged;
             DevicePalletsListDg.SelectedCellsChanged += DevicePalletsListDg_SelectedCellsChanged;
-
-
+            
             DevicesListDg2.MouseDoubleClick += DevicesListDg2_MouseDoubleClick;
             ProductsListDg.MouseDoubleClick += ProductsListDg_MouseDoubleClick;
-
-
+            
             DevicesListDg2.CellEditEnding += DevicesListDg2_CellEditEnding;
             ProductsListDg.CellEditEnding += ProductsListDg_CellEditEnding;
             BuffersListDg.CellEditEnding += BuffersListDg_CellEditEnding;
             DeviceBuffersListDg.CellEditEnding += DeviceBuffersListDg_CellEditEnding;
             ProductDetailsListDg.CellEditEnding += ProductDetailsListDg_CellEditEnding;
-
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-            managementModel = new DevicesManagementModel(this);
-            DataContext = managementModel;
+            
+            deviceManagementModel = new DevicesManagementModel(this);
+            DataContext = deviceManagementModel;
         }
 
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
-                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            { Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName); }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -88,12 +80,6 @@ namespace MapViewPallet.MiniForm
             ChangeTabIndex(loadTab);
         }
 
-
-
-
-
-        //**********************************************
-
         private void DeviceManagementTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.Source is System.Windows.Controls.TabControl)
@@ -102,22 +88,22 @@ namespace MapViewPallet.MiniForm
                 {
                     case 0:
                         {
-                            managementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                            deviceManagementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
                             break;
                         }
                     case 1:
                         {
-                            managementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                            deviceManagementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
                             break;
                         }
                     case 2:
                         {
-                            managementModel.ReloadListProducts();
+                            deviceManagementModel.ReloadListProducts();
                             break;
                         }
                     case 3:
                         {
-                            managementModel.ReloadListBuffers();
+                            deviceManagementModel.ReloadListBuffers();
                             break;
                         }
                 }
@@ -138,8 +124,8 @@ namespace MapViewPallet.MiniForm
             if (DevicesListDg.SelectedItem != null)
             {
                 dtDevice temp = DevicesListDg.SelectedItem as dtDevice;
-                managementModel.ReloadListDeviceProducts(temp.deviceId);
-                managementModel.ReloadListDeviceBuffers(temp.deviceId);
+                deviceManagementModel.ReloadListDeviceProducts(temp.deviceId);
+                deviceManagementModel.ReloadListDeviceBuffers(temp.deviceId);
             }
         }
 
@@ -192,16 +178,10 @@ namespace MapViewPallet.MiniForm
             {
                 return;
             }
-
-            managementModel.UpdateDataStatus("Đang cập nhật...");
-
+            deviceManagementModel.UpdateDataStatus("Đang cập nhật...");
             dtDevice device = GetDataSave();
             string jsonData = JsonConvert.SerializeObject(device);
-
-
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateDevice");
-
-
             request.Method = "POST";
             request.ContentType = "application/json";
             System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
@@ -219,8 +199,7 @@ namespace MapViewPallet.MiniForm
                 int result = 0;
                 int.TryParse(reader.ReadToEnd(), out result);
             }
-
-            managementModel.UpdateDataStatus("Sẵn sàng");
+            deviceManagementModel.UpdateDataStatus("Sẵn sàng");
         }
 
         private dtDevice GetDataSave()
@@ -237,7 +216,7 @@ namespace MapViewPallet.MiniForm
             deviceData.creUsrId = Global_Object.userLogin;
             deviceData.updUsrId = Global_Object.userLogin;
             List<dtDeviceProduct> deviceProducts = new List<dtDeviceProduct>();
-            foreach (dtDeviceProduct item in managementModel.deviceProductsList)
+            foreach (dtDeviceProduct item in deviceManagementModel.deviceProductsList)
             {
                 if (item.checkStatus)
                 {
@@ -252,7 +231,7 @@ namespace MapViewPallet.MiniForm
             deviceData.deviceProducts = deviceProducts;
 
             List<dtDeviceBuffer> deviceBuffers = new List<dtDeviceBuffer>();
-            foreach (dtDeviceBuffer item in managementModel.deviceBuffersList)
+            foreach (dtDeviceBuffer item in deviceManagementModel.deviceBuffersList)
             {
                 if (item.checkStatus)
                 {
@@ -278,15 +257,14 @@ namespace MapViewPallet.MiniForm
                 dtDevice temp = DevicesListDg2.SelectedItem as dtDevice;
                 MaxBaytb.Text = temp.maxBay.ToString();
                 MaxRowtb.Text = temp.maxRow.ToString();
-                managementModel.ReloadListDevicePallets(temp.deviceId);
+                deviceManagementModel.ReloadListDevicePallets(temp.deviceId);
             }
         }
 
         private void DevicesListDg2_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            try
+            //try
             {
-                //DataGridCellInfo dgci = (DataGridCellInfo)(DevicesListDg2).CurrentCell;
                 switch (e.Column.DisplayIndex)
                 {
                     case 1:
@@ -341,7 +319,7 @@ namespace MapViewPallet.MiniForm
                                         MessageBoxIcon.Information
                                         );
 
-                                    managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                                    deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                                 }
                                 else if (result == -2)
                                 {
@@ -370,7 +348,7 @@ namespace MapViewPallet.MiniForm
                 }
 
             }
-            catch
+            //catch
             {
 
             }
@@ -452,7 +430,7 @@ namespace MapViewPallet.MiniForm
                         if (result == 1)
                         {
                             System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                            deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                         }
                         else if (result == 2)
                         {
@@ -471,7 +449,7 @@ namespace MapViewPallet.MiniForm
         private void Btn_Save_Devices_Click(object sender, RoutedEventArgs e)
         {
             List<dtDevice> devices = new List<dtDevice>();
-            foreach (dtDevice dr in managementModel.devicesList)
+            foreach (dtDevice dr in deviceManagementModel.devicesList)
             {
                 if (dr.deviceName.ToString().Trim() != dr.deviceNameOld.ToString().Trim()
                     || (((dr.pathFile != null) ? dr.pathFile.ToString() : "").Trim() != ""))
@@ -529,7 +507,7 @@ namespace MapViewPallet.MiniForm
                 if (result == 1)
                 {
                     System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                    deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                 }
                 else if (result == -2)
                 {
@@ -553,11 +531,11 @@ namespace MapViewPallet.MiniForm
                 int maxRow = 0;
                 int.TryParse(this.MaxRowtb.Text, out maxRow);
 
-                managementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
+                deviceManagementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
 
                 List<dtDevicePallet> devicePalletsListOld = new List<dtDevicePallet>();
 
-                foreach (dtDevicePallet item in managementModel.devicePalletsList)
+                foreach (dtDevicePallet item in deviceManagementModel.devicePalletsList)
                 {
                     devicePalletsListOld.Add(item);
                 }
@@ -567,9 +545,9 @@ namespace MapViewPallet.MiniForm
                 if (maxBay != int.Parse(selectedDevice.maxBay.ToString()) ||
                    maxRow != int.Parse(selectedDevice.maxRow.ToString()))
                 {
-                    if (managementModel.devicePalletsList != null)
+                    if (deviceManagementModel.devicePalletsList != null)
                     {
-                        managementModel.devicePalletsList.Clear();
+                        deviceManagementModel.devicePalletsList.Clear();
                     }
                     for (int r = 0; r < maxRow; r++)
                     {
@@ -610,14 +588,14 @@ namespace MapViewPallet.MiniForm
                                 }
                             }
 
-                            managementModel.devicePalletsList.Add(dr);
+                            deviceManagementModel.devicePalletsList.Add(dr);
                         }
                     }
-                    if (managementModel.GroupedDevicePallets.IsEditingItem)
-                        managementModel.GroupedDevicePallets.CommitEdit();
-                    if (managementModel.GroupedDevicePallets.IsAddingNew)
-                        managementModel.GroupedDevicePallets.CommitNew();
-                    managementModel.GroupedDevicePallets.Refresh();
+                    if (deviceManagementModel.GroupedDevicePallets.IsEditingItem)
+                        deviceManagementModel.GroupedDevicePallets.CommitEdit();
+                    if (deviceManagementModel.GroupedDevicePallets.IsAddingNew)
+                        deviceManagementModel.GroupedDevicePallets.CommitNew();
+                    deviceManagementModel.GroupedDevicePallets.Refresh();
                 }
             }
         }
@@ -629,7 +607,7 @@ namespace MapViewPallet.MiniForm
             if (ProductsListDg.SelectedItem != null)
             {
                 dtProduct temp = ProductsListDg.SelectedItem as dtProduct;
-                managementModel.ReloadListProductDetails(temp.productId);
+                deviceManagementModel.ReloadListProductDetails(temp.productId);
             }
         }
 
@@ -810,7 +788,7 @@ namespace MapViewPallet.MiniForm
                         if (result == 1)
                         {
                             System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                            deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                         }
                         else if (result == 2)
                         {
@@ -878,7 +856,7 @@ namespace MapViewPallet.MiniForm
                         if (result == 1)
                         {
                             System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                            deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                         }
                         else if (result == 2)
                         {
@@ -897,7 +875,7 @@ namespace MapViewPallet.MiniForm
         private void Btn_Save_Products_Click(object sender, RoutedEventArgs e)
         {
             List<dtProduct> products = new List<dtProduct>();
-            foreach (dtProduct dr in managementModel.productsList)
+            foreach (dtProduct dr in deviceManagementModel.productsList)
             {
                 if (((dr.pathFile != null) ? dr.pathFile.ToString() : "").Trim() != "")
                 {
@@ -949,7 +927,7 @@ namespace MapViewPallet.MiniForm
                 if (result == 1)
                 {
                     System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                    deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                 }
                 else if (result == -2)
                 {
@@ -975,7 +953,7 @@ namespace MapViewPallet.MiniForm
                 bufferX.Text = (bufferData != null) ? (((double)bufferData.x).ToString()) : "0";
                 bufferY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "0";
                 bufferA.Text = (bufferData != null) ? (((double)bufferData.angle).ToString()) : "0";
-                managementModel.ReloadListPallets(temp.bufferId);
+                deviceManagementModel.ReloadListPallets(temp.bufferId);
             }
         }
 
@@ -1136,7 +1114,7 @@ namespace MapViewPallet.MiniForm
                     if (result == 1)
                     {
                         System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        managementModel.ReloadListBuffers();
+                        deviceManagementModel.ReloadListBuffers();
                     }
                     else if (result == 2)
                     {
@@ -1171,9 +1149,9 @@ namespace MapViewPallet.MiniForm
                 List<dtBuffer> buffers = new List<dtBuffer>();
 
                 dynamic postApiBody = new JObject();
-                postApiBody.x = double.Parse((bufferX.Text != "") ? bufferX.Text : "0");
-                postApiBody.y = double.Parse((bufferY.Text != "") ? bufferY.Text : "0");
-                postApiBody.angle = double.Parse((bufferA.Text != "") ? bufferA.Text : "0");
+                postApiBody.x = Math.Round((double.Parse((bufferX.Text != "") ? bufferX.Text : "0")),2);
+                postApiBody.y = Math.Round((double.Parse((bufferY.Text != "") ? bufferY.Text : "0")),2);
+                postApiBody.angle = Math.Round((double.Parse((bufferA.Text != "") ? bufferA.Text : "0")),2);
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 
@@ -1244,7 +1222,7 @@ namespace MapViewPallet.MiniForm
                 //            break;
                 //        }
                 //}
-                foreach (dtPallet pallet in managementModel.palletsList)
+                foreach (dtPallet pallet in deviceManagementModel.palletsList)
                 {
                     pallet.updUsrId = Global_Object.userLogin;
                     pallets.Add(pallet);
@@ -1306,10 +1284,10 @@ namespace MapViewPallet.MiniForm
 
         public void UpdateTab1(bool isAddDevice)
         {
-            managementModel.UpdateDataStatus("Đang cập nhật...");
+            deviceManagementModel.UpdateDataStatus("Đang cập nhật...");
             if (isAddDevice)
             {
-                managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
             }
             else
             {
@@ -1322,24 +1300,24 @@ namespace MapViewPallet.MiniForm
                     }
                     else
                     {
-                        managementModel.ReloadListDeviceProducts((DevicesListDg.SelectedItem as dtDevice).deviceId);
-                        managementModel.ReloadListDeviceBuffers((DevicesListDg.SelectedItem as dtDevice).deviceId);
+                        deviceManagementModel.ReloadListDeviceProducts((DevicesListDg.SelectedItem as dtDevice).deviceId);
+                        deviceManagementModel.ReloadListDeviceBuffers((DevicesListDg.SelectedItem as dtDevice).deviceId);
                     }
                 }
                 else
                 {
-                    managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                    deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                 }
             }
-            managementModel.UpdateDataStatus("Sẵn sàng");
+            deviceManagementModel.UpdateDataStatus("Sẵn sàng");
         }
 
         public void UpdateTab2(bool isAddDevice)
         {
-            managementModel.UpdateDataStatus("Đang cập nhật...");
+            deviceManagementModel.UpdateDataStatus("Đang cập nhật...");
             if (isAddDevice)
             {
-                managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
             }
             else
             {
@@ -1352,23 +1330,23 @@ namespace MapViewPallet.MiniForm
                     }
                     else
                     {
-                        managementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
+                        deviceManagementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
                     }
                 }
                 else
                 {
-                    managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                    deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                 }
             }
-            managementModel.UpdateDataStatus("Sẵn sàng");
+            deviceManagementModel.UpdateDataStatus("Sẵn sàng");
         }
 
         public void UpdateTab3(bool isAddProduct)
         {
-            managementModel.UpdateDataStatus("Đang cập nhật...");
+            deviceManagementModel.UpdateDataStatus("Đang cập nhật...");
             if (isAddProduct)
             {
-                managementModel.ReloadListProducts();
+                deviceManagementModel.ReloadListProducts();
             }
             else
             {
@@ -1381,23 +1359,23 @@ namespace MapViewPallet.MiniForm
                     }
                     else
                     {
-                        managementModel.ReloadListProductDetails((ProductsListDg.SelectedItem as dtProduct).productId);
+                        deviceManagementModel.ReloadListProductDetails((ProductsListDg.SelectedItem as dtProduct).productId);
                     }
                 }
                 else
                 {
-                    managementModel.ReloadListProducts();
+                    deviceManagementModel.ReloadListProducts();
                 }
             }
-            managementModel.UpdateDataStatus("Sẵn sàng");
+            deviceManagementModel.UpdateDataStatus("Sẵn sàng");
         }
 
         public void UpdateTab4(bool isAddBuffer)
         {
-            managementModel.UpdateDataStatus("Đang cập nhật...");
+            deviceManagementModel.UpdateDataStatus("Đang cập nhật...");
             if (isAddBuffer)
             {
-                managementModel.ReloadListBuffers();
+                deviceManagementModel.ReloadListBuffers();
             }
             else
             {
@@ -1410,17 +1388,17 @@ namespace MapViewPallet.MiniForm
                     }
                     else
                     {
-                        managementModel.ReloadListPallets((BuffersListDg.SelectedItem as dtBuffer).bufferId);
+                        deviceManagementModel.ReloadListPallets((BuffersListDg.SelectedItem as dtBuffer).bufferId);
 
                     }
                 }
                 else
                 {
-                    managementModel.ReloadListBuffers();
+                    deviceManagementModel.ReloadListBuffers();
                 }
             }
             mainWindow.canvasControlService.ReloadAllStation();
-            managementModel.UpdateDataStatus("Sẵn sàng");
+            deviceManagementModel.UpdateDataStatus("Sẵn sàng");
         }
 
         //****************************************************************************************
@@ -1430,7 +1408,7 @@ namespace MapViewPallet.MiniForm
             if (DeviceManagementTabControl.SelectedIndex == 1)
             {
                 List<dtDevicePallet> devicePallets = new List<dtDevicePallet>();
-                foreach (dtDevicePallet dr in managementModel.devicePalletsList)
+                foreach (dtDevicePallet dr in deviceManagementModel.devicePalletsList)
                 {
                     dtDevicePallet devicePallet = new dtDevicePallet();
 
@@ -1477,7 +1455,7 @@ namespace MapViewPallet.MiniForm
                     if (result == 1)
                     {
                         System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                        deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                     }
                     else
                     {
@@ -1544,7 +1522,7 @@ namespace MapViewPallet.MiniForm
         private int uploadFileProducts()
         {
             List<string> files = new List<string>();
-            foreach (dtProduct dr in managementModel.productsList)
+            foreach (dtProduct dr in deviceManagementModel.productsList)
             {
                 if (((dr.pathFile != null) ? dr.pathFile.ToString() : "") != "")
                 {
@@ -1561,7 +1539,7 @@ namespace MapViewPallet.MiniForm
         private int uploadFileDevices()
         {
             List<string> files = new List<string>();
-            foreach (dtDevice dr in managementModel.devicesList)
+            foreach (dtDevice dr in deviceManagementModel.devicesList)
             {
                 if (((dr.pathFile != null) ? dr.pathFile.ToString() : "") != "")
                 {
@@ -1658,11 +1636,11 @@ namespace MapViewPallet.MiniForm
 
         private void BufferReturnCbRow_Click(object sender, RoutedEventArgs e)
         {
-            try
+            //try
             {
                 //temp.updUsrId = Global_Object.userLogin;
                 List<dtBuffer> buffers = new List<dtBuffer>();
-                foreach (dtBuffer buffer in managementModel.buffersList)
+                foreach (dtBuffer buffer in deviceManagementModel.buffersList)
                 {
                     buffer.updUsrId = Global_Object.userLogin;
                     buffers.Add(buffer);
@@ -1710,7 +1688,7 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateTab4(true);
             }
-            catch
+            //catch
             {
 
             }
@@ -1745,7 +1723,7 @@ namespace MapViewPallet.MiniForm
                 devicePallet.creUsrId = Global_Object.userLogin;
                 devicePallet.updUsrId = Global_Object.userLogin;
 
-                foreach (dtDevicePallet dr in managementModel.devicePalletsList)
+                foreach (dtDevicePallet dr in deviceManagementModel.devicePalletsList)
                 {
                     dtDevicePallet devicePalletold = new dtDevicePallet();
 
@@ -1798,7 +1776,7 @@ namespace MapViewPallet.MiniForm
                     if (result == 1)
                     {
                         System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        managementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                        deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                     }
                     else
                     {

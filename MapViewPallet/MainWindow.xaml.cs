@@ -61,9 +61,9 @@ namespace MapViewPallet
 
         //=================VARIABLE==================
         public System.Timers.Timer stationTimer;
-        public System.Timers.Timer robotTimer;
+        //public System.Timers.Timer robotTimer;
         //bool play = false;
-        public Point renderTransformOrigin = new Point(0, 0);
+        //public Point renderTransformOrigin = new Point(0, 0);
         public bool drag = true;
         //Data Grid View
         MainWindowModel mainWindowModel;
@@ -101,18 +101,7 @@ namespace MapViewPallet
             canvasControlService = new CanvasControlService(this);
             snd = new System.Media.SoundPlayer();
             //===============DataGridView========
-            //StationsDataGrid.CanUserAddRows = false;
-            //StationsDataGrid.CanUserDeleteRows = false;
-            //StationsDataGrid.CanUserReorderColumns = false;
-            //StationsDataGrid.CanUserResizeColumns = false;
-            //StationsDataGrid.CanUserResizeRows = false;
-            //StationsDataGrid.SelectionMode = DataGridSelectionMode.Single;
-            //StationsDataGrid.SelectionUnit = DataGridSelectionUnit.FullRow;
-            //StationsDataGrid.SelectedCellsChanged += StationsDataGrid_SelectedCellsChanged;
-            //StationsDataGrid.SelectionChanged += StationsDataGrid_SelectionChanged;
-
-            //StationsDataGrid.GotFocus += StationsDataGrid_GotFocus;
-            //StationsDataGrid.LostFocus += StationsDataGrid_LostFocus;
+            
             mainWindowModel = new MainWindowModel(this);
             //previousStationNameIdDgv = "";
             //previousStationNameIdTrv = "";
@@ -120,24 +109,23 @@ namespace MapViewPallet
 
 
             stationTimer = new System.Timers.Timer();
-            stationTimer.Interval = 1000;
+            stationTimer.Interval = 3000;
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
             stationTimer.Enabled = true;
 
 
-            robotTimer = new System.Timers.Timer();
-            robotTimer.Interval = 50;
-            robotTimer.Elapsed += OnTimedRedrawRobotEvent;
-            robotTimer.AutoReset = true;
-            robotTimer.Enabled = true;
-
-            //LoadStation();
+            //robotTimer = new System.Timers.Timer();
+            //robotTimer.Interval = 50;
+            //robotTimer.Elapsed += OnTimedRedrawRobotEvent;
+            //robotTimer.AutoReset = true;
+            //robotTimer.Enabled = true;
+            
             Loaded += MainWindow_Loaded;
-            Dispatcher.BeginInvoke(new ThreadStart(() =>
-            {
-                canvasControlService.ReloadAllStation();
-            }));
+
+            
+
+
             //Dispatcher.BeginInvoke(new ThreadStart(() =>
             //{
             //    for (int i = 1; i < 5; i++)
@@ -188,7 +176,6 @@ namespace MapViewPallet
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
-
             ApplyLanguage(menuItem.Tag.ToString());
         }
         
@@ -216,6 +203,11 @@ namespace MapViewPallet
             if (Global_Object.userLogin <= 2)
             {
                 myManagementWindow.Visibility = Visibility.Visible;
+
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    canvasControlService.ReloadAllStation();
+                }));
             }
         }
 
@@ -226,17 +218,18 @@ namespace MapViewPallet
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
         {
-            Parallel.Invoke(() =>
-            {
-                //Console.WriteLine("Begin first task...");
-                canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
-            });
-            //canvasControlService.RedrawAllStation();
-        }
+            //Parallel.Invoke(() =>
+            //{
+            //    //Console.WriteLine("Begin first task...");
+            //    canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
+            //});
 
-        private void testinout(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Console.WriteLine("test in out");
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
+            }));
+
+            //canvasControlService.RedrawAllStation();
         }
 
         public ImageBrush LoadImage(string name)
@@ -410,13 +403,7 @@ namespace MapViewPallet
             //}
             //catch { }
         }
-
         
-
-
-
-
-
 
         private void clearLog_Clicked(object sender, RoutedEventArgs e)
         {
@@ -570,6 +557,11 @@ namespace MapViewPallet
             if (Global_Object.userLogin <= 2)
             {
                 myManagementWindow.Visibility = Visibility.Visible;
+
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    canvasControlService.ReloadAllStation();
+                }));
             }
         }
 

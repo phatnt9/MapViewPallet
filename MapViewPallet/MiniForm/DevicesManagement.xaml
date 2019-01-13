@@ -48,8 +48,8 @@
                                                         VerticalAlignment="Center">
                                                 <Button Name="btn_Refresh_Device"
                                                         Click="Btn_Refresh_Device_Click"
-                                                        Width="24" 
-                                                        Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
@@ -117,7 +117,8 @@
                                                         VerticalAlignment="Center">
                                                 <Button Name="btn_Refresh_DeviceProduct"
                                                         Click="Btn_Refresh_DeviceProduct_Click"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
@@ -199,7 +200,8 @@
 
                                                 <Button Name="btn_Refresh_DeviceBuffer"
                                                         Click="Btn_Refresh_DeviceBuffer_Click"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                                 
@@ -287,10 +289,11 @@
                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Center">
                                 <Button Name="Btn_Exit_tab1" 
-                                        Width="70"
-                                        Height="25"
-                                        Content="{DynamicResource DevicesManagement_Button_Exit}" 
-                                        Margin="15,0"
+                                        Width="Auto" 
+                                    Height="25"
+                                    Padding="5 0"
+                                    Margin="10 0"
+                                        Content="{DynamicResource DevicesManagement_Button_Exit}"
                                         Click="Btn_Exit_Device_Click"/>
                             </StackPanel>
                         </Grid>
@@ -321,19 +324,22 @@
                                                 <Button Name="btn_Add_Device"
                                                         Click="Btn_Add_Device_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Plus"/>
                                                 </Button>
                                                 <Button Name="btn_Delete_Device"
                                                         Click="Btn_Delete_Device_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Delete"/>
                                                 </Button>
                                                 <Button Name="btn_Refresh_Device2"
                                                         Click="Btn_Refresh_Device_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
@@ -449,30 +455,30 @@
                                                     <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
                                                         <Label VerticalAlignment="Center" 
-                                                               Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Bay}"
-                                                               FontSize="12"></Label>
+                                                               Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Bay}"/>
                                                         <TextBox Name="MaxBaytb" 
                                                                  Width="40"
-                                                                 PreviewTextInput="MaxBaytb_PreviewTextInput"></TextBox>
+                                                                 Height="17"
+                                                                 PreviewTextInput="MaxBaytb_PreviewTextInput"/>
                                                     </StackPanel>
                                                     <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
                                                         <Label VerticalAlignment="Center" 
-                                                               Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Row}"
-                                                               FontSize="12"></Label>
+                                                               Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Row}"/>
                                                         <TextBox Name="MaxRowtb" 
                                                                  Width="40"
-                                                                 PreviewTextInput ="MaxRowtb_PreviewTextInput"></TextBox>
+                                                                 Height="17"
+                                                                 PreviewTextInput ="MaxRowtb_PreviewTextInput"/>
                                                     </StackPanel>
                                                     <Button Name="btn_Apply" 
                                                             Margin="20,0,0,0"
-                                                            Height="25" Width="32"
+                                                            Height="20" Width="25"
                                                             Click="Btn_Apply_DeviceBufferData_Click">
                                                         <iconPacks:PackIconMaterial Kind="Check"/>
                                                     </Button>
                                                     <Button Name="btn_Save_DevicePallet" 
                                                             Margin="20,0,0,0"
-                                                            Height="25" Width="32"
+                                                            Height="20" Width="25"
                                                             Click="Btn_Save_DevicePallet_Click">
                                                         <iconPacks:PackIconMaterial Kind="ContentSave"/>
                                                     </Button>
@@ -607,7 +613,8 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="X" FontSize="12"/>
                                                             <TextBox Name="palletLineX" 
-                                                                     Width="35" FontSize="12"
+                                                                     Width="35"
+                                                                     Height="17"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal" 
@@ -615,7 +622,8 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="Y" FontSize="12"/>
                                                             <TextBox Name="palletLineY" 
-                                                                     Width="35" FontSize="12"
+                                                                     Width="35" 
+                                                                     Height="17"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal" 
@@ -623,7 +631,8 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="A" FontSize="12"/>
                                                             <TextBox Name="palletLineA" 
-                                                                     Width="35" FontSize="12"
+                                                                     Width="35"
+                                                                     Height="17"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
                                                     </StackPanel>
@@ -641,13 +650,14 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="D" FontSize="12"/>
                                                             <TextBox Name="palletPalletD" 
-                                                                     Width="35" FontSize="12"
+                                                                     Width="35" 
+                                                                     Height="17"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
                                                         <StackPanel VerticalAlignment="Center">
                                                             <Button Name="btn_SetPalletDataPallet"
                                                                     Margin="15,0,0,0"
-                                                                    Height="25" Width="32"
+                                                                    Height="20" Width="25"
                                                                     Click="Btn_SetPalletDataPallet_Click">
                                                                 <iconPacks:PackIconMaterial Kind="ContentSave"/>
                                                             </Button>
@@ -666,16 +676,18 @@
                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Center">
                                 <Button Name="Btn_Save_DevicePallet" 
-                                        Width="70" 
+                                        Width="Auto" 
                                         Height="25"
-                                        Content="{DynamicResource DevicesManagement_Button_Save}" 
-                                        Margin="15,0"
+                                        Padding="5 0"
+                                        Margin="10 0"
+                                        Content="{DynamicResource DevicesManagement_Button_Save}"
                                         Click="Btn_Save_Devices_Click"/>
                                 <Button Name="Btn_Exit_DevicePallet" 
-                                        Width="70" 
+                                        Width="Auto" 
                                         Height="25"
-                                        Content="{DynamicResource DevicesManagement_Button_Exit}" 
-                                        Margin="15,0"
+                                        Padding="5 0"
+                                        Margin="10 0"
+                                        Content="{DynamicResource DevicesManagement_Button_Exit}"
                                         Click="Btn_Exit_DevicePallet_Click"/>
                             </StackPanel>
                         </Grid>
@@ -706,19 +718,22 @@
                                                 <Button Name="btn_Add_Product"
                                                         Click="Btn_Add_Product_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Plus"/>
                                                 </Button>
                                                 <Button Name="btn_Delete_Product"
                                                         Click="Btn_Delete_Product_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Delete"/>
                                                 </Button>
                                                 <Button Name="btn_Refresh_Product"
                                                         Click="Btn_Refresh_Product_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
@@ -827,19 +842,22 @@
                                                 <Button Name="btn_Add_ProductDetail"
                                                         Click="Btn_Add_ProductDetail_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Plus"/>
                                                 </Button>
                                                 <Button Name="btn_Delete_ProductDetail"
                                                         Click="Btn_Delete_ProductDetail_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Delete"/>
                                                 </Button>
                                                 <Button Name="btn_Refresh_ProductDetail"
                                                         Click="Btn_Refresh_ProductDetail_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
@@ -893,16 +911,18 @@
                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Center">
                                 <Button Name="Btn_Save_Product" 
-                                        Width="70" 
-                                        Height="25"
-                                        Content="{DynamicResource DevicesManagement_Button_Save}" 
-                                        Margin="15,0"
+                                        Width="Auto" 
+                                Height="25"
+                                Padding="5 0"
+                                Margin="10 0"
+                                        Content="{DynamicResource DevicesManagement_Button_Save}"
                                         Click="Btn_Save_Products_Click"/>
                                 <Button Name="Btn_Exit_Product" 
-                                        Width="70" 
-                                        Height="25"
+                                        Width="Auto" 
+                                Height="25"
+                                Padding="5 0"
+                                Margin="10 0"
                                         Content="{DynamicResource DevicesManagement_Button_Exit}" 
-                                        Margin="15,0"
                                         Click="Btn_Exit_Product_Click"/>
                             </StackPanel>
                         </Grid>
@@ -936,19 +956,22 @@
                                                 <Button Name="btn_Add_Buffer"
                                                         Click="Btn_Add_Buffer_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Plus"/>
                                                 </Button>
                                                 <Button Name="btn_Delete_Buffer"
                                                         Click="Btn_Delete_Buffer_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Delete"/>
                                                 </Button>
                                                 <Button Name="btn_Refresh_Buffer"
                                                         Click="Btn_Refresh_Buffer_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
@@ -1064,7 +1087,8 @@
                                                                Content="X"
                                                                FontSize="12"></Label>
                                                         <TextBox Name="bufferX" 
-                                                                 Width="45" 
+                                                                 Width="40" 
+                                                                 Height="17"
                                                                  FontSize="12"
                                                                  PreviewTextInput="BufferX_PreviewTextInput"/>
                                                     </StackPanel>
@@ -1074,7 +1098,8 @@
                                                                Content="Y"
                                                                FontSize="12"></Label>
                                                         <TextBox Name="bufferY" 
-                                                                 Width="45" 
+                                                                 Width="40" 
+                                                                 Height="17"
                                                                  FontSize="12"
                                                                  PreviewTextInput ="BufferY_PreviewTextInput"/>
                                                     </StackPanel>
@@ -1084,14 +1109,15 @@
                                                                Content="A"
                                                                FontSize="12"></Label>
                                                         <TextBox Name="bufferA" 
-                                                                 Width="45" 
+                                                                 Width="40" 
+                                                                 Height="17"
                                                                  FontSize="12"
                                                                  PreviewTextInput="BufferA_PreviewTextInput"/>
                                                     </StackPanel>
                                                     <Button Name="btn_SetBufferData"
                                                             Click="Btn_SetBufferData_Click"
                                                             Margin="15,0,0,0"
-                                                            Height="25" Width="32">
+                                                            Height="20" Width="25">
                                                         <iconPacks:PackIconMaterial Kind="ContentSave"/>
                                                     </Button>
                                                 </StackPanel>
@@ -1114,13 +1140,15 @@
                                                 <Button Name="btn_Save_Pallet"
                                                         Click="Btn_Save_Pallet_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="ContentSave"/>
                                                 </Button>
                                                 <Button Name="btn_Refresh_Pallet"
                                                         Click="Btn_Refresh_Pallet_Click"
                                                         Margin="5 0 0 0"
-                                                        Width="24" Height="24">
+                                                        Width="20" 
+                                                        Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
                                             </StackPanel>
@@ -1220,17 +1248,19 @@
                         <Grid Grid.Row="1">
                             <StackPanel Orientation="Horizontal" 
                                         HorizontalAlignment="Center">
-                                <Button Name="Btn_Save_Buffer" 
-                                        Width="70" 
-                                        Height="25"
-                                        Content="{DynamicResource DevicesManagement_Button_Save}" 
-                                        Margin="15,0"
-                                        Click="Btn_Save_Buffer_Click"/>
+                                <!--<Button Name="Btn_Save_Buffer" 
+                                     Width="Auto" 
+                                Height="25"
+                                Padding="5 0"
+                                Margin="10 0"
+                                     Content="{DynamicResource DevicesManagement_Button_Save}" 
+                                     Click="Btn_Save_Buffer_Click"/>-->
                                 <Button Name="Btn_Exit_Buffer" 
-                                        Width="70" 
-                                        Height="25"
-                                        Content="{DynamicResource DevicesManagement_Button_Exit}" 
-                                        Margin="15,0"
+                                        Width="Auto" 
+                                Height="25"
+                                Padding="5 0"
+                                Margin="10 0"
+                                        Content="{DynamicResource DevicesManagement_Button_Exit}"
                                         Click="Btn_Exit_Buffer_Click"/>
                             </StackPanel>
                         </Grid>

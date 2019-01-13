@@ -40,8 +40,10 @@
                              Height="25" 
                              Margin="11,0"
                              ></TextBox>
-                    <Button Width="70" 
-                            Margin="0,0,11,0"
+                    <Button Width="Auto"
+                            Height="25"
+                            Margin="15 0"
+                            Padding="5 0"
                             Content="{DynamicResource AddDevicesForm_Add}" 
                             Click="Button_Click"/>
                 </StackPanel>

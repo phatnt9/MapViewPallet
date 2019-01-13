@@ -26,7 +26,7 @@ namespace MapViewPallet.Shape
         private MainWindow mainWindow;
         private Canvas map;
 
-        
+
 
         private double pZoomScale;
         public double zoomScale
@@ -69,7 +69,7 @@ namespace MapViewPallet.Shape
         private string selectedItemName = "";
         private string hoveringItemName = "";
         private double slidingScale;
-        
+
         //---------------OBJECT-------------------
         public SortedDictionary<string, CanvasPath> list_Path;
         public SortedDictionary<string, StationShape> list_Station;
@@ -115,7 +115,7 @@ namespace MapViewPallet.Shape
 
             }
         }
-        public void ReCenterMapCanvas ()
+        public void ReCenterMapCanvas()
         {
             double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
             double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
@@ -191,8 +191,8 @@ namespace MapViewPallet.Shape
 
                     Point p1 = e.GetPosition(mainWindow.clipBorder);
                     Point p2 = e.GetPosition(mainWindow.map);
-                    Console.WriteLine(p1.X.ToString("0.00") +"-"+ p1.Y.ToString("0.00"));
-                    Console.WriteLine(p2.X.ToString("0.00") +"-"+ p2.Y.ToString("0.00"));
+                    Console.WriteLine(p1.X.ToString("0.00") + "-" + p1.Y.ToString("0.00"));
+                    Console.WriteLine(p2.X.ToString("0.00") + "-" + p2.Y.ToString("0.00"));
                 }
             }
             if (!mainWindow.drag)
@@ -208,7 +208,7 @@ namespace MapViewPallet.Shape
         private void Map_Zoom(object sender, MouseWheelEventArgs e)
         {
             Point mousePos = e.GetPosition(map);
-            
+
             double zoomDirection = e.Delta > 0 ? 1 : -1;
             slidingScale = 0.1 * zoomDirection;
             double edgeW = (pScaleTransform.ScaleX + slidingScale) * map.Width;
@@ -271,7 +271,7 @@ namespace MapViewPallet.Shape
                 Vector moveVector = startPoint - e.GetPosition(mainWindow.clipBorder);
                 double xCoor = originalPoint.X - moveVector.X;
                 double yCoor = originalPoint.Y - moveVector.Y;
-                
+
                 double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
                 double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
                 double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
@@ -357,7 +357,7 @@ namespace MapViewPallet.Shape
             map.ReleaseMouseCapture();
         }
 
-        
+
 
         //PROCESS=====PROCESS=====PROCESS=====PROCESS=========
 
@@ -429,7 +429,7 @@ namespace MapViewPallet.Shape
                 case Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT:
                     if (mouseWasDownOn != null)
                     {
-                        
+
                         string elementName = mouseWasDownOn.Name;
                         string type = Global_Object.Foo(mouseWasDownOn);
                         if (elementName != "")
@@ -460,9 +460,9 @@ namespace MapViewPallet.Shape
 
                             dynamic postApiBody = new JObject();
                             Point updateBufferDataPoint = Global_Object.CoorLaser(mousePos);
-                            postApiBody.x = updateBufferDataPoint.X;
-                            postApiBody.y = updateBufferDataPoint.Y;
-                            postApiBody.angle = Global_Object.bufferToMove.props._rotate;
+                            postApiBody.x = Math.Round(updateBufferDataPoint.X, 1);
+                            postApiBody.y = Math.Round(updateBufferDataPoint.Y, 1);
+                            postApiBody.angle = Math.Round(Global_Object.bufferToMove.props._rotate, 1);
                             string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                             buffer.bufferData = jsonBufferData;
 
@@ -617,7 +617,7 @@ namespace MapViewPallet.Shape
                     {
                         string elementName = mouseWasDownOn.Name;
                         string type = (e.Source.GetType().Name);
-                        if ((elementName != "") && ((type == "StraightPath")||(elementName.Split('x')[0] == "StraightPath")) )
+                        if ((elementName != "") && ((type == "StraightPath") || (elementName.Split('x')[0] == "StraightPath")))
                         {
                             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_P1;
                             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL; //stop draw
@@ -655,14 +655,14 @@ namespace MapViewPallet.Shape
         }
         public void ReloadAllStation()
         {
-            for (int i=0; i< list_Station.Count; i++)
-            {
-                Console.WriteLine(i);
-                StationShape temp = list_Station.ElementAt(i).Value;
-                Console.WriteLine("Remove: "+ list_Station.ElementAt(i).Key);
-                temp.Remove();
-            }
-            list_Station.Clear();
+            //for (int i = 0; i < list_Station.Count; i++)
+            //{
+            //    //Console.WriteLine(i);
+            //    StationShape temp = list_Station.ElementAt(i).Value;
+            //    Console.WriteLine("Remove: " + list_Station.ElementAt(i).Key);
+            //    temp.Remove();
+            //}
+            //list_Station.Clear();
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
             request.Method = "GET";
@@ -674,37 +674,46 @@ namespace MapViewPallet.Shape
                 string result = reader.ReadToEnd();
 
                 DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
-
-                foreach (DataRow dr in buffers.Rows)
+                if (buffers.Rows.Count >= list_Station.Count)
                 {
-                    dtBuffer tempBuffer = new dtBuffer
+                    foreach (DataRow dr in buffers.Rows)
                     {
-                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                        creDt = dr["creDt"].ToString(),
-                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                        updDt = dr["updDt"].ToString(),
+                        dtBuffer tempBuffer = new dtBuffer
+                        {
+                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                            creDt = dr["creDt"].ToString(),
+                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                            updDt = dr["updDt"].ToString(),
 
-                        bufferId = int.Parse(dr["bufferId"].ToString()),
-                        bufferName = dr["bufferName"].ToString(),
-                        bufferNameOld = dr["bufferNameOld"].ToString(),
-                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
-                        bufferData = dr["bufferData"].ToString(),
-                        maxBay = int.Parse(dr["maxBay"].ToString()),
-                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
-                        maxRow = int.Parse(dr["maxRow"].ToString()),
-                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
-                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
-                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
-                        //pallets
-                    };
-                    if (!list_Station.ContainsKey(tempBuffer.bufferId.ToString()))
-                    {
-                        StationShape tempStation = new StationShape(map, tempBuffer);
-                        tempStation.ReDraw();
-                        //tempStation.RemoveHandle += StationRemove;
-                        list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
-                        //list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+                            bufferId = int.Parse(dr["bufferId"].ToString()),
+                            bufferName = dr["bufferName"].ToString(),
+                            bufferNameOld = dr["bufferNameOld"].ToString(),
+                            bufferCheckIn = dr["bufferCheckIn"].ToString(),
+                            bufferData = dr["bufferData"].ToString(),
+                            maxBay = int.Parse(dr["maxBay"].ToString()),
+                            maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+                            maxRow = int.Parse(dr["maxRow"].ToString()),
+                            maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                            bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                            bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                            //pallets
+                        };
+                        if (list_Station.ContainsKey(tempBuffer.bufferId.ToString().Trim()))
+                        {
+                            list_Station[tempBuffer.bufferId.ToString().Trim()].props.bufferDb = tempBuffer;
+
+                        }
+                        else
+                        {
+                            StationShape tempStation = new StationShape(map, tempBuffer);
+                            tempStation.ReDraw();
+                            //tempStation.RemoveHandle += StationRemove;
+                            list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+                        }
                     }
+                }
+                else
+                {
 
                 }
             }
@@ -713,7 +722,7 @@ namespace MapViewPallet.Shape
         {
             Point mousePos = e.GetPosition(map);
             var mouseWasDownOn = e.Source as FrameworkElement;
-            
+
 
             switch (Global_Mouse.ctrl_MouseMove)
             {
@@ -769,7 +778,7 @@ namespace MapViewPallet.Shape
                     }
             }
         }
-        public void RedrawAllStation ()
+        public void RedrawAllStation()
         {
             for (int i = 0; i < list_Station.Count; i++)
             {
@@ -779,20 +788,16 @@ namespace MapViewPallet.Shape
         public void RedrawAllStation(List<dtBuffer> listBuffer)
         {
             //Có lỗi System.InvalidOperationException: 'Collection was modified after the enumerator was instantiated.'
-            lock (Global_Object.syncLock)
+            for (int i = 0; i < list_Station.Count; i++)
             {
-                for (int i = 0; i < list_Station.Count; i++)
+                foreach (dtBuffer buffer in listBuffer)
                 {
-                    foreach (dtBuffer buffer in listBuffer)
+                    if (buffer.bufferId == list_Station.ElementAt(i).Value.props.bufferDb.bufferId)
                     {
-                        if (buffer.bufferId == list_Station.ElementAt(i).Value.props.bufferDb.bufferId)
-                        {
-                            list_Station.ElementAt(i).Value.ReDraw(buffer);
-                        }
+                        list_Station.ElementAt(i).Value.ReDraw(buffer);
                     }
                 }
             }
-                
         }
         public List<dtBuffer> GetDataAllStation()
         {
@@ -836,7 +841,7 @@ namespace MapViewPallet.Shape
             }
             return listBuffer;
         }
-        public void GetListPallet (dtBuffer tempBuffer)
+        public void GetListPallet(dtBuffer tempBuffer)
         {
             HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
             request2.Method = "POST";
@@ -886,7 +891,6 @@ namespace MapViewPallet.Shape
                         productDetailId = int.Parse(dr2["productDetailId"].ToString()),
                         productDetailName = dr2["productDetailName"].ToString(),
                     };
-                    //props._palletList["Pallet" + "x" + tempPallet.bay + "x" + tempPallet.row].StatusChanged(tempPallet.palletStatus);
                     tempBuffer.pallets.Add(tempPallet);
                 }
             }

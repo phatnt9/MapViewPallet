@@ -129,9 +129,9 @@ namespace MapViewPallet.MiniForm
                 List<dtBuffer> buffers = new List<dtBuffer>();
 
                 dynamic postApiBody = new JObject();
-                postApiBody.x = double.Parse((bufferX.Text != "") ? bufferX.Text : "0");
-                postApiBody.y = double.Parse((bufferY.Text != "") ? bufferY.Text : "0");
-                postApiBody.angle = double.Parse((bufferA.Text != "") ? bufferA.Text : "0");
+                postApiBody.x = Math.Round((double.Parse((bufferX.Text != "") ? bufferX.Text : "0")), 2);
+                postApiBody.y = Math.Round((double.Parse((bufferY.Text != "") ? bufferY.Text : "0")), 2);
+                postApiBody.angle = Math.Round((double.Parse((bufferA.Text != "") ? bufferA.Text : "0")), 2);
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferCheckIn = jsonBufferData;
 
@@ -374,9 +374,9 @@ namespace MapViewPallet.MiniForm
                 List<dtBuffer> buffers = new List<dtBuffer>();
 
                 dynamic postApiBody = new JObject();
-                postApiBody.x = double.Parse((bufferPosX.Text != "") ? bufferPosX.Text : "0");
-                postApiBody.y = double.Parse((bufferPosY.Text != "") ? bufferPosY.Text : "0");
-                postApiBody.angle = double.Parse((bufferPosA.Text != "") ? bufferPosA.Text : "0");
+                postApiBody.x = Math.Round((double.Parse((bufferPosX.Text != "") ? bufferPosX.Text : "0")),2);
+                postApiBody.y = Math.Round((double.Parse((bufferPosY.Text != "") ? bufferPosY.Text : "0")),2);
+                postApiBody.angle = Math.Round((double.Parse((bufferPosA.Text != "") ? bufferPosA.Text : "0")),2);
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 

@@ -163,7 +163,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
                 if (result > 0)
                 {
-                    devicesManagement.managementModel.ReloadListBuffers();
+                    devicesManagement.deviceManagementModel.ReloadListBuffers();
                     System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (result == -2)

@@ -94,7 +94,7 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel Width="300" 
+            <StackPanel Width="Auto" 
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Grid>
@@ -103,14 +103,18 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Button Name="btn_save" Width="90" 
-                                FontSize="13"
+                        <Button Name="btn_save" Width="Auto"
+                                Height="25"
+                                Margin="15 0"
+                                Padding="5 0"
                                 Content="{DynamicResource AddUserForm_Save}" 
                                 Click="Btn_save_Click"></Button>
                     </Grid>
                     <Grid Grid.Column="1">
-                        <Button Name="btn_exit" Width="90" 
-                                FontSize="13"
+                        <Button Name="btn_exit" Width="Auto"
+                                Height="25"
+                                Margin="15 0"
+                                Padding="5 0"
                                 Content="{DynamicResource AddUserForm_Exit}" 
                                 Click="Btn_exit_Click"></Button>
                     </Grid>

@@ -37,6 +37,7 @@
                              Width="170"
                              CharacterCasing="Upper"
                              PreviewKeyDown="UserNametb_PreviewKeyDown">
+                        SELDATADMIN
                     </TextBox>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 10"
@@ -46,7 +47,8 @@
                     <iconPacks:PackIconMaterial Kind="Key" Margin="5 0"/>
                     <PasswordBox Name="passwordtb" 
                                  Width="170"
-                                 PreviewKeyDown="Passwordtb_PreviewKeyDown">
+                                 PreviewKeyDown="Passwordtb_PreviewKeyDown"
+                                 Password="seldat">
                     </PasswordBox>
 
                 </StackPanel>
