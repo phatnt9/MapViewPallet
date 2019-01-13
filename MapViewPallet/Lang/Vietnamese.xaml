@@ -23,6 +23,7 @@
     <sys:String x:Key="Station_Menu_Item_Properties">Thông tin</sys:String>
     <sys:String x:Key="Station_Menu_Item_Edit">Tùy chỉnh</sys:String>
     <sys:String x:Key="Station_Menu_Item_Rotate">Xoay</sys:String>
+    <sys:String x:Key="Station_Menu_Item_Remove">Xóa</sys:String>
 
     <!--Toolbar-->
     <sys:String x:Key="MainWindow_Toolbar_MapReCenter">Đặt lại bản đồ</sys:String>

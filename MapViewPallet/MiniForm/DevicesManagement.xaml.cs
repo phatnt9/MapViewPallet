@@ -1115,6 +1115,8 @@ namespace MapViewPallet.MiniForm
                     {
                         System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         deviceManagementModel.ReloadListBuffers();
+                        mainWindow.canvasControlService.list_Station.Remove(buffer.bufferName.ToString().Trim());
+
                     }
                     else if (result == 2)
                     {
@@ -1129,6 +1131,7 @@ namespace MapViewPallet.MiniForm
                 }
 
             }
+            mainWindow.canvasControlService.ReloadAllStation();
         }
 
         private void Btn_SetBufferData_Click(object sender, RoutedEventArgs e)
@@ -1397,7 +1400,6 @@ namespace MapViewPallet.MiniForm
                     deviceManagementModel.ReloadListBuffers();
                 }
             }
-            mainWindow.canvasControlService.ReloadAllStation();
             deviceManagementModel.UpdateDataStatus("Sẵn sàng");
         }
 

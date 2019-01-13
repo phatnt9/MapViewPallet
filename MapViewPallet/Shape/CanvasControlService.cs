@@ -698,23 +698,27 @@ namespace MapViewPallet.Shape
                             bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
                             //pallets
                         };
-                        if (list_Station.ContainsKey(tempBuffer.bufferId.ToString().Trim()))
+                        if (list_Station.ContainsKey(tempBuffer.bufferName.ToString().Trim()))
                         {
-                            list_Station[tempBuffer.bufferId.ToString().Trim()].props.bufferDb = tempBuffer;
-
+                            list_Station[tempBuffer.bufferName.ToString().Trim()].props.bufferDb = tempBuffer;
+                            //Console.WriteLine("khong add them station"+ tempBuffer.bufferName);
                         }
                         else
                         {
                             StationShape tempStation = new StationShape(map, tempBuffer);
-                            tempStation.ReDraw();
+                            //tempStation.ReDraw();
                             //tempStation.RemoveHandle += StationRemove;
                             list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+                            //Console.WriteLine("Add them station" + tempBuffer.bufferName);
                         }
                     }
                 }
                 else
                 {
-
+                    foreach (KeyValuePair<string,StationShape> station in list_Station)
+                    {
+                        MessageBox.Show("Station Error");
+                    }
                 }
             }
         }
@@ -778,13 +782,15 @@ namespace MapViewPallet.Shape
                     }
             }
         }
-        public void RedrawAllStation()
-        {
-            for (int i = 0; i < list_Station.Count; i++)
-            {
-                list_Station.ElementAt(i).Value.ReDraw();
-            }
-        }
+
+        //public void RedrawAllStation()
+        //{
+        //    for (int i = 0; i < list_Station.Count; i++)
+        //    {
+        //        list_Station.ElementAt(i).Value.ReDraw();
+        //    }
+        //}
+
         public void RedrawAllStation(List<dtBuffer> listBuffer)
         {
             //Có lỗi System.InvalidOperationException: 'Collection was modified after the enumerator was instantiated.'

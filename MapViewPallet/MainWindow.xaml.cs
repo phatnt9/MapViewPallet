@@ -193,17 +193,12 @@ namespace MapViewPallet
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             CenterWindowOnScreen();
-            //TEST frm1 = new TEST();
-            //frm1.ShowDialog();
-
-
             myManagementWindow.Visibility = Visibility.Hidden;
             LoginForm frm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
             frm.ShowDialog();
             if (Global_Object.userLogin <= 2)
             {
                 myManagementWindow.Visibility = Visibility.Visible;
-
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     canvasControlService.ReloadAllStation();
@@ -286,63 +281,63 @@ namespace MapViewPallet
         }
 
 
-        public void LoadStation()
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
-            request.Method = "GET";
-            request.ContentType = @"application/json";
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                string result = reader.ReadToEnd();
+        //public void LoadStation()
+        //{
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+        //    request.Method = "GET";
+        //    request.ContentType = @"application/json";
+        //    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+        //    using (Stream responseStream = response.GetResponseStream())
+        //    {
+        //        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+        //        string result = reader.ReadToEnd();
 
-                DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
+        //        DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
 
-                foreach (DataRow dr in buffers.Rows)
-                {
-                    dtBuffer tempBuffer = new dtBuffer
-                    {
-                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                        creDt = dr["creDt"].ToString(),
-                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                        updDt = dr["updDt"].ToString(),
-                        bufferId = int.Parse(dr["bufferId"].ToString()),
-                        bufferName = dr["bufferName"].ToString(),
-                        maxBay = int.Parse(dr["maxBay"].ToString()),
-                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
-                        maxRow = int.Parse(dr["maxRow"].ToString()),
-                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
-                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
-                        bufferNameOld = dr["bufferNameOld"].ToString(),
-                        bufferData = dr["bufferData"].ToString(),
-                        //bufferData = bufferData[i],
-                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
-                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
-                    };
-                    if (!canvasControlService.list_Station.ContainsKey(tempBuffer.bufferId.ToString()))
-                    {
-                        StationShape tempStation = new StationShape(map, tempBuffer);
+        //        foreach (DataRow dr in buffers.Rows)
+        //        {
+        //            dtBuffer tempBuffer = new dtBuffer
+        //            {
+        //                creUsrId = int.Parse(dr["creUsrId"].ToString()),
+        //                creDt = dr["creDt"].ToString(),
+        //                updUsrId = int.Parse(dr["updUsrId"].ToString()),
+        //                updDt = dr["updDt"].ToString(),
+        //                bufferId = int.Parse(dr["bufferId"].ToString()),
+        //                bufferName = dr["bufferName"].ToString(),
+        //                maxBay = int.Parse(dr["maxBay"].ToString()),
+        //                maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+        //                maxRow = int.Parse(dr["maxRow"].ToString()),
+        //                maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+        //                bufferCheckIn = dr["bufferCheckIn"].ToString(),
+        //                bufferNameOld = dr["bufferNameOld"].ToString(),
+        //                bufferData = dr["bufferData"].ToString(),
+        //                //bufferData = bufferData[i],
+        //                bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+        //                bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+        //            };
+        //            if (!canvasControlService.list_Station.ContainsKey(tempBuffer.bufferId.ToString()))
+        //            {
+        //                StationShape tempStation = new StationShape(map, tempBuffer);
 
-                        tempStation.ReDraw();
-                        //tempStation.RemoveHandle += palletViewEventControl.StationRemove;
-                        //palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Replace(" ",""), tempStation);
-                        canvasControlService.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
-                        stationGroup.Items.Add(new TrvStation(tempStation));
+        //                tempStation.ReDraw();
+        //                //tempStation.RemoveHandle += palletViewEventControl.StationRemove;
+        //                //palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Replace(" ",""), tempStation);
+        //                canvasControlService.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+        //                stationGroup.Items.Add(new TrvStation(tempStation));
 
-                        mainWindowModel.AddItem(new DgvStation
-                        {
-                            Name = tempStation.Name,
-                            Bays = tempStation.props.bufferDb.maxBay,
-                            Rows = tempStation.props.bufferDb.maxRow,
-                            Position = tempStation.props._posision,
-                            Angle = tempStation.props._rotate
-                        });
-                    }
+        //                mainWindowModel.AddItem(new DgvStation
+        //                {
+        //                    Name = tempStation.Name,
+        //                    Bays = tempStation.props.bufferDb.maxBay,
+        //                    Rows = tempStation.props.bufferDb.maxRow,
+        //                    Position = tempStation.props._posision,
+        //                    Angle = tempStation.props._rotate
+        //                });
+        //            }
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
         private void btn_LoadExcel_Click(object sender, RoutedEventArgs e)
         {
@@ -433,18 +428,18 @@ namespace MapViewPallet
             //stationGroup.Items.Remove(temp);
         }
 
-        private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
-        {
-            canvasControlService.ReloadAllStation();
-            //LoadPath(@"C:\Users\LI\Desktop\Path.xls");
-            //LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
-            string fileName1 = "Path.xls";
-            //string fileName2 = "StationMain.xls";
-            string path1 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName1);
-            //string path2 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName2);
-            LoadPath(path1);
-            //LoadStation(path2);
-        }
+        //private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
+        //{
+        //    canvasControlService.ReloadAllStation();
+        //    //LoadPath(@"C:\Users\LI\Desktop\Path.xls");
+        //    //LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
+        //    string fileName1 = "Path.xls";
+        //    //string fileName2 = "StationMain.xls";
+        //    string path1 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName1);
+        //    //string path2 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName2);
+        //    LoadPath(path1);
+        //    //LoadStation(path2);
+        //}
 
         //private void StationsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         //{
