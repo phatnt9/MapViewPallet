@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MapViewPallet.Shape;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
@@ -119,14 +120,18 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
             if (maxRow == 0)
             {
-                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidateNumber, "Max Row", "greater", "0"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                System.Windows.Forms.MessageBox.Show
+                    (String.Format(Global_Object.messageValidateNumber, "Max Row", "greater", "0"), 
+                    Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.bufferMaxRowtb.Focus();
                 return;
             }
 
             if (maxBay == 0)
             {
-                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidateNumber, "Max Bay", "greater", "0"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                System.Windows.Forms.MessageBox.Show
+                    (String.Format(Global_Object.messageValidateNumber, "Max Bay", "greater", "0"), 
+                    Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.bufferMaxBaytb.Focus();
                 return;
             }
@@ -163,7 +168,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
                 if (result > 0)
                 {
-                    devicesManagement.deviceManagementModel.ReloadListBuffers();
+                    devicesManagement.mainWindow.canvasControlService.ReloadAllStation();
                     System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (result == -2)

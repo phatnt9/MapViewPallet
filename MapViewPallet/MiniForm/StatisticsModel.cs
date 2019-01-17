@@ -659,6 +659,7 @@ namespace MapViewPallet.MiniForm
                         rpBeginDatetime = dr["rpBeginDatetime"].ToString(),
                         rpEndDatetime = dr["rpEndDatetime"].ToString(),
                         robotProcessStastus = dr["robotProcessStastus"].ToString(),
+                        orderContent = dr["orderContent"].ToString(),
                         robotId = dr["robotId"].ToString(),
                         timeWorkId = int.Parse(dr["timeWorkId"].ToString()),
                         activeDate = dr["activeDate"].ToString()
@@ -813,6 +814,7 @@ namespace MapViewPallet.MiniForm
             }
             return false;
         }
+        
     }
 
     

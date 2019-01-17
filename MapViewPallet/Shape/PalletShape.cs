@@ -19,7 +19,7 @@ namespace MapViewPallet.Shape
 {
     public class PalletShape : Border
     {
-        private double palletMargin = 0.05; //metters
+        private double palletMargin = 0.1; //metters
 
         private dtPallet pPallet;
         public dtPallet pallet { get => pPallet; set => pPallet = value; }
@@ -34,8 +34,14 @@ namespace MapViewPallet.Shape
             this.name = name;
             Name = name;
             // Specific Size of Pallet
-            Margin = new Thickness(palletMargin / Global_Object.resolution);
-            //Padding = new Thickness(palletPadding / Global_Object.resolution);
+            Margin = new Thickness
+                (
+                (palletMargin / Global_Object.resolution)+0,
+                (palletMargin / Global_Object.resolution)+0,
+                (palletMargin / Global_Object.resolution)+0,
+                (palletMargin / Global_Object.resolution)+0
+                );
+            Padding = new Thickness(5,0,5,0);
             // Style Pallet Border
             BorderBrush = new SolidColorBrush(Colors.Black);
             BorderThickness = new Thickness(0.3);

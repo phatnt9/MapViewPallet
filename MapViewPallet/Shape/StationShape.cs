@@ -23,7 +23,8 @@ namespace MapViewPallet.Shape
     {
 
         //public event Action<string> RemoveHandle;
-
+        int StaticWidth = 16;
+        int StaticHeight = 18;
         public class Props
         {
             //public bool isSelected;
@@ -85,7 +86,8 @@ namespace MapViewPallet.Shape
             //SHAPE
             ToolTip = "";
             ToolTipOpening += ChangeToolTipContent;
-            BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF1F1F"));
+            //BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF1F1F"));
+            BorderBrush = new SolidColorBrush(Colors.Lime);
             BorderThickness = new Thickness(1,0,1,1);
             CornerRadius = new CornerRadius(0);
             RenderTransformOrigin = new Point(0, 0);
@@ -131,8 +133,8 @@ namespace MapViewPallet.Shape
             //MouseLeftButtonDown += MouseLeftButtonDownStation;
             //MouseRightButtonDown += MouseRightButtonDownStation;
             //===================CREATE=====================
-            Width = 11 * props.bufferDb.maxBay;
-            Height = 13 * props.bufferDb.maxRow;
+            Width = StaticWidth * props.bufferDb.maxBay;
+            Height = StaticHeight * props.bufferDb.maxRow;
             props.NameID = props.bufferDb.bufferName; //label
             props._palletList = new SortedDictionary<string, PalletShape>();
             props._myTransformGroup = new TransformGroup();
@@ -241,8 +243,8 @@ namespace MapViewPallet.Shape
                     props._stationGrid.RowDefinitions.Clear();
                     props._stationGrid.ColumnDefinitions.Clear();
 
-                    Width = 11 * props.bufferDb.maxBay;
-                    Height = 13 * props.bufferDb.maxRow;
+                    Width = StaticWidth * props.bufferDb.maxBay;
+                    Height = StaticHeight * props.bufferDb.maxRow;
 
 
                     for (int bayIndex = 0; bayIndex < props.bufferDb.maxBay; bayIndex++) //Column Index
@@ -285,6 +287,13 @@ namespace MapViewPallet.Shape
                 else
                 {
                     props.bufferDb = buffer;
+                    Dispatcher.BeginInvoke(new ThreadStart(() =>
+                    {
+                        props._myRotateTransform.Angle = props._rotate;
+                        props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
+                        props._myTransformGroup.Children[0] = props._myRotateTransform;
+                        props._myTransformGroup.Children[1] = props._myTranslateTransform;
+                    }));
                 }
 
             }
@@ -304,13 +313,6 @@ namespace MapViewPallet.Shape
                     props._palletList["Pallet" + "x" + dr.bay + "x" + dr.row].StatusChanged(dr);
                 }
             }
-            Dispatcher.BeginInvoke(new ThreadStart(() =>
-            {
-                props._myRotateTransform.Angle = props._rotate;
-                props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
-                props._myTransformGroup.Children[0] = props._myRotateTransform;
-                props._myTransformGroup.Children[1] = props._myTranslateTransform;
-            }));
         }
 
         public void EditMenu(object sender, RoutedEventArgs e)
@@ -407,11 +409,12 @@ namespace MapViewPallet.Shape
 
         private void ChangeToolTipContent(object sender, ToolTipEventArgs e)
         {
-            ToolTip = "Tên: " + props.NameID +
-                "\n Vị trí: " + Global_Object.CoorLaser(props._posision).X.ToString("0.00") + "," + Global_Object.CoorLaser(props._posision).Y.ToString("0.00") +
-                " \n Dài: " + Height.ToString("0.00") + "m" +
-                " \n Rộng: " + Width.ToString("0.00") + "m" +
-                " \n Góc quay: " + props._rotate;
+            //ToolTip = "Tên: " + props.NameID +
+            //    "\n Vị trí: " + Global_Object.CoorLaser(props._posision).X.ToString("0.00") + "," + Global_Object.CoorLaser(props._posision).Y.ToString("0.00") +
+            //    " \n Dài: " + Height.ToString("0.00") + "m" +
+            //    " \n Rộng: " + Width.ToString("0.00") + "m" +
+            //    " \n Góc quay: " + props._rotate;
+            ToolTip = ""+props.NameID;
         }
 
         public void Remove()

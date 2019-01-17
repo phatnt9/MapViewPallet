@@ -20,8 +20,7 @@ namespace MapViewPallet.MiniForm
         private int _operationType;
         private string _rpBeginDatetime;
         private string _rpEndDatetime;
-        private string _locationBuffer;
-        private string _locationPallet;
+        private string _orderContent;
         private string _robotProcessStastus;
 
         private string _robotId;
@@ -40,8 +39,7 @@ namespace MapViewPallet.MiniForm
         public int operationType { get => _operationType; set => _operationType = value; }
         public string rpBeginDatetime { get => _rpBeginDatetime; set => _rpBeginDatetime = value; }
         public string rpEndDatetime { get => _rpEndDatetime; set => _rpEndDatetime = value; }
-        public string locationBuffer { get => _locationBuffer; set => _locationBuffer = value; }
-        public string locationPallet { get => _locationPallet; set => _locationPallet = value; }
+        public string orderContent { get => _orderContent; set => _orderContent = value; }
         public string robotProcessStastus { get => _robotProcessStastus; set => _robotProcessStastus = value; }
         public string robotId { get => _robotId; set => _robotId = value; }
         public int timeWorkId { get => _timeWorkId; set => _timeWorkId = value; }

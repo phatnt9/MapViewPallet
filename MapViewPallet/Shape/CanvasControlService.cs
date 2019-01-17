@@ -277,6 +277,9 @@ namespace MapViewPallet.Shape
                 double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
                 double ClipBorderHeight = (mainWindow.clipBorder.ActualHeight);
 
+                //translateTransform.X = xCoor;
+                //translateTransform.Y = yCoor;
+
                 double xlim;
                 double ylim;
                 if (ClipBorderWidth < map.Width)
@@ -655,14 +658,14 @@ namespace MapViewPallet.Shape
         }
         public void ReloadAllStation()
         {
-            //for (int i = 0; i < list_Station.Count; i++)
-            //{
-            //    //Console.WriteLine(i);
-            //    StationShape temp = list_Station.ElementAt(i).Value;
-            //    Console.WriteLine("Remove: " + list_Station.ElementAt(i).Key);
-            //    temp.Remove();
-            //}
-            //list_Station.Clear();
+            for (int i = 0; i < list_Station.Count; i++)
+            {
+                //Console.WriteLine(i);
+                StationShape temp = list_Station.ElementAt(i).Value;
+                Console.WriteLine("Remove: " + list_Station.ElementAt(i).Key);
+                temp.Remove();
+            }
+            list_Station.Clear();
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
             request.Method = "GET";
@@ -674,54 +677,45 @@ namespace MapViewPallet.Shape
                 string result = reader.ReadToEnd();
 
                 DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
-                if (buffers.Rows.Count >= list_Station.Count)
+                foreach (DataRow dr in buffers.Rows)
                 {
-                    foreach (DataRow dr in buffers.Rows)
+                    dtBuffer tempBuffer = new dtBuffer
                     {
-                        dtBuffer tempBuffer = new dtBuffer
-                        {
-                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                            creDt = dr["creDt"].ToString(),
-                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                            updDt = dr["updDt"].ToString(),
+                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                        creDt = dr["creDt"].ToString(),
+                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                        updDt = dr["updDt"].ToString(),
 
-                            bufferId = int.Parse(dr["bufferId"].ToString()),
-                            bufferName = dr["bufferName"].ToString(),
-                            bufferNameOld = dr["bufferNameOld"].ToString(),
-                            bufferCheckIn = dr["bufferCheckIn"].ToString(),
-                            bufferData = dr["bufferData"].ToString(),
-                            maxBay = int.Parse(dr["maxBay"].ToString()),
-                            maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
-                            maxRow = int.Parse(dr["maxRow"].ToString()),
-                            maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
-                            bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
-                            bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
-                            //pallets
-                        };
-                        if (list_Station.ContainsKey(tempBuffer.bufferName.ToString().Trim()))
-                        {
-                            list_Station[tempBuffer.bufferName.ToString().Trim()].props.bufferDb = tempBuffer;
-                            //Console.WriteLine("khong add them station"+ tempBuffer.bufferName);
-                        }
-                        else
-                        {
-                            StationShape tempStation = new StationShape(map, tempBuffer);
-                            //tempStation.ReDraw();
-                            //tempStation.RemoveHandle += StationRemove;
-                            list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
-                            //Console.WriteLine("Add them station" + tempBuffer.bufferName);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (KeyValuePair<string,StationShape> station in list_Station)
+                        bufferId = int.Parse(dr["bufferId"].ToString()),
+                        bufferName = dr["bufferName"].ToString(),
+                        bufferNameOld = dr["bufferNameOld"].ToString(),
+                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
+                        bufferData = dr["bufferData"].ToString(),
+                        maxBay = int.Parse(dr["maxBay"].ToString()),
+                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+                        maxRow = int.Parse(dr["maxRow"].ToString()),
+                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                        //pallets
+                    };
+                    if (list_Station.ContainsKey(tempBuffer.bufferName.ToString().Trim()))
                     {
-                        MessageBox.Show("Station Error");
+                        list_Station[tempBuffer.bufferName.ToString().Trim()].props.bufferDb = tempBuffer;
+                        Console.WriteLine("Upadte bufferDb station ReloadAllStation:" + tempBuffer.bufferName);
+                    }
+                    else
+                    {
+                        StationShape tempStation = new StationShape(map, tempBuffer);
+                        //tempStation.ReDraw();
+                        //tempStation.RemoveHandle += StationRemove;
+                        list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+                        Console.WriteLine("Add them station ReloadAllStation:" + tempBuffer.bufferName);
                     }
                 }
             }
         }
+
         void Statectrl_MouseMove(MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(map);

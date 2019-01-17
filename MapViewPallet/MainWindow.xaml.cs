@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MahApps.Metro.Controls;
 using System.Threading.Tasks;
+using MapViewPallet.MiniForm.MicsWpfForm;
 
 namespace MapViewPallet
 {
@@ -46,7 +47,6 @@ namespace MapViewPallet
             station = pStation;
             Name = station.Name;
             Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
-
         }
 
         public string Name { get; set; }
@@ -58,7 +58,6 @@ namespace MapViewPallet
 
     public partial class MainWindow : Window
     {
-
         //=================VARIABLE==================
         public System.Timers.Timer stationTimer;
         //public System.Timers.Timer robotTimer;
@@ -75,36 +74,35 @@ namespace MapViewPallet
         Point transform = new Point(0, 0);
         public CanvasControlService canvasControlService;
         System.Media.SoundPlayer snd;
-        //PlanControl planControl;
-        //DevicesManagement devicesManagement;
-        //UserManagement userManagement;
 
+
+        PlanControl planControl;
+        DevicesManagement devicesManagement;
+        UserManagement userManagement;
+        Statistics statistics;
 
         public MainWindow()
         {
             InitializeComponent();
             ApplyLanguage();
-
+            Loaded += MainWindow_Loaded;
+            Closing += MainWindow_Closing;
             //==============TreeView=============
-            trvGroups = new List<dynamic>();
-            stationGroup = new TrvStationGroup();
-            trvGroups.Add(stationGroup);
-            //mainTreeView.ItemsSource = trvGroups;
-            //mainTreeView.GotFocus += mainTreeView_GotFocus;
-            //mainTreeView.LostFocus += mainTreeView_LostFocus;
             //===================================
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
-            ImageBrush img = LoadImage("mapbackground");
+
+            ImageBrush img = LoadImage("test3");
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
+
             canvasControlService = new CanvasControlService(this);
+
             snd = new System.Media.SoundPlayer();
+
             //===============DataGridView========
-            
+
             mainWindowModel = new MainWindowModel(this);
-            //previousStationNameIdDgv = "";
-            //previousStationNameIdTrv = "";
             DataContext = canvasControlService;
 
 
@@ -120,11 +118,6 @@ namespace MapViewPallet
             //robotTimer.Elapsed += OnTimedRedrawRobotEvent;
             //robotTimer.AutoReset = true;
             //robotTimer.Enabled = true;
-            
-            Loaded += MainWindow_Loaded;
-
-            
-
 
             //Dispatcher.BeginInvoke(new ThreadStart(() =>
             //{
@@ -141,6 +134,56 @@ namespace MapViewPallet
             //        Thread.Sleep(100);
             //    }
             //}));
+        }
+
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            Global_Object.musicPlayerOld.StopPlaying();
+            Global_Object.musicPlayerOld = null;
+        }
+
+        private void DevicesManagement_Closed(object sender, EventArgs e)
+        {
+            devicesManagement = null;
+        }
+
+
+        private void PlanControl_Closed(object sender, EventArgs e)
+        {
+            planControl = null;
+        }
+
+        private void UserManagement_Closed(object sender, EventArgs e)
+        {
+            userManagement = null;
+        }
+        
+        private void Statistics_Closed(object sender, EventArgs e)
+        {
+            statistics = null;
+        }
+
+
+        public System.Drawing.Image Resize(System.Drawing.Image img, float percentage)
+        {
+            //lấy kích thước ban đầu của bức ảnh
+            int originalW = (int)img.Width;
+            int originalH = (int)img.Height;
+
+            //tính kích thước cho ảnh mới theo tỷ lệ đưa vào
+            int resizedW = (int)(originalW * percentage);
+            int resizedH = (int)(originalH * percentage);
+
+            //tạo 1 ảnh Bitmap mới theo kích thước trên
+            System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(resizedW, resizedH);
+            //tạo 1 graphic mới từ Bitmap
+            System.Drawing.Graphics graphic = System.Drawing.Graphics.FromImage((System.Drawing.Image)bmp);
+            //vẽ lại ảnh ban đầu lên bmp theo kích thước mới
+            graphic.DrawImage(img, 0, 0, resizedW, resizedH);
+            //giải phóng tài nguyên mà graphic đang giữ
+            graphic.Dispose();
+            //return the image
+            return (System.Drawing.Image)bmp;
         }
 
 
@@ -178,7 +221,7 @@ namespace MapViewPallet
             MenuItem menuItem = sender as MenuItem;
             ApplyLanguage(menuItem.Tag.ToString());
         }
-        
+
 
         private void CenterWindowOnScreen()
         {
@@ -196,7 +239,7 @@ namespace MapViewPallet
             myManagementWindow.Visibility = Visibility.Hidden;
             LoginForm frm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
             frm.ShowDialog();
-            if (Global_Object.userLogin <= 2)
+            if (Global_Object.userAuthor <= 2)
             {
                 myManagementWindow.Visibility = Visibility.Visible;
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
@@ -213,18 +256,10 @@ namespace MapViewPallet
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
         {
-            //Parallel.Invoke(() =>
-            //{
-            //    //Console.WriteLine("Begin first task...");
-            //    canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
-            //});
-
             Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
                 canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
             }));
-
-            //canvasControlService.RedrawAllStation();
         }
 
         public ImageBrush LoadImage(string name)
@@ -281,64 +316,6 @@ namespace MapViewPallet
         }
 
 
-        //public void LoadStation()
-        //{
-        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
-        //    request.Method = "GET";
-        //    request.ContentType = @"application/json";
-        //    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-        //    using (Stream responseStream = response.GetResponseStream())
-        //    {
-        //        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-        //        string result = reader.ReadToEnd();
-
-        //        DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
-
-        //        foreach (DataRow dr in buffers.Rows)
-        //        {
-        //            dtBuffer tempBuffer = new dtBuffer
-        //            {
-        //                creUsrId = int.Parse(dr["creUsrId"].ToString()),
-        //                creDt = dr["creDt"].ToString(),
-        //                updUsrId = int.Parse(dr["updUsrId"].ToString()),
-        //                updDt = dr["updDt"].ToString(),
-        //                bufferId = int.Parse(dr["bufferId"].ToString()),
-        //                bufferName = dr["bufferName"].ToString(),
-        //                maxBay = int.Parse(dr["maxBay"].ToString()),
-        //                maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
-        //                maxRow = int.Parse(dr["maxRow"].ToString()),
-        //                maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
-        //                bufferCheckIn = dr["bufferCheckIn"].ToString(),
-        //                bufferNameOld = dr["bufferNameOld"].ToString(),
-        //                bufferData = dr["bufferData"].ToString(),
-        //                //bufferData = bufferData[i],
-        //                bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
-        //                bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
-        //            };
-        //            if (!canvasControlService.list_Station.ContainsKey(tempBuffer.bufferId.ToString()))
-        //            {
-        //                StationShape tempStation = new StationShape(map, tempBuffer);
-
-        //                tempStation.ReDraw();
-        //                //tempStation.RemoveHandle += palletViewEventControl.StationRemove;
-        //                //palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Replace(" ",""), tempStation);
-        //                canvasControlService.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
-        //                stationGroup.Items.Add(new TrvStation(tempStation));
-
-        //                mainWindowModel.AddItem(new DgvStation
-        //                {
-        //                    Name = tempStation.Name,
-        //                    Bays = tempStation.props.bufferDb.maxBay,
-        //                    Rows = tempStation.props.bufferDb.maxRow,
-        //                    Position = tempStation.props._posision,
-        //                    Angle = tempStation.props._rotate
-        //                });
-        //            }
-
-        //        }
-        //    }
-        //}
-
         private void btn_LoadExcel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -373,32 +350,7 @@ namespace MapViewPallet
             catch { }
         }
 
-        private void btn_LoadExcel2_Click(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            //    DataTable data = new DataTable();
-            //    data = Global_Object.LoadExcelFile();
-            //    foreach (DataRow row in data.Rows)
-            //    {
-            //        StationShape tempStation;
-            //        string stationName = row.Field<string>("NAME");
-            //        double oriX = double.Parse(row.Field<string>("POSITION").Split(',')[0]);
-            //        double oriY = double.Parse(row.Field<string>("POSITION").Split(',')[1]);
-            //        Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY)); // Change Laser Metter to Canvas Position
-            //        int lines = int.Parse(row.Field<string>("LINES"));
-            //        int pallets = int.Parse(row.Field<string>("PALLETS"));
-            //        double rotate = double.Parse(row.Field<string>("ROTATE"));
-            //        tempStation = new StationShape(map, stationName, lines, pallets, rotate);
-            //        tempStation.ReDraw(ori);
-            //        tempStation.RemoveHandle += palletViewEventControl.StationRemove;
-            //        palletViewEventControl.list_Station.Add(tempStation.Name, tempStation);
-            //        stationGroup.Items.Add(new TrvStation(tempStation));
-            //    }
-            //}
-            //catch { }
-        }
-        
+
 
         private void clearLog_Clicked(object sender, RoutedEventArgs e)
         {
@@ -406,11 +358,6 @@ namespace MapViewPallet
         }
 
         private void autoScrollLog_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void mainTreeView_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
 
         }
@@ -428,110 +375,51 @@ namespace MapViewPallet
             //stationGroup.Items.Remove(temp);
         }
 
-        //private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
-        //{
-        //    canvasControlService.ReloadAllStation();
-        //    //LoadPath(@"C:\Users\LI\Desktop\Path.xls");
-        //    //LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
-        //    string fileName1 = "Path.xls";
-        //    //string fileName2 = "StationMain.xls";
-        //    string path1 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName1);
-        //    //string path2 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName2);
-        //    LoadPath(path1);
-        //    //LoadStation(path2);
-        //}
-
-        //private void StationsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        //{
-
-        //}
-
-        //private void StationsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //}
-
-        //private void StationsDataGrid_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
-        //    if (temp != null)
-        //    {
-        //        Console.WriteLine("In: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
-        //        palletViewEventControl.list_Station[temp.Name].SelectedStyle();
-        //        previousStationNameIdDgv = temp.Name;
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
-
-        //private void StationsDataGrid_LostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
-        //    if (temp != null)
-        //    {
-        //        Console.WriteLine("Out: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
-        //        palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
-        //    }
-        //    else
-        //    {
-        //        if (previousStationNameIdDgv != "")
-        //        {
-        //            palletViewEventControl.list_Station[previousStationNameIdDgv].DeselectedStyle();
-        //        }
-        //    }
-        //}
-
-        //private void mainTreeView_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    TrvStation temp = mainTreeView.SelectedItem as TrvStation;
-        //    if (temp != null)
-        //    {
-        //        //Console.WriteLine("In: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
-        //        palletViewEventControl.list_Station[temp.Name].SelectedStyle();
-        //        previousStationNameIdTrv = temp.Name;
-        //    }
-        //    else
-        //    {
-
-        //    }
-
-        //}
-
-        //private void mainTreeView_LostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    TrvStation temp = mainTreeView.SelectedItem as TrvStation;
-        //    if (temp != null)
-        //    {
-        //        //Console.WriteLine("Out: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
-        //        palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
-        //    }
-        //    else
-        //    {
-        //        if (previousStationNameIdTrv != "")
-        //        {
-        //            palletViewEventControl.list_Station[previousStationNameIdTrv].DeselectedStyle();
-        //        }
-        //    }
-        //}
-
         private void btn_PlanControl_Click(object sender, RoutedEventArgs e)
         {
-            PlanControl planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
-            planControl.ShowDialog();
+            if (planControl == null)
+            {
+                planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
+                planControl.Closed += PlanControl_Closed;
+                planControl.Show();
+            }
+            else
+            {
+                planControl.Focus();
+            }
         }
 
         private void btn_DevicesManagement_Click(object sender, RoutedEventArgs e)
         {
-            DevicesManagement devicesManagement = new DevicesManagement(this,0, Thread.CurrentThread.CurrentCulture.ToString());
-            devicesManagement.ShowDialog();
+            if (devicesManagement == null)
+            {
+                DevicesManagement devicesManagement = new DevicesManagement(this, 0, Thread.CurrentThread.CurrentCulture.ToString());
+                devicesManagement.Closed += DevicesManagement_Closed;
+                devicesManagement.Show();
+            }
+            else
+            {
+                devicesManagement.ChangeTabIndex(0);
+                devicesManagement.Focus();
+            }
         }
 
         private void btn_UsersManagement_Click(object sender, RoutedEventArgs e)
         {
-            UserManagement userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
-            userManagement.ShowDialog();
+            if (userManagement == null)
+            {
+
+                userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
+                userManagement.Closed += UserManagement_Closed;
+                userManagement.Show();
+            }
+            else
+            {
+                userManagement.Focus();
+            }
         }
+
+        
 
         private void btn_ChangePassword_Click(object sender, RoutedEventArgs e)
         {
@@ -552,7 +440,6 @@ namespace MapViewPallet
             if (Global_Object.userLogin <= 2)
             {
                 myManagementWindow.Visibility = Visibility.Visible;
-
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     canvasControlService.ReloadAllStation();
@@ -577,38 +464,93 @@ namespace MapViewPallet
 
         private void Btn_PlanManagement_Click(object sender, RoutedEventArgs e)
         {
-            PlanControl planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
-            planControl.ShowDialog();
+            if (planControl == null)
+            {
+                planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
+                planControl.Closed += PlanControl_Closed;
+                planControl.Show();
+            }
+            else
+            {
+                planControl.Focus();
+            }
         }
 
         private void Btn_OperationManagement_Click(object sender, RoutedEventArgs e)
         {
-            DevicesManagement devicesManagement = new DevicesManagement(this, 0, Thread.CurrentThread.CurrentCulture.ToString());
-            devicesManagement.ShowDialog();
+            if (devicesManagement == null)
+            {
+                devicesManagement = new DevicesManagement(this, 0, Thread.CurrentThread.CurrentCulture.ToString());
+                devicesManagement.Closed += DevicesManagement_Closed;
+                devicesManagement.Show();
+            }
+            else
+            {
+                devicesManagement.ChangeTabIndex(0);
+                devicesManagement.Focus();
+            }
         }
 
         private void Btn_DeviceManagement_Click(object sender, RoutedEventArgs e)
         {
-            DevicesManagement devicesManagement = new DevicesManagement(this, 1, Thread.CurrentThread.CurrentCulture.ToString());
-            devicesManagement.ShowDialog();
+            if (devicesManagement == null)
+            {
+                devicesManagement = new DevicesManagement(this, 1, Thread.CurrentThread.CurrentCulture.ToString());
+                devicesManagement.Closed += DevicesManagement_Closed;
+                devicesManagement.Show();
+            }
+            else
+            {
+                devicesManagement.ChangeTabIndex(1);
+                devicesManagement.Focus();
+            }
+
         }
-        
+
         private void Btn_ProductManagement_Click(object sender, RoutedEventArgs e)
         {
-            DevicesManagement devicesManagement = new DevicesManagement(this, 2, Thread.CurrentThread.CurrentCulture.ToString());
-            devicesManagement.ShowDialog();
+            if (devicesManagement == null)
+            {
+                devicesManagement = new DevicesManagement(this, 2, Thread.CurrentThread.CurrentCulture.ToString());
+                devicesManagement.Closed += DevicesManagement_Closed;
+                devicesManagement.Show();
+            }
+            else
+            {
+                devicesManagement.ChangeTabIndex(2);
+                devicesManagement.Focus();
+            }
+
         }
 
         private void Btn_BufferManagement_Click(object sender, RoutedEventArgs e)
         {
-            DevicesManagement devicesManagement = new DevicesManagement(this, 3, Thread.CurrentThread.CurrentCulture.ToString());
-            devicesManagement.ShowDialog();
+            if (devicesManagement == null)
+            {
+                devicesManagement = new DevicesManagement(this, 3, Thread.CurrentThread.CurrentCulture.ToString());
+                devicesManagement.Closed += DevicesManagement_Closed;
+                devicesManagement.Show();
+            }
+            else
+            {
+                devicesManagement.ChangeTabIndex(3);
+                devicesManagement.Focus();
+            }
         }
 
         private void Btn_UserManagement_Click(object sender, RoutedEventArgs e)
         {
-            UserManagement userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
-            userManagement.ShowDialog();
+            if (userManagement == null)
+            {
+
+                userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
+                userManagement.Closed += UserManagement_Closed;
+                userManagement.Show();
+            }
+            else
+            {
+                userManagement.Focus();
+            }
         }
 
         private void Btn_MapReCenter_Click(object sender, RoutedEventArgs e)
@@ -618,9 +560,18 @@ namespace MapViewPallet
 
         private void Btn_Statistics_Click(object sender, RoutedEventArgs e)
         {
-            Statistics statistics = new Statistics();
-            statistics.ShowDialog();
+            if (statistics == null)
+            {
+                statistics = new Statistics(Thread.CurrentThread.CurrentCulture.ToString());
+                statistics.Closed += Statistics_Closed;
+                statistics.Show();
+            }
+            else
+            {
+                statistics.Focus();
+            }
         }
+
 
         private void MoveBuffer_Click(object sender, RoutedEventArgs e)
         {
@@ -628,6 +579,166 @@ namespace MapViewPallet
             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION;
             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION;
         }
+
+        private void btn_AboutUs_Click(object sender, RoutedEventArgs e)
+        {
+            About frm = new About();
+            frm.ShowDialog();
+        }
+
+        private void PlayMusic_Click(object sender, RoutedEventArgs e)
+        {
+            Global_Object.PlayWarning(true);
+        }
+
+        private void StopMusic_Click(object sender, RoutedEventArgs e)
+        {
+            Global_Object.StopWarning();
+        }
     }
 
 }
+//public void LoadStation()
+//{
+//    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+//    request.Method = "GET";
+//    request.ContentType = @"application/json";
+//    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+//    using (Stream responseStream = response.GetResponseStream())
+//    {
+//        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+//        string result = reader.ReadToEnd();
+
+//        DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
+
+//        foreach (DataRow dr in buffers.Rows)
+//        {
+//            dtBuffer tempBuffer = new dtBuffer
+//            {
+//                creUsrId = int.Parse(dr["creUsrId"].ToString()),
+//                creDt = dr["creDt"].ToString(),
+//                updUsrId = int.Parse(dr["updUsrId"].ToString()),
+//                updDt = dr["updDt"].ToString(),
+//                bufferId = int.Parse(dr["bufferId"].ToString()),
+//                bufferName = dr["bufferName"].ToString(),
+//                maxBay = int.Parse(dr["maxBay"].ToString()),
+//                maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+//                maxRow = int.Parse(dr["maxRow"].ToString()),
+//                maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+//                bufferCheckIn = dr["bufferCheckIn"].ToString(),
+//                bufferNameOld = dr["bufferNameOld"].ToString(),
+//                bufferData = dr["bufferData"].ToString(),
+//                //bufferData = bufferData[i],
+//                bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+//                bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+//            };
+//            if (!canvasControlService.list_Station.ContainsKey(tempBuffer.bufferId.ToString()))
+//            {
+//                StationShape tempStation = new StationShape(map, tempBuffer);
+
+//                tempStation.ReDraw();
+//                //tempStation.RemoveHandle += palletViewEventControl.StationRemove;
+//                //palletViewEventControl.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Replace(" ",""), tempStation);
+//                canvasControlService.list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+//                stationGroup.Items.Add(new TrvStation(tempStation));
+
+//                mainWindowModel.AddItem(new DgvStation
+//                {
+//                    Name = tempStation.Name,
+//                    Bays = tempStation.props.bufferDb.maxBay,
+//                    Rows = tempStation.props.bufferDb.maxRow,
+//                    Position = tempStation.props._posision,
+//                    Angle = tempStation.props._rotate
+//                });
+//            }
+
+//        }
+//    }
+//}
+
+//private void btn_LoadAll_Click(object sender, RoutedEventArgs e)
+//{
+//    canvasControlService.ReloadAllStation();
+//    //LoadPath(@"C:\Users\LI\Desktop\Path.xls");
+//    //LoadStation(@"C:\Users\LI\Desktop\StationMain.xls");
+//    string fileName1 = "Path.xls";
+//    //string fileName2 = "StationMain.xls";
+//    string path1 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName1);
+//    //string path2 = Path.Combine(Environment.CurrentDirectory, @"Excels\", fileName2);
+//    LoadPath(path1);
+//    //LoadStation(path2);
+//}
+
+//private void StationsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+//{
+
+//}
+
+//private void StationsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+//{
+//}
+
+//private void StationsDataGrid_GotFocus(object sender, RoutedEventArgs e)
+//{
+//    DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
+//    if (temp != null)
+//    {
+//        Console.WriteLine("In: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
+//        palletViewEventControl.list_Station[temp.Name].SelectedStyle();
+//        previousStationNameIdDgv = temp.Name;
+//    }
+//    else
+//    {
+
+//    }
+//}
+
+//private void StationsDataGrid_LostFocus(object sender, RoutedEventArgs e)
+//{
+//    DgvStation temp = (sender as DataGrid).CurrentCell.Item as DgvStation;
+//    if (temp != null)
+//    {
+//        Console.WriteLine("Out: " + temp.Name + "-" + temp.Bays + "-" + temp.Rows);
+//        palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
+//    }
+//    else
+//    {
+//        if (previousStationNameIdDgv != "")
+//        {
+//            palletViewEventControl.list_Station[previousStationNameIdDgv].DeselectedStyle();
+//        }
+//    }
+//}
+
+//private void mainTreeView_GotFocus(object sender, RoutedEventArgs e)
+//{
+//    TrvStation temp = mainTreeView.SelectedItem as TrvStation;
+//    if (temp != null)
+//    {
+//        //Console.WriteLine("In: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
+//        palletViewEventControl.list_Station[temp.Name].SelectedStyle();
+//        previousStationNameIdTrv = temp.Name;
+//    }
+//    else
+//    {
+
+//    }
+
+//}
+
+//private void mainTreeView_LostFocus(object sender, RoutedEventArgs e)
+//{
+//    TrvStation temp = mainTreeView.SelectedItem as TrvStation;
+//    if (temp != null)
+//    {
+//        //Console.WriteLine("Out: " + temp.Name + "-" + temp.station.props.Bays + "-" + temp.station.props.Rows);
+//        palletViewEventControl.list_Station[temp.Name].DeselectedStyle();
+//    }
+//    else
+//    {
+//        if (previousStationNameIdTrv != "")
+//        {
+//            palletViewEventControl.list_Station[previousStationNameIdTrv].DeselectedStyle();
+//        }
+//    }
+//}

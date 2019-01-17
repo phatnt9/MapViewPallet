@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"  
         mc:Ignorable="d"
         Title="{DynamicResource Statistics_Title}"
         WindowStartupLocation="CenterOwner" Height="650" Width="1000">
@@ -21,7 +22,7 @@
             <TabControl
                 Name="StatisticsTabControl">
                 <!--<TabItem Header="{DynamicResource Statistics_TabItem_RobotProcess}" FontSize="12">-->
-                <TabItem Header="Robot Process" FontSize="12">
+                <TabItem Header="{DynamicResource Statistics_TabItem_RobotProcess}" FontSize="12">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="100"></RowDefinition>
@@ -160,13 +161,16 @@
                                         Click="Search_Click"
                                         >Search</Button>
                                     <Button 
-                                        Margin="0 10 0 0"
-                                        Width="80" 
-                                        Click="Button_Click"
-                                        >Test</Button>
-                                    <Button 
+                                        Name="Test"
                                         Margin="0 10 0 0"
                                         Width="80"
+                                        Click="Test_Click"
+                                        >Test</Button>
+                                    <Button 
+                                        Name="btnExport"
+                                        Margin="0 10 0 0"
+                                        Width="80"
+                                        Click="BtnExport_Click"
                                         >Export</Button>
                                 </StackPanel>
                                 
@@ -186,6 +190,7 @@
                                     CanUserAddRows="False"
                                     CanUserResizeRows="False"
                                     CanUserDeleteRows="False"
+                                    CanUserSortColumns="True"
                                     AutoGenerateColumns="False">
                                     <DataGrid.Columns>
                                         <!--<DataGridTemplateColumn 
@@ -226,8 +231,7 @@
                                                         ItemsSource="{Binding DataContext.AllRobots, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="robotName"
                                                         SelectedValuePath="id"
-                                                        SelectedValue="{Binding robotId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            >
+                                                        SelectedValue="{Binding robotId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     </ComboBox>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
@@ -277,6 +281,28 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
+                                        <DataGridTemplateColumn 
+                                            Width="50" 
+                                            Visibility="Visible">
+                                            <DataGridTemplateColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                               Text="orderContent"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.HeaderTemplate>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock HorizontalAlignment="Center" 
+                                                               Text="{Binding Path=orderContent}">
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
                                         <!--<DataGridTemplateColumn 
                                             Width="Auto" 
                                             Visibility="Visible">
@@ -299,7 +325,7 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>-->
 
-                                        <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn CanUserSort="True">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
@@ -739,10 +765,80 @@
                     </Grid>
                 </TabItem>
                 <!--<TabItem Header="{DynamicResource Statistics_TabItem_RobotCharge}" FontSize="12">-->
-                <TabItem Header="Robot Charge" FontSize="12">
-                    
+                <TabItem Header="{DynamicResource Statistics_TabItem_RobotCharge}" FontSize="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="120"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <StackPanel Margin="0 0 30 0"
+                                            Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                        <Label Content="Robot"></Label>
+                                        <ComboBox 
+                                                Name="cmbRobotRobotCharge" 
+                                                Width="100"
+                                                ItemsSource="{Binding Robots}"
+                                                SelectedItem="{Binding dtRobot}"
+                                                DisplayMemberPath="robotName"
+                                                SelectedValuePath="id"
+                                                ></ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Margin="0 0 30 0"
+                                            Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                        <Label Content="Shift"></Label>
+                                        <ComboBox 
+                                                Name="cmbShiftRobotCharge"
+                                                Width="100"
+                                                ItemsSource="{Binding TimeWorks}"
+                                                SelectedItem="{Binding dtTimeWork}"
+                                                DisplayMemberPath="timeWorkName"
+                                                SelectedValuePath="timeWorkId"
+                                                ></ComboBox>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <StackPanel 
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                                    <Button 
+                                        Name="btnSearchRobotCharge"
+                                        Margin="0 10 0 0"
+                                        Width="80"
+                                        Click="Search_Click"
+                                        >Search</Button>
+                                    <Button 
+                                        Name="btxExportRobotCharge"
+                                        Margin="0 10 0 0"
+                                        Width="80"
+                                        >Export</Button>
+                                </StackPanel>
+
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="300"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <DataGrid>
+                                    
+                                </DataGrid>
+                            </Grid>
+                            <Grid Grid.Column="1"></Grid>
+                        </Grid>
+                    </Grid>
                 </TabItem>
-                <TabItem></TabItem>
             </TabControl>
         </Grid>
     </Grid>

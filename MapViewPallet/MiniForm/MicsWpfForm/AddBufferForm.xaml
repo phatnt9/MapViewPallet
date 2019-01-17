@@ -83,7 +83,7 @@
                              Content="{DynamicResource AddBufferForm_BufferReturn}" 
                              ></CheckBox>
                     </StackPanel>
-                    <Button Width="Auto"
+                    <Button Width="70"
                                 Height="25"
                                 Margin="15 0"
                                 Padding="5 0"

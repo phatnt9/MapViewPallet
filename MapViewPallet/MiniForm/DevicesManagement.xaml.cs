@@ -24,7 +24,7 @@ namespace MapViewPallet.MiniForm
     {
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
         public DevicesManagementModel deviceManagementModel;
-        MainWindow mainWindow;
+        public MainWindow mainWindow;
         int loadTab = 0;
 
 
@@ -55,6 +55,7 @@ namespace MapViewPallet.MiniForm
             deviceManagementModel = new DevicesManagementModel(this);
             DataContext = deviceManagementModel;
         }
+        
 
         public void ApplyLanguage(string cultureName = null)
         {
@@ -716,6 +717,7 @@ namespace MapViewPallet.MiniForm
 
         private void ProductsListDg_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            // có lỗi
             DataGridCellInfo dgci = (DataGridCellInfo)((System.Windows.Controls.DataGrid)sender).CurrentCell;
             switch (dgci.Column.DisplayIndex)
             {
@@ -1113,25 +1115,37 @@ namespace MapViewPallet.MiniForm
                     int.TryParse(reader.ReadToEnd(), out result);
                     if (result == 1)
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         deviceManagementModel.ReloadListBuffers();
-                        mainWindow.canvasControlService.list_Station.Remove(buffer.bufferName.ToString().Trim());
+                        mainWindow.canvasControlService.ReloadAllStation();
+                        System.Windows.Forms.MessageBox.Show
+                            (
+                            String.Format(Global_Object.messageDeleteSucced),
+                            Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information
+                            );
 
                     }
                     else if (result == 2)
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "Buffer", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        System.Windows.Forms.MessageBox.Show
+                            (
+                            String.Format(Global_Object.messageDeleteUse, "Buffer", "Other Screen"), 
+                            Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning
+                            );
                         return;
                     }
                     else
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        System.Windows.Forms.MessageBox.Show
+                            (
+                            String.Format(Global_Object.messageDeleteFail), 
+                            Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error
+                            );
                         return;
                     }
                 }
 
             }
-            mainWindow.canvasControlService.ReloadAllStation();
+            //mainWindow.canvasControlService.ReloadAllStation();
         }
 
         private void Btn_SetBufferData_Click(object sender, RoutedEventArgs e)

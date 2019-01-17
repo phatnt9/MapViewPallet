@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
-        Title="About" Height="350" Width="600" ResizeMode="NoResize"
+        Title="About" Height="300" Width="600" ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
@@ -22,8 +22,8 @@
         </Grid>
         <Grid Grid.Row="1" Background="#f5f5f5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="130"></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="0"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -50,7 +50,7 @@
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">
-                <TextBox
+                <!--<TextBox
     TextWrapping="Wrap"
     VerticalAlignment="Stretch"
     MinWidth="280"
@@ -58,8 +58,7 @@
     VerticalScrollBarVisibility="Auto"
     SpellCheck.IsEnabled="True"
     Height="80">
-                    Multiline.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. The quick brown fox jumps over the lazy dog. War and peace. Keep going. Go on. For how long? Not long. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </TextBox>
+                </TextBox>-->
             </Grid>
             
             

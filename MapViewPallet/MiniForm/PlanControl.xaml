@@ -43,7 +43,7 @@
             <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="Gray">
                 <Grid Name="ProcedureTabs"  Background="White">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="90"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="40"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -133,8 +133,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible"/>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Hidden"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Hidden"/>
                                             <DataGridTextColumn
                                                 Binding="{Binding Path=deviceName}" 
                                                 IsReadOnly="True">
@@ -216,7 +216,7 @@
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Name="DeletePlan"
-                                                                Background="#FFF67F"
+                                                                Background="Transparent"
                                                                 Click="DeletePlan_Click">
                                                             <iconPacks:PackIconMaterial Kind="DeleteForever" />
                                                         </Button>
@@ -273,8 +273,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Hidden"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Hidden"/>
                                             <DataGridTextColumn 
                                                 Binding="{Binding Path=deviceName}" 
                                                 IsReadOnly="True">
@@ -356,7 +356,7 @@
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Name="DeletePlan"
-                                                                Background="#D62839"
+                                                                Background="Transparent"
                                                                 Click="DeletePlan_Click">
                                                             <iconPacks:PackIconMaterial Kind="DeleteForever" />
                                                         </Button>
@@ -414,8 +414,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True"/>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Hidden"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Hidden"/>
                                             <DataGridTextColumn 
                                                 Binding="{Binding Path=deviceName}" 
                                                 IsReadOnly="True">
@@ -497,7 +497,7 @@
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Button Name="DeletePlan"
-                                                                Background="#D62839"
+                                                                Background="Transparent"
                                                                 Click="DeletePlan_Click">
                                                             <iconPacks:PackIconMaterial Kind="DeleteForever" />
                                                         </Button>
@@ -751,7 +751,7 @@
                                     Height="25"
                                     Padding="5 0"
                                     Margin="10 0"
-                                    Content="CreatePlanPallet" 
+                                    Content="Apply" 
                                     Click="Btn_CreatePlanPallet_Click"/>
                             <Button Name="Btn_Accept" 
                                     Width="Auto" 

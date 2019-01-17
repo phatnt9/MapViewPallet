@@ -49,6 +49,42 @@ namespace MapViewPallet
         public static string messageTitileWarning = "Warning";
 
         //#######################################
+        public static MusicPlayerOld musicPlayerOld = new MusicPlayerOld("ALARM.mp3");
+        public static void PlayWarning(bool isLoop)
+        {
+            if (musicPlayerOld == null)
+            {
+                musicPlayerOld = new MusicPlayerOld("ALARM.mp3");
+                musicPlayerOld.Play(true);
+            }
+            else
+            {
+                if (musicPlayerOld.IsBeingPlayed)
+                {
+                    return;
+                }
+                //if (Global_Object.musicPlayerOld.IsBeingPlayed)
+                //{
+                //    Global_Object.musicPlayerOld.StopPlaying();
+                //}
+                else
+                {
+                    musicPlayerOld.Play(true);
+                }
+            }
+        }
+        public static void StopWarning()
+        {
+            if (musicPlayerOld != null)
+            {
+                if (musicPlayerOld.IsBeingPlayed)
+                {
+                    musicPlayerOld.StopPlaying();
+                }
+            }
+        }
+
+        //#######################################
 
         public static Point LaserOriginalCoor = new Point(648,378);
         public static Point OriginPoint = new Point(0,0);
@@ -126,8 +162,6 @@ namespace MapViewPallet
 
         public static double resolution = 0.1; // Square meters per pixel
         public static string Foo<T>(T parameter) { return typeof(T).Name; }
-        public static double palletWidth = 13;
-        public static double palletHeight = 15;
         public static double LengthBetweenPoints(Point pt1, Point pt2)
         {
             //Calculate the distance between the both points
