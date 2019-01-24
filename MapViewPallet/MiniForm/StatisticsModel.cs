@@ -169,7 +169,7 @@ namespace MapViewPallet.MiniForm
         }
 
 
-        public void ReloadListRobot()
+        public void ReloadListRobot(int tabIndex)
         {
             Robots.Add(new dtRobot() { id = "", robotName = "No data" });
             Robots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
@@ -181,7 +181,24 @@ namespace MapViewPallet.MiniForm
             AllRobots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
             AllRobots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
 
-            
+            switch (tabIndex)
+            {
+                case 0:
+                    {
+                        
+                        break;
+                    }
+                case 1:
+                    {
+                        
+                        break;
+                    }
+                default:
+                    {
+                        
+                        break;
+                    }
+            }
         }
 
         public void ReloadListOperationType()

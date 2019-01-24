@@ -4,7 +4,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,8 +35,35 @@ namespace MapViewPallet.MiniForm
             InitializeComponent();
             ApplyLanguage(cultureName);
             Loaded += Statistics_Loaded;
+            StatisticsTabControl.SelectionChanged += StatisticsTabControl_SelectionChanged;
             statisticsModel = new StatisticsModel(this);
             DataContext = statisticsModel;
+        }
+
+        private void StatisticsTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.Source is System.Windows.Controls.TabControl)
+            {
+                switch (((e.Source as System.Windows.Controls.TabControl).SelectedIndex))
+                {
+                    case 0:
+                        {
+                            statisticsModel.ReloadListProduct();
+                            statisticsModel.ReloadListProductDetail();
+                            statisticsModel.ReloadListOperationType();
+                            statisticsModel.ReloadListRobot((e.Source as System.Windows.Controls.TabControl).SelectedIndex);
+                            statisticsModel.ReloadListDevice();
+                            statisticsModel.ReloadListBuffer();
+                            statisticsModel.ReloadListTimeWork();
+                            break;
+                        }
+                    case 1:
+                        {
+                            statisticsModel.ReloadListRobot(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                            break;
+                        }
+                }
+            }
         }
 
         public void ApplyLanguage(string cultureName = null)
@@ -61,7 +90,7 @@ namespace MapViewPallet.MiniForm
             statisticsModel.ReloadListProduct();
             statisticsModel.ReloadListProductDetail();
             statisticsModel.ReloadListOperationType();
-            statisticsModel.ReloadListRobot();
+            statisticsModel.ReloadListRobot(0);
             statisticsModel.ReloadListDevice();
             statisticsModel.ReloadListBuffer();
             statisticsModel.ReloadListTimeWork();
@@ -361,6 +390,78 @@ namespace MapViewPallet.MiniForm
                 }
             }
             return null;
+        }
+
+        private void BtnSearchRobotCharge_Click(object sender, RoutedEventArgs e)
+        {
+            dtRobotCharge robotCharge = new dtRobotCharge();
+            if (cmbRobotRobotCharge.SelectedValue != null && !string.IsNullOrEmpty(cmbRobotRobotCharge.SelectedValue.ToString()))
+            {
+                robotCharge.robotId = cmbRobotRobotCharge.SelectedValue.ToString();
+            }
+
+            if (cmbShiftRobotCharge.SelectedValue != null && !string.IsNullOrEmpty(cmbShiftRobotCharge.SelectedValue.ToString()) && int.Parse(cmbShiftRobotCharge.SelectedValue.ToString()) > 0)
+            {
+                robotCharge.timeWorkId = int.Parse(cmbShiftRobotCharge.SelectedValue.ToString());
+            }
+
+            string jsonSend = JsonConvert.SerializeObject(robotCharge);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "reportRobot/getReportRobotCharge");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonSend);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                string result = reader.ReadToEnd();
+                DataTable reportRobotCharge = JsonConvert.DeserializeObject<DataTable>(result);
+
+                if (reportRobotCharge.Rows.Count > 0)
+                {
+                    grvReportRobotCharge.DataContext = reportRobotCharge;
+
+                    //foreach (DataGridViewRow dr in grvReportRobotCharge.Rows)
+                    //{
+                    //    if (dr.Cells["rcBeginDatetime"].Value.ToString() != "" && dr.Cells["rcEndDatetime"].Value.ToString() != "")
+                    //    {
+                    //        DateTime dtBegin = DateTime.ParseExact(dr.Cells["rcBeginDatetime"].Value.ToString(), "yyyy-MM-dd HH:mm:ss",
+                    //                   System.Globalization.CultureInfo.InvariantCulture);
+
+                    //        DateTime dtEnd = DateTime.ParseExact(dr.Cells["rcEndDatetime"].Value.ToString(), "yyyy-MM-dd HH:mm:ss",
+                    //                  System.Globalization.CultureInfo.InvariantCulture);
+
+                    //        TimeSpan duration = dtEnd.Subtract(dtBegin);
+
+                    //        dr.Cells["timeCharge"].Value = duration.ToString(@"hh\:mm");
+                    //    }
+                    //}
+                }
+                else
+                {
+                    DataTable dt = (DataTable)grvReportRobotCharge.ItemsSource;
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        dt.Rows.Clear();
+                    }
+                }
+            }
+
+        }
+
+        private void BtxExportRobotCharge_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

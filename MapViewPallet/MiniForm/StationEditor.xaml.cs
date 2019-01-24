@@ -41,12 +41,7 @@ namespace MapViewPallet.MiniForm
         {
             InitializeComponent();
             ApplyLanguage(cultureName);
-
             this.stationShape = stationShape;
-
-
-
-
             Loaded += StationEditor_Loaded;
             stationEditorModel = new StationEditorModel(this);
             DataContext = stationEditorModel;
@@ -74,20 +69,29 @@ namespace MapViewPallet.MiniForm
 
         private void PalletsListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            if (PalletsListDg.SelectedItem != null)
+            try
             {
-                dtPallet pallet = PalletsListDg.SelectedItem as dtPallet;
-                dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
-                palletX.Text = (palletData != null) ? (((double)palletData.line.x).ToString()) : "0";
-                palletY.Text = (palletData != null) ? (((double)palletData.line.y).ToString()) : "0";
-                palletA.Text = (palletData != null) ? (((double)palletData.line.angle).ToString()) : "0";
-                //palletR.Text = (palletData != null) ? (((double)palletData.pallet.row).ToString()) : "0";
-                palletR.Text = pallet.row.ToString();
-                palletRowlb.Content = pallet.row;
-                palletB.Text = pallet.bay.ToString();
-                palletBaylb.Content = pallet.bay;
-                palletD.Text = (palletData != null) ? (((double)palletData.pallet.direct).ToString()) : "0";
+                if (PalletsListDg.SelectedItem != null)
+                {
+                    dtPallet pallet = PalletsListDg.SelectedItem as dtPallet;
+                    dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                    palletX.Text = (palletData != null) ? (((double)palletData.line.x).ToString()) : "0";
+                    palletY.Text = (palletData != null) ? (((double)palletData.line.y).ToString()) : "0";
+                    palletA.Text = (palletData != null) ? (((double)palletData.line.angle).ToString()) : "0";
+                    //palletR.Text = (palletData != null) ? (((double)palletData.pallet.row).ToString()) : "0";
+                    palletR.Text = pallet.row.ToString();
+                    palletB.Text = pallet.bay.ToString();
+                    palletRowlb.Content = pallet.row;
+                    palletBaylb.Content = pallet.bay;
+                    palletD.Text = (palletData != null) ? ((palletData.pallet.direction).ToString()) : "0";
+                    palletHasSubLine.Text = (palletData != null) ? ((palletData.pallet.hasSubLine).ToString()) : "no";
+                }
             }
+            catch
+            {
+
+            }
+
         }
 
         private void StationEditor_Loaded(object sender, RoutedEventArgs e)
@@ -95,12 +99,17 @@ namespace MapViewPallet.MiniForm
             bufferNamelb.Content = stationShape.props.bufferDb.bufferName;
             bufferMaxRowlb.Content = stationShape.props.bufferDb.maxRow;
             bufferMaxBaylb.Content = stationShape.props.bufferDb.maxBay;
-            bufferTypeNamelb.Content = (stationShape.props.bufferDb.bufferReturn == true) ? "Trả hàng" : "Lưu hàng";
+            //bufferTypeNamelb.Content = (stationShape.props.bufferDb.bufferReturn == true) ? "StationEditor_BufferType_Return" : "StationEditor_BufferType_Buffer";
+            bufferTypeNamelb.SetResourceReference(System.Windows.Controls.Label.ContentProperty, (stationShape.props.bufferDb.bufferReturn == true) ? "StationEditor_BufferType_Return" : "StationEditor_BufferType_Buffer");
 
             dynamic buffercheckin = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferCheckIn);
-            bufferX.Text = (buffercheckin != null) ? (((double)buffercheckin.x).ToString()) : "0";
-            bufferY.Text = (buffercheckin != null) ? (((double)buffercheckin.y).ToString()) : "0";
-            bufferA.Text = (buffercheckin != null) ? (((double)buffercheckin.angle).ToString()) : "0";
+            bufferX.Text = (buffercheckin.checkin != null) ? (((double)buffercheckin.checkin.x).ToString()) : "0";
+            bufferY.Text = (buffercheckin.checkin != null) ? (((double)buffercheckin.checkin.y).ToString()) : "0";
+            bufferA.Text = (buffercheckin.checkin != null) ? (((double)buffercheckin.checkin.angle).ToString()) : "0";
+
+            bufferHeadPointX.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.x).ToString()) : "0";
+            bufferHeadPointY.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.y).ToString()) : "0";
+            bufferHeadPointA.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.angle).ToString()) : "0";
 
             dynamic bufferdata = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferData);
             bufferPosX.Text = (bufferdata != null) ? (((double)bufferdata.x).ToString()) : "0";
@@ -129,9 +138,19 @@ namespace MapViewPallet.MiniForm
                 List<dtBuffer> buffers = new List<dtBuffer>();
 
                 dynamic postApiBody = new JObject();
-                postApiBody.x = Math.Round((double.Parse((bufferX.Text != "") ? bufferX.Text : "0")), 2);
-                postApiBody.y = Math.Round((double.Parse((bufferY.Text != "") ? bufferY.Text : "0")), 2);
-                postApiBody.angle = Math.Round((double.Parse((bufferA.Text != "") ? bufferA.Text : "0")), 2);
+                dynamic checkin = new JObject();
+                dynamic headpoint = new JObject();
+
+                checkin.x = Math.Round((double.Parse((bufferX.Text != "") ? bufferX.Text : "0")), 2);
+                checkin.y = Math.Round((double.Parse((bufferY.Text != "") ? bufferY.Text : "0")), 2);
+                checkin.angle = Math.Round((double.Parse((bufferA.Text != "") ? bufferA.Text : "0")), 2);
+
+                headpoint.x = Math.Round((double.Parse((bufferHeadPointX.Text != "") ? bufferHeadPointX.Text : "0")), 2);
+                headpoint.y = Math.Round((double.Parse((bufferHeadPointY.Text != "") ? bufferHeadPointY.Text : "0")), 2);
+                headpoint.angle = Math.Round((double.Parse((bufferHeadPointA.Text != "") ? bufferHeadPointA.Text : "0")), 2);
+
+                postApiBody.checkin = checkin;
+                postApiBody.headpoint = headpoint;
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferCheckIn = jsonBufferData;
 
@@ -211,9 +230,10 @@ namespace MapViewPallet.MiniForm
                 palletLine.y = double.Parse((palletY.Text != "") ? palletY.Text : "0");
                 palletLine.angle = double.Parse((palletA.Text != "") ? palletA.Text : "0");
 
-                palletPallet.row = double.Parse((palletR.Text != "") ? palletR.Text : "0");
-                palletPallet.bay = double.Parse((palletB.Text != "") ? palletB.Text : "0");
-                palletPallet.direct = double.Parse((palletD.Text != "") ? palletD.Text : "0");
+                palletPallet.row = int.Parse((palletR.Text != "") ? palletR.Text : "0");
+                palletPallet.bay = int.Parse((palletB.Text != "") ? palletB.Text : "0");
+                palletPallet.direction = int.Parse((palletD.Text != "") ? palletD.Text : "0");
+                palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
 
                 palletData.line = palletLine;
                 palletData.pallet = palletPallet;
@@ -281,90 +301,9 @@ namespace MapViewPallet.MiniForm
             e.Handled = !IsTextAllowed(e.Text);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (dtPallet pallet in stationEditorModel.palletsList)
-            {
-                pallet.palletStatus = "F";
-                string jsonData = JsonConvert.SerializeObject(pallet);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
-                request.Method = "POST";
-                request.ContentType = "application/json";
 
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonData);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
-                }
 
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    int result = 0;
-                    int.TryParse(reader.ReadToEnd(), out result);
-                    if (result == 1)
-                    {
-                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else if (result == -2)
-                    {
-                        // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                
-            }
-            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
-            pallet.palletStatus = "W";
-            string jsonData = JsonConvert.SerializeObject(pallet);
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
-            request.Method = "POST";
-            request.ContentType = "application/json";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
-
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                int result = 0;
-                int.TryParse(reader.ReadToEnd(), out result);
-                if (result == 1)
-                {
-                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else if (result == -2)
-                {
-                    // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
-        }
 
         private void Btn_SetBufferPosData_Click(object sender, RoutedEventArgs e)
         {
@@ -374,9 +313,9 @@ namespace MapViewPallet.MiniForm
                 List<dtBuffer> buffers = new List<dtBuffer>();
 
                 dynamic postApiBody = new JObject();
-                postApiBody.x = Math.Round((double.Parse((bufferPosX.Text != "") ? bufferPosX.Text : "0")),2);
-                postApiBody.y = Math.Round((double.Parse((bufferPosY.Text != "") ? bufferPosY.Text : "0")),2);
-                postApiBody.angle = Math.Round((double.Parse((bufferPosA.Text != "") ? bufferPosA.Text : "0")),2);
+                postApiBody.x = Math.Round((double.Parse((bufferPosX.Text != "") ? bufferPosX.Text : "0")), 2);
+                postApiBody.y = Math.Round((double.Parse((bufferPosY.Text != "") ? bufferPosY.Text : "0")), 2);
+                postApiBody.angle = Math.Round((double.Parse((bufferPosA.Text != "") ? bufferPosA.Text : "0")), 2);
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 
@@ -427,6 +366,91 @@ namespace MapViewPallet.MiniForm
             {
 
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (dtPallet pallet in stationEditorModel.palletsList)
+            {
+                pallet.palletStatus = "F";
+                string jsonData = JsonConvert.SerializeObject(pallet);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+            }
+            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
+            pallet.palletStatus = "W";
+            string jsonData = JsonConvert.SerializeObject(pallet);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                int result = 0;
+                int.TryParse(reader.ReadToEnd(), out result);
+                if (result == 1)
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (result == -2)
+                {
+                    // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

@@ -28,109 +28,110 @@
                 <ScrollViewer>
                     <StackPanel>
                         <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <GroupBox Header="{DynamicResource StationEditor_Groupbox_BufferInfo}" FontSize="20">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="55"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <StackPanel Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Label FontSize="13"
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <GroupBox Header="{DynamicResource StationEditor_Groupbox_BufferInfo}" FontSize="20">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="55"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <StackPanel Orientation="Vertical">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Label FontSize="13"
                                                            Width="Auto"
                                                            Content="{DynamicResource StationEditor_Groupbox_BufferInfo_BufferName}"></Label>
-                                                    <Label FontSize="13" Name="bufferNamelb"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
+                                                        <Label FontSize="13" Name="bufferNamelb"></Label>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
                                                         <Label FontSize="13" 
                                                            Width="Auto"
                                                            Content="{DynamicResource StationEditor_Groupbox_BufferInfo_BufferType}"></Label>
-                                                    <Label FontSize="13" Name="bufferTypeNamelb"></Label>
+                                                        <Label FontSize="13" Name="bufferTypeNamelb"></Label>
+                                                    </StackPanel>
                                                 </StackPanel>
-                                            </StackPanel>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <StackPanel Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <StackPanel Orientation="Vertical">
+                                                    <StackPanel Orientation="Horizontal">
                                                         <Label FontSize="13" 
                                                            Width="Auto"
                                                            Content="{DynamicResource StationEditor_Groupbox_BufferInfo_BufferNumberOfRow}"></Label>
-                                                    <Label FontSize="13" Name="bufferMaxRowlb"></Label>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
+                                                        <Label FontSize="13" Name="bufferMaxRowlb"></Label>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
                                                         <Label FontSize="13" 
                                                            Width="Auto"
                                                            Content="{DynamicResource StationEditor_Groupbox_BufferInfo_BufferNumberOfBay}"></Label>
-                                                    <Label FontSize="13" Name="bufferMaxBaylb"></Label>
+                                                        <Label FontSize="13" Name="bufferMaxBaylb"></Label>
+                                                    </StackPanel>
                                                 </StackPanel>
-                                            </StackPanel>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="1" Margin="0 5 0 0">
-                                        <StackPanel>
+                                        <Grid Grid.Row="1" Margin="0 5 0 0">
+                                            <StackPanel>
                                                 <TextBlock FontSize="14" 
                                                            Width="Auto"
                                                            FontWeight="Bold" Text="{DynamicResource StationEditor_Groupbox_BufferInfo_BufferCoordinate}"></TextBlock>
-                                            <Grid>
-                                                <StackPanel Orientation="Horizontal" 
+                                                <Grid>
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
                                                             HorizontalAlignment="Left" 
                                                             VerticalAlignment="Center"
                                                             Margin="0,0,0,0">
-                                                    <StackPanel Orientation="Horizontal" 
+                                                            <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
-                                                        <Label VerticalAlignment="Center" 
+                                                                <Label VerticalAlignment="Center" 
                                                                Content="Checkin: "
                                                                FontSize="12"></Label>
-                                                    </StackPanel>
-                                                    <StackPanel Orientation="Horizontal" 
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
-                                                        <Label VerticalAlignment="Center" 
+                                                                <Label VerticalAlignment="Center" 
                                                                Content="X"
                                                                FontSize="12"></Label>
-                                                        <TextBox Name="bufferX" 
+                                                                <TextBox Name="bufferX" 
                                                                  Width="35"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
                                                                  PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                    </StackPanel>
-                                                    <StackPanel Orientation="Horizontal" 
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
-                                                        <Label VerticalAlignment="Center" 
+                                                                <Label VerticalAlignment="Center" 
                                                                Content="Y"
                                                                FontSize="12"></Label>
-                                                        <TextBox Name="bufferY" 
+                                                                <TextBox Name="bufferY" 
                                                                  Width="35"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
                                                                  PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                    </StackPanel>
-                                                    <StackPanel Orientation="Horizontal" 
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">
-                                                        <Label VerticalAlignment="Center" 
+                                                                <Label VerticalAlignment="Center" 
                                                                Content="A"
                                                                FontSize="12"></Label>
-                                                        <TextBox Name="bufferA" 
+                                                                <TextBox Name="bufferA" 
                                                                  Width="35"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
                                                                  PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                    </StackPanel>
-                                                    <Button Name="btn_SetBufferData" 
+                                                            </StackPanel>
+                                                            <Button Name="btn_SetBufferData" 
                                                             Margin="20 0"
                                                             Height="20" 
                                                             Width="Auto"
@@ -138,167 +139,158 @@
                                                             FontSize="12"
                                                             Content="{DynamicResource StationEditor_Button_Save}"
                                                             Click="Btn_SetBufferData_Click"/>
-                                                </StackPanel>
-                                            </Grid>
-                                        </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
+                                                            HorizontalAlignment="Left" 
+                                                            VerticalAlignment="Center"
+                                                            Margin="0,0,0,0">
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                               Content="Head point: "
+                                                               FontSize="12"></Label>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                               Content="X"
+                                                               FontSize="12"></Label>
+                                                                <TextBox Name="bufferHeadPointX" 
+                                                                 Width="35"
+                                                                 Height="17"
+                                                                 FontSize="12"
+                                                                 CharacterCasing="Upper"
+                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                               Content="Y"
+                                                               FontSize="12"></Label>
+                                                                <TextBox Name="bufferHeadPointY" 
+                                                                 Width="35"
+                                                                 Height="17"
+                                                                 FontSize="12"
+                                                                 CharacterCasing="Upper"
+                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                               Content="A"
+                                                               FontSize="12"></Label>
+                                                                <TextBox Name="bufferHeadPointA" 
+                                                                 Width="35"
+                                                                 Height="17"
+                                                                 FontSize="12"
+                                                                 CharacterCasing="Upper"
+                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>
+                                                            </StackPanel>
+                                                            
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </GroupBox>
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <GroupBox Header="{DynamicResource StationEditor_Groupbox_PalletInfo}" FontSize="20">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <StackPanel Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <GroupBox Header="{DynamicResource StationEditor_Groupbox_PalletInfo}" FontSize="20">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <StackPanel Orientation="Vertical">
+                                                    <StackPanel Orientation="Horizontal">
                                                         <Label FontSize="13"
                                                            Width="Auto"
                                                             Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletRow}"></Label>
-                                                    <Label FontSize="13" Name="palletRowlb"></Label>
+                                                        <Label FontSize="13" Name="palletRowlb"></Label>
+                                                    </StackPanel>
                                                 </StackPanel>
-                                            </StackPanel>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <StackPanel Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <StackPanel Orientation="Vertical">
+                                                    <StackPanel Orientation="Horizontal">
                                                         <Label FontSize="13"
                                                            Width="Auto"
                                                             Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletBay}"></Label>
-                                                    <Label FontSize="13" Name="palletBaylb"></Label>
+                                                        <Label FontSize="13" Name="palletBaylb"></Label>
+                                                    </StackPanel>
                                                 </StackPanel>
-                                            </StackPanel>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="1" Margin="0 5 0 0">
-                                        <StackPanel>
+                                        <Grid Grid.Row="1" Margin="0 5 0 0">
+                                            <StackPanel>
                                                 <TextBlock FontSize="14" 
                                                            Width="Auto"
                                                            FontWeight="Bold"
                                                             Text="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletPosition}"></TextBlock>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition></RowDefinition>
-                                                    <RowDefinition></RowDefinition>
-                                                </Grid.RowDefinitions>
-                                                <Grid Grid.Row="0" Margin="0 5 0 0">
-                                                    <StackPanel Orientation="Horizontal" 
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid Grid.Row="0" Margin="0 5 0 0">
+                                                        <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Left" 
                                                                 VerticalAlignment="Center"
                                                                 Margin="0,0,0,0">
-                                                        <StackPanel Orientation="Horizontal" 
+                                                            <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
-                                                            <Label VerticalAlignment="Center" 
+                                                                <Label VerticalAlignment="Center" 
                                                                    Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletCoordinate}"
                                                            Width="Auto"
                                                                    FontSize="12"></Label>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" 
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
-                                                            <Label VerticalAlignment="Center" 
+                                                                <Label VerticalAlignment="Center" 
                                                                    Content="X"
                                                            Width="Auto"
                                                                    FontSize="12"></Label>
-                                                            <TextBox x:Name="palletX" 
+                                                                <TextBox x:Name="palletX" 
                                                                      Width="35"
                                                                      Height="17"
                                                                  FontSize="12"
                                                                      CharacterCasing="Upper"
                                                                      PreviewTextInput="myPreviewTextInput"/>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" 
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
-                                                            <Label VerticalAlignment="Center" 
+                                                                <Label VerticalAlignment="Center" 
                                                                    Content="Y"
                                                            Width="Auto"
                                                                    FontSize="12"></Label>
-                                                            <TextBox Name="palletY" 
+                                                                <TextBox Name="palletY" 
                                                                      Width="35"
                                                                      Height="17"
                                                                  FontSize="12"
                                                                      CharacterCasing="Upper"
                                                                      PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" 
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
-                                                            <Label VerticalAlignment="Center" 
+                                                                <Label VerticalAlignment="Center" 
                                                                    Content="A"
                                                            Width="Auto"
                                                                    FontSize="12"></Label>
-                                                            <TextBox Name="palletA" 
+                                                                <TextBox Name="palletA" 
                                                                      Width="35" 
                                                                      Height="17"
                                                                  FontSize="12"
                                                                      CharacterCasing="Upper"
                                                                      PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                        </StackPanel>
-                                                        <!--<Button Name="btn_SetPalletDataLine" 
-                                                             Margin="20,0,0,0"
-                                                             Width="35" 
-                                                             Height="20" 
-                                                             FontSize="12"
-                                                             Content="Lưu"/>-->
-                                                    </StackPanel>
-                                                </Grid>
-                                                <Grid Grid.Row="1" Margin="0 5 0 0">
-                                                    <StackPanel Orientation="Horizontal" 
-                                                                HorizontalAlignment="Left" 
-                                                                VerticalAlignment="Center"
-                                                                Margin="0,0,0,0">
-                                                        <StackPanel Orientation="Horizontal" 
-                                                                    HorizontalAlignment="Right">
-                                                            <Label VerticalAlignment="Center" 
-                                                                   Content="Pallet: "
-                                                           Width="Auto"
-                                                                   FontSize="12"></Label>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" 
-                                                                    HorizontalAlignment="Right">
-                                                            <Label VerticalAlignment="Center" 
-                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletRow}"
-                                                                   FontSize="12"
-                                                           Width="Auto"></Label>
-                                                            <TextBox Name="palletR" 
-                                                                     Width="35" 
-                                                                     Height="17"
-                                                                 FontSize="12"
-                                                                     IsEnabled="False"
-                                                                     PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" 
-                                                                    HorizontalAlignment="Right">
-                                                            <Label VerticalAlignment="Center" 
-                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletBay}"
-                                                                   FontSize="12"
-                                                           Width="Auto"></Label>
-                                                            <TextBox Name="palletB" 
-                                                                     Width="35"
-                                                                     Height="17"
-                                                                 FontSize="12"
-                                                                     IsEnabled="False"
-                                                                     PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                        </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" 
-                                                                    HorizontalAlignment="Right">
-                                                            <Label VerticalAlignment="Center" 
-                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection}" 
-                                                                   FontSize="12"
-                                                           Width="Auto"></Label>
-                                                            <TextBox Name="palletD" 
-                                                                     Width="35"
-                                                                     Height="17"
-                                                                 FontSize="12"
-                                                                     PreviewTextInput="myPreviewTextInput"></TextBox>
-                                                        </StackPanel>
-                                                        <Button Name="btn_SetPalletDataPallet" 
+                                                                <Button Name="btn_SetPalletDataPallet" 
                                                                 Margin="20 0"
                                                                 Height="20" 
                                                                 Width="Auto"
@@ -306,58 +298,147 @@
                                                             FontSize="12"
                                                                 Content="{DynamicResource StationEditor_Button_Save}"
                                                                 Click="Btn_SetPalletDataPallet_Click"/>
-                                                    </StackPanel>
+                                                            </StackPanel>
+                                                            <!--<Button Name="btn_SetPalletDataLine" 
+                                                             Margin="20,0,0,0"
+                                                             Width="35" 
+                                                             Height="20" 
+                                                             FontSize="12"
+                                                             Content="Lưu"/>-->
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    <Grid Grid.Row="1" Margin="0 5 0 0">
+                                                        <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Left" 
+                                                                VerticalAlignment="Center"
+                                                                Margin="0,0,0,0">
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                                   Content="Pallet: "
+                                                           Width="Auto"
+                                                                   FontSize="12"></Label>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletRow}"
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                                <TextBox Name="palletR" 
+                                                                     Width="35" 
+                                                                     Height="17"
+                                                                 FontSize="12"
+                                                                     IsEnabled="False"
+                                                                     PreviewTextInput="myPreviewTextInput"></TextBox>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletBay}"
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                                <TextBox Name="palletB" 
+                                                                     Width="35"
+                                                                     Height="17"
+                                                                 FontSize="12"
+                                                                     IsEnabled="False"
+                                                                     PreviewTextInput="myPreviewTextInput"></TextBox>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection}" 
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                                <ComboBox 
+                                                                    Name="palletD"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                                    <ComboBoxItem>0</ComboBoxItem>
+                                                                    <ComboBoxItem>1</ComboBoxItem>
+                                                                    <ComboBoxItem>2</ComboBoxItem>
+                                                                </ComboBox>
+                                                                <!--<TextBox Name="palletD" 
+                                                                     Width="35"
+                                                                     Height="17"
+                                                                 FontSize="12"
+                                                                     PreviewTextInput="myPreviewTextInput"></TextBox>-->
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                               Content="Subline"
+                                                               FontSize="12"></Label>
+                                                                <ComboBox 
+                                                                    Name="palletHasSubLine"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                                    <ComboBoxItem>yes</ComboBoxItem>
+                                                                    <ComboBoxItem>no</ComboBoxItem>
+                                                                </ComboBox>
+                                                                <!--<TextBox Name="bufferHeadPointHasSubLine" 
+                                                                 Width="35"
+                                                                 Height="17"
+                                                                 FontSize="12"
+                                                                 CharacterCasing="Upper"
+                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>-->
+                                                            </StackPanel>
+                                                           
+                                                        </StackPanel>
+                                                    </Grid>
                                                 </Grid>
-                                            </Grid>
-                                        </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </GroupBox>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <GroupBox Header="{DynamicResource StationEditor_Groupbox_BufferDetail}" FontSize="20">
-                                <Grid>
-                                    <StackPanel Orientation="Horizontal" 
+                                </GroupBox>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <GroupBox Header="{DynamicResource StationEditor_Groupbox_BufferDetail}" FontSize="20">
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" 
                                                 HorizontalAlignment="Center" 
                                                 VerticalAlignment="Center"
                                                 Margin="0,0,0,5">
-                                        <StackPanel Orientation="Horizontal" 
+                                            <StackPanel Orientation="Horizontal" 
                                                     HorizontalAlignment="Right">
-                                            <Label VerticalAlignment="Center" 
+                                                <Label VerticalAlignment="Center" 
                                                    Content="X"
                                                    FontSize="12"
                                                            Width="Auto"></Label>
-                                            <TextBox Name="bufferPosX" 
+                                                <TextBox Name="bufferPosX" 
                                                      Width="Auto" 
                                                      Height="17"
                                                                  FontSize="12"
                                                      PreviewTextInput="myPreviewTextInput"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" 
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" 
                                                     HorizontalAlignment="Right">
-                                            <Label VerticalAlignment="Center" 
+                                                <Label VerticalAlignment="Center" 
                                                    Content="Y"
                                                    FontSize="12"
                                                            Width="Auto"></Label>
-                                            <TextBox Name="bufferPosY" 
-                                                     Width="45" 
+                                                <TextBox Name="bufferPosY" 
+                                                     Width="Auto" 
                                                      Height="17"
                                                                  FontSize="12"
                                                      PreviewTextInput ="myPreviewTextInput"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" 
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" 
                                                     HorizontalAlignment="Right">
-                                            <Label VerticalAlignment="Center" 
+                                                <Label VerticalAlignment="Center" 
                                                    Content="A"
                                                    FontSize="12"
                                                            Width="Auto"></Label>
-                                            <TextBox Name="bufferPosA" 
-                                                     Width="45" 
+                                                <TextBox Name="bufferPosA" 
+                                                     Width="Auto" 
                                                      Height="17"
                                                                  FontSize="12"
                                                      PreviewTextInput="myPreviewTextInput"/>
-                                        </StackPanel>
-                                        <Button Name="btn_SetBufferPosData" 
+                                            </StackPanel>
+                                            <Button Name="btn_SetBufferPosData" 
                                                 Margin="20 0"
                                                 Height="20" 
                                                 Width="Auto"
@@ -365,13 +446,13 @@
                                                             FontSize="12"
                                                 Content="{DynamicResource StationEditor_Button_Save}"
                                                 Click="Btn_SetBufferPosData_Click"/>
-                                    </StackPanel>
-                                </Grid>
-                            </GroupBox>
+                                        </StackPanel>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
                         </Grid>
-                    </Grid>
                     </StackPanel>
-                    
+
                 </ScrollViewer>
             </Grid>
             <Grid Grid.Column="1">
@@ -411,7 +492,9 @@
                                           CanUserSortColumns="True"
                                           AutoGenerateColumns="False"
                                           FontSize="12"
-                                          FontWeight="Normal">
+                                          FontWeight="Normal"
+                                          SelectionMode="Single"
+                                          SelectionUnit="FullRow">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Id" 
                                                             Width="Auto" 
@@ -529,7 +612,7 @@
                                                 </Style>
                                             </DataGridTextColumn.EditingElementStyle>
                                         </DataGridTextColumn>
-                                        
+
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>
@@ -556,6 +639,6 @@
                 </Grid>
             </StackPanel>
         </Grid>
-        
+
     </Grid>
 </Window>

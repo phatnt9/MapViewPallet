@@ -568,7 +568,7 @@
                                                         <DataGridTextColumn
                                                             Width="*" 
                                                             IsReadOnly="True"
-                                                            Visibility="Hidden"
+                                                            Visibility="Visible"
                                                             Binding="{Binding Path=dataPallet}">
                                                             <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
@@ -1058,7 +1058,7 @@
                                                     <DataGridTextColumn Header="Dữ liệu" 
                                                                         Width="Auto"  
                                                                         IsReadOnly="True"
-                                                                        Visibility="Hidden"
+                                                                        Visibility="Visible"
                                                                         Binding="{Binding Path=bufferCheckIn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                         <DataGridTextColumn.ElementStyle>
                                                             <Style TargetType="TextBlock">
@@ -1224,7 +1224,7 @@
                                                     <DataGridTextColumn Header="Dữ liệu" 
                                                                         Width="Auto"  
                                                                         IsReadOnly="True"
-                                                                        Visibility="Hidden"
+                                                                        Visibility="Visible"
                                                                         Binding="{Binding Path=dataPallet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                         <DataGridTextColumn.ElementStyle>
                                                             <Style TargetType="TextBlock">

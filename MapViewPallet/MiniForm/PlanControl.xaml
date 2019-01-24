@@ -133,8 +133,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Hidden"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Hidden"/>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible"/>
                                             <DataGridTextColumn
                                                 Binding="{Binding Path=deviceName}" 
                                                 IsReadOnly="True">
@@ -273,8 +273,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Hidden"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Hidden"/>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible"/>
                                             <DataGridTextColumn 
                                                 Binding="{Binding Path=deviceName}" 
                                                 IsReadOnly="True">
@@ -414,8 +414,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Hidden"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Hidden"/>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible"/>
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible"/>
                                             <DataGridTextColumn 
                                                 Binding="{Binding Path=deviceName}" 
                                                 IsReadOnly="True">

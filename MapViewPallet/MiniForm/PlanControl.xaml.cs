@@ -94,7 +94,7 @@ namespace MapViewPallet.MiniForm
             {
                 switch (UpdateDateStatus((DateTime)pCalendar.SelectedDate))
                 {
-                    case -1: { Shift1Dgv.IsReadOnly = Shift2Dgv.IsReadOnly = Shift3Dgv.IsReadOnly = true; break; }
+                    case -1: { Shift1Dgv.IsReadOnly = Shift2Dgv.IsReadOnly = Shift3Dgv.IsReadOnly = false; break; }
                     default: { Shift1Dgv.IsReadOnly = Shift2Dgv.IsReadOnly = Shift3Dgv.IsReadOnly = false; break; }
                 }
                 if (TabControlShift.IsLoaded)
