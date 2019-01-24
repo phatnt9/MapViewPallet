@@ -91,14 +91,14 @@ namespace MapViewPallet.Shape
             list_Robot = new SortedDictionary<string, RobotShape>();
             //==========EVENT==========
             map.MouseDown += Map_MouseDown;
-            map.MouseWheel += Map_Zoom;
+            //map.MouseWheel += Map_Zoom;
             map.MouseMove += Map_MouseMove;
-            map.SizeChanged += Map_SizeChanged;
+            //map.SizeChanged += Map_SizeChanged;
             map.MouseLeftButtonDown += Map_MouseLeftButtonDown;
             map.MouseRightButtonDown += Map_MouseRightButtonDown;
             map.MouseLeftButtonUp += Map_MouseLeftButtonUp;
             mainWindow.PreviewKeyDown += new KeyEventHandler(HandleEsc);
-            mainWindow.clipBorder.SizeChanged += ClipBorder_SizeChanged;
+            //mainWindow.clipBorder.SizeChanged += ClipBorder_SizeChanged;
 
         }
 
@@ -179,7 +179,7 @@ namespace MapViewPallet.Shape
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             ToggleSelectedPath(selectedItemName);
             selectedItemName = elementName;
-            Console.WriteLine(elementName);
+            //Console.WriteLine(elementName);
             if ((mainWindow.drag))
             {
                 if (e.Source.ToString() == "System.Windows.Controls.Canvas")
@@ -191,8 +191,8 @@ namespace MapViewPallet.Shape
 
                     Point p1 = e.GetPosition(mainWindow.clipBorder);
                     Point p2 = e.GetPosition(mainWindow.map);
-                    Console.WriteLine(p1.X.ToString("0.00") + "-" + p1.Y.ToString("0.00"));
-                    Console.WriteLine(p2.X.ToString("0.00") + "-" + p2.Y.ToString("0.00"));
+                    //Console.WriteLine(p1.X.ToString("0.00") + "-" + p1.Y.ToString("0.00"));
+                    //Console.WriteLine(p2.X.ToString("0.00") + "-" + p2.Y.ToString("0.00"));
                 }
             }
             if (!mainWindow.drag)
@@ -279,6 +279,8 @@ namespace MapViewPallet.Shape
 
                 //translateTransform.X = xCoor;
                 //translateTransform.Y = yCoor;
+
+                Console.WriteLine(xCoor+"    "+ yCoor);
 
                 double xlim;
                 double ylim;

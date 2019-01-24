@@ -6,12 +6,14 @@
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
                     <local2:UserAuthorCollection x:Key="UserAuthorSource">
                     </local2:UserAuthorCollection>
                 </ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Han.Wpf.ViewportControl;component/Themes/Generic.xaml" />
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Grey.xaml" />
