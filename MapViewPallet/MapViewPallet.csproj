@@ -172,6 +172,9 @@
     <Compile Include="MiniForm\MicsWpfForm\AddUserForm.xaml.cs">
       <DependentUpon>AddUserForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiniForm\MicsWpfForm\BufferSettingForm.xaml.cs">
+      <DependentUpon>BufferSettingForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MiniForm\NotifyUIBase.cs" />
     <Compile Include="MiniForm\Plan.cs" />
     <Compile Include="MiniForm\PlanControl.xaml.cs">
@@ -269,6 +272,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MiniForm\MicsWpfForm\AddUserForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiniForm\MicsWpfForm\BufferSettingForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -553,6 +560,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Map_Laser.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Map_aTan.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

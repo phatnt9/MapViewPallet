@@ -120,6 +120,16 @@
                                 <MenuItem Header="{DynamicResource English}" Tag="en-US" Click="MenuItem_Click" IsCheckable="True" IsChecked="True"/>
                                 <MenuItem Header="{DynamicResource Vietnamese}" Tag="vi-VN" Click="MenuItem_Click" IsCheckable="True"/>
                             </MenuItem>
+                            <MenuItem Header="Tool">
+                                <MenuItem 
+                                    Header="Buffer Properties"
+                                    Click="MenuItem_Click_1">
+                                    <MenuItem.Icon>
+                                        <iconPacks:Material
+                                            Kind="Settings" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
                             
                         </Menu>
                     </DockPanel>
@@ -370,7 +380,7 @@
                                             <Canvas Name="map" RenderTransformOrigin="0.5,0.5" 
                                             Width="Auto" Height="Auto">
                                                 <Canvas.Children>
-                                                    <Rectangle x:Name="rect" Fill="Red" Width="1" Height="1"/>
+                                                    <Rectangle x:Name="rect" Fill="Red" Width="10" Height="10"/>
                                                 </Canvas.Children>
                                                 <Canvas.RenderTransform>
                                                     <TransformGroup>
@@ -413,7 +423,7 @@
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <Slider
+                                <!--<Slider
                                     Margin="0 20 0 0"
                                     TickFrequency="1"
                                     TickPlacement="BottomRight"
@@ -421,7 +431,7 @@
                                     Minimum="1"
                                     Maximum="9" 
                                     Height="Auto"
-                                    Value="{Binding Path=zoomScale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    Value="{Binding Path=zoomScale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>-->
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">

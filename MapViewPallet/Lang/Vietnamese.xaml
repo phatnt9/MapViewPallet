@@ -9,8 +9,6 @@
     <sys:String x:Key="English">English</sys:String>
     <sys:String x:Key="Vietnamese">Tiếng Việt</sys:String>
 
-
-
     <!--MainWindow-->
     <sys:String x:Key="MainWindow_Title">Phần mềm quản lý</sys:String>
     <sys:String x:Key="MainWindow_Menu_Management">_Quản lý</sys:String>

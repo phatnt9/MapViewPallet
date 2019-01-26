@@ -3,19 +3,14 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
-using System.Windows.Shapes;
 using System.ComponentModel;
-using static MapViewPallet.Global_Object;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
-using System.Data;
 using MapViewPallet.MiniForm;
-using System.Timers;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MapViewPallet.Shape
 {
@@ -23,8 +18,8 @@ namespace MapViewPallet.Shape
     {
 
         //public event Action<string> RemoveHandle;
-        int StaticWidth = 16;
-        int StaticHeight = 18;
+        //int StaticWidth = 16;
+        //int StaticHeight = 18;
         public class Props
         {
             //public bool isSelected;
@@ -133,8 +128,8 @@ namespace MapViewPallet.Shape
             //MouseLeftButtonDown += MouseLeftButtonDownStation;
             //MouseRightButtonDown += MouseRightButtonDownStation;
             //===================CREATE=====================
-            Width = StaticWidth * props.bufferDb.maxBay;
-            Height = StaticHeight * props.bufferDb.maxRow;
+            Width = Global_Object.StaticPalletWidth * props.bufferDb.maxBay;
+            Height = Global_Object.StaticPalletHeight * props.bufferDb.maxRow;
             props.NameID = props.bufferDb.bufferName; //label
             props._palletList = new SortedDictionary<string, PalletShape>();
             props._myTransformGroup = new TransformGroup();
@@ -214,6 +209,9 @@ namespace MapViewPallet.Shape
             props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
             props._myTransformGroup.Children[0] = props._myRotateTransform;
             props._myTransformGroup.Children[1] = props._myTranslateTransform;
+            
+            Width = Global_Object.StaticPalletWidth * props.bufferDb.maxBay;
+            Height = Global_Object.StaticPalletHeight * props.bufferDb.maxRow;
 
         }
 
@@ -243,8 +241,8 @@ namespace MapViewPallet.Shape
                     props._stationGrid.RowDefinitions.Clear();
                     props._stationGrid.ColumnDefinitions.Clear();
 
-                    Width = StaticWidth * props.bufferDb.maxBay;
-                    Height = StaticHeight * props.bufferDb.maxRow;
+                    Width = Global_Object.StaticPalletWidth * props.bufferDb.maxBay;
+                    Height = Global_Object.StaticPalletHeight * props.bufferDb.maxRow;
 
 
                     for (int bayIndex = 0; bayIndex < props.bufferDb.maxBay; bayIndex++) //Column Index
@@ -293,6 +291,10 @@ namespace MapViewPallet.Shape
                         props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
                         props._myTransformGroup.Children[0] = props._myRotateTransform;
                         props._myTransformGroup.Children[1] = props._myTranslateTransform;
+
+                        Width = Global_Object.StaticPalletWidth * props.bufferDb.maxBay;
+                        Height = Global_Object.StaticPalletHeight * props.bufferDb.maxRow;
+
                     }));
                 }
 

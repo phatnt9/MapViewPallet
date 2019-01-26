@@ -507,6 +507,17 @@
                                                 </Style>
                                             </DataGridTextColumn.EditingElementStyle>
                                         </DataGridTextColumn>
+                                        <DataGridTextColumn Header="PlanId" 
+                                                            Width="Auto" 
+                                                            Visibility="Visible"
+                                                            IsReadOnly="True"
+                                                            Binding="{Binding Path=planId}">
+                                            <DataGridTextColumn.EditingElementStyle>
+                                                <Style TargetType="TextBox">
+                                                    <Setter Property="CharacterCasing" Value="Upper"/>
+                                                </Style>
+                                            </DataGridTextColumn.EditingElementStyle>
+                                        </DataGridTextColumn>
                                         <DataGridTextColumn
                                             Width="Auto" 
                                             IsReadOnly="True"

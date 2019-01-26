@@ -173,6 +173,8 @@ namespace MapViewPallet.Shape
         private void Map_MouseDown(object sender, MouseButtonEventArgs e)
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
+            Point mousePos = e.GetPosition(map);
+            Console.WriteLine(mousePos.X+"  "+mousePos.Y);
         }
         private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -282,74 +284,74 @@ namespace MapViewPallet.Shape
 
                 Console.WriteLine(xCoor+"    "+ yCoor);
 
-                double xlim;
-                double ylim;
-                if (ClipBorderWidth < map.Width)
-                {
-                    xlim = (map.Width * (pScaleTransform.ScaleX - 1)) / 2;
-                }
-                else
-                {
-                    xlim = Math.Abs((MapWidthScaled - ClipBorderWidth) / 2);
-                }
+                //double xlim;
+                //double ylim;
+                //if (ClipBorderWidth < map.Width)
+                //{
+                //    xlim = (map.Width * (pScaleTransform.ScaleX - 1)) / 2;
+                //}
+                //else
+                //{
+                //    xlim = Math.Abs((MapWidthScaled - ClipBorderWidth) / 2);
+                //}
 
-                if (ClipBorderHeight < map.Height)
-                {
-                    ylim = (map.Height * (pScaleTransform.ScaleY - 1)) / 2;
-                }
-                else
-                {
-                    ylim = Math.Abs((MapHeightScaled - ClipBorderHeight) / 2);
-                }
+                //if (ClipBorderHeight < map.Height)
+                //{
+                //    ylim = (map.Height * (pScaleTransform.ScaleY - 1)) / 2;
+                //}
+                //else
+                //{
+                //    ylim = Math.Abs((MapHeightScaled - ClipBorderHeight) / 2);
+                //}
 
-                if (ClipBorderWidth > map.Width)
-                {
-                    if ((xCoor >= (-xlim)) && (xCoor <= (xlim)))
-                    {
-                        translateTransform.X = xCoor;
-                    }
-                }
-                else
-                {
-                    if (ClipBorderWidth < MapWidthScaled)
-                    {
-                        if ((xCoor <= (xlim)) && (xCoor >= -(MapWidthScaled - ClipBorderWidth - xlim)))
-                        {
-                            translateTransform.X = xCoor;
-                        }
-                    }
-                    else
-                    {
-                        if ((xCoor >= (xlim)) && (xCoor <= -(MapWidthScaled - ClipBorderWidth - xlim)))
-                        {
-                            translateTransform.X = xCoor;
-                        }
-                    }
-                }
-                if (ClipBorderHeight > map.Height)
-                {
-                    if ((yCoor >= (-ylim)) && (yCoor <= (ylim)))
-                    {
-                        translateTransform.Y = yCoor;
-                    }
-                }
-                else
-                {
-                    if (ClipBorderHeight < MapHeightScaled)
-                    {
-                        if ((yCoor <= (ylim)) && (yCoor >= -(MapHeightScaled - ClipBorderHeight - ylim)))
-                        {
-                            translateTransform.Y = yCoor;
-                        }
-                    }
-                    else
-                    {
-                        if ((yCoor >= (ylim)) && (yCoor <= -(MapHeightScaled - ClipBorderHeight - ylim)))
-                        {
-                            translateTransform.Y = yCoor;
-                        }
-                    }
-                }
+                //if (ClipBorderWidth > map.Width)
+                //{
+                //    if ((xCoor >= (-xlim)) && (xCoor <= (xlim)))
+                //    {
+                //        translateTransform.X = xCoor;
+                //    }
+                //}
+                //else
+                //{
+                //    if (ClipBorderWidth < MapWidthScaled)
+                //    {
+                //        if ((xCoor <= (xlim)) && (xCoor >= -(MapWidthScaled - ClipBorderWidth - xlim)))
+                //        {
+                //            translateTransform.X = xCoor;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        if ((xCoor >= (xlim)) && (xCoor <= -(MapWidthScaled - ClipBorderWidth - xlim)))
+                //        {
+                //            translateTransform.X = xCoor;
+                //        }
+                //    }
+                //}
+                //if (ClipBorderHeight > map.Height)
+                //{
+                //    if ((yCoor >= (-ylim)) && (yCoor <= (ylim)))
+                //    {
+                //        translateTransform.Y = yCoor;
+                //    }
+                //}
+                //else
+                //{
+                //    if (ClipBorderHeight < MapHeightScaled)
+                //    {
+                //        if ((yCoor <= (ylim)) && (yCoor >= -(MapHeightScaled - ClipBorderHeight - ylim)))
+                //        {
+                //            translateTransform.Y = yCoor;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        if ((yCoor >= (ylim)) && (yCoor <= -(MapHeightScaled - ClipBorderHeight - ylim)))
+                //        {
+                //            translateTransform.Y = yCoor;
+                //        }
+                //    }
+                //}
             }
             if (!mainWindow.drag)
             {
@@ -803,45 +805,53 @@ namespace MapViewPallet.Shape
         }
         public List<dtBuffer> GetDataAllStation()
         {
-            List<dtBuffer> listBuffer = new List<dtBuffer>();
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
-            request.Method = "GET";
-            request.ContentType = @"application/json";
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
+            try
             {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                string result = reader.ReadToEnd();
-
-                DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
-                foreach (DataRow dr in buffers.Rows)
+                List<dtBuffer> listBuffer = new List<dtBuffer>();
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                request.Method = "GET";
+                request.ContentType = @"application/json";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
                 {
-                    dtBuffer tempBuffer = new dtBuffer
-                    {
-                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                        creDt = dr["creDt"].ToString(),
-                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                        updDt = dr["updDt"].ToString(),
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
 
-                        bufferId = int.Parse(dr["bufferId"].ToString()),
-                        bufferName = dr["bufferName"].ToString(),
-                        bufferNameOld = dr["bufferNameOld"].ToString(),
-                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
-                        bufferData = dr["bufferData"].ToString(),
-                        maxRow = int.Parse(dr["maxRow"].ToString()),
-                        maxBay = int.Parse(dr["maxBay"].ToString()),
-                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
-                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
-                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
-                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
-                        //pallets
-                    };
-                    GetListPallet(tempBuffer);
-                    listBuffer.Add(tempBuffer);
+                    DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
+                    foreach (DataRow dr in buffers.Rows)
+                    {
+                        dtBuffer tempBuffer = new dtBuffer
+                        {
+                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                            creDt = dr["creDt"].ToString(),
+                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                            updDt = dr["updDt"].ToString(),
+
+                            bufferId = int.Parse(dr["bufferId"].ToString()),
+                            bufferName = dr["bufferName"].ToString(),
+                            bufferNameOld = dr["bufferNameOld"].ToString(),
+                            bufferCheckIn = dr["bufferCheckIn"].ToString(),
+                            bufferData = dr["bufferData"].ToString(),
+                            maxRow = int.Parse(dr["maxRow"].ToString()),
+                            maxBay = int.Parse(dr["maxBay"].ToString()),
+                            maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                            maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+                            bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                            bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                            //pallets
+                        };
+                        GetListPallet(tempBuffer);
+                        listBuffer.Add(tempBuffer);
+                    }
                 }
+                return listBuffer;
             }
-            return listBuffer;
+            catch
+            {
+
+                return new List<dtBuffer>();
+            }
+            
         }
         public void GetListPallet(dtBuffer tempBuffer)
         {

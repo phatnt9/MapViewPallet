@@ -31,6 +31,12 @@ namespace MapViewPallet
         public static int userAuthor = -2;
 
 
+        public static double StaticPalletWidth = 13;
+        public static double StaticPalletHeight = 12;
+        public static double StaticPalletMargin = 0;
+        public static double StaticPalletPadding = 0;
+
+
         public static string messageDuplicated = "{0} is duplicated.";
         public static string messageSaveSucced = "Save operation succeeded.";
         public static string messageSaveFail = "Failed to save. Please try again.";

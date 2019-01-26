@@ -358,6 +358,10 @@ namespace MapViewPallet.MiniForm
         private void DevicesListDg2_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             DataGridCellInfo dgci = (DataGridCellInfo)((System.Windows.Controls.DataGrid)sender).CurrentCell;
+            if (dgci.Column == null)
+            {
+                return;
+            }
             switch (dgci.Column.DisplayIndex)
             {
                 case 2:
@@ -719,6 +723,10 @@ namespace MapViewPallet.MiniForm
         {
             // có lỗi
             DataGridCellInfo dgci = (DataGridCellInfo)((System.Windows.Controls.DataGrid)sender).CurrentCell;
+            if(dgci.Column == null)
+            {
+                return;
+            }
             switch (dgci.Column.DisplayIndex)
             {
                 case 2:

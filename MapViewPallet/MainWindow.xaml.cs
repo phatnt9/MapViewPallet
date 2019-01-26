@@ -91,7 +91,7 @@ namespace MapViewPallet
             //===================================
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
 
-            ImageBrush img = LoadImage("test3");
+            ImageBrush img = LoadImage("Map_aTan");
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
@@ -110,8 +110,7 @@ namespace MapViewPallet
             stationTimer.Interval = 3000;
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
-            stationTimer.Enabled = true;
-
+            //stationTimer.Enabled = true;
 
             //robotTimer = new System.Timers.Timer();
             //robotTimer.Interval = 50;
@@ -245,6 +244,7 @@ namespace MapViewPallet
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     canvasControlService.ReloadAllStation();
+                    stationTimer.Enabled = true;
                 }));
             }
         }
@@ -588,12 +588,21 @@ namespace MapViewPallet
 
         private void PlayMusic_Click(object sender, RoutedEventArgs e)
         {
-            Global_Object.PlayWarning(true);
+            //Global_Object.PlayWarning(true);
+            //Global_Object.StaticHeight++;
+            //Global_Object.StaticWidth++;
+            BufferSettingForm form = new BufferSettingForm();
+            form.ShowDialog();
         }
 
         private void StopMusic_Click(object sender, RoutedEventArgs e)
         {
-            Global_Object.StopWarning();
+            //Global_Object.StopWarning();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 
