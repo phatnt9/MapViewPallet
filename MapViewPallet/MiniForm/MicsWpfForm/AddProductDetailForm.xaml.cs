@@ -68,46 +68,58 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
-            request.Method = "POST";
-            request.ContentType = @"application/json";
-            dtProductDetail productDetail = new dtProductDetail();
-            productDetail.productId = ((devicesManagement.ProductsListDg.SelectedItem) as dtProduct).productId;
-            productDetail.productDetailId = 0;
-            productDetail.productDetailName = this.productDetailNametb.Text.Trim();
-            productDetail.creUsrId = Global_Object.userLogin;
-            productDetail.updUsrId = Global_Object.userLogin;
-
-            string jsonData = JsonConvert.SerializeObject(productDetail);
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
+            if (!Global_Object.ServerAlive())
             {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
+                return;
             }
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
+            try
             {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                string result = reader.ReadToEnd();
-                switch (result)
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+                dtProductDetail productDetail = new dtProductDetail();
+                productDetail.productId = ((devicesManagement.ProductsListDg.SelectedItem) as dtProduct).productId;
+                productDetail.productDetailId = 0;
+                productDetail.productDetailName = this.productDetailNametb.Text.Trim();
+                productDetail.creUsrId = Global_Object.userLogin;
+                productDetail.updUsrId = Global_Object.userLogin;
+
+                string jsonData = JsonConvert.SerializeObject(productDetail);
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
                 {
-                    case "-1":
-                        {
-                            addProductDetailModel.productDetailNameDuplicate = "Mã sản phẩm đã tồn tại!";
-                            break;
-                        }
-                    default:
-                        {
-                            break;
-                        }
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
                 }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+                    switch (result)
+                    {
+                        case "-1":
+                            {
+                                addProductDetailModel.productDetailNameDuplicate = "Mã sản phẩm đã tồn tại!";
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
+                }
+                devicesManagement.UpdateTab3(false);
+                productDetailNametb.Focus();
             }
-            devicesManagement.UpdateTab3(false);
-            productDetailNametb.Focus();
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+
         }
     }
 }

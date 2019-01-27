@@ -91,7 +91,7 @@ namespace MapViewPallet
             //===================================
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
 
-            ImageBrush img = LoadImage("Map_aTan");
+            ImageBrush img = LoadImage("test3");
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;

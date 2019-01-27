@@ -460,7 +460,11 @@ namespace MapViewPallet.Shape
                     if (Global_Object.bufferToMove != null)
                     {
                         // Cap nhat data
-                        //try
+                        if (!Global_Object.ServerAlive())
+                        {
+                            break;
+                        }
+                        try
                         {
                             dtBuffer buffer = Global_Object.bufferToMove.props.bufferDb;
                             List<dtBuffer> buffers = new List<dtBuffer>();
@@ -517,13 +521,10 @@ namespace MapViewPallet.Shape
                             }
                             //UpdateTab4(true);
                         }
-                        //catch
+                        catch (Exception exc)
                         {
-
+                            Console.WriteLine(exc.Message);
                         }
-
-
-                        //
                         Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION;//Do nothing, ready to move
                         Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION;
                         Global_Object.bufferToMove = null;
@@ -662,62 +663,74 @@ namespace MapViewPallet.Shape
         }
         public void ReloadAllStation()
         {
-            for (int i = 0; i < list_Station.Count; i++)
+            if (!Global_Object.ServerAlive())
             {
-                //Console.WriteLine(i);
-                StationShape temp = list_Station.ElementAt(i).Value;
-                Console.WriteLine("Remove: " + list_Station.ElementAt(i).Key);
-                temp.Remove();
+                return;
             }
-            list_Station.Clear();
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
-            request.Method = "GET";
-            request.ContentType = @"application/json";
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
+            try
             {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                string result = reader.ReadToEnd();
-
-                DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
-                foreach (DataRow dr in buffers.Rows)
+                for (int i = 0; i < list_Station.Count; i++)
                 {
-                    dtBuffer tempBuffer = new dtBuffer
-                    {
-                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                        creDt = dr["creDt"].ToString(),
-                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                        updDt = dr["updDt"].ToString(),
+                    //Console.WriteLine(i);
+                    StationShape temp = list_Station.ElementAt(i).Value;
+                    Console.WriteLine("Remove: " + list_Station.ElementAt(i).Key);
+                    temp.Remove();
+                }
+                list_Station.Clear();
 
-                        bufferId = int.Parse(dr["bufferId"].ToString()),
-                        bufferName = dr["bufferName"].ToString(),
-                        bufferNameOld = dr["bufferNameOld"].ToString(),
-                        bufferCheckIn = dr["bufferCheckIn"].ToString(),
-                        bufferData = dr["bufferData"].ToString(),
-                        maxBay = int.Parse(dr["maxBay"].ToString()),
-                        maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
-                        maxRow = int.Parse(dr["maxRow"].ToString()),
-                        maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
-                        bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
-                        bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
-                        //pallets
-                    };
-                    if (list_Station.ContainsKey(tempBuffer.bufferName.ToString().Trim()))
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                request.Method = "GET";
+                request.ContentType = @"application/json";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+
+                    DataTable buffers = JsonConvert.DeserializeObject<DataTable>(result);
+                    foreach (DataRow dr in buffers.Rows)
                     {
-                        list_Station[tempBuffer.bufferName.ToString().Trim()].props.bufferDb = tempBuffer;
-                        Console.WriteLine("Upadte bufferDb station ReloadAllStation:" + tempBuffer.bufferName);
-                    }
-                    else
-                    {
-                        StationShape tempStation = new StationShape(map, tempBuffer);
-                        //tempStation.ReDraw();
-                        //tempStation.RemoveHandle += StationRemove;
-                        list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
-                        Console.WriteLine("Add them station ReloadAllStation:" + tempBuffer.bufferName);
+                        dtBuffer tempBuffer = new dtBuffer
+                        {
+                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                            creDt = dr["creDt"].ToString(),
+                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                            updDt = dr["updDt"].ToString(),
+
+                            bufferId = int.Parse(dr["bufferId"].ToString()),
+                            bufferName = dr["bufferName"].ToString(),
+                            bufferNameOld = dr["bufferNameOld"].ToString(),
+                            bufferCheckIn = dr["bufferCheckIn"].ToString(),
+                            bufferData = dr["bufferData"].ToString(),
+                            maxBay = int.Parse(dr["maxBay"].ToString()),
+                            maxBayOld = int.Parse(dr["maxBayOld"].ToString()),
+                            maxRow = int.Parse(dr["maxRow"].ToString()),
+                            maxRowOld = int.Parse(dr["maxRowOld"].ToString()),
+                            bufferReturn = bool.Parse(dr["bufferReturn"].ToString()),
+                            bufferReturnOld = bool.Parse(dr["bufferReturnOld"].ToString()),
+                            //pallets
+                        };
+                        if (list_Station.ContainsKey(tempBuffer.bufferName.ToString().Trim()))
+                        {
+                            list_Station[tempBuffer.bufferName.ToString().Trim()].props.bufferDb = tempBuffer;
+                            Console.WriteLine("Upadte bufferDb station ReloadAllStation:" + tempBuffer.bufferName);
+                        }
+                        else
+                        {
+                            StationShape tempStation = new StationShape(map, tempBuffer);
+                            //tempStation.ReDraw();
+                            //tempStation.RemoveHandle += StationRemove;
+                            list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
+                            Console.WriteLine("Add them station ReloadAllStation:" + tempBuffer.bufferName);
+                        }
                     }
                 }
             }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+            
         }
 
         void Statectrl_MouseMove(MouseEventArgs e)
@@ -805,6 +818,10 @@ namespace MapViewPallet.Shape
         }
         public List<dtBuffer> GetDataAllStation()
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return new List<dtBuffer>();
+            }
             try
             {
                 List<dtBuffer> listBuffer = new List<dtBuffer>();
@@ -846,66 +863,77 @@ namespace MapViewPallet.Shape
                 }
                 return listBuffer;
             }
-            catch
+            catch (Exception exc)
             {
-
+                Console.WriteLine(exc.Message);
                 return new List<dtBuffer>();
             }
-            
         }
         public void GetListPallet(dtBuffer tempBuffer)
         {
-            HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
-            request2.Method = "POST";
-            request2.ContentType = @"application/json";
-
-
-            dynamic postApiBody2 = new JObject();
-            postApiBody2.bufferId = tempBuffer.bufferId;
-            string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
-
-
-            System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
-            Byte[] byteArray2 = encoding2.GetBytes(jsonData2);
-            request2.ContentLength = byteArray2.Length;
-            using (Stream dataStream2 = request2.GetRequestStream())
+            if (!Global_Object.ServerAlive())
             {
-                dataStream2.Write(byteArray2, 0, byteArray2.Length);
-                dataStream2.Flush();
+                return;
             }
-            HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse;
-            using (Stream responseStream2 = response2.GetResponseStream())
+            try
             {
-                StreamReader reader2 = new StreamReader(responseStream2, Encoding.UTF8);
-                string result2 = reader2.ReadToEnd();
+                HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                request2.Method = "POST";
+                request2.ContentType = @"application/json";
 
-                DataTable pallets = JsonConvert.DeserializeObject<DataTable>(result2);
-                foreach (DataRow dr2 in pallets.Rows)
+
+                dynamic postApiBody2 = new JObject();
+                postApiBody2.bufferId = tempBuffer.bufferId;
+                string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
+
+
+                System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
+                Byte[] byteArray2 = encoding2.GetBytes(jsonData2);
+                request2.ContentLength = byteArray2.Length;
+                using (Stream dataStream2 = request2.GetRequestStream())
                 {
-                    dtPallet tempPallet = new dtPallet
+                    dataStream2.Write(byteArray2, 0, byteArray2.Length);
+                    dataStream2.Flush();
+                }
+                HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse;
+                using (Stream responseStream2 = response2.GetResponseStream())
+                {
+                    StreamReader reader2 = new StreamReader(responseStream2, Encoding.UTF8);
+                    string result2 = reader2.ReadToEnd();
+
+                    DataTable pallets = JsonConvert.DeserializeObject<DataTable>(result2);
+                    foreach (DataRow dr2 in pallets.Rows)
                     {
-                        creUsrId = int.Parse(dr2["creUsrId"].ToString()),
-                        creDt = dr2["creDt"].ToString(),
-                        updUsrId = int.Parse(dr2["updUsrId"].ToString()),
-                        updDt = dr2["updDt"].ToString(),
-                        palletId = int.Parse(dr2["palletId"].ToString()),
-                        deviceBufferId = int.Parse(dr2["deviceBufferId"].ToString()),
-                        bufferId = int.Parse(dr2["bufferId"].ToString()),
-                        planId = int.Parse(dr2["planId"].ToString()),
-                        row = int.Parse(dr2["row"].ToString()),
-                        bay = int.Parse(dr2["bay"].ToString()),
-                        dataPallet = dr2["dataPallet"].ToString(),
-                        palletStatus = dr2["palletStatus"].ToString(),
-                        deviceId = int.Parse(dr2["deviceId"].ToString()),
-                        deviceName = dr2["deviceName"].ToString(),
-                        productId = int.Parse(dr2["productId"].ToString()),
-                        productName = dr2["productName"].ToString(),
-                        productDetailId = int.Parse(dr2["productDetailId"].ToString()),
-                        productDetailName = dr2["productDetailName"].ToString(),
-                    };
-                    tempBuffer.pallets.Add(tempPallet);
+                        dtPallet tempPallet = new dtPallet
+                        {
+                            creUsrId = int.Parse(dr2["creUsrId"].ToString()),
+                            creDt = dr2["creDt"].ToString(),
+                            updUsrId = int.Parse(dr2["updUsrId"].ToString()),
+                            updDt = dr2["updDt"].ToString(),
+                            palletId = int.Parse(dr2["palletId"].ToString()),
+                            deviceBufferId = int.Parse(dr2["deviceBufferId"].ToString()),
+                            bufferId = int.Parse(dr2["bufferId"].ToString()),
+                            planId = int.Parse(dr2["planId"].ToString()),
+                            row = int.Parse(dr2["row"].ToString()),
+                            bay = int.Parse(dr2["bay"].ToString()),
+                            dataPallet = dr2["dataPallet"].ToString(),
+                            palletStatus = dr2["palletStatus"].ToString(),
+                            deviceId = int.Parse(dr2["deviceId"].ToString()),
+                            deviceName = dr2["deviceName"].ToString(),
+                            productId = int.Parse(dr2["productId"].ToString()),
+                            productName = dr2["productName"].ToString(),
+                            productDetailId = int.Parse(dr2["productDetailId"].ToString()),
+                            productDetailName = dr2["productDetailName"].ToString(),
+                        };
+                        tempBuffer.pallets.Add(tempPallet);
+                    }
                 }
             }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+            
         }
         public void RedrawAllRobot()
         {

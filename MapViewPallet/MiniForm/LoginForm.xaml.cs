@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -75,6 +76,10 @@ namespace MapViewPallet.MiniForm
 
         private void btn_login_Click(object sender, RoutedEventArgs e)
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
             try
             {
                 if (string.IsNullOrEmpty(this.userNametb.Text) || this.userNametb.Text.Trim() == "")
@@ -128,9 +133,9 @@ namespace MapViewPallet.MiniForm
                 }
 
             }
-            catch
+            catch (Exception exc)
             {
-
+                Console.WriteLine(exc.Message);
             }
         }
 
@@ -155,6 +160,7 @@ namespace MapViewPallet.MiniForm
                 btn_login_Click(sender, e);
             }
         }
+
         
     }
 }

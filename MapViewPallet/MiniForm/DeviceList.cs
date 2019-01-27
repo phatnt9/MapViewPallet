@@ -22,6 +22,10 @@ namespace MapViewPallet.MiniForm
 
         public bool GetDevicesList()
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return false;
+            }
             try
             {
                 listDevices.Clear();
@@ -55,8 +59,9 @@ namespace MapViewPallet.MiniForm
                 }
                 return true;
             }
-            catch 
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 return false;
             }
         }

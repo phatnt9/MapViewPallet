@@ -55,31 +55,50 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel 
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel 
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                <Grid>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Grid Margin="5 0">
-                            <Button Name="btn_login"
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Grid Margin="5 0">
+                                <Button Name="btn_login"
                                     Width="70"
                                     Height="20"
                                     Content="{DynamicResource LoginForm_Enter}"
                                     Margin="0,0,0,0"
                                     Click="btn_login_Click">
-                            </Button>
-                        </Grid>
-                        <Grid Margin="5 0">
-                            <Button Name="btn_exit"
+                                </Button>
+                            </Grid>
+                            <Grid Margin="5 0">
+                                <Button Name="btn_exit"
                                     Width="70"
                                     Height="20"
                                     Content="{DynamicResource LoginForm_Exit}"
                                     Click="btn_exit_Click"></Button>
-                        </Grid>
-                    </StackPanel>
-                    
-                </Grid>
-            </StackPanel>
+                            </Grid>
+                            <!--<Grid Margin="5 0">
+                                <Button Name="btn_ping"
+                                    Width="70"
+                                    Height="20"
+                                    Content="Ping"
+                                    Click="Btn_ping_Click"></Button>
+                            </Grid>-->
+                        </StackPanel>
+
+                    </Grid>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <StackPanel>
+                    <TextBlock Name="PingTestlb"></TextBlock>
+                </StackPanel>
+            </Grid>
+            
             
         </Grid>
     </Grid>

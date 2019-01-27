@@ -73,116 +73,128 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(this.bufferNametb.Text) || this.bufferNametb.Text.Trim() == "")
+            if (!Global_Object.ServerAlive())
             {
-                System.Windows.Forms.MessageBox.Show
-                    (
-                    String.Format(Global_Object.messageValidate, "Buffer", "Buffer"), 
-                    Global_Object.messageTitileWarning, 
-                    MessageBoxButtons.OK, 
-                    MessageBoxIcon.Warning
-                    );
-                this.bufferNametb.Focus();
                 return;
             }
-
-            if (string.IsNullOrEmpty(this.bufferMaxBaytb.Text) || this.bufferMaxBaytb.Text.Trim() == "")
+            try
             {
-                System.Windows.Forms.MessageBox.Show
-                    (
-                    String.Format(Global_Object.messageValidate, "Max Bay", "Max Bay"),
-                    Global_Object.messageTitileWarning,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                    );
-                this.bufferMaxBaytb.Focus();
-                return;
-            }
-
-            if (string.IsNullOrEmpty(this.bufferMaxRowtb.Text) || this.bufferMaxRowtb.Text.Trim() == "")
-            {
-                System.Windows.Forms.MessageBox.Show
-                    (
-                    String.Format(Global_Object.messageValidate, "Max Row", "Max Row"),
-                    Global_Object.messageTitileWarning,
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                    );
-                this.bufferMaxRowtb.Focus();
-                return;
-            }
-
-            int maxRow = 0;
-            int maxBay = 0;
-
-            int.TryParse(this.bufferMaxRowtb.Text.Trim().Replace(" ", ""), out maxRow);
-            int.TryParse(this.bufferMaxBaytb.Text.Trim().Replace(" ", ""), out maxBay);
-
-            if (maxRow == 0)
-            {
-                System.Windows.Forms.MessageBox.Show
-                    (String.Format(Global_Object.messageValidateNumber, "Max Row", "greater", "0"), 
-                    Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.bufferMaxRowtb.Focus();
-                return;
-            }
-
-            if (maxBay == 0)
-            {
-                System.Windows.Forms.MessageBox.Show
-                    (String.Format(Global_Object.messageValidateNumber, "Max Bay", "greater", "0"), 
-                    Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.bufferMaxBaytb.Focus();
-                return;
-            }
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/insertBuffer");
-            request.Method = "POST";
-            request.ContentType = @"application/json";
-            dtBuffer buffer = new dtBuffer();
-            buffer.bufferName = this.bufferNametb.Text.Trim();
-            buffer.maxRow = maxRow;
-            buffer.maxBay = maxBay;
-            buffer.bufferReturn = (bool)bufferReturnCb.IsChecked;
-            buffer.bufferData = "{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"}";
-            buffer.bufferCheckIn = "{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"}";
-            buffer.creUsrId = Global_Object.userLogin;
-            buffer.updUsrId = Global_Object.userLogin;
-
-            string jsonData = JsonConvert.SerializeObject(buffer);
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                int result = 0;
-                int.TryParse(reader.ReadToEnd(), out result);
-
-                if (result > 0)
+                if (string.IsNullOrEmpty(this.bufferNametb.Text) || this.bufferNametb.Text.Trim() == "")
                 {
-                    devicesManagement.mainWindow.canvasControlService.ReloadAllStation();
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else if (result == -2)
-                {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Buffer"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show
+                        (
+                        String.Format(Global_Object.messageValidate, "Buffer", "Buffer"),
+                        Global_Object.messageTitileWarning,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                        );
                     this.bufferNametb.Focus();
                     return;
                 }
-                else
+
+                if (string.IsNullOrEmpty(this.bufferMaxBaytb.Text) || this.bufferMaxBaytb.Text.Trim() == "")
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show
+                        (
+                        String.Format(Global_Object.messageValidate, "Max Bay", "Max Bay"),
+                        Global_Object.messageTitileWarning,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                        );
+                    this.bufferMaxBaytb.Focus();
+                    return;
                 }
+
+                if (string.IsNullOrEmpty(this.bufferMaxRowtb.Text) || this.bufferMaxRowtb.Text.Trim() == "")
+                {
+                    System.Windows.Forms.MessageBox.Show
+                        (
+                        String.Format(Global_Object.messageValidate, "Max Row", "Max Row"),
+                        Global_Object.messageTitileWarning,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                        );
+                    this.bufferMaxRowtb.Focus();
+                    return;
+                }
+
+                int maxRow = 0;
+                int maxBay = 0;
+
+                int.TryParse(this.bufferMaxRowtb.Text.Trim().Replace(" ", ""), out maxRow);
+                int.TryParse(this.bufferMaxBaytb.Text.Trim().Replace(" ", ""), out maxBay);
+
+                if (maxRow == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show
+                        (String.Format(Global_Object.messageValidateNumber, "Max Row", "greater", "0"),
+                        Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.bufferMaxRowtb.Focus();
+                    return;
+                }
+
+                if (maxBay == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show
+                        (String.Format(Global_Object.messageValidateNumber, "Max Bay", "greater", "0"),
+                        Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.bufferMaxBaytb.Focus();
+                    return;
+                }
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/insertBuffer");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+                dtBuffer buffer = new dtBuffer();
+                buffer.bufferName = this.bufferNametb.Text.Trim();
+                buffer.maxRow = maxRow;
+                buffer.maxBay = maxBay;
+                buffer.bufferReturn = (bool)bufferReturnCb.IsChecked;
+                buffer.bufferData = "{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"}";
+                buffer.bufferCheckIn = "{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"}";
+                buffer.creUsrId = Global_Object.userLogin;
+                buffer.updUsrId = Global_Object.userLogin;
+
+                string jsonData = JsonConvert.SerializeObject(buffer);
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+
+                    if (result > 0)
+                    {
+                        devicesManagement.mainWindow.canvasControlService.ReloadAllStation();
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Buffer"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.bufferNametb.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                devicesManagement.UpdateTab4(true);
             }
-            devicesManagement.UpdateTab4(true);
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+
         }
         
 

@@ -31,7 +31,11 @@ namespace MapViewPallet.MiniForm
 
         public void ReloadListPallets(int bufferId)
         {
-            //try
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
             {
                 palletsList.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
@@ -95,8 +99,9 @@ namespace MapViewPallet.MiniForm
                     //devicesManagement.PalletsListDg.ScrollIntoView(devicesManagement.PalletsListDg.SelectedItem);
                 }
             }
-            //catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
             }
         }
 

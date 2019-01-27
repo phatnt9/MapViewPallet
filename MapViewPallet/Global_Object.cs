@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -90,6 +91,38 @@ namespace MapViewPallet
             }
         }
 
+        //#######################################
+        public static bool ServerAlive()
+        {
+            var url = "http://localhost:8081/robot/rest/timeWork/getListTimeWork";
+            try
+            {
+                var myRequest = (HttpWebRequest)WebRequest.Create(url);
+
+                var response = (HttpWebResponse)myRequest.GetResponse();
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    //  it's at least in some way responsive
+                    //  but may be internally broken
+                    //  as you could find out if you called one of the methods for real
+                    Console.WriteLine(string.Format("{0} Available", url));
+                    return true;
+                }
+                else
+                {
+                    //  well, at least it returned...
+                    Console.WriteLine(string.Format("{0} Returned, but with status: {1}", url, response.StatusDescription));
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                //  not available at all, for some reason
+                Console.WriteLine(string.Format("{0} unavailable: {1}", url, ex.Message));
+                return false;
+            }
+        }
         //#######################################
 
         public static Point LaserOriginalCoor = new Point(648,378);

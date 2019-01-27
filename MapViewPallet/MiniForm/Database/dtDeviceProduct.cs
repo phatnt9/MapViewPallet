@@ -41,6 +41,10 @@ namespace MapViewPallet.MiniForm
 
         public void GetProductDetailsList()
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProductDetailByProductId");
@@ -83,7 +87,7 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch
+            catch (Exception exc)
             {
 
             }

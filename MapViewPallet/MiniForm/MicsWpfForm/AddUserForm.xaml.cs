@@ -157,36 +157,48 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void loadDevice()
         {
-            List<dtDevice> dt = new List<dtDevice>();
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
-            request.Method = "GET";
-            request.ContentType = @"application/json";
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
+            if (!Global_Object.ServerAlive())
             {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                string result = reader.ReadToEnd();
-
-                DataTable devices = JsonConvert.DeserializeObject<DataTable>(result);
-                foreach (DataRow dr in devices.Rows)
-                {
-                    dtDevice tempDevice = new dtDevice
-                    {
-                        creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                        creDt = dr["creDt"].ToString(),
-                        updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                        updDt = dr["updDt"].ToString(),
-                        deviceId = int.Parse(dr["deviceId"].ToString()),
-                        deviceName = dr["deviceName"].ToString()
-                    };
-                    if (!ContainDevice(tempDevice, dt))
-                    { 
-                        dt.Add(tempDevice);
-                    }
-                    
-                }
+                return;
             }
-            cmbDevice.ItemsSource = dt;
+            try
+            {
+                List<dtDevice> dt = new List<dtDevice>();
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
+                request.Method = "GET";
+                request.ContentType = @"application/json";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+
+                    DataTable devices = JsonConvert.DeserializeObject<DataTable>(result);
+                    foreach (DataRow dr in devices.Rows)
+                    {
+                        dtDevice tempDevice = new dtDevice
+                        {
+                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                            creDt = dr["creDt"].ToString(),
+                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                            updDt = dr["updDt"].ToString(),
+                            deviceId = int.Parse(dr["deviceId"].ToString()),
+                            deviceName = dr["deviceName"].ToString()
+                        };
+                        if (!ContainDevice(tempDevice, dt))
+                        {
+                            dt.Add(tempDevice);
+                        }
+
+                    }
+                }
+                cmbDevice.ItemsSource = dt;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+            
         }
 
         public bool ContainDevice(dtDevice tempOpe, List<dtDevice> List)
@@ -210,6 +222,10 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void Btn_save_Click(object sender, RoutedEventArgs e)
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
             try
             {
                 if (string.IsNullOrEmpty(this.userNametb.Text) || this.userNametb.Text.Trim() == "")
@@ -286,9 +302,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                //logFile.Error(ex.Message);
+                Console.WriteLine(exc.Message);
             }
         }
 

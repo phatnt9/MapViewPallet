@@ -100,56 +100,68 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if (UsersListDg.SelectedItem == null || !UsersListDg.HasItems)
+            if (!Global_Object.ServerAlive())
             {
-                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNothingSelected), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            if (System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteConfirm, "User"), Global_Object.messageTitileWarning, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+            try
             {
-                List<dtUser> listDelete = new List<dtUser>();
-                dtUser user = UsersListDg.SelectedItem as dtUser;
-                listDelete.Add(user);
-
-                string jsonData = JsonConvert.SerializeObject(listDelete);
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/deleteListUser");
-                request.Method = "DELETE";
-                request.ContentType = "application/json";
-
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonData);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
+                if (UsersListDg.SelectedItem == null || !UsersListDg.HasItems)
                 {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNothingSelected), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
+                if (System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteConfirm, "User"), Global_Object.messageTitileWarning, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    int result = 0;
-                    int.TryParse(reader.ReadToEnd(), out result);
-                    if (result == 1)
+                    List<dtUser> listDelete = new List<dtUser>();
+                    dtUser user = UsersListDg.SelectedItem as dtUser;
+                    listDelete.Add(user);
+
+                    string jsonData = JsonConvert.SerializeObject(listDelete);
+
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/deleteListUser");
+                    request.Method = "DELETE";
+                    request.ContentType = "application/json";
+
+                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                    Byte[] byteArray = encoding.GetBytes(jsonData);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        userModel.ReloadListUsers();
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        dataStream.Flush();
                     }
-                    else if (result == 2)
+
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    using (Stream responseStream = response.GetResponseStream())
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "User", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        int result = 0;
+                        int.TryParse(reader.ReadToEnd(), out result);
+                        if (result == 1)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            userModel.ReloadListUsers();
+                        }
+                        else if (result == 2)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "User", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                     }
                 }
             }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+            
         }
     }
 }

@@ -184,6 +184,10 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_CreatePlanPallet_Click(object sender, RoutedEventArgs e)
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
             try
             {
                 DateTime selectedDate = (DateTime)pCalendar.SelectedDate;
@@ -211,55 +215,68 @@ namespace MapViewPallet.MiniForm
                     string result = reader.ReadToEnd();
                 }
             }
-            catch
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
             }
         }
 
         private void DeletePlan_Click(object sender, RoutedEventArgs e)
         {
-            List<Plan> listPlanDelete = new List<Plan>();
-            Plan plan = (sender as System.Windows.Controls.Button).DataContext as Plan;
-            listPlanDelete.Add(plan);
-            string jsonData = JsonConvert.SerializeObject(listPlanDelete);
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/deleteListPlan");
-            request.Method = "DELETE";
-            request.ContentType = "application/json";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
+            if (!Global_Object.ServerAlive())
             {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
+                return;
             }
-
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
+            try
             {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                int result = 0;
-                int.TryParse(reader.ReadToEnd(), out result);
-                if (result == 1)
-                {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if ((pCalendar.SelectedDate != null) && (TabControlShift.SelectedIndex >= 0) && (TabControlShift.IsLoaded))
-                    {
+                List<Plan> listPlanDelete = new List<Plan>();
+                Plan plan = (sender as System.Windows.Controls.Button).DataContext as Plan;
+                listPlanDelete.Add(plan);
+                string jsonData = JsonConvert.SerializeObject(listPlanDelete);
 
-                        operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/deleteListPlan");
+                request.Method = "DELETE";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if ((pCalendar.SelectedDate != null) && (TabControlShift.SelectedIndex >= 0) && (TabControlShift.IsLoaded))
+                        {
+
+                            operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+                        }
+                    }
+                    else if (result == 2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "Devices", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                else if (result == 2)
-                {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "Devices", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
             }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+
         }
     }
 

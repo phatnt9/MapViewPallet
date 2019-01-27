@@ -65,51 +65,63 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(this.deviceNametb.Text) || this.deviceNametb.Text.Trim() == "")
+            if (!Global_Object.ServerAlive())
             {
-                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "Devices Name", "Devices Name"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.deviceNametb.Focus();
                 return;
             }
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/insertDevice");
-            request.Method = "POST";
-            request.ContentType = @"application/json";
-            dtDevice device = new dtDevice();
-            device.deviceName = this.deviceNametb.Text.Trim();
-            device.creUsrId = Global_Object.userLogin;
-            device.updUsrId = Global_Object.userLogin;
-            string jsonData = JsonConvert.SerializeObject(device);
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
+            try
             {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader readerResult = new StreamReader(responseStream, Encoding.UTF8);
-                device = JsonConvert.DeserializeObject<dtDevice>(readerResult.ReadToEnd());
-
-                if (device.deviceId > 0)
+                if (string.IsNullOrEmpty(this.deviceNametb.Text) || this.deviceNametb.Text.Trim() == "")
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else if (device.deviceId == -2)
-                {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Devices Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "Devices Name", "Devices Name"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.deviceNametb.Focus();
                     return;
                 }
-                else
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/insertDevice");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+                dtDevice device = new dtDevice();
+                device.deviceName = this.deviceNametb.Text.Trim();
+                device.creUsrId = Global_Object.userLogin;
+                device.updUsrId = Global_Object.userLogin;
+                string jsonData = JsonConvert.SerializeObject(device);
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
                 }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader readerResult = new StreamReader(responseStream, Encoding.UTF8);
+                    device = JsonConvert.DeserializeObject<dtDevice>(readerResult.ReadToEnd());
+
+                    if (device.deviceId > 0)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (device.deviceId == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Devices Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.deviceNametb.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                devicesManagement.UpdateTab1(true);
             }
-            devicesManagement.UpdateTab1(true);
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
+
         }
 
         

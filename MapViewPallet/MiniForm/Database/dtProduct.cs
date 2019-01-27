@@ -33,6 +33,10 @@ namespace MapViewPallet.MiniForm
 
         public void GetProductDetailsList()
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
             try
             {
                 productDetails = new List<dtProductDetail>();
@@ -76,7 +80,7 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch
+            catch (Exception exc)
             {
 
             }

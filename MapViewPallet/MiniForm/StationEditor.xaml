@@ -352,7 +352,7 @@
                                                                    FontSize="12"
                                                            Width="Auto"></Label>
                                                                 <ComboBox 
-                                                                    Name="palletD"
+                                                                    Name="palletD_Main"
                                                                     Height="20" 
                                                                     Width="Auto" 
                                                                     FontSize="12">
@@ -360,11 +360,22 @@
                                                                     <ComboBoxItem>1</ComboBoxItem>
                                                                     <ComboBoxItem>2</ComboBoxItem>
                                                                 </ComboBox>
-                                                                <!--<TextBox Name="palletD" 
-                                                                     Width="35"
-                                                                     Height="17"
-                                                                 FontSize="12"
-                                                                     PreviewTextInput="myPreviewTextInput"></TextBox>-->
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection}" 
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                                <ComboBox 
+                                                                    Name="palletD_Sub"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                                    <ComboBoxItem>0</ComboBoxItem>
+                                                                    <ComboBoxItem>1</ComboBoxItem>
+                                                                    <ComboBoxItem>2</ComboBoxItem>
+                                                                </ComboBox>
                                                             </StackPanel>
                                                             <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Right">

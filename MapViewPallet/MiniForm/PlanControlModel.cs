@@ -339,6 +339,10 @@ namespace MapViewPallet.MiniForm
 
         public List<Plan> CheckPlans(int timeWorkId, DateTime selectedDate)
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return new List<Plan>();
+            }
             try
             {
                 List<Plan> returnList = new List<Plan>();
@@ -402,8 +406,9 @@ namespace MapViewPallet.MiniForm
                     return returnList;
                 }
             }
-            catch 
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 return null;
             }
         }
@@ -442,6 +447,10 @@ namespace MapViewPallet.MiniForm
 
         public void SendPlanToDb (Plan plan)
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/insertUpdatePlan");
@@ -479,9 +488,9 @@ namespace MapViewPallet.MiniForm
                     int.TryParse(reader.ReadToEnd(), out result);
                 }
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(exc.Message);
             }
         }
 

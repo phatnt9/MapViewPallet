@@ -43,7 +43,6 @@ namespace MapViewPallet.MiniForm
 
         public DevicesManagementModel(DevicesManagement devicesManagement)
         {
-            UpdateDataStatus("Sẵn sàng");
             this.devicesManagement = devicesManagement;
 
             devicesList = new List<dtDevice>();
@@ -71,9 +70,12 @@ namespace MapViewPallet.MiniForm
 
         public void ReloadListDevices(int tabIndex)
         {
-            //try
+            if (!Global_Object.ServerAlive())
             {
-                UpdateDataStatus("Đang cập nhật...");
+                return;
+            }
+            try
+            {
                 devicesList.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
                 request.Method = "GET";
@@ -145,19 +147,21 @@ namespace MapViewPallet.MiniForm
                             break;
                         }
                 }
-                UpdateDataStatus("Sẵn sàng");
             }
-            //catch
+            catch (Exception exc)
             {
-                //UpdateDataStatus("Lỗi");
+                Console.WriteLine(exc.Message);
             }
         }
 
         public void ReloadListProducts()
         {
-            //try
+            if (!Global_Object.ServerAlive())
             {
-                UpdateDataStatus("Đang cập nhật...");
+                return;
+            }
+            try
+            {
                 productsList.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProduct");
                 request.Method = "GET";
@@ -199,20 +203,22 @@ namespace MapViewPallet.MiniForm
                 {
                     devicesManagement.ProductsListDg.SelectedItem = devicesManagement.ProductsListDg.Items[0];
                 }
-                UpdateDataStatus("Sẵn sàng");
             }
-            //catch
+            catch (Exception exc)
             {
-                //UpdateDataStatus("Lỗi");
+                Console.WriteLine(exc.Message);
             }
         }
 
         public void ReloadListBuffers()
         {
-            //try
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
             {
                 buffersList.Clear();
-                UpdateDataStatus("Đang cập nhật...");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
@@ -259,19 +265,21 @@ namespace MapViewPallet.MiniForm
                 {
                     devicesManagement.BuffersListDg.SelectedItem = devicesManagement.BuffersListDg.Items[0];
                 }
-                UpdateDataStatus("Sẵn sàng");
             }
-            //catch
+            catch (Exception exc)
             {
-                //UpdateDataStatus("Lỗi");
+                Console.WriteLine(exc.Message);
             }
         }
 
         public void ReloadListDeviceProducts(int deviceId)
         {
-            //try
+            if (!Global_Object.ServerAlive())
             {
-                UpdateDataStatus("Đang cập nhật...");
+                return;
+            }
+            try
+            {
                 deviceProductsList.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListDeviceProductAllByDeviceId");
                 request.Method = "POST";
@@ -324,20 +332,22 @@ namespace MapViewPallet.MiniForm
                 {
                     devicesManagement.DeviceProductsListDg.SelectedItem = devicesManagement.DeviceProductsListDg.Items[0];
                 }
-                UpdateDataStatus("Sẵn sàng");
             }
-            //catch
+            catch (Exception exc)
             {
-                //UpdateDataStatus("Lỗi");
+                Console.WriteLine(exc.Message);
             }
         }
 
         public void ReloadListDeviceBuffers(int deviceId)
         {
-            //try
+            if (!Global_Object.ServerAlive())
             {
-                deviceBuffersList.Clear();
-                UpdateDataStatus("Đang cập nhật...");
+                return;
+            }
+            try
+            {
+                deviceBuffersList.Clear(); 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListDeviceBufferAllByDeviceId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
@@ -391,17 +401,20 @@ namespace MapViewPallet.MiniForm
                 {
                     devicesManagement.DeviceBuffersListDg.SelectedItem = devicesManagement.DeviceBuffersListDg.Items[0];
                 }
-                UpdateDataStatus("Sẵn sàng");
             }
-            //catch
+            catch (Exception exc)
             {
-                //UpdateDataStatus("Lỗi");
+                Console.WriteLine(exc.Message);
             }
         }
 
         public void ReloadListProductDetails(int productId)
         {
-            //try
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
             {
                 productDetailsList.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProductDetailByProductId");
@@ -451,17 +464,20 @@ namespace MapViewPallet.MiniForm
                 {
                     devicesManagement.ProductDetailsListDg.SelectedItem = devicesManagement.ProductDetailsListDg.Items[0];
                 }
-                UpdateDataStatus("Sẵn sàng");
             }
-            //catch
+            catch (Exception exc)
             {
-                UpdateDataStatus("Lỗi");
+                Console.WriteLine(exc.Message);
             }
         }
 
         public void ReloadListPallets(int bufferId)
         {
-            //try
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
             {
                 palletsList.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
@@ -522,17 +538,20 @@ namespace MapViewPallet.MiniForm
                 {
                     devicesManagement.PalletsListDg.SelectedItem = devicesManagement.PalletsListDg.Items[0];
                 }
-                UpdateDataStatus("Sẵn sàng");
             }
-            //catch
+            catch (Exception exc)
             {
-                UpdateDataStatus("Lỗi");
+
             }
         }
 
         public void ReloadListDevicePallets (int deviceId)
         {
-            //try
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
             {
 
                 devicePalletsList.Clear();
@@ -587,11 +606,10 @@ namespace MapViewPallet.MiniForm
                 {
                     devicesManagement.DevicePalletsListDg.SelectedItem = devicesManagement.DevicePalletsListDg.Items[0];
                 }
-                UpdateDataStatus("Sẵn sàng");
             }
-            //catch
+            catch (Exception exc)
             {
-                UpdateDataStatus("Lỗi");
+                Console.WriteLine(exc.Message);
             }
         }
         
@@ -753,10 +771,7 @@ namespace MapViewPallet.MiniForm
             return false;
         }
         
-        public void UpdateDataStatus(string status)
-        {
-            statusData = status;
-        }
+        
 
     }
 }

@@ -121,113 +121,14 @@
   <data name="mapbackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mapbackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Pallet0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Pallet0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Pallet1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Pallet1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Pallet2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Pallet2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Pallet3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Pallet3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Pallet4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Pallet4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Pallet5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Pallet5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PalletEmpty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PalletEmpty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PalletError" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PalletError.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="tennessee_whiskey" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tennessee_whiskey.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="phat_straightpath" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\phat_straightpath.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="phat_joinpath_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\phat_joinpath_off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="phat_joinpath_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\phat_joinpath_on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="phat_straightpath_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\phat_straightpath_off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="phat_straightpath_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\phat_straightpath_on.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="phat_joinpath" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\phat_joinpath.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="phat_mapExtend" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\phat_mapExtend.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="phat_mapShrink" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\phat_mapShrink.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pallet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pallet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Map" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Debug\Resources\Map\Map.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Robotpixel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Robotpixel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bobo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bobo.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ssss" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Debug\Resources\ssss.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Station_Error" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Station_Error.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Station_Normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Station_Normal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Station_Unknow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Station_Unknow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Station_Warning" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Station_Warning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Group" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Group.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="seldat_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\seldat_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="unilever_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\unilever_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="add_item" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add_item.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="refresh_item" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\refresh_item.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="remove_item" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\remove_item.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_clear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="mainIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mainIcon.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -249,8 +150,5 @@
   </data>
   <data name="Map_Laser" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Map_Laser.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Map_aTan" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Map_aTan.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

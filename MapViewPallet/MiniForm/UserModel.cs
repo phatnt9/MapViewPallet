@@ -39,6 +39,10 @@ namespace MapViewPallet.MiniForm
 
         public void ReloadListUsers()
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
             try
             {
                 usersList.Clear();
@@ -100,9 +104,9 @@ namespace MapViewPallet.MiniForm
                     userManagement.UsersListDg.SelectedItem = userManagement.UsersListDg.Items[0];
                 }
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                //logFile.Error(ex.Message);
+                Console.WriteLine(exc.Message);
             }
         }
 

@@ -82,71 +82,83 @@ namespace MapViewPallet.MiniForm
 
         private void btn_save_Click(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(passwordNewtb.Password) || String.IsNullOrEmpty(passwordNewConfirmtb.Password))
+            if (!Global_Object.ServerAlive())
             {
-                System.Windows.Forms.MessageBox.Show("Password không được để trống!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                if (String.IsNullOrEmpty(passwordNewtb.Password))
+                return;
+            }
+            try
+            {
+                if (String.IsNullOrEmpty(passwordNewtb.Password) || String.IsNullOrEmpty(passwordNewConfirmtb.Password))
                 {
+                    System.Windows.Forms.MessageBox.Show("Password không được để trống!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (String.IsNullOrEmpty(passwordNewtb.Password))
+                    {
+                        passwordNewtb.Focus();
+                    }
+                    else
+                    {
+                        passwordNewConfirmtb.Focus();
+                    }
+                    return;
+                }
+
+                if (passwordNewtb.Password != passwordNewConfirmtb.Password)
+                {
+                    System.Windows.Forms.MessageBox.Show("New Password don't match the Confirm New Password!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    passwordNewtb.SelectAll();
                     passwordNewtb.Focus();
-                }
-                else
-                {
-                    passwordNewConfirmtb.Focus();
-                }
-                return;
-            }
-
-            if (passwordNewtb.Password != passwordNewConfirmtb.Password)
-            {
-                System.Windows.Forms.MessageBox.Show("New Password don't match the Confirm New Password!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                passwordNewtb.SelectAll();
-                passwordNewtb.Focus();
-                return;
-            }
-
-            dtUser user = new dtUser();
-            user.userId = Global_Object.userLogin;
-            user.userName = this.userNametb.Text;
-            user.userAuthor = Global_Object.userAuthor;
-            user.userPasswordOld = this.passwordCurrenttb.Password;
-            user.userPassword = this.passwordNewtb.Password;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/changPasswordUser");
-            request.Method = "POST";
-            request.ContentType = @"application/json";
-            string jsonData = JsonConvert.SerializeObject(user);
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                int result = int.Parse(reader.ReadToEnd());
-
-                if (result == 1)
-                {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
-                }
-                else if (result == -2)
-                {
-                    System.Windows.Forms.MessageBox.Show("Password is correct!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    passwordCurrenttb.SelectAll();
-                    passwordCurrenttb.Focus();
                     return;
                 }
-                else
+
+                dtUser user = new dtUser();
+                user.userId = Global_Object.userLogin;
+                user.userName = this.userNametb.Text;
+                user.userAuthor = Global_Object.userAuthor;
+                user.userPasswordOld = this.passwordCurrenttb.Password;
+                user.userPassword = this.passwordNewtb.Password;
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/changPasswordUser");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+                string jsonData = JsonConvert.SerializeObject(user);
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
                 {
-                    System.Windows.Forms.MessageBox.Show("Change Password fail!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = int.Parse(reader.ReadToEnd());
+
+                    if (result == 1)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                    else if (result == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Password is correct!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        passwordCurrenttb.SelectAll();
+                        passwordCurrenttb.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Change Password fail!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
             }
+            catch (Exception exc)
+            {
+
+            }
+            
 
 
         }
