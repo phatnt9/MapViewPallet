@@ -34,6 +34,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         public WaitServerForm(MainWindow mainWindow)
         {
+            Console.WriteLine("Tao roi");
             InitializeComponent();
             this.mainWindow = mainWindow;
             serverTimer = new System.Timers.Timer();
@@ -42,7 +43,13 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             serverTimer.AutoReset = true;
             serverTimer.Enabled = false;
             Loaded += WaitServerForm_Loaded;
+            Closing += WaitServerForm_Closing;
             
+        }
+
+        private void WaitServerForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Console.WriteLine("Dang dong");
         }
 
         private void WaitServerForm_Loaded(object sender, RoutedEventArgs e)
@@ -50,6 +57,23 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
             mainWindow.stationTimer.Enabled = false;
+
+            if (mainWindow.planControl != null)
+            {
+                mainWindow.planControl.Close();
+            }
+            if (mainWindow.devicesManagement != null)
+            {
+                mainWindow.devicesManagement.Close();
+            }
+            if (mainWindow.userManagement != null)
+            {
+                mainWindow.userManagement.Close();
+            }
+            if (mainWindow.statistics != null)
+            {
+                mainWindow.statistics.Close();
+            }
             serverTimer.Enabled = true;
         }
 

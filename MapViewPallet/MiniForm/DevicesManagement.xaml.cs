@@ -56,7 +56,6 @@ namespace MapViewPallet.MiniForm
             DataContext = deviceManagementModel;
         }
 
-
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)

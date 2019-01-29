@@ -20,32 +20,7 @@ namespace MapViewPallet
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public class TrvStationGroup
-    {
-        public TrvStationGroup()
-        {
-            Items = new ObservableCollection<TrvStation>();
-            Title = "Stations";
-            Icon = "pack://siteoforigin:,,,/Resources/Group.png";
-        }
-        public string Title { get; set; }
-        public string Icon { get; set; }
-        public ObservableCollection<TrvStation> Items { get; set; }
-    }
-    public class TrvStation
-    {
-        public StationShape station;
-        public TrvStation(StationShape pStation)
-        {
-            station = pStation;
-            Name = station.Name;
-            Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
-        }
-
-        public string Name { get; set; }
-        public string Icon { get; set; }
-    }
-
+    
 
 
 
@@ -53,26 +28,16 @@ namespace MapViewPallet
     {
         //=================VARIABLE==================
         public System.Timers.Timer stationTimer;
-        //public System.Timers.Timer robotTimer;
-        //bool play = false;
-        //public Point renderTransformOrigin = new Point(0, 0);
         public bool drag = true;
-        //Data Grid View
         MainWindowModel mainWindowModel;
-        //string previousStationNameIdDgv;
-        //string previousStationNameIdTrv;
-        //Tree View
-        TrvStationGroup stationGroup;
-        List<dynamic> trvGroups;
-        Point transform = new Point(0, 0);
         public CanvasControlService canvasControlService;
         System.Media.SoundPlayer snd;
 
-        WaitServerForm waitServerForm;
-        PlanControl planControl;
-        DevicesManagement devicesManagement;
-        UserManagement userManagement;
-        Statistics statistics;
+        public WaitServerForm waitServerForm;
+        public PlanControl planControl;
+        public DevicesManagement devicesManagement;
+        public UserManagement userManagement;
+        public Statistics statistics;
 
         public MainWindow()
         {
@@ -249,29 +214,48 @@ namespace MapViewPallet
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
         {
-            //Application.Current.Dispatcher.Invoke((Action)delegate {
-            //    // your code
-            //});
-            
-            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            Application.Current.Dispatcher.Invoke((Action)delegate
             {
-                if (!Global_Object.ServerAlive())
+                if (waitServerForm == null)
                 {
-                    if (waitServerForm == null)
+                    if (!Global_Object.ServerAlive())
                     {
-                        waitServerForm = new WaitServerForm(this);
-                        waitServerForm.Closed += WaitServerForm_Closed;
-                        waitServerForm.ShowDialog();
+                        if (true)
+                        {
+                            waitServerForm = new WaitServerForm(this);
+                            waitServerForm.Closed += WaitServerForm_Closed;
+                            waitServerForm.ShowDialog();
+                        }
+                        return;
                     }
-                    return;
+                    canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
                 }
-                canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
-            }));
-        }
+            });
 
+            //Dispatcher.BeginInvoke(new ThreadStart(() =>
+            //{
+            //    if (!Global_Object.ServerAlive())
+            //    {
+            //        if (waitServerForm == null)
+            //        {
+            //            if (CloseAllWindows())
+            //            {
+            //                waitServerForm = new WaitServerForm(this);
+            //                waitServerForm.Closed += WaitServerForm_Closed;
+            //                waitServerForm.ShowDialog();
+            //            }
+
+            //        }
+            //        return;
+            //    }
+            //    canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
+            //}));
+        }
+        
         private void WaitServerForm_Closed(object sender, EventArgs e)
         {
             waitServerForm = null;
+            Console.WriteLine("WaitServerForm_Closed and "+ ((waitServerForm==null)?"it is null":"it is not null"));
         }
 
         public ImageBrush LoadImage(string name)
@@ -364,21 +348,21 @@ namespace MapViewPallet
 
 
 
-        private void clearLog_Clicked(object sender, RoutedEventArgs e)
-        {
+        //private void clearLog_Clicked(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
 
-        private void autoScrollLog_Checked(object sender, RoutedEventArgs e)
-        {
+        //private void autoScrollLog_Checked(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
 
-        private void StationPropertiesMenu_Click(object sender, RoutedEventArgs e)
-        {
-            TrvStation temp = ((sender as MenuItem).DataContext) as TrvStation;
-            temp.station.stationProperties.ShowDialog();
-        }
+        //private void StationPropertiesMenu_Click(object sender, RoutedEventArgs e)
+        //{
+        //    TrvStation temp = ((sender as MenuItem).DataContext) as TrvStation;
+        //    temp.station.stationProperties.ShowDialog();
+        //}
 
         private void StationEditMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -763,3 +747,39 @@ namespace MapViewPallet
 //        }
 //    }
 //}
+
+//public class TrvStationGroup
+//{
+//    public TrvStationGroup()
+//    {
+//        Items = new ObservableCollection<TrvStation>();
+//        Title = "Stations";
+//        Icon = "pack://siteoforigin:,,,/Resources/Group.png";
+//    }
+//    public string Title { get; set; }
+//    public string Icon { get; set; }
+//    public ObservableCollection<TrvStation> Items { get; set; }
+//}
+//public class TrvStation
+//{
+//    public StationShape station;
+//    public TrvStation(StationShape pStation)
+//    {
+//        station = pStation;
+//        Name = station.Name;
+//        Icon = "pack://siteoforigin:,,,/Resources/Pallet.png";
+//    }
+
+//    public string Name { get; set; }
+//    public string Icon { get; set; }
+//}
+
+//public System.Timers.Timer robotTimer;
+//bool play = false;
+//public Point renderTransformOrigin = new Point(0, 0);
+//string previousStationNameIdDgv;
+//string previousStationNameIdTrv;
+//Tree View
+//TrvStationGroup stationGroup;
+//List<dynamic> trvGroups;
+//Point transform = new Point(0, 0);
