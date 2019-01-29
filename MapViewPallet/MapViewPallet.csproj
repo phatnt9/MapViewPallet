@@ -175,6 +175,9 @@
     <Compile Include="MiniForm\MicsWpfForm\BufferSettingForm.xaml.cs">
       <DependentUpon>BufferSettingForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiniForm\MicsWpfForm\WaitServerForm.xaml.cs">
+      <DependentUpon>WaitServerForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MiniForm\NotifyUIBase.cs" />
     <Compile Include="MiniForm\Plan.cs" />
     <Compile Include="MiniForm\PlanControl.xaml.cs">
@@ -281,6 +284,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MiniForm\MicsWpfForm\BufferSettingForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiniForm\MicsWpfForm\WaitServerForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

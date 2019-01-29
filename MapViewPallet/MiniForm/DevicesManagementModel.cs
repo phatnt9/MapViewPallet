@@ -72,6 +72,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                devicesManagement.Close();
                 return;
             }
             try
@@ -158,6 +159,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                devicesManagement.Close();
                 return;
             }
             try
@@ -214,6 +216,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                devicesManagement.Close();
                 return;
             }
             try
@@ -276,6 +279,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                devicesManagement.Close();
                 return;
             }
             try
@@ -343,6 +347,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                devicesManagement.Close();
                 return;
             }
             try
@@ -412,6 +417,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                devicesManagement.Close();
                 return;
             }
             try
@@ -475,6 +481,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                devicesManagement.Close();
                 return;
             }
             try
@@ -549,6 +556,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                devicesManagement.Close();
                 return;
             }
             try

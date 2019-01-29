@@ -1,25 +1,18 @@
 ﻿using MapViewPallet.DataGridView;
 using MapViewPallet.MiniForm;
 using MapViewPallet.Shape;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using System.IO;
-using System.Net;
-using System.Text;
 using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using MahApps.Metro.Controls;
-using System.Threading.Tasks;
 using MapViewPallet.MiniForm.MicsWpfForm;
 
 namespace MapViewPallet
@@ -75,7 +68,7 @@ namespace MapViewPallet
         public CanvasControlService canvasControlService;
         System.Media.SoundPlayer snd;
 
-
+        WaitServerForm waitServerForm;
         PlanControl planControl;
         DevicesManagement devicesManagement;
         UserManagement userManagement;
@@ -256,10 +249,29 @@ namespace MapViewPallet
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
         {
+            //Application.Current.Dispatcher.Invoke((Action)delegate {
+            //    // your code
+            //});
+            
             Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
+                if (!Global_Object.ServerAlive())
+                {
+                    if (waitServerForm == null)
+                    {
+                        waitServerForm = new WaitServerForm(this);
+                        waitServerForm.Closed += WaitServerForm_Closed;
+                        waitServerForm.ShowDialog();
+                    }
+                    return;
+                }
                 canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
             }));
+        }
+
+        private void WaitServerForm_Closed(object sender, EventArgs e)
+        {
+            waitServerForm = null;
         }
 
         public ImageBrush LoadImage(string name)
@@ -591,8 +603,8 @@ namespace MapViewPallet
             //Global_Object.PlayWarning(true);
             //Global_Object.StaticHeight++;
             //Global_Object.StaticWidth++;
-            BufferSettingForm form = new BufferSettingForm();
-            form.ShowDialog();
+            //BufferSettingForm form = new BufferSettingForm();
+            //form.ShowDialog();
         }
 
         private void StopMusic_Click(object sender, RoutedEventArgs e)

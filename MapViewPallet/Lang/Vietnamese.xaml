@@ -89,6 +89,8 @@
     <sys:String x:Key="LoginForm_Password">Mật khẩu</sys:String>
     <sys:String x:Key="LoginForm_Enter">Đăng nhập</sys:String>
     <sys:String x:Key="LoginForm_Exit">Thoát</sys:String>
+    <sys:String x:Key="LoginForm_LoginError">Vui lòng kiểm tra máy chủ</sys:String>
+    <sys:String x:Key="LoginForm_WaitLogin">Vui lòng chờ</sys:String>
 
     <!--PlanControl-->
     <sys:String x:Key="PlanControl_Title">Thiết Lập Quy Trình</sys:String>
@@ -171,7 +173,8 @@
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletBay">Cột:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletPosition">Tọa độ:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletCoordinate">Cột:</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection">Hướng: </sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_main">dirM: </sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_sub">dirS: </sys:String>
     
     
     <sys:String x:Key="StationEditor_Groupbox_BufferDetail">Chi tiết Buffer</sys:String>

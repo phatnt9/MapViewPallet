@@ -36,26 +36,26 @@ namespace MapViewPallet.MiniForm
             this.mainWindow = mainWindow;
             loadTab = loadtab;
             DeviceManagementTabControl.SelectionChanged += DeviceManagementTabControl_SelectionChanged;
-            
+
             DevicesListDg.SelectedCellsChanged += DevicesListDg_SelectedCellsChanged;
             DevicesListDg2.SelectedCellsChanged += DevicesListDg2_SelectedCellsChanged;
             ProductsListDg.SelectedCellsChanged += ProductsListDg_SelectedCellsChanged;
             BuffersListDg.SelectedCellsChanged += BuffersListDg_SelectedCellsChanged;
             DevicePalletsListDg.SelectedCellsChanged += DevicePalletsListDg_SelectedCellsChanged;
-            
+
             DevicesListDg2.MouseDoubleClick += DevicesListDg2_MouseDoubleClick;
             ProductsListDg.MouseDoubleClick += ProductsListDg_MouseDoubleClick;
-            
+
             DevicesListDg2.CellEditEnding += DevicesListDg2_CellEditEnding;
             ProductsListDg.CellEditEnding += ProductsListDg_CellEditEnding;
             BuffersListDg.CellEditEnding += BuffersListDg_CellEditEnding;
             DeviceBuffersListDg.CellEditEnding += DeviceBuffersListDg_CellEditEnding;
             ProductDetailsListDg.CellEditEnding += ProductDetailsListDg_CellEditEnding;
-            
+
             deviceManagementModel = new DevicesManagementModel(this);
             DataContext = deviceManagementModel;
         }
-        
+
 
         public void ApplyLanguage(string cultureName = null)
         {
@@ -177,6 +177,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -210,7 +211,7 @@ namespace MapViewPallet.MiniForm
             {
                 Console.WriteLine(exc.Message);
             }
-            
+
         }
 
         private dtDevice GetDataSave()
@@ -276,6 +277,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -414,6 +416,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -474,13 +477,14 @@ namespace MapViewPallet.MiniForm
             {
                 Console.WriteLine(exc.Message);
             }
-            
+
         }
 
         private void Btn_Save_Devices_Click(object sender, RoutedEventArgs e)
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -657,6 +661,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -720,6 +725,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -768,7 +774,7 @@ namespace MapViewPallet.MiniForm
         {
             // có lỗi
             DataGridCellInfo dgci = (DataGridCellInfo)((System.Windows.Controls.DataGrid)sender).CurrentCell;
-            if(dgci.Column == null)
+            if (dgci.Column == null)
             {
                 return;
             }
@@ -811,6 +817,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -890,6 +897,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -953,6 +961,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -1051,6 +1060,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -1136,14 +1146,24 @@ namespace MapViewPallet.MiniForm
 
         private void DevicePalletsListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            if (DevicePalletsListDg.SelectedItem != null)
+            try
             {
-                dtDevicePallet devicePallet = DevicePalletsListDg.SelectedItem as dtDevicePallet;
-                dynamic devicePalletData = JsonConvert.DeserializeObject(devicePallet.dataPallet);
-                palletLineX.Text = (devicePalletData != null) ? (((double)devicePalletData.line.x).ToString()) : "0";
-                palletLineY.Text = (devicePalletData != null) ? (((double)devicePalletData.line.y).ToString()) : "0";
-                palletLineA.Text = (devicePalletData != null) ? (((double)devicePalletData.line.angle).ToString()) : "0";
-                palletPalletD.Text = (devicePalletData != null) ? (((double)devicePalletData.pallet.direct).ToString()) : "0";
+
+                if (DevicePalletsListDg.SelectedItem != null)
+                {
+                    dtDevicePallet devicePallet = DevicePalletsListDg.SelectedItem as dtDevicePallet;
+                    dynamic devicePalletData = JsonConvert.DeserializeObject(devicePallet.dataPallet);
+                    palletLineX.Text = (devicePalletData != null) ? (((double)devicePalletData.line.x).ToString()) : "0";
+                    palletLineY.Text = (devicePalletData != null) ? (((double)devicePalletData.line.y).ToString()) : "0";
+                    palletLineA.Text = (devicePalletData != null) ? (((double)devicePalletData.line.angle).ToString()) : "0";
+                    palletD_Main.Text = (devicePalletData != null) ? ((devicePalletData.pallet.dir_main).ToString()) : "0";
+                    palletD_Sub.Text = (devicePalletData != null) ? ((devicePalletData.pallet.dir_sub).ToString()) : "0";
+                    palletHasSubLine.Text = (devicePalletData != null) ? ((devicePalletData.pallet.hasSubLine).ToString()) : "no";
+                }
+            }
+            catch
+            {
+
             }
         }
 
@@ -1163,6 +1183,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -1255,6 +1276,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -1263,9 +1285,9 @@ namespace MapViewPallet.MiniForm
                 List<dtBuffer> buffers = new List<dtBuffer>();
 
                 dynamic postApiBody = new JObject();
-                postApiBody.x = Math.Round((double.Parse((bufferX.Text != "") ? bufferX.Text : "0")),2);
-                postApiBody.y = Math.Round((double.Parse((bufferY.Text != "") ? bufferY.Text : "0")),2);
-                postApiBody.angle = Math.Round((double.Parse((bufferA.Text != "") ? bufferA.Text : "0")),2);
+                postApiBody.x = Math.Round((double.Parse((bufferX.Text != "") ? bufferX.Text : "0")), 2);
+                postApiBody.y = Math.Round((double.Parse((bufferY.Text != "") ? bufferY.Text : "0")), 2);
+                postApiBody.angle = Math.Round((double.Parse((bufferA.Text != "") ? bufferA.Text : "0")), 2);
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 
@@ -1324,6 +1346,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -1516,6 +1539,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -1677,6 +1701,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return -5;
             }
             try
@@ -1755,10 +1780,10 @@ namespace MapViewPallet.MiniForm
             }
             catch (Exception exc)
             {
-                return -5;
                 Console.WriteLine(exc.Message);
+                return -5;
             }
-            
+
         }
 
         private void Btn_Save_Buffer_Click(object sender, RoutedEventArgs e)
@@ -1771,6 +1796,7 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
             try
@@ -1835,16 +1861,19 @@ namespace MapViewPallet.MiniForm
         {
             if (!Global_Object.ServerAlive())
             {
+                Close();
                 return;
             }
-            try
+            //try
             {
                 if ((DeviceManagementTabControl.SelectedIndex == 1) && (DevicePalletsListDg.SelectedItem != null))
                 {
                     if ((palletLineX.Text.Trim() == "") ||
                         (palletLineY.Text.Trim() == "") ||
                         (palletLineA.Text.Trim() == "") ||
-                        (palletPalletD.Text.Trim() == ""))
+                        (palletD_Main.Text.Trim() == "") ||
+                        (palletD_Sub.Text.Trim() == "") ||
+                        (palletHasSubLine.Text.Trim() == ""))
                     {
                         return;
                     }
@@ -1857,8 +1886,10 @@ namespace MapViewPallet.MiniForm
                         ",\"angle\":" + double.Parse(palletLineA.Text) +
                         "},\"pallet\":{\"row\":" + (double)devicePallet.row +
                         ",\"bay\":" + (double)devicePallet.bay +
-                        ",\"direct\":" + double.Parse(palletPalletD.Text) +
-                        "}}";
+                        ",\"dir_main\":" + (palletD_Main.Text) +
+                        ",\"dir_sub\":" + (palletD_Sub.Text) +
+                        ",\"hasSubLine\":\"" + (palletHasSubLine.Text) +
+                        "\"}}";
 
                     //devicePallet.dataPallet = (devicePallet.dataPallet != null) ? devicePallet.dataPallet.ToString() : initiateDataPallet;
                     devicePallet.dataPallet = initiateDataPallet;
@@ -1875,7 +1906,16 @@ namespace MapViewPallet.MiniForm
                         devicePalletold.deviceId = int.Parse(dr.deviceId.ToString());
                         devicePalletold.row = int.Parse(dr.row.ToString());
                         devicePalletold.bay = int.Parse(dr.bay.ToString());
-                        string initiateDataPalletOld = "{\"line\":{\"x\":0.0,\"y\":0.0,\"angle\":0.0},\"pallet\":{\"row\":" + (double)dr.row + ",\"bay\":" + (double)dr.bay + ",\"direct\":0.0}}";
+                        string initiateDataPalletOld =
+                            "{\"line\":{\"x\":" + double.Parse(palletLineX.Text) +
+                        ",\"y\":" + double.Parse(palletLineY.Text) +
+                        ",\"angle\":" + double.Parse(palletLineA.Text) +
+                        "},\"pallet\":{\"row\":" + (double)devicePallet.row +
+                        ",\"bay\":" + (double)devicePallet.bay +
+                        ",\"dir_main\":" + (palletD_Main.Text) +
+                        ",\"dir_sub\":" + (palletD_Sub.Text) +
+                        ",\"hasSubLine\":\"" + (palletHasSubLine.Text) +
+                        "\"}}";
                         devicePalletold.dataPallet = (dr.dataPallet != null) ? dr.dataPallet.ToString() : initiateDataPalletOld;
                         devicePalletold.creUsrId = Global_Object.userLogin;
                         devicePalletold.updUsrId = Global_Object.userLogin;
@@ -1929,9 +1969,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            //catch (Exception exc)
             {
-                Console.WriteLine(exc.Message);
+                //Console.WriteLine(exc.Message);
             }
 
         }
@@ -1943,7 +1983,7 @@ namespace MapViewPallet.MiniForm
         }
 
 
-        
+
 
 
     }

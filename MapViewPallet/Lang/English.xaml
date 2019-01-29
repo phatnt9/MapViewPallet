@@ -86,6 +86,8 @@
     <sys:String x:Key="LoginForm_Password">Password</sys:String>
     <sys:String x:Key="LoginForm_Enter">Login</sys:String>
     <sys:String x:Key="LoginForm_Exit">Close</sys:String>
+    <sys:String x:Key="LoginForm_LoginError">Please check Server</sys:String>
+    <sys:String x:Key="LoginForm_WaitLogin">Please wait</sys:String>
 
     <!--PlanControl-->
     <sys:String x:Key="PlanControl_Title">Plan Management</sys:String>
@@ -167,7 +169,8 @@
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletBay">Bay:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletPosition">Position:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletCoordinate">Coordinate:</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection">Direction:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_main">dirM:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_sub">dirS:</sys:String>
 
 
     <sys:String x:Key="StationEditor_Groupbox_BufferDetail">Buffer Detail</sys:String>

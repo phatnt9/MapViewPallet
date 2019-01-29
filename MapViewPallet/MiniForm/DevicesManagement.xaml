@@ -645,7 +645,7 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="Pallet:" FontSize="12"/>
                                                         </StackPanel>
-                                                        <StackPanel Orientation="Horizontal" 
+                                                        <!--<StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Center">
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="D" FontSize="12"/>
@@ -653,6 +653,58 @@
                                                                      Width="35" 
                                                                      Height="17"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
+                                                        </StackPanel>-->
+                                                        <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                            <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_main}" 
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                            <ComboBox 
+                                                                    Name="palletD_Main"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                                <ComboBoxItem>0</ComboBoxItem>
+                                                                <ComboBoxItem>1</ComboBoxItem>
+                                                                <ComboBoxItem>2</ComboBoxItem>
+                                                            </ComboBox>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                            <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_sub}" 
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                            <ComboBox 
+                                                                    Name="palletD_Sub"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                                <ComboBoxItem>0</ComboBoxItem>
+                                                                <ComboBoxItem>1</ComboBoxItem>
+                                                                <ComboBoxItem>2</ComboBoxItem>
+                                                            </ComboBox>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Right">
+                                                            <Label VerticalAlignment="Center" 
+                                                               Content="Subline"
+                                                               FontSize="12"></Label>
+                                                            <ComboBox 
+                                                                    Name="palletHasSubLine"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                                <ComboBoxItem>yes</ComboBoxItem>
+                                                                <ComboBoxItem>no</ComboBoxItem>
+                                                            </ComboBox>
+                                                            <!--<TextBox Name="bufferHeadPointHasSubLine" 
+                                                                 Width="35"
+                                                                 Height="17"
+                                                                 FontSize="12"
+                                                                 CharacterCasing="Upper"
+                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>-->
                                                         </StackPanel>
                                                         <StackPanel VerticalAlignment="Center">
                                                             <Button Name="btn_SetPalletDataPallet"

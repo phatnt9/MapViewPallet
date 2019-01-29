@@ -265,22 +265,6 @@
                                         Kind="MusicOff"/>
                                 </Button>
                                 <Separator />
-                                <!--<StackPanel Orientation="Horizontal">
-                                     <StackPanel VerticalAlignment="Center">
-                                     <iconPacks:PackIconMaterial
-                                     Kind="MagnifyPlusOutline" />
-                                     </StackPanel>
-                                     <ComboBox>
-                                     <ComboBoxItem Content="25%" />
-                                     <ComboBoxItem Content="50%" />
-                                     <ComboBoxItem Content="75%" />
-                                     <ComboBoxItem IsSelected="True" Content="100%" />
-                                     <ComboBoxItem Content="125%" />
-                                     <ComboBoxItem Content="150%" />
-                                     <ComboBoxItem Content="200%" />
-                                     </ComboBox>
-                                     </StackPanel>-->
-
                             </ToolBar>
                         </ToolBarTray>
                     </StackPanel>
@@ -289,66 +273,12 @@
 
             </Grid>
         </Grid>
-        <Grid Grid.Row="1" Background="#f5f5f5" Grid.RowSpan="2">
+        <Grid Grid.Row="1" Background="#f5f5f5" Grid.RowSpan="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0"/>
                 <ColumnDefinition Width="0"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <!--<Grid Grid.Column="0">
-                 <Grid.RowDefinitions>
-                 <RowDefinition Height="50"></RowDefinition>
-                 <RowDefinition></RowDefinition>
-                 <RowDefinition Height="24"></RowDefinition>
-                 </Grid.RowDefinitions>
-                 <Grid Grid.Row="0">
-                 
-                 </Grid>
-            -->
-            <!--List Station-->
-            <!--
-                 <Grid Grid.Row="1">
-                 <TreeView Name="mainTreeView" Background="#F5F5F5" BorderThickness="0"
-                 MouseRightButtonDown="mainTreeView_MouseRightButtonDown">
-                 <TreeView.Resources>
-                 <ContextMenu x:Key ="SolutionContext"  StaysOpen="true">
-                 <MenuItem Header="Add..." />
-                 <MenuItem Header="Rename"/>
-                 </ContextMenu>
-                 <HierarchicalDataTemplate DataType="{x:Type self:TrvStationGroup}" ItemsSource="{Binding Items}">
-                 <StackPanel Orientation="Horizontal">
-                 <Image Height="16" Margin="0,0,5,0" Source="{Binding Icon}"/>
-                 <TextBlock Text="{Binding Title}" />
-                 <TextBlock Text=" [" Foreground="Blue" />
-                 <TextBlock Text="{Binding Items.Count}" Foreground="Blue" />
-                 <TextBlock Text="]" Foreground="Blue" />
-                 </StackPanel>
-                 </HierarchicalDataTemplate>
-                 <DataTemplate DataType="{x:Type self:TrvStation}">
-                 <StackPanel Orientation="Horizontal">
-                 <StackPanel.ContextMenu>
-                 <ContextMenu>
-                 <MenuItem Header="Properties" Click="StationPropertiesMenu_Click"/>
-                 <MenuItem Header="Edit" Click="StationEditMenu_Click"/>
-            -->
-            <!-- Command="{Binding Command}" This command should be in the data context (each country item)-->
-            <!--
-                 </ContextMenu>
-                 </StackPanel.ContextMenu>
-                 <Image Height="16" Margin="0,0,5,0" Source="{Binding Icon}"/>
-                 <TextBlock Text="{Binding Name}" />
-                 </StackPanel>
-                 </DataTemplate>
-                 </TreeView.Resources>
-                 </TreeView>
-                 </Grid>
-                 <Grid Grid.Row="2">
-            -->
-            <!--Tool Treeview-->
-            <!--
-                 </Grid>
-                 </Grid>
-                 <GridSplitter Style="{DynamicResource GridSplitterStyle1}" Background="#B9B9B9" Grid.Column="1" Width="8"  HorizontalAlignment="Stretch" />-->
             <Border Grid.Column="2" BorderBrush="#B9B9B9" BorderThickness="0,0,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -357,13 +287,13 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="10"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="25"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Grid.Column="0">
                         </Grid>
@@ -373,26 +303,35 @@
                             Grid.ColumnSpan="1" 
                             Grid.RowSpan="2">
                             <Grid>
-                                <Border Name="clipBorder" ClipToBounds="True"  BorderBrush="Black" BorderThickness="1"
-                                        RenderTransformOrigin="0.5,0.5" Background="#f5f5f5">
-                                    <xctk:Zoombox MinScale="0.5" MaxScale="100">
-                                        <Grid Background="Transparent">
-                                            <Canvas Name="map" RenderTransformOrigin="0.5,0.5" 
-                                            Width="Auto" Height="Auto">
-                                                <Canvas.Children>
-                                                    <Rectangle x:Name="rect" Fill="Red" Width="10" Height="10"/>
-                                                </Canvas.Children>
-                                                <Canvas.RenderTransform>
-                                                    <TransformGroup>
-                                                        <MatrixTransform x:Name="canvasMatrixTransform" Matrix="1,0,0,1,0,0"/>
-                                                        <ScaleTransform x:Name="canvasScaleTransform"/>
-                                                        <TranslateTransform x:Name="canvasTranslateTransform"/>
-                                                    </TransformGroup>
-                                                </Canvas.RenderTransform>
-                                            </Canvas>
-                                        </Grid>
+                                <Border 
+                                    Name="clipBorder" 
+                                    ClipToBounds="True"  
+                                    BorderBrush="DimGray" 
+                                    BorderThickness="3"
+                                    RenderTransformOrigin="0.5,0.5" 
+                                    Background="#f5f5f5">
+                                    <xctk:Zoombox 
+                                        MinScale="0.5" 
+                                        MaxScale="100">
+                                        <!--<Grid Background="Transparent">-->
+                                        <Canvas 
+                                                Name="map" 
+                                                RenderTransformOrigin="0.5,0.5" 
+                                                Width="Auto" 
+                                                Height="Auto">
+                                            <Canvas.Children>
+                                                <Rectangle x:Name="rect" Fill="Red" Width="10" Height="10"/>
+                                            </Canvas.Children>
+                                            <Canvas.RenderTransform>
+                                                <TransformGroup>
+                                                    <MatrixTransform x:Name="canvasMatrixTransform" Matrix="1,0,0,1,0,0"/>
+                                                    <ScaleTransform x:Name="canvasScaleTransform"/>
+                                                    <TranslateTransform x:Name="canvasTranslateTransform"/>
+                                                </TransformGroup>
+                                            </Canvas.RenderTransform>
+                                        </Canvas>
+                                        <!--</Grid>-->
                                     </xctk:Zoombox>
-                                   
                                 </Border>
                             </Grid>
                         </Border>
@@ -424,14 +363,14 @@
                             </Grid>
                             <Grid Grid.Row="1">
                                 <!--<Slider
-                                    Margin="0 20 0 0"
-                                    TickFrequency="1"
-                                    TickPlacement="BottomRight"
-                                    Orientation="Vertical"
-                                    Minimum="1"
-                                    Maximum="9" 
-                                    Height="Auto"
-                                    Value="{Binding Path=zoomScale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>-->
+                                     Margin="0 20 0 0"
+                                     TickFrequency="1"
+                                     TickPlacement="BottomRight"
+                                     Orientation="Vertical"
+                                     Minimum="1"
+                                     Maximum="9" 
+                                     Height="Auto"
+                                     Value="{Binding Path=zoomScale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>-->
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
@@ -484,9 +423,9 @@
                             </StackPanel>
                         </Grid>
                     </Grid>
-                    <GridSplitter Background="#B9B9B9" Grid.Row="0"
-                                  Height="3" HorizontalAlignment="Stretch" 
-                                  VerticalAlignment="Bottom"/>
+                    <!--<GridSplitter Background="#B9B9B9" Grid.Row="0"
+                         Height="3" HorizontalAlignment="Stretch" 
+                         VerticalAlignment="Bottom"/>-->
 
                 </Grid>
             </Border>

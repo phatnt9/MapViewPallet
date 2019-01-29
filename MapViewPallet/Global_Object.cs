@@ -1,23 +1,15 @@
-﻿using MapViewPallet.MiniForm;
+﻿using MapViewPallet.MiniForm.MicsWpfForm;
 using MapViewPallet.Shape;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Sockets;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace MapViewPallet
 {
-    
+
     public static class Global_Object
     {
         public static readonly object syncLock = new object();
@@ -25,7 +17,8 @@ namespace MapViewPallet
         public static StationShape bufferToMove;
 
         public static string url = @"http://localhost:8081/robot/rest/";
-
+        public static string hostUrl = "localhost";
+        public static string hostPort = "8081";
 
         public static int userLogin = -2;
         public static string userName = "";
@@ -54,6 +47,8 @@ namespace MapViewPallet
         public static string messageTitileInformation = "Information";
         public static string messageTitileError = "Error";
         public static string messageTitileWarning = "Warning";
+
+        
 
         //#######################################
         public static MusicPlayerOld musicPlayerOld = new MusicPlayerOld("ALARM.mp3");
@@ -92,38 +87,65 @@ namespace MapViewPallet
         }
 
         //#######################################
-        public static bool ServerAlive()
+        //public static bool ServerAlive()
+        //{
+        //    var url = "http://localhost:8081/robot/rest/timeWork/getListTimeWork";
+        //    try
+        //    {
+        //        var myRequest = (HttpWebRequest)WebRequest.Create(url);
+
+        //        var response = (HttpWebResponse)myRequest.GetResponse();
+
+        //        if (response.StatusCode == HttpStatusCode.OK)
+        //        {
+        //            //  it's at least in some way responsive
+        //            //  but may be internally broken
+        //            //  as you could find out if you called one of the methods for real
+        //            Console.WriteLine(string.Format("{0} Available", url));
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            //  well, at least it returned...
+        //            Console.WriteLine(string.Format("{0} Returned, but with status: {1}", url, response.StatusDescription));
+        //            return true;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //  not available at all, for some reason
+        //        Console.WriteLine(string.Format("{0} unavailable: {1}", url, ex.Message));
+        //        return false;
+        //    }
+        //}
+        public static bool ServerAlive(string hostUri="localhost", int portNumber=8081)
         {
-            var url = "http://localhost:8081/robot/rest/timeWork/getListTimeWork";
+            //=====================================================
+            TcpClient tcpClient = new TcpClient();
             try
             {
-                var myRequest = (HttpWebRequest)WebRequest.Create(url);
-
-                var response = (HttpWebResponse)myRequest.GetResponse();
-
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    //  it's at least in some way responsive
-                    //  but may be internally broken
-                    //  as you could find out if you called one of the methods for real
-                    Console.WriteLine(string.Format("{0} Available", url));
-                    return true;
-                }
-                else
-                {
-                    //  well, at least it returned...
-                    Console.WriteLine(string.Format("{0} Returned, but with status: {1}", url, response.StatusDescription));
-                    return true;
-                }
+                tcpClient.Connect("localhost", 8081);
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //  not available at all, for some reason
-                Console.WriteLine(string.Format("{0} unavailable: {1}", url, ex.Message));
                 return false;
             }
+            //=====================================================
+            //try
+            //{
+            //    using (var client = new TcpClient(hostUri, portNumber))
+            //    {
+            //        return true;
+            //    }
+            //}
+            //catch (SocketException ex)
+            //{
+            //    return false;
+            //}
+            //=====================================================
         }
-        //#######################################
+
 
         public static Point LaserOriginalCoor = new Point(648,378);
         public static Point OriginPoint = new Point(0,0);

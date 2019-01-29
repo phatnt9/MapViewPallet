@@ -721,7 +721,7 @@ namespace MapViewPallet.Shape
                             //tempStation.ReDraw();
                             //tempStation.RemoveHandle += StationRemove;
                             list_Station.Add(tempStation.props.bufferDb.bufferName.ToString().Trim(), tempStation);
-                            Console.WriteLine("Add them station ReloadAllStation:" + tempBuffer.bufferName);
+                            //Console.WriteLine("Add them station ReloadAllStation:" + tempBuffer.bufferName);
                         }
                     }
                 }
