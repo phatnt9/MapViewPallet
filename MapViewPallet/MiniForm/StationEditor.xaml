@@ -21,11 +21,14 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="500"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="4"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <ScrollViewer>
+                <ScrollViewer 
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -37,46 +40,44 @@
                                 <GroupBox Header="{DynamicResource StationEditor_Groupbox_BufferInfo}" FontSize="20">
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="55"></RowDefinition>
+                                            <RowDefinition Height="Auto"></RowDefinition>
                                             <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid Grid.Column="0">
-                                                <StackPanel Orientation="Vertical">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Label FontSize="13"
+                                            <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                                                <Grid>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="13"
                                                            Width="Auto"
                                                            Content="{DynamicResource StationEditor_Groupbox_BufferInfo_BufferName}"></Label>
-                                                        <Label FontSize="13" Name="bufferNamelb"></Label>
-                                                    </StackPanel>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Label FontSize="13" 
+                                                            <Label FontSize="13" Name="bufferNamelb"></Label>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="13" 
                                                            Width="Auto"
                                                            Content="{DynamicResource StationEditor_Groupbox_BufferInfo_BufferType}"></Label>
-                                                        <Label FontSize="13" Name="bufferTypeNamelb"></Label>
+                                                            <Label FontSize="13" Name="bufferTypeNamelb"></Label>
+                                                        </StackPanel>
                                                     </StackPanel>
-                                                </StackPanel>
-                                            </Grid>
-                                            <Grid Grid.Column="1">
-                                                <StackPanel Orientation="Vertical">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Label FontSize="13" 
+                                                </Grid>
+                                                <Grid>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="13" 
                                                            Width="Auto"
                                                            Content="{DynamicResource StationEditor_Groupbox_BufferInfo_BufferNumberOfRow}"></Label>
-                                                        <Label FontSize="13" Name="bufferMaxRowlb"></Label>
-                                                    </StackPanel>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Label FontSize="13" 
+                                                            <Label FontSize="13" Name="bufferMaxRowlb"></Label>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="13" 
                                                            Width="Auto"
                                                            Content="{DynamicResource StationEditor_Groupbox_BufferInfo_BufferNumberOfBay}"></Label>
-                                                        <Label FontSize="13" Name="bufferMaxBaylb"></Label>
+                                                            <Label FontSize="13" Name="bufferMaxBaylb"></Label>
+                                                        </StackPanel>
                                                     </StackPanel>
-                                                </StackPanel>
-                                            </Grid>
+                                                </Grid>
+                                            </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1" Margin="0 5 0 0">
                                             <StackPanel>
@@ -101,7 +102,7 @@
                                                                Content="X"
                                                                FontSize="12"></Label>
                                                                 <TextBox Name="bufferX" 
-                                                                 Width="35"
+                                                                 Width="Auto"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
@@ -113,7 +114,7 @@
                                                                Content="Y"
                                                                FontSize="12"></Label>
                                                                 <TextBox Name="bufferY" 
-                                                                 Width="35"
+                                                                 Width="Auto"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
@@ -125,7 +126,7 @@
                                                                Content="A"
                                                                FontSize="12"></Label>
                                                                 <TextBox Name="bufferA" 
-                                                                 Width="35"
+                                                                 Width="Auto"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
@@ -156,7 +157,7 @@
                                                                Content="X"
                                                                FontSize="12"></Label>
                                                                 <TextBox Name="bufferHeadPointX" 
-                                                                 Width="35"
+                                                                 Width="Auto"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
@@ -168,7 +169,7 @@
                                                                Content="Y"
                                                                FontSize="12"></Label>
                                                                 <TextBox Name="bufferHeadPointY" 
-                                                                 Width="35"
+                                                                 Width="Auto"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
@@ -180,7 +181,7 @@
                                                                Content="A"
                                                                FontSize="12"></Label>
                                                                 <TextBox Name="bufferHeadPointA" 
-                                                                 Width="35"
+                                                                 Width="Auto"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
@@ -204,30 +205,28 @@
                                             <RowDefinition Height="*"></RowDefinition>
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid Grid.Column="0">
-                                                <StackPanel Orientation="Vertical">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Label FontSize="13"
+                                            <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                                                <Grid>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="13"
                                                            Width="Auto"
                                                             Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletRow}"></Label>
-                                                        <Label FontSize="13" Name="palletRowlb"></Label>
+                                                            <Label FontSize="13" Name="palletRowlb"></Label>
+                                                        </StackPanel>
                                                     </StackPanel>
-                                                </StackPanel>
-                                            </Grid>
-                                            <Grid Grid.Column="1">
-                                                <StackPanel Orientation="Vertical">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Label FontSize="13"
+                                                </Grid>
+                                                <Grid>
+                                                    <StackPanel Orientation="Vertical">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label FontSize="13"
                                                            Width="Auto"
                                                             Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletBay}"></Label>
-                                                        <Label FontSize="13" Name="palletBaylb"></Label>
+                                                            <Label FontSize="13" Name="palletBaylb"></Label>
+                                                        </StackPanel>
                                                     </StackPanel>
-                                                </StackPanel>
-                                            </Grid>
+                                                </Grid>
+                                            </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1" Margin="0 5 0 0">
                                             <StackPanel>
@@ -259,7 +258,7 @@
                                                            Width="Auto"
                                                                    FontSize="12"></Label>
                                                                 <TextBox x:Name="palletX" 
-                                                                     Width="35"
+                                                                     Width="Auto"
                                                                      Height="17"
                                                                  FontSize="12"
                                                                      CharacterCasing="Upper"
@@ -272,7 +271,7 @@
                                                            Width="Auto"
                                                                    FontSize="12"></Label>
                                                                 <TextBox Name="palletY" 
-                                                                     Width="35"
+                                                                     Width="Auto"
                                                                      Height="17"
                                                                  FontSize="12"
                                                                      CharacterCasing="Upper"
@@ -285,7 +284,7 @@
                                                            Width="Auto"
                                                                    FontSize="12"></Label>
                                                                 <TextBox Name="palletA" 
-                                                                     Width="35" 
+                                                                     Width="Auto" 
                                                                      Height="17"
                                                                  FontSize="12"
                                                                      CharacterCasing="Upper"
@@ -315,7 +314,7 @@
                                                             <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
                                                                 <Label VerticalAlignment="Center" 
-                                                                   Content="Pallet: "
+                                                                   Content=""
                                                            Width="Auto"
                                                                    FontSize="12"></Label>
                                                             </StackPanel>
@@ -326,7 +325,7 @@
                                                                    FontSize="12"
                                                            Width="Auto"></Label>
                                                                 <TextBox Name="palletR" 
-                                                                     Width="35" 
+                                                                     Width="Auto" 
                                                                      Height="17"
                                                                  FontSize="12"
                                                                      IsEnabled="False"
@@ -339,7 +338,7 @@
                                                                    FontSize="12"
                                                            Width="Auto"></Label>
                                                                 <TextBox Name="palletB" 
-                                                                     Width="35"
+                                                                     Width="Auto"
                                                                      Height="17"
                                                                  FontSize="12"
                                                                      IsEnabled="False"
@@ -369,6 +368,22 @@
                                                            Width="Auto"></Label>
                                                                 <ComboBox 
                                                                     Name="palletD_Sub"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                                    <ComboBoxItem>0</ComboBoxItem>
+                                                                    <ComboBoxItem>1</ComboBoxItem>
+                                                                    <ComboBoxItem>2</ComboBoxItem>
+                                                                </ComboBox>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_sub}" 
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                                <ComboBox 
+                                                                    Name="palletD_Out"
                                                                     Height="20" 
                                                                     Width="Auto" 
                                                                     FontSize="12">
@@ -466,7 +481,12 @@
 
                 </ScrollViewer>
             </Grid>
-            <Grid Grid.Column="1">
+            <GridSplitter 
+                Grid.Column="1" 
+                HorizontalAlignment="Stretch"
+                Background="Ivory"
+                ></GridSplitter>
+            <Grid Grid.Column="2">
                 <Grid>
                     <GroupBox Header="{DynamicResource StationEditor_Groupbox_PalletList}" FontSize="20" FontWeight="DemiBold">
                         <Grid>

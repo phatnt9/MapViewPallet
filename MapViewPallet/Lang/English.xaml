@@ -171,6 +171,7 @@
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletCoordinate">Coordinate:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_main">dirM:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_sub">dirS:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_out">dirO:</sys:String>
 
 
     <sys:String x:Key="StationEditor_Groupbox_BufferDetail">Buffer Detail</sys:String>

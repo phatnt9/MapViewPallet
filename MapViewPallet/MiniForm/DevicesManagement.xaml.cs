@@ -1152,12 +1152,13 @@ namespace MapViewPallet.MiniForm
                 {
                     dtDevicePallet devicePallet = DevicePalletsListDg.SelectedItem as dtDevicePallet;
                     dynamic devicePalletData = JsonConvert.DeserializeObject(devicePallet.dataPallet);
-                    palletLineX.Text = (devicePalletData != null) ? (((double)devicePalletData.line.x).ToString()) : "0";
-                    palletLineY.Text = (devicePalletData != null) ? (((double)devicePalletData.line.y).ToString()) : "0";
-                    palletLineA.Text = (devicePalletData != null) ? (((double)devicePalletData.line.angle).ToString()) : "0";
-                    palletD_Main.Text = (devicePalletData != null) ? ((devicePalletData.pallet.dir_main).ToString()) : "0";
-                    palletD_Sub.Text = (devicePalletData != null) ? ((devicePalletData.pallet.dir_sub).ToString()) : "0";
-                    palletHasSubLine.Text = (devicePalletData != null) ? ((devicePalletData.pallet.hasSubLine).ToString()) : "no";
+                    palletLineX.Text = (devicePalletData.line.x != null) ? (((double)devicePalletData.line.x).ToString()) : "0";
+                    palletLineY.Text = (devicePalletData.line.y != null) ? (((double)devicePalletData.line.y).ToString()) : "0";
+                    palletLineA.Text = (devicePalletData.line.angle != null) ? (((double)devicePalletData.line.angle).ToString()) : "0";
+                    palletD_Main.Text = (devicePalletData.pallet.dir_main != null) ? ((devicePalletData.pallet.dir_main).ToString()) : "0";
+                    palletD_Sub.Text = (devicePalletData.pallet.dir_sub != null) ? ((devicePalletData.pallet.dir_sub).ToString()) : "0";
+                    palletD_Out.Text = (devicePalletData.pallet.dir_out != null) ? ((devicePalletData.pallet.dir_out).ToString()) : "0";
+                    palletHasSubLine.Text = (devicePalletData.pallet.hasSubLine != null) ? ((devicePalletData.pallet.hasSubLine).ToString()) : "no";
                 }
             }
             catch
@@ -1863,7 +1864,7 @@ namespace MapViewPallet.MiniForm
                 Close();
                 return;
             }
-            //try
+            try
             {
                 if ((DeviceManagementTabControl.SelectedIndex == 1) && (DevicePalletsListDg.SelectedItem != null))
                 {
@@ -1879,19 +1880,39 @@ namespace MapViewPallet.MiniForm
                     List<dtDevicePallet> devicePallets = new List<dtDevicePallet>();
                     dtDevicePallet devicePallet = DevicePalletsListDg.SelectedItem as dtDevicePallet;
 
-                    string initiateDataPallet =
-                        "{\"line\":{\"x\":" + double.Parse(palletLineX.Text) +
-                        ",\"y\":" + double.Parse(palletLineY.Text) +
-                        ",\"angle\":" + double.Parse(palletLineA.Text) +
-                        "},\"pallet\":{\"row\":" + (double)devicePallet.row +
-                        ",\"bay\":" + (double)devicePallet.bay +
-                        ",\"dir_main\":" + (palletD_Main.Text) +
-                        ",\"dir_sub\":" + (palletD_Sub.Text) +
-                        ",\"hasSubLine\":\"" + (palletHasSubLine.Text) +
-                        "\"}}";
+                    dynamic palletData = new JObject();
+                    dynamic palletLine = new JObject();
+                    dynamic palletPallet = new JObject();
 
-                    //devicePallet.dataPallet = (devicePallet.dataPallet != null) ? devicePallet.dataPallet.ToString() : initiateDataPallet;
-                    devicePallet.dataPallet = initiateDataPallet;
+                    palletLine.x = double.Parse((palletLineX.Text != "") ? palletLineX.Text : "0");
+                    palletLine.y = double.Parse((palletLineY.Text != "") ? palletLineY.Text : "0");
+                    palletLine.angle = double.Parse((palletLineA.Text != "") ? palletLineA.Text : "0");
+
+                    palletPallet.row = int.Parse((devicePallet.row.ToString() != "") ? devicePallet.row.ToString() : "0");
+                    palletPallet.bay = int.Parse((devicePallet.bay.ToString() != "") ? devicePallet.bay.ToString() : "0");
+                    palletPallet.dir_main = int.Parse((palletD_Main.Text != "") ? palletD_Main.Text : "0");
+                    palletPallet.dir_sub = int.Parse((palletD_Sub.Text != "") ? palletD_Sub.Text : "0");
+                    palletPallet.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
+                    palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
+
+                    palletData.line = palletLine;
+                    palletData.pallet = palletPallet;
+
+                    string initiateDataPallet = JsonConvert.SerializeObject(palletData);
+
+                    //string initiateDataPallet =
+                    //    "{\"line\":{\"x\":" + double.Parse(palletLineX.Text) +
+                    //    ",\"y\":" + double.Parse(palletLineY.Text) +
+                    //    ",\"angle\":" + double.Parse(palletLineA.Text) +
+                    //    "},\"pallet\":{\"row\":" + (double)devicePallet.row +
+                    //    ",\"bay\":" + (double)devicePallet.bay +
+                    //    ",\"dir_main\":" + (palletD_Main.Text) +
+                    //    ",\"dir_sub\":" + (palletD_Sub.Text) +
+                    //    ",\"hasSubLine\":\"" + (palletHasSubLine.Text) +
+                    //    "\"}}";
+
+                    devicePallet.dataPallet = (devicePallet.dataPallet != null) ? devicePallet.dataPallet.ToString() : initiateDataPallet;
+                    //devicePallet.dataPallet = initiateDataPallet;
 
                     devicePallet.creUsrId = Global_Object.userLogin;
                     devicePallet.updUsrId = Global_Object.userLogin;
@@ -1905,16 +1926,40 @@ namespace MapViewPallet.MiniForm
                         devicePalletold.deviceId = int.Parse(dr.deviceId.ToString());
                         devicePalletold.row = int.Parse(dr.row.ToString());
                         devicePalletold.bay = int.Parse(dr.bay.ToString());
-                        string initiateDataPalletOld =
-                            "{\"line\":{\"x\":" + double.Parse(palletLineX.Text) +
-                        ",\"y\":" + double.Parse(palletLineY.Text) +
-                        ",\"angle\":" + double.Parse(palletLineA.Text) +
-                        "},\"pallet\":{\"row\":" + (double)devicePallet.row +
-                        ",\"bay\":" + (double)devicePallet.bay +
-                        ",\"dir_main\":" + (palletD_Main.Text) +
-                        ",\"dir_sub\":" + (palletD_Sub.Text) +
-                        ",\"hasSubLine\":\"" + (palletHasSubLine.Text) +
-                        "\"}}";
+
+
+                        dynamic palletDataOld = new JObject();
+                        dynamic palletLineOld = new JObject();
+                        dynamic palletPalletOld = new JObject();
+
+                        palletLineOld.x = double.Parse((palletLineX.Text != "") ? palletLineX.Text : "0");
+                        palletLineOld.y = double.Parse((palletLineY.Text != "") ? palletLineY.Text : "0");
+                        palletLineOld.angle = double.Parse((palletLineA.Text != "") ? palletLineA.Text : "0");
+
+                        palletPalletOld.row = int.Parse((devicePalletold.row.ToString() != "") ? devicePalletold.row.ToString() : "0");
+                        palletPalletOld.bay = int.Parse((devicePalletold.bay.ToString() != "") ? devicePalletold.bay.ToString() : "0");
+                        palletPalletOld.dir_main = int.Parse((palletD_Main.Text != "") ? palletD_Main.Text : "0");
+                        palletPalletOld.dir_sub = int.Parse((palletD_Sub.Text != "") ? palletD_Sub.Text : "0");
+                        palletPalletOld.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
+                        palletPalletOld.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
+
+                        palletDataOld.line = palletLineOld;
+                        palletDataOld.pallet = palletPalletOld;
+
+                        string initiateDataPalletOld = JsonConvert.SerializeObject(palletDataOld);
+
+                        //string initiateDataPalletOld =
+                        //    "{\"line\":{\"x\":" + double.Parse(palletLineX.Text) +
+                        //",\"y\":" + double.Parse(palletLineY.Text) +
+                        //",\"angle\":" + double.Parse(palletLineA.Text) +
+                        //"},\"pallet\":{\"row\":" + (double)devicePallet.row +
+                        //",\"bay\":" + (double)devicePallet.bay +
+                        //",\"dir_main\":" + (palletD_Main.Text) +
+                        //",\"dir_sub\":" + (palletD_Sub.Text) +
+                        //",\"hasSubLine\":\"" + (palletHasSubLine.Text) +
+                        //"\"}}";
+
+
                         devicePalletold.dataPallet = (dr.dataPallet != null) ? dr.dataPallet.ToString() : initiateDataPalletOld;
                         devicePalletold.creUsrId = Global_Object.userLogin;
                         devicePalletold.updUsrId = Global_Object.userLogin;
@@ -1968,9 +2013,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            //catch (Exception exc)
+            catch (Exception exc)
             {
-                //Console.WriteLine(exc.Message);
+                Console.WriteLine(exc.Message);
             }
 
         }

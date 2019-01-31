@@ -174,7 +174,7 @@ namespace MapViewPallet.Shape
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             Point mousePos = e.GetPosition(map);
-            Console.WriteLine(mousePos.X+"  "+mousePos.Y);
+            //Console.WriteLine(mousePos.X+"  "+mousePos.Y);
         }
         private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -282,7 +282,7 @@ namespace MapViewPallet.Shape
                 //translateTransform.X = xCoor;
                 //translateTransform.Y = yCoor;
 
-                Console.WriteLine(xCoor+"    "+ yCoor);
+                //Console.WriteLine(xCoor+"    "+ yCoor);
 
                 //double xlim;
                 //double ylim;

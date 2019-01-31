@@ -75,17 +75,18 @@ namespace MapViewPallet.MiniForm
                 {
                     dtPallet pallet = PalletsListDg.SelectedItem as dtPallet;
                     dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
-                    palletX.Text = (palletData != null) ? (((double)palletData.line.x).ToString()) : "0";
-                    palletY.Text = (palletData != null) ? (((double)palletData.line.y).ToString()) : "0";
-                    palletA.Text = (palletData != null) ? (((double)palletData.line.angle).ToString()) : "0";
+                    palletX.Text = (palletData.line.x != null) ? (((double)palletData.line.x).ToString()) : "0";
+                    palletY.Text = (palletData.line.y != null) ? (((double)palletData.line.y).ToString()) : "0";
+                    palletA.Text = (palletData.line.angle != null) ? (((double)palletData.line.angle).ToString()) : "0";
                     //palletR.Text = (palletData != null) ? (((double)palletData.pallet.row).ToString()) : "0";
                     palletR.Text = pallet.row.ToString();
                     palletB.Text = pallet.bay.ToString();
                     palletRowlb.Content = pallet.row;
                     palletBaylb.Content = pallet.bay;
-                    palletD_Main.Text = (palletData != null) ? ((palletData.pallet.dir_main).ToString()) : "0";
-                    palletD_Sub.Text = (palletData != null) ? ((palletData.pallet.dir_sub).ToString()) : "0";
-                    palletHasSubLine.Text = (palletData != null) ? ((palletData.pallet.hasSubLine).ToString()) : "no";
+                    palletD_Main.Text = (palletData.pallet.dir_main != null) ? ((palletData.pallet.dir_main).ToString()) : "0";
+                    palletD_Sub.Text = (palletData.pallet.dir_sub != null) ? ((palletData.pallet.dir_sub).ToString()) : "0";
+                    palletD_Out.Text = (palletData.pallet.dir_out != null) ? ((palletData.pallet.dir_out).ToString()) : "0";
+                    palletHasSubLine.Text = (palletData.pallet.hasSubLine != null) ? ((palletData.pallet.hasSubLine).ToString()) : "no";
                 }
             }
             catch
@@ -243,6 +244,7 @@ namespace MapViewPallet.MiniForm
                 palletPallet.bay = int.Parse((palletB.Text != "") ? palletB.Text : "0");
                 palletPallet.dir_main = int.Parse((palletD_Main.Text != "") ? palletD_Main.Text : "0");
                 palletPallet.dir_sub = int.Parse((palletD_Sub.Text != "") ? palletD_Sub.Text : "0");
+                palletPallet.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
                 palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
 
                 palletData.line = palletLine;

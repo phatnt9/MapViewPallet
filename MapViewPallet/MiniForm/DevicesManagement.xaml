@@ -457,7 +457,7 @@
                                                         <Label VerticalAlignment="Center" 
                                                                Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Bay}"/>
                                                         <TextBox Name="MaxBaytb" 
-                                                                 Width="40"
+                                                                 Width="Auto"
                                                                  Height="17"
                                                                  PreviewTextInput="MaxBaytb_PreviewTextInput"/>
                                                     </StackPanel>
@@ -466,7 +466,7 @@
                                                         <Label VerticalAlignment="Center" 
                                                                Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Row}"/>
                                                         <TextBox Name="MaxRowtb" 
-                                                                 Width="40"
+                                                                 Width="Auto"
                                                                  Height="17"
                                                                  PreviewTextInput ="MaxRowtb_PreviewTextInput"/>
                                                     </StackPanel>
@@ -613,7 +613,7 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="X" FontSize="12"/>
                                                             <TextBox Name="palletLineX" 
-                                                                     Width="35"
+                                                                     Width="Auto"
                                                                      Height="17"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
@@ -622,7 +622,7 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="Y" FontSize="12"/>
                                                             <TextBox Name="palletLineY" 
-                                                                     Width="35" 
+                                                                     Width="Auto" 
                                                                      Height="17"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
@@ -631,7 +631,7 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="A" FontSize="12"/>
                                                             <TextBox Name="palletLineA" 
-                                                                     Width="35"
+                                                                     Width="Auto"
                                                                      Height="17"
                                                                      PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                         </StackPanel>
@@ -678,6 +678,22 @@
                                                            Width="Auto"></Label>
                                                             <ComboBox 
                                                                     Name="palletD_Sub"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                                <ComboBoxItem>0</ComboBoxItem>
+                                                                <ComboBoxItem>1</ComboBoxItem>
+                                                                <ComboBoxItem>2</ComboBoxItem>
+                                                            </ComboBox>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                            <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_out}" 
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                            <ComboBox 
+                                                                    Name="palletD_Out"
                                                                     Height="20" 
                                                                     Width="Auto" 
                                                                     FontSize="12">
@@ -1139,7 +1155,7 @@
                                                                Content="X"
                                                                FontSize="12"></Label>
                                                         <TextBox Name="bufferX" 
-                                                                 Width="40" 
+                                                                 Width="Auto" 
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  PreviewTextInput="BufferX_PreviewTextInput"/>
@@ -1150,7 +1166,7 @@
                                                                Content="Y"
                                                                FontSize="12"></Label>
                                                         <TextBox Name="bufferY" 
-                                                                 Width="40" 
+                                                                 Width="Auto" 
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  PreviewTextInput ="BufferY_PreviewTextInput"/>
@@ -1161,7 +1177,7 @@
                                                                Content="A"
                                                                FontSize="12"></Label>
                                                         <TextBox Name="bufferA" 
-                                                                 Width="40" 
+                                                                 Width="Auto" 
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  PreviewTextInput="BufferA_PreviewTextInput"/>
