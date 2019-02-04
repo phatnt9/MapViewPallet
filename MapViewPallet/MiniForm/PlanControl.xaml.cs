@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MapViewPallet.MiniForm.MicsWpfForm;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -277,6 +278,12 @@ namespace MapViewPallet.MiniForm
                 Console.WriteLine(exc.Message);
             }
 
+        }
+
+        private void Btn_importPlan_Click(object sender, RoutedEventArgs e)
+        {
+            ImportPlanForm importPlanForm = new ImportPlanForm();
+            importPlanForm.ShowDialog();
         }
     }
 

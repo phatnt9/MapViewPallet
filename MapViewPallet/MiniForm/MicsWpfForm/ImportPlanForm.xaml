@@ -1,0 +1,101 @@
+﻿<Window x:Class="MapViewPallet.MiniForm.MicsWpfForm.ImportPlanForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
+        mc:Ignorable="d"
+        Title="ImportPlanForm" 
+        Height="234" 
+        Width="700"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <GroupBox
+                Header="{DynamicResource ImportPlanForm_GroupBox_ChooseImportType}">
+                <Grid>
+                    <StackPanel>
+                        <CheckBox
+                            Name="chkDeleteInsert"
+                            Margin="20,20,0,0"
+                            Content="Delete all and add new"
+                            Checked="ChkDeleteInsert_Checked"
+                            ></CheckBox>
+                        <CheckBox
+                            Name="chkUpdateInsertAddAmount"
+                            Margin="20,20,0,0"
+                            Content="Insert and update (Accumulate pallets)"
+                            Checked="ChkUpdateInsertAddAmount_Checked"
+                            ></CheckBox>
+                        <CheckBox
+                            Name="chkUpdateInsert"
+                            Margin="20,20,0,0"
+                            Content="Insert and update (Do not accumulate pallets)"
+                            Checked="ChkUpdateInsert_Checked"
+                            ></CheckBox>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Column="1">
+            <StackPanel>
+                <StackPanel 
+                    Margin="0,10,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <Label
+                        Content="Chọn ngày Import:"
+                        ></Label>
+                    <DatePicker
+                        Name="dtpImport"
+                        Width="100"/>
+                </StackPanel>
+                <StackPanel
+                    Margin="0,10,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <Label
+                        Content="File excel:"
+                        >
+                    </Label>
+                    <TextBox 
+                        Name="txtFile"
+                        IsEnabled="False"
+                        Width="100"></TextBox>
+                    <Button 
+                        Margin="10,0,0,0"
+                        Width="50"
+                        Content="..."
+                        Click="btnSelectFile_Click">
+                    </Button>
+                </StackPanel>
+                <StackPanel
+                    Margin="0,10,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <Button
+                        Width="Auto" 
+                        Height="25"
+                        Padding="5 0"
+                        Content="Import" 
+                        Margin="10 0" 
+                        Click="Import_Click"></Button>
+                    <Button
+                        Width="Auto" 
+                        Height="25"
+                        Padding="5 0"
+                        Content="Close" 
+                        Margin="10 0" 
+                        Click="Close_Click"></Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Data;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -327,13 +326,13 @@ namespace MapViewPallet.MiniForm
                                 int.TryParse(reader.ReadToEnd(), out result);
                                 if (result == 1)
                                 {
-                                    System.Windows.Forms.MessageBox.Show
-                                        (
-                                        String.Format(Global_Object.messageSaveSucced),
-                                        Global_Object.messageTitileInformation,
-                                        MessageBoxButtons.OK,
-                                        MessageBoxIcon.Information
-                                        );
+                                    //System.Windows.Forms.MessageBox.Show
+                                    //    (
+                                    //    String.Format(Global_Object.messageSaveSucced),
+                                    //    Global_Object.messageTitileInformation,
+                                    //    MessageBoxButtons.OK,
+                                    //    MessageBoxIcon.Information
+                                    //    );
 
                                     deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                                 }
@@ -700,7 +699,7 @@ namespace MapViewPallet.MiniForm
                         int.TryParse(reader.ReadToEnd(), out result);
                         if (result == 1)
                         {
-                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else if (result == -2)
                         {
@@ -1873,6 +1872,7 @@ namespace MapViewPallet.MiniForm
                         (palletLineA.Text.Trim() == "") ||
                         (palletD_Main.Text.Trim() == "") ||
                         (palletD_Sub.Text.Trim() == "") ||
+                        (palletD_Out.Text.Trim() == "") ||
                         (palletHasSubLine.Text.Trim() == ""))
                     {
                         return;
@@ -1911,8 +1911,8 @@ namespace MapViewPallet.MiniForm
                     //    ",\"hasSubLine\":\"" + (palletHasSubLine.Text) +
                     //    "\"}}";
 
-                    devicePallet.dataPallet = (devicePallet.dataPallet != null) ? devicePallet.dataPallet.ToString() : initiateDataPallet;
-                    //devicePallet.dataPallet = initiateDataPallet;
+                    //devicePallet.dataPallet = (devicePallet.dataPallet != null) ? devicePallet.dataPallet.ToString() : initiateDataPallet;
+                    devicePallet.dataPallet = initiateDataPallet;
 
                     devicePallet.creUsrId = Global_Object.userLogin;
                     devicePallet.updUsrId = Global_Object.userLogin;
@@ -2002,7 +2002,7 @@ namespace MapViewPallet.MiniForm
                         int.TryParse(reader.ReadToEnd(), out result);
                         if (result == 1)
                         {
-                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                             deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                         }
                         else

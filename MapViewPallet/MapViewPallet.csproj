@@ -131,10 +131,12 @@
     <Compile Include="MiniForm\ChangePassForm.xaml.cs">
       <DependentUpon>ChangePassForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiniForm\Database\clImportPlan.cs" />
     <Compile Include="MiniForm\Database\dtDevicePallet.cs" />
     <Compile Include="MiniForm\Database\dtOperationType.cs" />
     <Compile Include="MiniForm\Database\dtRobotCharge.cs" />
     <Compile Include="MiniForm\Database\dtRobotProcess.cs" />
+    <Compile Include="MiniForm\Database\structExcel.cs" />
     <Compile Include="MiniForm\DeviceList.cs" />
     <Compile Include="MiniForm\Database\dtBuffer.cs" />
     <Compile Include="MiniForm\Database\dtDevice.cs" />
@@ -174,6 +176,9 @@
     </Compile>
     <Compile Include="MiniForm\MicsWpfForm\BufferSettingForm.xaml.cs">
       <DependentUpon>BufferSettingForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MiniForm\MicsWpfForm\ImportPlanForm.xaml.cs">
+      <DependentUpon>ImportPlanForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="MiniForm\MicsWpfForm\WaitServerForm.xaml.cs">
       <DependentUpon>WaitServerForm.xaml</DependentUpon>
@@ -284,6 +289,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MiniForm\MicsWpfForm\BufferSettingForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiniForm\MicsWpfForm\ImportPlanForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

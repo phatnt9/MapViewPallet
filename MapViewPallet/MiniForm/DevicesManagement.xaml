@@ -65,39 +65,28 @@
                                                       SelectionMode="Single"
                                                       SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-                                                    
-                                                    <DataGridTemplateColumn Width="Auto" 
-                                                                            Header="Id"
-                                                                            Visibility="Visible">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center"
-                                                                               Text="{Binding Path=deviceId}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
 
-                                                    <DataGridTemplateColumn Width="*">
-                                                        <DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        Header="Id"
+                                                                        Visibility="Visible"
+                                                                        IsReadOnly="True"
+                                                                        Binding="{Binding Path=deviceId}">
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=deviceName}">
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                         Text="{DynamicResource DevicesManagement_Groupbox_Device_Column_DeviceName}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </DataGridTemplateColumn.HeaderTemplate>
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock
-                                                                        Text="{Binding Path=deviceName}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
+
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -134,7 +123,9 @@
                                                       SelectionMode="Single"
                                                       SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-                                                    
+
+
+
                                                     <DataGridTemplateColumn Width="Auto">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
@@ -146,40 +137,28 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    
-                                                    <DataGridTemplateColumn 
-                                                        Width="Auto" 
-                                                        Header="Id"
-                                                        Visibility="Visible">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=productId}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
-                                                    <DataGridTemplateColumn Width="*" >
-                                                        <DataGridTemplateColumn.HeaderTemplate>
+
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        Header="Id"
+                                                                        Visibility="Visible"
+                                                                        IsReadOnly="True"
+                                                                        Binding="{Binding Path=productId}">
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=productName}">
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                         Text="{DynamicResource DevicesManagement_Groupbox_Product_Column_ProductName}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </DataGridTemplateColumn.HeaderTemplate>
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock
-                                                                        Text="{Binding Path=productName}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
+
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -204,7 +183,7 @@
                                                         Height="20">
                                                     <iconPacks:PackIconMaterial Kind="Refresh"/>
                                                 </Button>
-                                                
+
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
@@ -218,7 +197,7 @@
                                                       SelectionMode="Single"
                                                       SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-                                                    
+
                                                     <DataGridTemplateColumn Width="Auto">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
@@ -229,40 +208,28 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
-                                                    
-                                                    <DataGridTemplateColumn 
-                                                        Width="Auto" 
-                                                        Header="Id"
-                                                        Visibility="Visible">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=bufferId}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
-                                                    <DataGridTemplateColumn Width="*">
-                                                        <DataGridTemplateColumn.HeaderTemplate>
+
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        Header="Id"
+                                                                        Visibility="Visible"
+                                                                        IsReadOnly="True"
+                                                                        Binding="{Binding Path=bufferId}">
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=bufferName}">
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                         Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferName}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </DataGridTemplateColumn.HeaderTemplate>
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock
-                                                                        Text="{Binding Path=bufferName}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
+
                                                     <DataGridTextColumn
                                                         Width="Auto" 
                                                         IsReadOnly="False" 
@@ -277,7 +244,7 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-                                                    
+
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -290,9 +257,9 @@
                                         HorizontalAlignment="Center">
                                 <Button Name="Btn_Exit_tab1" 
                                         Width="Auto" 
-                                    Height="25"
-                                    Padding="5 0"
-                                    Margin="10 0"
+                                        Height="25"
+                                        Padding="5 0"
+                                        Margin="10 0"
                                         Content="{DynamicResource DevicesManagement_Button_Exit}"
                                         Click="Btn_Exit_Device_Click"/>
                             </StackPanel>
@@ -356,19 +323,12 @@
                                                       SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
 
-                                                    <DataGridTemplateColumn Width="Auto" 
-                                                                            Header="Id" Visibility="Visible">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=deviceId}">
-
-                                                                    </TextBlock>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        IsReadOnly="True"
+                                                                        Header="Id" 
+                                                                        Visibility="Visible"
+                                                                        Binding="{Binding Path=deviceId}">
+                                                    </DataGridTextColumn>
 
                                                     <DataGridTextColumn
                                                         Width="*"
@@ -384,50 +344,31 @@
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
 
-                                                    <DataGridTemplateColumn Width="Auto">
-                                                        <DataGridTemplateColumn.HeaderTemplate>
+                                                    <DataGridTextColumn 
+                                                        Width="Auto"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=imageDeviceUrl}">
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                         Text="{DynamicResource DevicesManagement_Groupbox_Device_Column_ImageDeviceUrl}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </DataGridTemplateColumn.HeaderTemplate>
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock
-                                                                        Text="{Binding Path=imageDeviceUrl}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
 
-                                                    <DataGridTemplateColumn Width="Auto" 
-                                                                            Header="ImageUrlOld"
-                                                                            Visibility="Hidden">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center"
-                                                                               Text="{Binding Path=imageDeviceUrlOld}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        Header="ImageUrlOld"
+                                                                        Visibility="Hidden"
+                                                                        Binding="{Binding Path=imageDeviceUrlOld}">
+                                                    </DataGridTextColumn>
 
-                                                    <DataGridTemplateColumn Width="Auto" 
-                                                                            Header="pathFile"
-                                                                            Visibility="Hidden">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        Header="pathFile"
+                                                                        Visibility="Hidden"
+                                                                        Binding="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                    </DataGridTextColumn>
 
                                                 </DataGrid.Columns>
                                             </DataGrid>
@@ -495,29 +436,19 @@
                                                           SelectionMode="Single"
                                                           SelectionUnit="FullRow">
                                                     <DataGrid.Columns>
-                                                        <DataGridTemplateColumn Width="Auto" 
-                                                                                Header="DeviceId" Visibility="Hidden">
-                                                            <DataGridTemplateColumn.CellTemplate>
-                                                                <DataTemplate>
-                                                                    <StackPanel>
-                                                                        <TextBlock HorizontalAlignment="Center" 
-                                                                                   Text="{Binding Path=deviceId}"/>
-                                                                    </StackPanel>
-                                                                </DataTemplate>
-                                                            </DataGridTemplateColumn.CellTemplate>
-                                                        </DataGridTemplateColumn>
-                                                        <DataGridTemplateColumn Width="Auto" 
-                                                                                Header="Id"  Visibility="Visible">
-                                                            <DataGridTemplateColumn.CellTemplate>
-                                                                <DataTemplate>
-                                                                    <StackPanel>
-                                                                        <TextBlock HorizontalAlignment="Center" 
-                                                                                   Text="{Binding Path=devicePalletId}"/>
-                                                                    </StackPanel>
-                                                                </DataTemplate>
-                                                            </DataGridTemplateColumn.CellTemplate>
-                                                        </DataGridTemplateColumn>
-                                                        
+                                                        <DataGridTextColumn Width="Auto" 
+                                                                            Header="DeviceId" 
+                                                                            Visibility="Hidden"
+                                                                            IsReadOnly="True"
+                                                                            Binding="{Binding Path=deviceId}">
+                                                        </DataGridTextColumn>
+                                                        <DataGridTextColumn Width="Auto" 
+                                                                            Header="devicePalletId"  
+                                                                            IsReadOnly="True"
+                                                                            Visibility="Visible"
+                                                                            Binding="{Binding Path=devicePalletId}">
+                                                        </DataGridTextColumn>
+
                                                         <DataGridTextColumn
                                                             Width="Auto" 
                                                             IsReadOnly="True"
@@ -531,7 +462,7 @@
                                                                 </DataTemplate>
                                                             </DataGridTextColumn.HeaderTemplate>
                                                         </DataGridTextColumn>
-                                                        
+
                                                         <DataGridTextColumn
                                                             Width="Auto" 
                                                             IsReadOnly="True"
@@ -546,24 +477,19 @@
                                                             </DataGridTextColumn.HeaderTemplate>
                                                         </DataGridTextColumn>
 
-                                                        <DataGridTemplateColumn Width="*">
-                                                            <DataGridTemplateColumn.HeaderTemplate>
+                                                        <DataGridTextColumn 
+                                                            Width="*"
+                                                            IsReadOnly="True"
+                                                            Binding="{Binding Path=devicePalletName}">
+                                                            <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
                                                                         <TextBlock
                                                                             Text="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Column_DevicePalletName}"/>
                                                                     </StackPanel>
                                                                 </DataTemplate>
-                                                            </DataGridTemplateColumn.HeaderTemplate>
-                                                            <DataGridTemplateColumn.CellTemplate>
-                                                                <DataTemplate>
-                                                                    <StackPanel>
-                                                                        <TextBlock HorizontalAlignment="Center" 
-                                                                                   Text="{Binding Path=devicePalletName}"/>
-                                                                    </StackPanel>
-                                                                </DataTemplate>
-                                                            </DataGridTemplateColumn.CellTemplate>
-                                                        </DataGridTemplateColumn>
+                                                            </DataGridTextColumn.HeaderTemplate>
+                                                        </DataGridTextColumn>
 
                                                         <DataGridTextColumn
                                                             Width="*" 
@@ -646,25 +572,25 @@
                                                                    Content="Pallet:" FontSize="12"/>
                                                         </StackPanel>
                                                         <!--<StackPanel Orientation="Horizontal" 
-                                                                    HorizontalAlignment="Center">
-                                                            <Label VerticalAlignment="Center" 
-                                                                   Content="D" FontSize="12"/>
-                                                            <TextBox Name="palletPalletD" 
-                                                                     Width="35" 
-                                                                     Height="17"
-                                                                     PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
-                                                        </StackPanel>-->
+                                                             HorizontalAlignment="Center">
+                                                             <Label VerticalAlignment="Center" 
+                                                             Content="D" FontSize="12"/>
+                                                             <TextBox Name="palletPalletD" 
+                                                             Width="35" 
+                                                             Height="17"
+                                                             PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
+                                                             </StackPanel>-->
                                                         <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_main}" 
                                                                    FontSize="12"
-                                                           Width="Auto"></Label>
+                                                                   Width="Auto"></Label>
                                                             <ComboBox 
-                                                                    Name="palletD_Main"
-                                                                    Height="20" 
-                                                                    Width="Auto" 
-                                                                    FontSize="12">
+                                                                Name="palletD_Main"
+                                                                Height="20" 
+                                                                Width="Auto" 
+                                                                FontSize="12">
                                                                 <ComboBoxItem>0</ComboBoxItem>
                                                                 <ComboBoxItem>1</ComboBoxItem>
                                                                 <ComboBoxItem>2</ComboBoxItem>
@@ -675,12 +601,12 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_sub}" 
                                                                    FontSize="12"
-                                                           Width="Auto"></Label>
+                                                                   Width="Auto"></Label>
                                                             <ComboBox 
-                                                                    Name="palletD_Sub"
-                                                                    Height="20" 
-                                                                    Width="Auto" 
-                                                                    FontSize="12">
+                                                                Name="palletD_Sub"
+                                                                Height="20" 
+                                                                Width="Auto" 
+                                                                FontSize="12">
                                                                 <ComboBoxItem>0</ComboBoxItem>
                                                                 <ComboBoxItem>1</ComboBoxItem>
                                                                 <ComboBoxItem>2</ComboBoxItem>
@@ -691,27 +617,27 @@
                                                             <Label VerticalAlignment="Center" 
                                                                    Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_out}" 
                                                                    FontSize="12"
-                                                           Width="Auto"></Label>
+                                                                   Width="Auto"></Label>
                                                             <ComboBox 
-                                                                    Name="palletD_Out"
-                                                                    Height="20" 
-                                                                    Width="Auto" 
-                                                                    FontSize="12">
+                                                                Name="palletD_Out"
+                                                                Height="20" 
+                                                                Width="Auto" 
+                                                                FontSize="12">
                                                                 <ComboBoxItem>0</ComboBoxItem>
                                                                 <ComboBoxItem>1</ComboBoxItem>
                                                                 <ComboBoxItem>2</ComboBoxItem>
                                                             </ComboBox>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal" 
-                                                                HorizontalAlignment="Right">
+                                                                    HorizontalAlignment="Right">
                                                             <Label VerticalAlignment="Center" 
-                                                               Content="Subline"
-                                                               FontSize="12"></Label>
+                                                                   Content="Subline"
+                                                                   FontSize="12"></Label>
                                                             <ComboBox 
-                                                                    Name="palletHasSubLine"
-                                                                    Height="20" 
-                                                                    Width="Auto" 
-                                                                    FontSize="12">
+                                                                Name="palletHasSubLine"
+                                                                Height="20" 
+                                                                Width="Auto" 
+                                                                FontSize="12">
                                                                 <ComboBoxItem>yes</ComboBoxItem>
                                                                 <ComboBoxItem>no</ComboBoxItem>
                                                             </ComboBox>
@@ -817,18 +743,12 @@
                                                       SelectionMode="Single"
                                                       SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-                                                    <DataGridTemplateColumn Width="Auto" 
-                                                                            Header="Id" Visibility="Visible">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=productId}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        Binding="{Binding Path=productId}"
+                                                                        Header="Id" 
+                                                                        Visibility="Visible">
+                                                    </DataGridTextColumn>
+
                                                     <DataGridTextColumn
                                                         Width="Auto" 
                                                         IsReadOnly="False"
@@ -842,52 +762,33 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-                                                    
-                                                    <DataGridTemplateColumn Width="Auto">
-                                                        <DataGridTemplateColumn.HeaderTemplate>
+
+                                                    <DataGridTextColumn 
+                                                        Width="Auto"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=imageProductUrl, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                        <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
                                                                     <TextBlock
                                                                         Text="{DynamicResource DevicesManagement_Groupbox_Product_Column_ImageProductUrl}"/>
                                                                 </StackPanel>
                                                             </DataTemplate>
-                                                        </DataGridTemplateColumn.HeaderTemplate>
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=imageProductUrl, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
-                                                    <DataGridTemplateColumn Width="Auto" 
-                                                                            Header="ImageUrlOld"
-                                                                            Visibility="Hidden">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=imageProductUrlOld, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
-                                                    <DataGridTemplateColumn Width="Auto" 
-                                                                            Header="pathFile"
-                                                                            Visibility="Hidden">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
+                                                        </DataGridTextColumn.HeaderTemplate>
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        Header="ImageUrlOld"
+                                                                        Visibility="Hidden"
+                                                                        Binding="{Binding Path=imageProductUrlOld, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                    </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        Header="pathFile"
+                                                                        Visibility="Hidden"
+                                                                        Binding="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                    </DataGridTextColumn>
+
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -941,19 +842,13 @@
                                                       SelectionMode="Single"
                                                       SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-                                                    
-                                                    <DataGridTemplateColumn Width="Auto" 
-                                                                            Header="Id">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=productDetailId}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                    
+
+                                                    <DataGridTextColumn Width="Auto" 
+                                                                        Header="Id"
+                                                                        IsReadOnly="True"
+                                                                        Binding="{Binding Path=productDetailId}">
+                                                    </DataGridTextColumn>
+
                                                     <DataGridTextColumn
                                                         Width="Auto"  
                                                         IsReadOnly="False"
@@ -967,7 +862,7 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-                                                    
+
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -980,16 +875,16 @@
                                         HorizontalAlignment="Center">
                                 <Button Name="Btn_Save_Product" 
                                         Width="Auto" 
-                                Height="25"
-                                Padding="5 0"
-                                Margin="10 0"
+                                        Height="25"
+                                        Padding="5 0"
+                                        Margin="10 0"
                                         Content="{DynamicResource DevicesManagement_Button_Save}"
                                         Click="Btn_Save_Products_Click"/>
                                 <Button Name="Btn_Exit_Product" 
                                         Width="Auto" 
-                                Height="25"
-                                Padding="5 0"
-                                Margin="10 0"
+                                        Height="25"
+                                        Padding="5 0"
+                                        Margin="10 0"
                                         Content="{DynamicResource DevicesManagement_Button_Exit}" 
                                         Click="Btn_Exit_Product_Click"/>
                             </StackPanel>
@@ -1055,17 +950,14 @@
                                                       SelectionMode="Single"
                                                       SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-                                                    <DataGridTemplateColumn Width="Auto"  
-                                                                            Header="Id" Visibility="Visible">
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate>
-                                                                <StackPanel>
-                                                                    <TextBlock HorizontalAlignment="Center" 
-                                                                               Text="{Binding Path=bufferId}"/>
-                                                                </StackPanel>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
+                                                    <DataGridTextColumn 
+                                                        Width="Auto"  
+                                                        Header="Id" 
+                                                        Visibility="Visible"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=bufferId}">
+                                                    </DataGridTextColumn>
+
                                                     <DataGridTextColumn
                                                         Width="Auto"  
                                                         IsReadOnly="False"
@@ -1079,6 +971,7 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
+
                                                     <DataGridTextColumn
                                                         Width="Auto"  
                                                         IsReadOnly="False"
@@ -1092,6 +985,7 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
+
                                                     <DataGridTextColumn
                                                         Width="Auto"  
                                                         IsReadOnly="False"
@@ -1105,6 +999,7 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
+
                                                     <DataGridTemplateColumn Width="Auto" >
                                                         <DataGridTemplateColumn.HeaderTemplate>
                                                             <DataTemplate>
@@ -1123,6 +1018,7 @@
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
+
                                                     <DataGridTextColumn Header="Dữ liệu" 
                                                                         Width="Auto"  
                                                                         IsReadOnly="True"
@@ -1318,16 +1214,16 @@
                                         HorizontalAlignment="Center">
                                 <!--<Button Name="Btn_Save_Buffer" 
                                      Width="Auto" 
-                                Height="25"
-                                Padding="5 0"
-                                Margin="10 0"
+                                     Height="25"
+                                     Padding="5 0"
+                                     Margin="10 0"
                                      Content="{DynamicResource DevicesManagement_Button_Save}" 
                                      Click="Btn_Save_Buffer_Click"/>-->
                                 <Button Name="Btn_Exit_Buffer" 
                                         Width="Auto" 
-                                Height="25"
-                                Padding="5 0"
-                                Margin="10 0"
+                                        Height="25"
+                                        Padding="5 0"
+                                        Margin="10 0"
                                         Content="{DynamicResource DevicesManagement_Button_Exit}"
                                         Click="Btn_Exit_Buffer_Click"/>
                             </StackPanel>

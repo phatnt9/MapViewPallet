@@ -26,16 +26,19 @@
                 </Grid>
                 <Border Name="pCalendarCalendarBorder" Grid.Row="1" BorderThickness="0" 
                         BorderBrush="Black" Background="White">
-                    <StackPanel VerticalAlignment="Top"
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel VerticalAlignment="Top"
                                 HorizontalAlignment="Center"
                                 Margin="0 30 0 0">
-                        <Viewbox Width="220">
-                            <Calendar Name="pCalendar" 
+                            <Viewbox Width="220">
+                                <Calendar Name="pCalendar" 
                                       HorizontalAlignment="Center" 
                                       VerticalAlignment="Center"
                                       SelectionMode="SingleDate"
                                       SelectedDatesChanged="PCalendar_SelectedDatesChanged"/>
-                        </Viewbox>
+                            </Viewbox>
+                        </StackPanel>
+                        
                     </StackPanel>
                     
                 </Border>
@@ -226,7 +229,10 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
-                                <TabItem Name="Plan_Shift2" Header="{DynamicResource PlanControl_Shift2_Label}">
+                                <TabItem 
+                                    Name="Plan_Shift2" 
+                                    Visibility="Hidden"
+                                    Header="{DynamicResource PlanControl_Shift2_Label}">
                                     <DataGrid Name="Shift2Dgv"
                                               ItemsSource="{Binding GroupedDevices_S2}"
                                               CanUserReorderColumns="False" 
@@ -367,7 +373,10 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
-                                <TabItem Name="Plan_Shift3" Header="{DynamicResource PlanControl_Shift3_Label}" >
+                                <TabItem 
+                                    Name="Plan_Shift3" 
+                                    Visibility="Hidden"
+                                    Header="{DynamicResource PlanControl_Shift3_Label}" >
                                     <DataGrid Name="Shift3Dgv"
                                               ItemsSource="{Binding GroupedDevices_S3}"
                                               CanUserReorderColumns="False" 
@@ -746,13 +755,25 @@
                     </Grid>
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Name="Btn_CreatePlanPallet" 
+                            <!--<Button Name="Btn_CreatePlanPallet" 
                                     Width="Auto" 
                                     Height="25"
                                     Padding="5 0"
                                     Margin="10 0"
                                     Content="Apply" 
-                                    Click="Btn_CreatePlanPallet_Click"/>
+                                    Click="Btn_CreatePlanPallet_Click"/>-->
+                            <StackPanel 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                                <Button
+                                Name="btn_importPlan"
+                                Width="auto"
+                                Content="Import Plan"
+                                Click="Btn_importPlan_Click"
+                                >
+
+                                </Button>
+                            </StackPanel>
                             <Button Name="Btn_Accept" 
                                     Width="Auto" 
                                     Height="25"
