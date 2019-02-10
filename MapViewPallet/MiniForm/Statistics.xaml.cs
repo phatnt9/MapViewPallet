@@ -148,6 +148,16 @@ namespace MapViewPallet.MiniForm
         {
             statisticsModel.ReloadDataGridTask();
         }
+        
+        private void BtnSearchRobotCharge_Click(object sender, RoutedEventArgs e)
+        {
+            statisticsModel.ReloadDataGridCharge();
+        }
+
+        private void BtxExportRobotCharge_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
         {
@@ -339,7 +349,9 @@ namespace MapViewPallet.MiniForm
 
         private void GrvReportRobotProcess_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
+            txtDetail.Text = "";
             Console.WriteLine(e.ToString());
+            statisticsModel.loadDetail();
         }
 
         public string GetCellValue(System.Windows.Controls.DataGrid datagrid, int row, int column)
@@ -390,88 +402,6 @@ namespace MapViewPallet.MiniForm
                 }
             }
             return null;
-        }
-
-        private void BtnSearchRobotCharge_Click(object sender, RoutedEventArgs e)
-        {
-            if (!Global_Object.ServerAlive())
-            {
-                return;
-            }
-            try
-            {
-                dtRobotCharge robotCharge = new dtRobotCharge();
-                if (cmbRobotRobotCharge.SelectedValue != null && !string.IsNullOrEmpty(cmbRobotRobotCharge.SelectedValue.ToString()))
-                {
-                    robotCharge.robotId = cmbRobotRobotCharge.SelectedValue.ToString();
-                }
-
-                if (cmbShiftRobotCharge.SelectedValue != null && !string.IsNullOrEmpty(cmbShiftRobotCharge.SelectedValue.ToString()) && int.Parse(cmbShiftRobotCharge.SelectedValue.ToString()) > 0)
-                {
-                    robotCharge.timeWorkId = int.Parse(cmbShiftRobotCharge.SelectedValue.ToString());
-                }
-
-                string jsonSend = JsonConvert.SerializeObject(robotCharge);
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "reportRobot/getReportRobotCharge");
-                request.Method = "POST";
-                request.ContentType = "application/json";
-
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonSend);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
-                }
-
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    string result = reader.ReadToEnd();
-                    DataTable reportRobotCharge = JsonConvert.DeserializeObject<DataTable>(result);
-
-                    if (reportRobotCharge.Rows.Count > 0)
-                    {
-                        grvReportRobotCharge.DataContext = reportRobotCharge;
-
-                        //foreach (DataGridViewRow dr in grvReportRobotCharge.Rows)
-                        //{
-                        //    if (dr.Cells["rcBeginDatetime"].Value.ToString() != "" && dr.Cells["rcEndDatetime"].Value.ToString() != "")
-                        //    {
-                        //        DateTime dtBegin = DateTime.ParseExact(dr.Cells["rcBeginDatetime"].Value.ToString(), "yyyy-MM-dd HH:mm:ss",
-                        //                   System.Globalization.CultureInfo.InvariantCulture);
-
-                        //        DateTime dtEnd = DateTime.ParseExact(dr.Cells["rcEndDatetime"].Value.ToString(), "yyyy-MM-dd HH:mm:ss",
-                        //                  System.Globalization.CultureInfo.InvariantCulture);
-
-                        //        TimeSpan duration = dtEnd.Subtract(dtBegin);
-
-                        //        dr.Cells["timeCharge"].Value = duration.ToString(@"hh\:mm");
-                        //    }
-                        //}
-                    }
-                    else
-                    {
-                        DataTable dt = (DataTable)grvReportRobotCharge.ItemsSource;
-                        if (dt != null && dt.Rows.Count > 0)
-                        {
-                            dt.Rows.Clear();
-                        }
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
-            }
-        }
-
-        private void BtxExportRobotCharge_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

@@ -18,6 +18,7 @@ namespace MapViewPallet.MiniForm
         private string _currentBattery;
         private string _robotChargeStatus;
         private string _procedureContent;
+        private string _timeCharge;
 
         public int robotChargeId { get => _robotChargeId; set => _robotChargeId = value; }
         public string robotTaskId { get => _robotTaskId; set => _robotTaskId = value; }
@@ -29,5 +30,6 @@ namespace MapViewPallet.MiniForm
         public string robotChargeStatus { get => _robotChargeStatus; set => _robotChargeStatus = value; }
         public string robotId { get => _robotId; set => _robotId = value; }
         public string procedureContent { get => _procedureContent; set => _procedureContent = value; }
+        public string timeCharge { get => _timeCharge; set => _timeCharge = value; }
     }
 }

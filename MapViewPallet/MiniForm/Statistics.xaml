@@ -44,7 +44,7 @@
                                         <StackPanel Margin="0 0 30 0"
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
-                                            <Label Content="Robot"></Label>
+                                            <Label Content="{DynamicResource Statistics_TabItem_Robot}"></Label>
                                             <ComboBox 
                                                 Name="cmbRobot" 
                                                 Width="100"
@@ -57,7 +57,7 @@
                                         <StackPanel Margin="0 0 30 0"
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
-                                            <Label Content="Devices"></Label>
+                                            <Label Content="{DynamicResource Statistics_TabItem_Devices}"></Label>
                                             <ComboBox 
                                                 Name="cmbDevice"
                                                 Width="100"
@@ -71,7 +71,7 @@
                                         <StackPanel Margin="0 0 30 0"
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
-                                            <Label Content="Products"></Label>
+                                            <Label Content="{DynamicResource Statistics_TabItem_Products}"></Label>
                                             <ComboBox 
                                                 Name="cmbProduct"
                                                 Width="100"
@@ -89,7 +89,7 @@
                                         <StackPanel Margin="0 0 30 0"
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
-                                            <Label Content="Operation Type"></Label>
+                                            <Label Content="{DynamicResource Statistics_TabItem_OperationType}"></Label>
                                             <ComboBox 
                                                 Name="cmbOperationType"
                                                 Width="100"
@@ -102,7 +102,7 @@
                                         <StackPanel Margin="0 0 30 0"
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
-                                            <Label Content="Buffer"></Label>
+                                            <Label Content="{DynamicResource Statistics_TabItem_Buffer}"></Label>
                                             <ComboBox 
                                                 Name="cmbBuffer"
                                                 Width="100"
@@ -115,7 +115,7 @@
                                         <StackPanel Margin="0 0 30 0"
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
-                                            <Label Content="Product Detail"></Label>
+                                            <Label Content="{DynamicResource Statistics_TabItem_ProductDetail}"></Label>
                                             <ComboBox 
                                                 Name="cmbProductDetail"
                                                 Width="100"
@@ -132,7 +132,7 @@
                                         <StackPanel Margin="0 0 30 0"
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
-                                            <Label Content="Shift"></Label>
+                                            <Label Content="{DynamicResource Statistics_TabItem_Shift}"></Label>
                                             <ComboBox 
                                                 Name="cmbShift"
                                                 Width="100"
@@ -157,21 +157,23 @@
                                     <Button 
                                         Name="Search"
                                         Margin="0 10 0 0"
-                                        Width="80"
+                                        Width="Auto"
+                                        Content="{DynamicResource Statistics_Button_Search}"
                                         Click="Search_Click"
-                                        >Search</Button>
-                                    <Button 
+                                        ></Button>
+                                    <!--<Button 
                                         Name="Test"
                                         Margin="0 10 0 0"
                                         Width="80"
                                         Click="Test_Click"
-                                        >Test</Button>
+                                        >Test</Button>-->
                                     <Button 
                                         Name="btnExport"
                                         Margin="0 10 0 0"
-                                        Width="80"
+                                        Width="Auto"
+                                        Content="{DynamicResource Statistics_Button_Export}"
                                         Click="BtnExport_Click"
-                                        >Export</Button>
+                                        ></Button>
                                 </StackPanel>
                                 
                             </Grid>
@@ -191,7 +193,8 @@
                                     CanUserResizeRows="False"
                                     CanUserDeleteRows="False"
                                     CanUserSortColumns="True"
-                                    AutoGenerateColumns="False">
+                                    AutoGenerateColumns="False"
+                                    SelectedCellsChanged="GrvReportRobotProcess_SelectedCellsChanged">
                                     <DataGrid.Columns>
                                         <!--<DataGridTemplateColumn 
                                             Width="Auto" 
@@ -753,10 +756,11 @@
                                 </DataGrid>
                             </Grid>
                             <Grid Grid.Column="1">
-                                <GroupBox Header="Detail">
+                                <GroupBox Header="{DynamicResource Statistics_Statistic_Detail}">
                                     <Grid>
-                                        <TextBox TextWrapping="Wrap">
-                                            Copy and connect the repository locally so that you can push updates you make and pull changes others make. Enter git clone and the repository URL at your command line:
+                                        <TextBox 
+                                            Name="txtDetail"
+                                            IsReadOnly="True">
                                         </TextBox>
                                     </Grid>
                                 </GroupBox>
@@ -831,9 +835,9 @@
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition Width="300"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
+                            <Grid Grid.Column="0" Grid.ColumnSpan="2">
                                 <DataGrid
-                                    ItemsSource="{Binding}"
+                                    ItemsSource="{Binding GroupedRobotCharge}"
                                     Name="grvReportRobotCharge"
                                     Margin="0 10 0 0"
                                     CanUserReorderColumns="False" 
@@ -841,8 +845,170 @@
                                     CanUserResizeRows="False"
                                     CanUserDeleteRows="False"
                                     CanUserSortColumns="True"
-                                    AutoGenerateColumns="True">
+                                    AutoGenerateColumns="False">
                                     <DataGrid.Columns>
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                               Text="Robot"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.HeaderTemplate>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ComboBox 
+                                                        IsHitTestVisible="False"
+                                                        ItemsSource="{Binding DataContext.AllRobots, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
+                                                        DisplayMemberPath="robotName"
+                                                        SelectedValuePath="id"
+                                                        SelectedValue="{Binding robotId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                    </ComboBox>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=robotChargeId}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="robotChargeId"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=robotTaskId}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="robotTaskId"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=chargeId}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="chargeId"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=timeWorkId}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="timeWorkId"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=rcBeginDatetime}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="rcBeginDatetime"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=rcEndDatetime}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="rcEndDatetime"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=currentBattery}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="currentBattery"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=robotChargeStatus}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="robotChargeStatus"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=timeCharge}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="timeCharge"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        Binding="{Binding Path=procedureContent}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="procedureContent"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+                                        
                                         
                                     </DataGrid.Columns>
                                 </DataGrid>

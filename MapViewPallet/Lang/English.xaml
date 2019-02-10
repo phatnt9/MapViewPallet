@@ -33,6 +33,7 @@
     <sys:String x:Key="MainWindow_Toolbar_UserManagement">User Management</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_Reloadallstation">Reload all Buffer</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_ZoomInOut">Zoom</sys:String>
+    <sys:String x:Key="MainWindow_Toolbar_MoveStaion">Move Buffer</sys:String>
 
     <!--TabItem-->
     <sys:String x:Key="MainWindow_TabItem_LogConsole">Log</sys:String>
@@ -203,6 +204,16 @@
     <!--Statistics-->
     <sys:String x:Key="Statistics_Title">Statistics</sys:String>
     <sys:String x:Key="Statistics_TabItem_RobotProcess">Robot Process</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Devices">Devices</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Products">Products</sys:String>
+    <sys:String x:Key="Statistics_TabItem_OperationType">Operation Type</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Buffer">Buffer</sys:String>
+    <sys:String x:Key="Statistics_TabItem_ProductDetail">Product Detail</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Shift">Shift</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Robot">Robot</sys:String>
     <sys:String x:Key="Statistics_TabItem_RobotCharge">Robot Charge</sys:String>
+    <sys:String x:Key="Statistics_Statistic_Detail">Detail</sys:String>
+    <sys:String x:Key="Statistics_Button_Search">Search</sys:String>
+    <sys:String x:Key="Statistics_Button_Export">Export</sys:String>
 
 </ResourceDictionary>

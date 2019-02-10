@@ -14,6 +14,8 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MapViewPallet.MiniForm.MicsWpfForm;
+using System.IO;
+using System.Media;
 
 namespace MapViewPallet
 {
@@ -26,6 +28,7 @@ namespace MapViewPallet
 
     public partial class MainWindow : Window
     {
+        private SoundPlayer Player = null;
         //=================VARIABLE==================
         public System.Timers.Timer stationTimer;
         public bool drag = true;
@@ -91,6 +94,29 @@ namespace MapViewPallet
             //        Thread.Sleep(100);
             //    }
             //}));
+        }
+
+        private void PlayWav(Stream stream, bool play_looping)
+        {
+            // Stop the player if it is running.
+            if (Player != null)
+            {
+                Player.Stop();
+                Player.Dispose();
+                Player = null;
+            }
+
+            // If we have no stream, we're done.
+            if (stream == null) return;
+
+            // Make the new player for the WAV stream.
+            Player = new SoundPlayer(stream);
+
+            // Play.
+            if (play_looping)
+                Player.PlayLooping();
+            else
+                Player.Play();
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
@@ -584,7 +610,7 @@ namespace MapViewPallet
 
         private void PlayMusic_Click(object sender, RoutedEventArgs e)
         {
-            //Global_Object.PlayWarning(true);
+            PlayWav(Properties.Resources.ALARM, true);
             //Global_Object.StaticHeight++;
             //Global_Object.StaticWidth++;
             //BufferSettingForm form = new BufferSettingForm();

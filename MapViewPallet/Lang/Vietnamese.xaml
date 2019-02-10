@@ -36,6 +36,7 @@
     <sys:String x:Key="MainWindow_Toolbar_UserManagement">Quản lý người dùng</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_Reloadallstation">Làm mới bản đồ</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_ZoomInOut">Thu/Phóng</sys:String>
+    <sys:String x:Key="MainWindow_Toolbar_MoveStaion">Di chuyển Buffer</sys:String>
 
     <!--TabItem-->
     <sys:String x:Key="MainWindow_TabItem_LogConsole">Thông Báo</sys:String>
@@ -207,7 +208,17 @@
     <!--Statistics-->
     <sys:String x:Key="Statistics_Title">Thống kê quy trình</sys:String>
     <sys:String x:Key="Statistics_TabItem_RobotProcess">Thống kê tác vụ</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Devices">Thiết bị</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Products">Sản phẩm</sys:String>
+    <sys:String x:Key="Statistics_TabItem_OperationType">Loại tác vụ</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Buffer">Buffer</sys:String>
+    <sys:String x:Key="Statistics_TabItem_ProductDetail">Mã hàng</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Shift">Ca</sys:String>
+    <sys:String x:Key="Statistics_TabItem_Robot">Robot</sys:String>
     <sys:String x:Key="Statistics_TabItem_RobotCharge">Thống kê lần sạc</sys:String>
+    <sys:String x:Key="Statistics_Statistic_Detail">Chi tiết</sys:String>
+    <sys:String x:Key="Statistics_Button_Search">Tìm kiếm</sys:String>
+    <sys:String x:Key="Statistics_Button_Export">Xuất file</sys:String>
 
 
 

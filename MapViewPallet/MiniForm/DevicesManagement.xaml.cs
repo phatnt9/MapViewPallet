@@ -23,6 +23,10 @@ namespace MapViewPallet.MiniForm
     {
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
         public DevicesManagementModel deviceManagementModel;
+        private AddBufferForm addBufferForm;
+        private AddDeviceForm addDeviceForm;
+        private AddProductForm addProductForm;
+        private AddProductDetailForm addProductDetailForm;
         public MainWindow mainWindow;
         int loadTab = 0;
 
@@ -406,8 +410,21 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Device_Click(object sender, RoutedEventArgs e)
         {
-            AddDeviceForm form = new AddDeviceForm(this, Thread.CurrentThread.CurrentCulture.ToString());
-            form.ShowDialog();
+            if (addDeviceForm == null)
+            {
+                addDeviceForm = new AddDeviceForm(this, Thread.CurrentThread.CurrentCulture.ToString());
+                addDeviceForm.Closed += AddDeviceForm_Closed;
+                addDeviceForm.ShowDialog();
+            }
+            else
+            {
+                addDeviceForm.Focus();
+            }
+        }
+
+        private void AddDeviceForm_Closed(object sender, EventArgs e)
+        {
+            addDeviceForm = null;
         }
 
         private void Btn_Delete_Device_Click(object sender, RoutedEventArgs e)
@@ -807,8 +824,21 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Product_Click(object sender, RoutedEventArgs e)
         {
-            AddProductForm form = new AddProductForm(this, Thread.CurrentThread.CurrentCulture.ToString());
-            form.ShowDialog();
+            if (addProductForm == null)
+            {
+                addProductForm = new AddProductForm(this, Thread.CurrentThread.CurrentCulture.ToString());
+                addProductForm.Closed += AddProductForm_Closed;
+                addProductForm.ShowDialog();
+            }
+            else
+            {
+                addProductForm.Focus();
+            }
+        }
+
+        private void AddProductForm_Closed(object sender, EventArgs e)
+        {
+            addProductForm = null;
         }
 
         private void Btn_Delete_Product_Click(object sender, RoutedEventArgs e)
@@ -887,8 +917,21 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_ProductDetail_Click(object sender, RoutedEventArgs e)
         {
-            AddProductDetailForm form = new AddProductDetailForm(this, Thread.CurrentThread.CurrentCulture.ToString());
-            form.ShowDialog();
+            if (addProductDetailForm == null)
+            {
+                addProductDetailForm = new AddProductDetailForm(this, Thread.CurrentThread.CurrentCulture.ToString());
+                addProductDetailForm.Closed += AddProductDetailForm_Closed;
+                addProductDetailForm.ShowDialog();
+            }
+            else
+            {
+                addProductDetailForm.Focus();
+            }
+        }
+
+        private void AddProductDetailForm_Closed(object sender, EventArgs e)
+        {
+            addProductDetailForm = null;
         }
 
         private void Btn_Delete_ProductDetail_Click(object sender, RoutedEventArgs e)
@@ -1173,9 +1216,22 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Buffer_Click(object sender, RoutedEventArgs e)
         {
-            AddBufferForm form = new AddBufferForm(this, Thread.CurrentThread.CurrentCulture.ToString());
-            form.ShowDialog();
+            if (addBufferForm == null)
+            {
+                addBufferForm = new AddBufferForm(this, Thread.CurrentThread.CurrentCulture.ToString());
+                addBufferForm.Closed += AddBufferForm_Closed;
+                addBufferForm.ShowDialog();
+            }
+            else
+            {
+                addBufferForm.Focus();
+            }
 
+        }
+
+        private void AddBufferForm_Closed(object sender, EventArgs e)
+        {
+            addBufferForm = null;
         }
 
         private void Btn_Delete_Buffer_Click(object sender, RoutedEventArgs e)
@@ -1354,14 +1410,6 @@ namespace MapViewPallet.MiniForm
                 //temp.updUsrId = Global_Object.userLogin;
                 //string palletCellEdit = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
                 List<dtPallet> pallets = new List<dtPallet>();
-                //switch (e.Column.DisplayIndex)
-                //{
-                //    case 4:
-                //        {
-                //            temp.dataPallet = palletCellEdit;
-                //            break;
-                //        }
-                //}
                 foreach (dtPallet pallet in deviceManagementModel.palletsList)
                 {
                     pallet.updUsrId = Global_Object.userLogin;

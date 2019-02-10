@@ -159,14 +159,14 @@
                                     <iconPacks:PackIconMaterial
                                         Kind="Map"/>
                                 </Button>
-                                <Button ToolBar.OverflowMode="Never"
+                                <!--<Button ToolBar.OverflowMode="Never"
                                         Name="btn_MapReCenter"
                                         Margin="5 0"
                                         ToolTip="{DynamicResource MainWindow_Toolbar_MapReCenter}"
                                         Click="Btn_MapReCenter_Click">
                                     <iconPacks:PackIconMaterial 
                                         Kind="SetCenter"/>
-                                </Button>
+                                </Button>-->
                                 <Separator />
                                 <Button ToolTip="{DynamicResource MainWindow_Toolbar_PlanManagement}"
                                         Name="btn_PlanManagement"
@@ -243,6 +243,7 @@
                                     Name="MoveBuffer"
                                     ToolBar.OverflowMode="Never"
                                     Margin="5 0"
+                                    ToolTip="{DynamicResource MainWindow_Toolbar_MoveStaion}"
                                     Click="MoveBuffer_Click">
                                     <iconPacks:PackIconMaterial 
                                         Kind="MoveResize"/>

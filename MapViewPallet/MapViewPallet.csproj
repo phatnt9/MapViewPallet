@@ -583,5 +583,11 @@
   <ItemGroup>
     <None Include="Resources\Map_aTan.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\ALARM.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ALARM.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
