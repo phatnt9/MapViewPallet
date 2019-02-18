@@ -379,7 +379,7 @@
                                                             <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
                                                                 <Label VerticalAlignment="Center" 
-                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_sub}" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_out}" 
                                                                    FontSize="12"
                                                            Width="Auto"></Label>
                                                                 <ComboBox 

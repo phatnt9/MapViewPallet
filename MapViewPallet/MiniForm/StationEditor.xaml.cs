@@ -449,6 +449,10 @@ namespace MapViewPallet.MiniForm
             try
             {
                 dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
+                if (pallet.palletStatus == "F")
+                {
+                    return;
+                }
                 pallet.palletStatus = "W";
                 string jsonData = JsonConvert.SerializeObject(pallet);
 

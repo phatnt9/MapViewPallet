@@ -2051,7 +2051,8 @@ namespace MapViewPallet.MiniForm
                         if (result == 1)
                         {
                             //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                           // deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                            deviceManagementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
                         }
                         else
                         {

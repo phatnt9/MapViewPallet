@@ -68,7 +68,7 @@ namespace MapViewPallet
 
 
             stationTimer = new System.Timers.Timer();
-            stationTimer.Interval = 3000;
+            stationTimer.Interval = 1000;
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
             //stationTimer.Enabled = true;
