@@ -238,6 +238,7 @@
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition></RowDefinition>
                                                         <RowDefinition></RowDefinition>
+                                                        <RowDefinition></RowDefinition>
                                                     </Grid.RowDefinitions>
                                                     <Grid Grid.Row="0" Margin="0 5 0 0">
                                                         <StackPanel Orientation="Horizontal" 
@@ -328,7 +329,7 @@
                                                                      Width="Auto" 
                                                                      Height="17"
                                                                  FontSize="12"
-                                                                     IsEnabled="False"
+                                                                     IsEnabled="True"
                                                                      PreviewTextInput="myPreviewTextInput"></TextBox>
                                                             </StackPanel>
                                                             <StackPanel Orientation="Horizontal" 
@@ -341,7 +342,7 @@
                                                                      Width="Auto"
                                                                      Height="17"
                                                                  FontSize="12"
-                                                                     IsEnabled="False"
+                                                                     IsEnabled="True"
                                                                      PreviewTextInput="myPreviewTextInput"></TextBox>
                                                             </StackPanel>
                                                             <StackPanel Orientation="Horizontal" 
@@ -376,6 +377,13 @@
                                                                     <ComboBoxItem>2</ComboBoxItem>
                                                                 </ComboBox>
                                                             </StackPanel>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    <Grid Grid.Row="2">
+                                                        <StackPanel Orientation="Horizontal" 
+                                                                HorizontalAlignment="Left" 
+                                                                VerticalAlignment="Center"
+                                                                Margin="0,0,0,0">
                                                             <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
                                                                 <Label VerticalAlignment="Center" 
@@ -390,6 +398,24 @@
                                                                     <ComboBoxItem>0</ComboBoxItem>
                                                                     <ComboBoxItem>1</ComboBoxItem>
                                                                     <ComboBoxItem>2</ComboBoxItem>
+                                                                </ComboBox>
+                                                            </StackPanel>
+                                                            <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                                <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletLine_ord}" 
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                                <ComboBox 
+                                                                    Name="palletL_Ord"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                                    <ComboBoxItem>0</ComboBoxItem>
+                                                                    <ComboBoxItem>1</ComboBoxItem>
+                                                                    <ComboBoxItem>2</ComboBoxItem>
+                                                                    <ComboBoxItem>3</ComboBoxItem>
+                                                                    <ComboBoxItem>4</ComboBoxItem>
                                                                 </ComboBox>
                                                             </StackPanel>
                                                             <StackPanel Orientation="Horizontal" 
@@ -412,7 +438,6 @@
                                                                  CharacterCasing="Upper"
                                                                  PreviewTextInput="myPreviewTextInput"></TextBox>-->
                                                             </StackPanel>
-                                                           
                                                         </StackPanel>
                                                     </Grid>
                                                 </Grid>
@@ -630,16 +655,23 @@
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Header="Plan">
+                                        <!--<DataGridTemplateColumn Header="Plan">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <Button Click="Button_Click_3">Plan</Button>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
+                                        </DataGridTemplateColumn>-->
+                                        <!--<DataGridTemplateColumn Header="Plan_2">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Click="Button_Click_4">Plan_2</Button>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>-->
                                         <DataGridTextColumn Header="Dữ liệu" 
                                                             Width="Auto" 
-                                                            IsReadOnly="True"
+                                                            IsReadOnly="False"
                                                             Visibility="Visible"
                                                             Binding="{Binding Path=dataPallet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                             <DataGridTextColumn.ElementStyle>

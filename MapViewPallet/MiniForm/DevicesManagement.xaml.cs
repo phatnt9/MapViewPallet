@@ -1200,6 +1200,7 @@ namespace MapViewPallet.MiniForm
                     palletD_Main.Text = (devicePalletData.pallet.dir_main != null) ? ((devicePalletData.pallet.dir_main).ToString()) : "0";
                     palletD_Sub.Text = (devicePalletData.pallet.dir_sub != null) ? ((devicePalletData.pallet.dir_sub).ToString()) : "0";
                     palletD_Out.Text = (devicePalletData.pallet.dir_out != null) ? ((devicePalletData.pallet.dir_out).ToString()) : "0";
+                    palletL_Ord.Text = (devicePalletData.pallet.line_ord != null) ? ((devicePalletData.pallet.line_ord).ToString()) : "0";
                     palletHasSubLine.Text = (devicePalletData.pallet.hasSubLine != null) ? ((devicePalletData.pallet.hasSubLine).ToString()) : "no";
                 }
             }
@@ -1941,6 +1942,7 @@ namespace MapViewPallet.MiniForm
                     palletPallet.dir_main = int.Parse((palletD_Main.Text != "") ? palletD_Main.Text : "0");
                     palletPallet.dir_sub = int.Parse((palletD_Sub.Text != "") ? palletD_Sub.Text : "0");
                     palletPallet.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
+                    palletPallet.line_ord = int.Parse((palletL_Ord.Text != "") ? palletL_Ord.Text : "0");
                     palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
 
                     palletData.line = palletLine;
@@ -1989,6 +1991,7 @@ namespace MapViewPallet.MiniForm
                         palletPalletOld.dir_main = int.Parse((palletD_Main.Text != "") ? palletD_Main.Text : "0");
                         palletPalletOld.dir_sub = int.Parse((palletD_Sub.Text != "") ? palletD_Sub.Text : "0");
                         palletPalletOld.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
+                        palletPalletOld.line_ord = int.Parse((palletL_Ord.Text != "") ? palletL_Ord.Text : "0");
                         palletPalletOld.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
 
                         palletDataOld.line = palletLineOld;

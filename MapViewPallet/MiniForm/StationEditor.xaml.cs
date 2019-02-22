@@ -79,13 +79,17 @@ namespace MapViewPallet.MiniForm
                     palletY.Text = (palletData.line.y != null) ? (((double)palletData.line.y).ToString()) : "0";
                     palletA.Text = (palletData.line.angle != null) ? (((double)palletData.line.angle).ToString()) : "0";
                     //palletR.Text = (palletData != null) ? (((double)palletData.pallet.row).ToString()) : "0";
-                    palletR.Text = pallet.row.ToString();
-                    palletB.Text = pallet.bay.ToString();
+                    //palletR.Text = pallet.row.ToString();
+                    //{"line":{"x":-4.19,"y":-13.69,"angle":0.0},"pallet":{"row":0,"bay":0,"dir_main":1,"dir_sub":1,"dir_out":2,"line_ord":0,"hasSubLine":"yes"}}
+                    palletR.Text = (palletData.pallet.row != null) ? (((int)palletData.pallet.row).ToString()) : pallet.row.ToString();
+                    //palletB.Text = pallet.bay.ToString();
+                    palletB.Text = (palletData.pallet.bay != null) ? (((int)palletData.pallet.bay).ToString()) : pallet.bay.ToString();
                     palletRowlb.Content = pallet.row;
                     palletBaylb.Content = pallet.bay;
                     palletD_Main.Text = (palletData.pallet.dir_main != null) ? ((palletData.pallet.dir_main).ToString()) : "0";
                     palletD_Sub.Text = (palletData.pallet.dir_sub != null) ? ((palletData.pallet.dir_sub).ToString()) : "0";
                     palletD_Out.Text = (palletData.pallet.dir_out != null) ? ((palletData.pallet.dir_out).ToString()) : "0";
+                    palletL_Ord.Text = (palletData.pallet.line_ord != null) ? ((palletData.pallet.line_ord).ToString()) : "0";
                     palletHasSubLine.Text = (palletData.pallet.hasSubLine != null) ? ((palletData.pallet.hasSubLine).ToString()) : "no";
                 }
             }
@@ -245,6 +249,7 @@ namespace MapViewPallet.MiniForm
                 palletPallet.dir_main = int.Parse((palletD_Main.Text != "") ? palletD_Main.Text : "0");
                 palletPallet.dir_sub = int.Parse((palletD_Sub.Text != "") ? palletD_Sub.Text : "0");
                 palletPallet.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
+                palletPallet.line_ord = int.Parse((palletL_Ord.Text != "") ? palletL_Ord.Text : "0");
                 palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
 
                 palletData.line = palletLine;
@@ -601,6 +606,63 @@ namespace MapViewPallet.MiniForm
                 Console.WriteLine(exc.Message);
             }
             
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
+            {
+                dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
+                if (pallet.palletStatus == "F")
+                {
+                    string jsonData = JsonConvert.SerializeObject(pallet);
+                    
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                    request.Method = "POST";
+                    request.ContentType = "application/json";
+
+                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                    Byte[] byteArray = encoding.GetBytes(jsonData);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
+                    {
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        dataStream.Flush();
+                    }
+
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    using (Stream responseStream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        int result = 0;
+                        int.TryParse(reader.ReadToEnd(), out result);
+                        if (result == 1)
+                        {
+                            //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else if (result == -2)
+                        {
+                            // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                //pallet.palletStatus = "P";
+
+                
+                stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
         }
     }
 }

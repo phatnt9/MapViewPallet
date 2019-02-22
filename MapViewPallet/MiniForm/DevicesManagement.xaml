@@ -493,7 +493,7 @@
 
                                                         <DataGridTextColumn
                                                             Width="*" 
-                                                            IsReadOnly="True"
+                                                            IsReadOnly="False"
                                                             Visibility="Visible"
                                                             Binding="{Binding Path=dataPallet}">
                                                             <DataGridTextColumn.HeaderTemplate>
@@ -626,6 +626,24 @@
                                                                 <ComboBoxItem>0</ComboBoxItem>
                                                                 <ComboBoxItem>1</ComboBoxItem>
                                                                 <ComboBoxItem>2</ComboBoxItem>
+                                                            </ComboBox>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                            <Label VerticalAlignment="Center" 
+                                                                   Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletLine_ord}" 
+                                                                   FontSize="12"
+                                                                   Width="Auto"></Label>
+                                                            <ComboBox 
+                                                                Name="palletL_Ord"
+                                                                Height="20" 
+                                                                Width="Auto" 
+                                                                FontSize="12">
+                                                                <ComboBoxItem>0</ComboBoxItem>
+                                                                <ComboBoxItem>1</ComboBoxItem>
+                                                                <ComboBoxItem>2</ComboBoxItem>
+                                                                <ComboBoxItem>3</ComboBoxItem>
+                                                                <ComboBoxItem>4</ComboBoxItem>
                                                             </ComboBox>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal" 

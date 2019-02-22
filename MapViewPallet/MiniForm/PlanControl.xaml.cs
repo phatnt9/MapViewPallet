@@ -285,6 +285,59 @@ namespace MapViewPallet.MiniForm
             ImportPlanForm importPlanForm = new ImportPlanForm();
             importPlanForm.ShowDialog();
         }
+
+        private void Shift1Dgv_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(sender);
+            dtPlan selectedPlan = Shift1Dgv.SelectedItem as dtPlan;
+            dynamic postApiBody = new JObject();
+            postApiBody.timeWorkId = 0;
+            postApiBody.activeDate = selectedPlan.activeDate;
+            postApiBody.deviceId = selectedPlan.deviceId;
+            postApiBody.productId = selectedPlan.productId;
+            postApiBody.productDetailId = selectedPlan.productDetailId;
+            postApiBody.updUsrId = 1;
+            postApiBody.palletAmount = 1;
+            string jsonData = JsonConvert.SerializeObject(postApiBody);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/createPlanPallet");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                int result = 0;
+                int.TryParse(reader.ReadToEnd(), out result);
+                if (result == 1)
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (result == -2)
+                {
+                    // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 
 }

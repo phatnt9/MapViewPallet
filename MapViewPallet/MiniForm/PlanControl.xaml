@@ -100,7 +100,8 @@
                                               CanUserSortColumns="True"
                                               AutoGenerateColumns="False"
                                               SelectionMode="Single"
-                                              SelectionUnit="FullRow">
+                                              SelectionUnit="FullRow"
+                                              SelectedCellsChanged="Shift1Dgv_SelectedCellsChanged">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>
@@ -138,6 +139,13 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible"/>
                                             <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible"/>
+                                            <DataGridTemplateColumn Header="Plan_2">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Click="Button_Click_4">Plan_2</Button>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                             <DataGridTextColumn
                                                 Binding="{Binding Path=deviceName}" 
                                                 IsReadOnly="True">
