@@ -35,6 +35,7 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <GroupBox Header="{DynamicResource StationEditor_Groupbox_BufferInfo}" FontSize="20">
@@ -329,7 +330,7 @@
                                                                      Width="Auto" 
                                                                      Height="17"
                                                                  FontSize="12"
-                                                                     IsEnabled="True"
+                                                                     IsEnabled="False"
                                                                      PreviewTextInput="myPreviewTextInput"></TextBox>
                                                             </StackPanel>
                                                             <StackPanel Orientation="Horizontal" 
@@ -342,7 +343,7 @@
                                                                      Width="Auto"
                                                                      Height="17"
                                                                  FontSize="12"
-                                                                     IsEnabled="True"
+                                                                     IsEnabled="False"
                                                                      PreviewTextInput="myPreviewTextInput"></TextBox>
                                                             </StackPanel>
                                                             <StackPanel Orientation="Horizontal" 
@@ -489,6 +490,21 @@
                                                                  FontSize="12"
                                                      PreviewTextInput="myPreviewTextInput"/>
                                             </StackPanel>
+                                            <StackPanel Orientation="Horizontal" 
+                                                                    HorizontalAlignment="Right">
+                                                <Label VerticalAlignment="Center" 
+                                                                   Content="Arr" 
+                                                                   FontSize="12"
+                                                           Width="Auto"></Label>
+                                                <ComboBox 
+                                                                    Name="bufferArr"
+                                                                    Height="20" 
+                                                                    Width="Auto" 
+                                                                    FontSize="12">
+                                                    <ComboBoxItem>bigEndian</ComboBoxItem>
+                                                    <ComboBoxItem>littleEndian</ComboBoxItem>
+                                                </ComboBox>
+                                            </StackPanel>
                                             <Button Name="btn_SetBufferPosData" 
                                                 Margin="20 0"
                                                 Height="20" 
@@ -500,6 +516,23 @@
                                         </StackPanel>
                                     </Grid>
                                 </GroupBox>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <StackPanel 
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                                    <Button 
+                                        Name="FlipRowBay"
+                                        Content="Flip"
+                                        Width="50" 
+                                        Height="20" 
+                                        Margin="5"></Button>
+                                    <Button 
+                                        Width="50" 
+                                        Height="20" 
+                                        Margin="5"></Button>
+                                </StackPanel>
                             </Grid>
                         </Grid>
                     </StackPanel>

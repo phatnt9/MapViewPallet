@@ -1084,15 +1084,24 @@ namespace MapViewPallet.MiniForm
 
         private void BuffersListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            if (BuffersListDg.SelectedItem != null)
+            try
             {
-                dtBuffer temp = BuffersListDg.SelectedItem as dtBuffer;
-                Console.WriteLine(temp.bufferData);
-                dynamic bufferData = JsonConvert.DeserializeObject(temp.bufferData);
-                bufferX.Text = (bufferData != null) ? (((double)bufferData.x).ToString()) : "0";
-                bufferY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "0";
-                bufferA.Text = (bufferData != null) ? (((double)bufferData.angle).ToString()) : "0";
-                deviceManagementModel.ReloadListPallets(temp.bufferId);
+
+                if (BuffersListDg.SelectedItem != null)
+                {
+                    dtBuffer temp = BuffersListDg.SelectedItem as dtBuffer;
+                    Console.WriteLine(temp.bufferData);
+                    dynamic bufferData = JsonConvert.DeserializeObject(temp.bufferData);
+                    bufferX.Text = (bufferData != null) ? (((double)bufferData.x).ToString()) : "0";
+                    bufferY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "0";
+                    bufferA.Text = (bufferData != null) ? (((double)bufferData.angle).ToString()) : "0";
+                    bufferArr.Text = (bufferData != null) ? ((bufferData.arrange).ToString()) : "bigEndian";
+                    deviceManagementModel.ReloadListPallets(temp.bufferId);
+                }
+            }
+            catch
+            {
+
             }
         }
 
@@ -1344,6 +1353,7 @@ namespace MapViewPallet.MiniForm
                 postApiBody.x = Math.Round((double.Parse((bufferX.Text != "") ? bufferX.Text : "0")), 2);
                 postApiBody.y = Math.Round((double.Parse((bufferY.Text != "") ? bufferY.Text : "0")), 2);
                 postApiBody.angle = Math.Round((double.Parse((bufferA.Text != "") ? bufferA.Text : "0")), 2);
+                postApiBody.arrange = (bufferArr.Text != "") ? bufferArr.Text : "bigEndian";
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 

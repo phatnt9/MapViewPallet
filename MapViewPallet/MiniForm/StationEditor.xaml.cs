@@ -79,11 +79,11 @@ namespace MapViewPallet.MiniForm
                     palletY.Text = (palletData.line.y != null) ? (((double)palletData.line.y).ToString()) : "0";
                     palletA.Text = (palletData.line.angle != null) ? (((double)palletData.line.angle).ToString()) : "0";
                     //palletR.Text = (palletData != null) ? (((double)palletData.pallet.row).ToString()) : "0";
-                    //palletR.Text = pallet.row.ToString();
+                    palletR.Text = pallet.row.ToString();
                     //{"line":{"x":-4.19,"y":-13.69,"angle":0.0},"pallet":{"row":0,"bay":0,"dir_main":1,"dir_sub":1,"dir_out":2,"line_ord":0,"hasSubLine":"yes"}}
-                    palletR.Text = (palletData.pallet.row != null) ? (((int)palletData.pallet.row).ToString()) : pallet.row.ToString();
-                    //palletB.Text = pallet.bay.ToString();
-                    palletB.Text = (palletData.pallet.bay != null) ? (((int)palletData.pallet.bay).ToString()) : pallet.bay.ToString();
+                    //palletR.Text = (palletData.pallet.row != null) ? (((int)palletData.pallet.row).ToString()) : pallet.row.ToString();
+                    palletB.Text = pallet.bay.ToString();
+                    //palletB.Text = (palletData.pallet.bay != null) ? (((int)palletData.pallet.bay).ToString()) : pallet.bay.ToString();
                     palletRowlb.Content = pallet.row;
                     palletBaylb.Content = pallet.bay;
                     palletD_Main.Text = (palletData.pallet.dir_main != null) ? ((palletData.pallet.dir_main).ToString()) : "0";
@@ -102,28 +102,36 @@ namespace MapViewPallet.MiniForm
 
         private void StationEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            bufferNamelb.Content = stationShape.props.bufferDb.bufferName;
-            bufferMaxRowlb.Content = stationShape.props.bufferDb.maxRow;
-            bufferMaxBaylb.Content = stationShape.props.bufferDb.maxBay;
-            //bufferTypeNamelb.Content = (stationShape.props.bufferDb.bufferReturn == true) ? "StationEditor_BufferType_Return" : "StationEditor_BufferType_Buffer";
-            bufferTypeNamelb.SetResourceReference(System.Windows.Controls.Label.ContentProperty, (stationShape.props.bufferDb.bufferReturn == true) ? "StationEditor_BufferType_Return" : "StationEditor_BufferType_Buffer");
+            try
+            {
+                bufferNamelb.Content = stationShape.props.bufferDb.bufferName;
+                bufferMaxRowlb.Content = stationShape.props.bufferDb.maxRow;
+                bufferMaxBaylb.Content = stationShape.props.bufferDb.maxBay;
+                //bufferTypeNamelb.Content = (stationShape.props.bufferDb.bufferReturn == true) ? "StationEditor_BufferType_Return" : "StationEditor_BufferType_Buffer";
+                bufferTypeNamelb.SetResourceReference(System.Windows.Controls.Label.ContentProperty, (stationShape.props.bufferDb.bufferReturn == true) ? "StationEditor_BufferType_Return" : "StationEditor_BufferType_Buffer");
 
-            dynamic buffercheckin = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferCheckIn);
-            bufferX.Text = (buffercheckin.checkin != null) ? (((double)buffercheckin.checkin.x).ToString()) : "0";
-            bufferY.Text = (buffercheckin.checkin != null) ? (((double)buffercheckin.checkin.y).ToString()) : "0";
-            bufferA.Text = (buffercheckin.checkin != null) ? (((double)buffercheckin.checkin.angle).ToString()) : "0";
+                dynamic buffercheckin = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferCheckIn);
+                bufferX.Text = (buffercheckin.checkin != null) ? (((double)buffercheckin.checkin.x).ToString()) : "0";
+                bufferY.Text = (buffercheckin.checkin != null) ? (((double)buffercheckin.checkin.y).ToString()) : "0";
+                bufferA.Text = (buffercheckin.checkin != null) ? (((double)buffercheckin.checkin.angle).ToString()) : "0";
 
-            bufferHeadPointX.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.x).ToString()) : "0";
-            bufferHeadPointY.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.y).ToString()) : "0";
-            bufferHeadPointA.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.angle).ToString()) : "0";
+                bufferHeadPointX.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.x).ToString()) : "0";
+                bufferHeadPointY.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.y).ToString()) : "0";
+                bufferHeadPointA.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.angle).ToString()) : "0";
 
-            dynamic bufferdata = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferData);
-            bufferPosX.Text = (bufferdata != null) ? (((double)bufferdata.x).ToString()) : "0";
-            bufferPosY.Text = (bufferdata != null) ? (((double)bufferdata.y).ToString()) : "0";
-            bufferPosA.Text = (bufferdata != null) ? (((double)bufferdata.angle).ToString()) : "0";
+                dynamic bufferdata = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferData);
+                bufferPosX.Text = (bufferdata != null) ? (((double)bufferdata.x).ToString()) : "0";
+                bufferPosY.Text = (bufferdata != null) ? (((double)bufferdata.y).ToString()) : "0";
+                bufferPosA.Text = (bufferdata != null) ? (((double)bufferdata.angle).ToString()) : "0";
+                bufferArr.Text = (bufferdata != null) ? ((bufferdata.arrange).ToString()) : "bigEndian";
+                
+                stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+            }
+            catch
+            {
 
-
-            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+            }
+            
         }
 
         private void Btn_exit_Click(object sender, RoutedEventArgs e)
@@ -337,6 +345,7 @@ namespace MapViewPallet.MiniForm
                 postApiBody.x = Math.Round((double.Parse((bufferPosX.Text != "") ? bufferPosX.Text : "0")), 2);
                 postApiBody.y = Math.Round((double.Parse((bufferPosY.Text != "") ? bufferPosY.Text : "0")), 2);
                 postApiBody.angle = Math.Round((double.Parse((bufferPosA.Text != "") ? bufferPosA.Text : "0")), 2);
+                postApiBody.arrange = (bufferArr.Text != "") ? bufferArr.Text : "bigEndian";
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 
@@ -664,5 +673,7 @@ namespace MapViewPallet.MiniForm
                 Console.WriteLine(exc.Message);
             }
         }
+
+        
     }
 }

@@ -25,7 +25,6 @@ namespace MapViewPallet.Shape
             //public bool isSelected;
             //public bool isHovering;
 
-
             public dtBuffer bufferDb;
             public Canvas _canvas;
 
@@ -83,7 +82,7 @@ namespace MapViewPallet.Shape
             ToolTipOpening += ChangeToolTipContent;
             //BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF1F1F"));
             BorderBrush = new SolidColorBrush(Colors.Lime);
-            BorderThickness = new Thickness(1,0,1,1);
+            BorderThickness = new Thickness(1, 0, 1, 1);
             CornerRadius = new CornerRadius(0);
             RenderTransformOrigin = new Point(0, 0);
             Background = new SolidColorBrush(Colors.Transparent);
@@ -143,7 +142,7 @@ namespace MapViewPallet.Shape
                 ColumnDefinition colTemp = new ColumnDefinition();
                 //colTemp.Name = Name + "xL" + bayIndex;
                 props._stationGrid.ColumnDefinitions.Add(colTemp);
-                
+
                 // Create BorderLine
                 Border borderLine = new Border();
                 Grid.SetColumn(borderLine, bayIndex);
@@ -168,8 +167,15 @@ namespace MapViewPallet.Shape
                     //=============
                     //if(rowIndex>0)
                     {
+                        dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
                         //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
-                        PalletShape palletTemp = new PalletShape("Pallet" + "x" + bayIndex + "x" + rowIndex);
+                        PalletShape palletTemp = new PalletShape(
+                            "Pallet"
+                            + "x" +
+                            ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
+                            + "x" +
+                            ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxRow - rowIndex - 1) : rowIndex));
+
                         Grid.SetRow(palletTemp, rowIndex);
                         gridLine.Children.Add(palletTemp);
                         props._palletList.Add(palletTemp.name, palletTemp);
@@ -209,7 +215,7 @@ namespace MapViewPallet.Shape
             props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
             props._myTransformGroup.Children[0] = props._myRotateTransform;
             props._myTransformGroup.Children[1] = props._myTranslateTransform;
-            
+
             Width = Global_Object.StaticPalletWidth * props.bufferDb.maxBay;
             Height = Global_Object.StaticPalletHeight * props.bufferDb.maxRow;
 
@@ -235,7 +241,7 @@ namespace MapViewPallet.Shape
                 if ((this.props.bufferDb.maxBay != buffer.maxBay) || ((this.props.bufferDb.maxRow != buffer.maxRow)))
                 {
                     props.bufferDb = buffer;
-                    
+
                     props._palletList.Clear();
                     props._stationGrid.Children.Clear();
                     props._stationGrid.RowDefinitions.Clear();
@@ -273,8 +279,15 @@ namespace MapViewPallet.Shape
                             //rowTemp.MinHeight = 10;
                             gridLine.RowDefinitions.Add(rowTemp);
 
+                            dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
                             //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
-                            PalletShape palletTemp = new PalletShape("Pallet" + "x" + bayIndex + "x" + rowIndex);
+                            PalletShape palletTemp = new PalletShape(
+                                "Pallet"
+                                + "x" +
+                                ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
+                                + "x" +
+                                ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxRow - rowIndex - 1) : rowIndex));
+
                             Grid.SetRow(palletTemp, rowIndex);
                             gridLine.Children.Add(palletTemp);
                             props._palletList.Add(palletTemp.name, palletTemp);
@@ -305,7 +318,7 @@ namespace MapViewPallet.Shape
             SetCoorAndRotate();
             UpdateAllPalletStatus(props.bufferDb.pallets);
         }
-        
+
         public void UpdateAllPalletStatus(List<dtPallet> listPallet)
         {
             foreach (dtPallet dr in listPallet)
@@ -352,8 +365,8 @@ namespace MapViewPallet.Shape
 
                 dynamic postApiBody = new JObject();
                 Point coorLader = Global_Object.CoorLaser(props._posision);
-                postApiBody.x = Math.Round(coorLader.X,1);
-                postApiBody.y = Math.Round(coorLader.Y,1);
+                postApiBody.x = Math.Round(coorLader.X, 1);
+                postApiBody.y = Math.Round(coorLader.Y, 1);
                 postApiBody.angle = Math.Round(props._rotate, 1);
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
@@ -420,7 +433,7 @@ namespace MapViewPallet.Shape
             //    " \n Dài: " + Height.ToString("0.00") + "m" +
             //    " \n Rộng: " + Width.ToString("0.00") + "m" +
             //    " \n Góc quay: " + props._rotate;
-            ToolTip = ""+props.NameID;
+            ToolTip = "" + props.NameID;
         }
 
         public void Remove()
