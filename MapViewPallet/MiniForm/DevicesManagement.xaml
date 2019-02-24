@@ -1054,6 +1054,24 @@
                                                             </Style>
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
+
+                                                    <DataGridTextColumn Header="Data" 
+                                                                        Width="Auto"  
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible"
+                                                                        Binding="{Binding Path=bufferData, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                                        <DataGridTextColumn.ElementStyle>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                            </Style>
+                                                        </DataGridTextColumn.ElementStyle>
+                                                        <DataGridTextColumn.EditingElementStyle>
+                                                            <Style TargetType="TextBox">
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
+                                                                <Setter Property="AcceptsReturn" Value="true" />
+                                                            </Style>
+                                                        </DataGridTextColumn.EditingElementStyle>
+                                                    </DataGridTextColumn>
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>

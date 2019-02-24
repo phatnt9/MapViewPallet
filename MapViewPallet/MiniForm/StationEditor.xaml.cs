@@ -102,7 +102,7 @@ namespace MapViewPallet.MiniForm
 
         private void StationEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            try
+            //try
             {
                 bufferNamelb.Content = stationShape.props.bufferDb.bufferName;
                 bufferMaxRowlb.Content = stationShape.props.bufferDb.maxRow;
@@ -127,7 +127,7 @@ namespace MapViewPallet.MiniForm
                 
                 stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
             }
-            catch
+            //catch
             {
 
             }

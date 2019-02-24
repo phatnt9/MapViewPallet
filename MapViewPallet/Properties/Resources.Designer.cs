@@ -92,6 +92,16 @@ namespace MapViewPallet.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Map_aTan___Copy {
+            get {
+                object obj = ResourceManager.GetObject("Map_aTan___Copy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Map_Laser {
             get {
                 object obj = ResourceManager.GetObject("Map_Laser", resourceCulture);
