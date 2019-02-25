@@ -592,5 +592,11 @@
   <ItemGroup>
     <None Include="Resources\Map_aTan - Copy.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Map_aTan - Copy2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Map_aTan - Copy3.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
