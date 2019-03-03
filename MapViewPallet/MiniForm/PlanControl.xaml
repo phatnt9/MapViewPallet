@@ -776,6 +776,8 @@
                                 <Button
                                 Name="btn_importPlan"
                                 Width="auto"
+                                Height="25"
+                                Padding="5 0"
                                 Content="Import Plan"
                                 Click="Btn_importPlan_Click"
                                 >

@@ -253,6 +253,7 @@
                                     Name="PlayMusic"
                                     ToolBar.OverflowMode="Never"
                                     Margin="5 0"
+                                    IsEnabled="False"
                                     Click="PlayMusic_Click">
                                     <iconPacks:PackIconMaterial 
                                         Kind="Music"/>
