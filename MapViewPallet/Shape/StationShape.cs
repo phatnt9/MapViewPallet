@@ -173,8 +173,7 @@ namespace MapViewPallet.Shape
                             "Pallet"
                             + "x" +
                             ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
-                            + "x" +
-                            ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxRow - rowIndex - 1) : rowIndex));
+                            + "x" + rowIndex);
 
                         Grid.SetRow(palletTemp, rowIndex);
                         gridLine.Children.Add(palletTemp);
@@ -285,8 +284,7 @@ namespace MapViewPallet.Shape
                                 "Pallet"
                                 + "x" +
                                 ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
-                                + "x" +
-                                ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxRow - rowIndex - 1) : rowIndex));
+                                + "x" + rowIndex);
 
                             Grid.SetRow(palletTemp, rowIndex);
                             gridLine.Children.Add(palletTemp);

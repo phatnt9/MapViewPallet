@@ -129,8 +129,7 @@ namespace MapViewPallet
         {
             devicesManagement = null;
         }
-
-
+        
         private void PlanControl_Closed(object sender, EventArgs e)
         {
             planControl = null;
@@ -145,30 +144,6 @@ namespace MapViewPallet
         {
             statistics = null;
         }
-
-
-        public System.Drawing.Image Resize(System.Drawing.Image img, float percentage)
-        {
-            //lấy kích thước ban đầu của bức ảnh
-            int originalW = (int)img.Width;
-            int originalH = (int)img.Height;
-
-            //tính kích thước cho ảnh mới theo tỷ lệ đưa vào
-            int resizedW = (int)(originalW * percentage);
-            int resizedH = (int)(originalH * percentage);
-
-            //tạo 1 ảnh Bitmap mới theo kích thước trên
-            System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(resizedW, resizedH);
-            //tạo 1 graphic mới từ Bitmap
-            System.Drawing.Graphics graphic = System.Drawing.Graphics.FromImage((System.Drawing.Image)bmp);
-            //vẽ lại ảnh ban đầu lên bmp theo kích thước mới
-            graphic.DrawImage(img, 0, 0, resizedW, resizedH);
-            //giải phóng tài nguyên mà graphic đang giữ
-            graphic.Dispose();
-            //return the image
-            return (System.Drawing.Image)bmp;
-        }
-
 
         private void ApplyLanguage(string cultureName = null)
         {
@@ -611,10 +586,6 @@ namespace MapViewPallet
         private void PlayMusic_Click(object sender, RoutedEventArgs e)
         {
             PlayWav(Properties.Resources.ALARM, true);
-            //Global_Object.StaticHeight++;
-            //Global_Object.StaticWidth++;
-            //BufferSettingForm form = new BufferSettingForm();
-            //form.ShowDialog();
         }
 
         private void StopMusic_Click(object sender, RoutedEventArgs e)
