@@ -96,7 +96,7 @@
     <!--PlanControl-->
     <sys:String x:Key="PlanControl_Title">Thiết Lập Quy Trình</sys:String>
     <sys:String x:Key="PlanControl_MainLabel">Thiết Lập Quy Trình</sys:String>
-    <sys:String x:Key="PlanControl_Shift1_Label">Ca 1</sys:String>
+    <sys:String x:Key="PlanControl_Shift1_Label">Kế hoạch</sys:String>
     <sys:String x:Key="PlanControl_Shift2_Label">Ca 2</sys:String>
     <sys:String x:Key="PlanControl_Shift3_Label">Ca 3</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_Deivce">Thiết bị</sys:String>
@@ -106,6 +106,7 @@
     <sys:String x:Key="PlanControl_Shift_Column_PalletUse">Đã cấp</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_Delete">Xóa</sys:String>
     <sys:String x:Key="PlanControl_Save">Lưu</sys:String>
+    <sys:String x:Key="PlanControl_Import">Nhập file</sys:String>
     <sys:String x:Key="PlanControl_Exit">Thoát</sys:String>
 
 

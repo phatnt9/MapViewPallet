@@ -10,6 +10,8 @@ using System.Net;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace MapViewPallet.MiniForm
 {

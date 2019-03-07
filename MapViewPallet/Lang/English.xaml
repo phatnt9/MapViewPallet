@@ -93,7 +93,7 @@
     <!--PlanControl-->
     <sys:String x:Key="PlanControl_Title">Plan Management</sys:String>
     <sys:String x:Key="PlanControl_MainLabel">Create Plan</sys:String>
-    <sys:String x:Key="PlanControl_Shift1_Label">Shift 1</sys:String>
+    <sys:String x:Key="PlanControl_Shift1_Label">Plan</sys:String>
     <sys:String x:Key="PlanControl_Shift2_Label">Shift 2</sys:String>
     <sys:String x:Key="PlanControl_Shift3_Label">Shift 3</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_Deivce">Device</sys:String>
@@ -103,6 +103,7 @@
     <sys:String x:Key="PlanControl_Shift_Column_PalletUse">Buffered</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_Delete">Delete</sys:String>
     <sys:String x:Key="PlanControl_Save">Save</sys:String>
+    <sys:String x:Key="PlanControl_Import">Import</sys:String>
     <sys:String x:Key="PlanControl_Exit">Close</sys:String>
 
 

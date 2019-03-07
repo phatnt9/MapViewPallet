@@ -124,8 +124,10 @@ namespace MapViewPallet.MiniForm
                 bufferPosY.Text = (bufferdata != null) ? (((double)bufferdata.y).ToString()) : "0";
                 bufferPosA.Text = (bufferdata != null) ? (((double)bufferdata.angle).ToString()) : "0";
                 bufferArr.Text = (bufferdata != null) ? ((bufferdata.arrange).ToString()) : "bigEndian";
-                
-                stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                }));
             }
             //catch
             {
@@ -141,7 +143,10 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Refresh_Pallet_Click(object sender, RoutedEventArgs e)
         {
-            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+            }));
         }
 
         private void Btn_SetBufferData_Click(object sender, RoutedEventArgs e)
@@ -445,7 +450,10 @@ namespace MapViewPallet.MiniForm
                     }
 
                 }
-                stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                }));
             }
             catch (Exception exc)
             {
@@ -502,7 +510,10 @@ namespace MapViewPallet.MiniForm
                         //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                }));
             }
             catch (Exception exc)
             {
@@ -555,7 +566,10 @@ namespace MapViewPallet.MiniForm
                         //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                }));
             }
             catch (Exception exc)
             {
@@ -608,7 +622,10 @@ namespace MapViewPallet.MiniForm
                         //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                }));
             }
             catch (Exception exc)
             {
@@ -665,8 +682,10 @@ namespace MapViewPallet.MiniForm
                 }
                 //pallet.palletStatus = "P";
 
-                
-                stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                }));
             }
             catch (Exception exc)
             {

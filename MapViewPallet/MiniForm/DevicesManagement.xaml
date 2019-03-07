@@ -275,6 +275,7 @@
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="4"></ColumnDefinition>
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
@@ -376,7 +377,13 @@
                                     </Grid>
                                 </GroupBox>
                             </Grid>
-                            <Grid Grid.Column="1">
+                            <GridSplitter 
+                                Grid.Column="1" 
+                                HorizontalAlignment="Stretch"
+                                Background="Ivory"
+                                >
+                            </GridSplitter>
+                            <Grid Grid.Column="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition Height="100"></RowDefinition>
@@ -651,34 +658,34 @@
                                                 <Grid Margin="0 4 0 0">
                                                     <StackPanel Orientation="Horizontal" 
                                                                 HorizontalAlignment="Center">
-                                                    <StackPanel Orientation="Horizontal" 
+                                                        <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
-                                                        <Label VerticalAlignment="Center" 
+                                                            <Label VerticalAlignment="Center" 
                                                                    Content="Subline"
                                                                    FontSize="12"></Label>
-                                                        <ComboBox 
+                                                            <ComboBox 
                                                                 Name="palletHasSubLine"
                                                                 Height="20" 
                                                                 Width="Auto" 
                                                                 FontSize="12">
-                                                            <ComboBoxItem>yes</ComboBoxItem>
-                                                            <ComboBoxItem>no</ComboBoxItem>
-                                                        </ComboBox>
-                                                        <!--<TextBox Name="bufferHeadPointHasSubLine" 
+                                                                <ComboBoxItem>yes</ComboBoxItem>
+                                                                <ComboBoxItem>no</ComboBoxItem>
+                                                            </ComboBox>
+                                                            <!--<TextBox Name="bufferHeadPointHasSubLine" 
                                                                  Width="35"
                                                                  Height="17"
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
                                                                  PreviewTextInput="myPreviewTextInput"></TextBox>-->
-                                                    </StackPanel>
-                                                    <StackPanel VerticalAlignment="Center">
-                                                        <Button Name="btn_SetPalletDataPallet"
+                                                        </StackPanel>
+                                                        <StackPanel VerticalAlignment="Center">
+                                                            <Button Name="btn_SetPalletDataPallet"
                                                                     Margin="15,0,0,0"
                                                                     Height="20" Width="25"
                                                                     Click="Btn_SetPalletDataPallet_Click">
-                                                            <iconPacks:PackIconMaterial Kind="ContentSave"/>
-                                                        </Button>
-                                                    </StackPanel>
+                                                                <iconPacks:PackIconMaterial Kind="ContentSave"/>
+                                                            </Button>
+                                                        </StackPanel>
                                                     </StackPanel>
                                                 </Grid>
                                             </StackPanel>
@@ -719,6 +726,7 @@
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="4"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
@@ -818,7 +826,12 @@
                                     </Grid>
                                 </GroupBox>
                             </Grid>
-                            <Grid Grid.Column="1">
+                            <GridSplitter 
+                                Grid.Column="1" 
+                                HorizontalAlignment="Stretch"
+                                Background="Ivory"
+                                ></GridSplitter>
+                            <Grid Grid.Column="2">
                                 <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_ProductDetail}">
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -923,6 +936,7 @@
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="4"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
@@ -1120,16 +1134,16 @@
                                                                  PreviewTextInput="BufferA_PreviewTextInput"/>
                                                     </StackPanel>
                                                     <StackPanel Orientation="Horizontal" 
-                                                                    HorizontalAlignment="Right">
+                                                                HorizontalAlignment="Right">
                                                         <Label VerticalAlignment="Center" 
-                                                                   Content="Arr" 
-                                                                   FontSize="12"
-                                                           Width="Auto"></Label>
+                                                               Content="Arr" 
+                                                               FontSize="12"
+                                                               Width="Auto"></Label>
                                                         <ComboBox 
-                                                                    Name="bufferArr"
-                                                                    Height="20" 
-                                                                    Width="Auto" 
-                                                                    FontSize="12">
+                                                            Name="bufferArr"
+                                                            Height="20" 
+                                                            Width="Auto" 
+                                                            FontSize="12">
                                                             <ComboBoxItem>bigEndian</ComboBoxItem>
                                                             <ComboBoxItem>littleEndian</ComboBoxItem>
                                                         </ComboBox>
@@ -1146,7 +1160,12 @@
                                     </Grid>
                                 </GroupBox>
                             </Grid>
-                            <Grid Grid.Column="1">
+                            <GridSplitter 
+                                Grid.Column="1" 
+                                HorizontalAlignment="Stretch"
+                                Background="Ivory"
+                                ></GridSplitter>
+                            <Grid Grid.Column="2">
                                 <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_Pallet}">
                                     <Grid>
                                         <Grid.RowDefinitions>

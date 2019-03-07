@@ -26,21 +26,16 @@ namespace MapViewPallet.MiniForm
     {
         //=================VARIABLE==================
         PlanControlModel operation_model;
-        private int _runningShift;
-        public int runningShift { get => _runningShift; set => _runningShift = value; }
         
 
         public PlanControl(string cultureName = null)
         {
-            runningShift = 1;
             InitializeComponent();
             ApplyLanguage(cultureName);
-            pCalendar.Loaded += pCalendarLoaded;
-            //===============TabControlShift========
-            TabControlShift.SelectionChanged += TabControlShift_SelectionChanged;
-            //===============DataGridView1========
             operation_model = new PlanControlModel(this);
             DataContext = operation_model;
+            pCalendar.Loaded += pCalendarLoaded;
+            TabControlShift.SelectionChanged += TabControlShift_SelectionChanged;
         }
 
         public void ApplyLanguage(string cultureName = null)
@@ -64,7 +59,6 @@ namespace MapViewPallet.MiniForm
 
         private void pCalendarLoaded(object sender, RoutedEventArgs e)
         {
-            //Console.WriteLine("pCalendarLoaded");
             pCalendar.SelectedDate = DateTime.Now;
             if (TabControlShift.IsLoaded)
             {
@@ -80,7 +74,10 @@ namespace MapViewPallet.MiniForm
                 {
                     System.Windows.Controls.TabControl temp = e.Source as System.Windows.Controls.TabControl;
                     //Console.WriteLine("Ca:" + (temp.SelectedIndex + 1));
-                    operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+                    Dispatcher.BeginInvoke(new ThreadStart(() =>
+                    {
+                        operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+                    }));
                 }
                 else
                 {
@@ -100,21 +97,14 @@ namespace MapViewPallet.MiniForm
                 }
                 if (TabControlShift.IsLoaded)
                 {
-                    operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+                    Dispatcher.BeginInvoke(new ThreadStart(() =>
+                    {
+                        operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+                    }));
                 }
             }
         }
         
-        private void Btn_Refresh_Click(object sender, RoutedEventArgs e)
-        {
-            if ((pCalendar.SelectedDate != null) &&
-                (TabControlShift.SelectedIndex>=0) &&
-                (TabControlShift.IsLoaded))
-            {
-
-                operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
-            }
-        }
         
         /// <summary>
         /// -1: Ngày hôm trước trở đi, 0: Ngày hôm nay, 1: Ngày hôm sau trở đi
@@ -164,7 +154,10 @@ namespace MapViewPallet.MiniForm
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             operation_model.UpdateAllCurrentPlansToDb();
-            operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+            }));
         }
         
         private void Btn_Test_Click(object sender, RoutedEventArgs e)
@@ -256,11 +249,13 @@ namespace MapViewPallet.MiniForm
                     int.TryParse(reader.ReadToEnd(), out result);
                     if (result == 1)
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         if ((pCalendar.SelectedDate != null) && (TabControlShift.SelectedIndex >= 0) && (TabControlShift.IsLoaded))
                         {
-
-                            operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+                            Dispatcher.BeginInvoke(new ThreadStart(() =>
+                            {
+                                operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+                            }));
                         }
                     }
                     else if (result == 2)

@@ -48,6 +48,7 @@ namespace MapViewPallet
             ApplyLanguage();
             Loaded += MainWindow_Loaded;
             Closing += MainWindow_Closing;
+            Closed += MainWindow_Closed;
             //==============TreeView=============
             //===================================
             canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
@@ -68,7 +69,7 @@ namespace MapViewPallet
 
 
             stationTimer = new System.Timers.Timer();
-            stationTimer.Interval = 1000;
+            stationTimer.Interval = 5000;
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
             //stationTimer.Enabled = true;
@@ -94,6 +95,11 @@ namespace MapViewPallet
             //        Thread.Sleep(100);
             //    }
             //}));
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            Environment.Exit(Environment.ExitCode);
         }
 
         private void PlayWav(Stream stream, bool play_looping)

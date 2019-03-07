@@ -450,62 +450,81 @@
                             <Grid Grid.Row="2">
                                 <GroupBox Header="{DynamicResource StationEditor_Groupbox_BufferDetail}" FontSize="20">
                                     <Grid>
-                                        <StackPanel Orientation="Horizontal" 
+                                        <WrapPanel>
+                                            <StackPanel Orientation="Horizontal" 
                                                 HorizontalAlignment="Center" 
                                                 VerticalAlignment="Center"
                                                 Margin="0,0,0,5">
-                                            <StackPanel Orientation="Horizontal" 
+
+                                                <WrapPanel>
+                                                    <StackPanel Orientation="Horizontal" 
                                                     HorizontalAlignment="Right">
-                                                <Label VerticalAlignment="Center" 
+                                                        <Label VerticalAlignment="Center" 
                                                    Content="X"
                                                    FontSize="12"
                                                            Width="Auto"></Label>
-                                                <TextBox Name="bufferPosX" 
+                                                        <TextBox Name="bufferPosX" 
                                                      Width="Auto" 
                                                      Height="17"
                                                                  FontSize="12"
                                                      PreviewTextInput="myPreviewTextInput"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" 
+                                                    </StackPanel>
+                                                </WrapPanel>
+                                                    
+                                                <WrapPanel>
+                                                    <StackPanel Orientation="Horizontal" 
                                                     HorizontalAlignment="Right">
-                                                <Label VerticalAlignment="Center" 
+                                                        <Label VerticalAlignment="Center" 
                                                    Content="Y"
                                                    FontSize="12"
                                                            Width="Auto"></Label>
-                                                <TextBox Name="bufferPosY" 
+                                                        <TextBox Name="bufferPosY" 
                                                      Width="Auto" 
                                                      Height="17"
                                                                  FontSize="12"
                                                      PreviewTextInput ="myPreviewTextInput"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" 
+                                                    </StackPanel>
+                                                </WrapPanel>
+                                                
+
+                                                <WrapPanel>
+                                                    <StackPanel Orientation="Horizontal" 
                                                     HorizontalAlignment="Right">
-                                                <Label VerticalAlignment="Center" 
+                                                        <Label VerticalAlignment="Center" 
                                                    Content="A"
                                                    FontSize="12"
                                                            Width="Auto"></Label>
-                                                <TextBox Name="bufferPosA" 
+                                                        <TextBox Name="bufferPosA" 
                                                      Width="Auto" 
                                                      Height="17"
                                                                  FontSize="12"
                                                      PreviewTextInput="myPreviewTextInput"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" 
+                                                    </StackPanel>
+                                                </WrapPanel>
+                                                
+
+
+                                                <WrapPanel>
+                                                    <StackPanel Orientation="Horizontal" 
                                                                     HorizontalAlignment="Right">
-                                                <Label VerticalAlignment="Center" 
+                                                    <Label VerticalAlignment="Center" 
                                                                    Content="Arr" 
                                                                    FontSize="12"
                                                            Width="Auto"></Label>
-                                                <ComboBox 
+                                                        <ComboBox 
                                                                     Name="bufferArr"
                                                                     Height="20" 
                                                                     Width="Auto" 
                                                                     FontSize="12">
-                                                    <ComboBoxItem>bigEndian</ComboBoxItem>
-                                                    <ComboBoxItem>littleEndian</ComboBoxItem>
-                                                </ComboBox>
-                                            </StackPanel>
-                                            <Button Name="btn_SetBufferPosData" 
+                                                            <ComboBoxItem>bigEndian</ComboBoxItem>
+                                                            <ComboBoxItem>littleEndian</ComboBoxItem>
+                                                        </ComboBox>
+                                                    </StackPanel>
+                                                </WrapPanel>
+                                                
+
+                                                <WrapPanel>
+                                                    <Button Name="btn_SetBufferPosData" 
                                                 Margin="20 0"
                                                 Height="20" 
                                                 Width="Auto"
@@ -513,12 +532,16 @@
                                                             FontSize="12"
                                                 Content="{DynamicResource StationEditor_Button_Save}"
                                                 Click="Btn_SetBufferPosData_Click"/>
-                                        </StackPanel>
+                                                </WrapPanel>
+                                                
+                                            </StackPanel>
+                                        </WrapPanel>
+                                        
                                     </Grid>
                                 </GroupBox>
                             </Grid>
                             <Grid Grid.Row="3">
-                                <StackPanel 
+                                <!--<StackPanel 
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center">
@@ -532,7 +555,7 @@
                                         Width="50" 
                                         Height="20" 
                                         Margin="5"></Button>
-                                </StackPanel>
+                                </StackPanel>-->
                             </Grid>
                         </Grid>
                     </StackPanel>
