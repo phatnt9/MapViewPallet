@@ -100,8 +100,7 @@
                                               CanUserSortColumns="True"
                                               AutoGenerateColumns="False"
                                               SelectionMode="Single"
-                                              SelectionUnit="FullRow"
-                                              SelectedCellsChanged="Shift1Dgv_SelectedCellsChanged">
+                                              SelectionUnit="FullRow">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>

@@ -159,17 +159,6 @@ namespace MapViewPallet.MiniForm
                 operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
             }));
         }
-        
-        private void Btn_Test_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine(operation_model.deviceList);
-            foreach (Plan plan in operation_model.BasePlans1)
-            {
-                string print = "\"" + plan.deviceName + "\"   deviceProductId:" + plan.deviceProductId + "   productDetailId:" + plan.productDetailId + "   palletAmount:" + plan.palletAmount + "   " + plan.productName;//productDetailName
-                Console.WriteLine(print);
-            }
-            Console.WriteLine("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -279,11 +268,6 @@ namespace MapViewPallet.MiniForm
         {
             ImportPlanForm importPlanForm = new ImportPlanForm();
             importPlanForm.ShowDialog();
-        }
-
-        private void Shift1Dgv_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)

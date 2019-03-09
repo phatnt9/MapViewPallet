@@ -100,9 +100,9 @@ namespace MapViewPallet.Shape
 
             ContextMenu = new ContextMenu();
 
-            MenuItem propertiesItem = new MenuItem();
-            propertiesItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Properties");
-            propertiesItem.Click += PropertiesMenu;
+            //MenuItem propertiesItem = new MenuItem();
+            //propertiesItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Properties");
+            //propertiesItem.Click += PropertiesMenu;
 
             MenuItem editItem = new MenuItem();
             editItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Edit");
@@ -116,7 +116,7 @@ namespace MapViewPallet.Shape
             rotateItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Rotate");
             rotateItem.Click += RotateMenu;
 
-            ContextMenu.Items.Add(propertiesItem);
+            //ContextMenu.Items.Add(propertiesItem);
             ContextMenu.Items.Add(editItem);
             ContextMenu.Items.Add(rotateItem);
             //ContextMenu.Items.Add(removeItem);

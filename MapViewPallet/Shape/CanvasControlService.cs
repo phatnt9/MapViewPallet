@@ -474,6 +474,8 @@ namespace MapViewPallet.Shape
                             postApiBody.x = Math.Round(updateBufferDataPoint.X, 1);
                             postApiBody.y = Math.Round(updateBufferDataPoint.Y, 1);
                             postApiBody.angle = Math.Round(Global_Object.bufferToMove.props._rotate, 1);
+                            dynamic data = JsonConvert.DeserializeObject(Global_Object.bufferToMove.props.bufferDb.bufferData);
+                            postApiBody.arrange = data.arrange;
                             string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                             buffer.bufferData = jsonBufferData;
 
