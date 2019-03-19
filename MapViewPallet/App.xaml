@@ -8,7 +8,17 @@
     <Application.Resources>
         
         <ResourceDictionary>
+            
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <Style TargetType="{x:Type DataGrid}">
+                        <Style.Triggers>
+                            <Trigger Property="HeadersVisibility" Value="Column">
+                                <Setter Property="RowHeaderWidth" Value="0" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ResourceDictionary>
                 <ResourceDictionary>
                     <local2:UserAuthorCollection x:Key="UserAuthorSource">
                     </local2:UserAuthorCollection>

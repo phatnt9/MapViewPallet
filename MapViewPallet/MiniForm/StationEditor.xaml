@@ -684,19 +684,6 @@
                                                 </Style>
                                             </DataGridTextColumn.EditingElementStyle>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn
-                                            Width="Auto" 
-                                            IsReadOnly="True"
-                                            Binding="{Binding Path=productDetailName}">
-                                            <DataGridTextColumn.HeaderTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel>
-                                                        <TextBlock
-                                                            Text="{DynamicResource DevicesManagement_Groupbox_Pallet_Column_ProductDetailName}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </DataGridTextColumn.HeaderTemplate>
-                                        </DataGridTextColumn>
                                         <DataGridTemplateColumn Header="Put">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
@@ -711,6 +698,20 @@
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
+                                        <DataGridTextColumn
+                                            Width="Auto" 
+                                            IsReadOnly="True"
+                                            Binding="{Binding Path=productDetailName}">
+                                            <DataGridTextColumn.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            Text="{DynamicResource DevicesManagement_Groupbox_Pallet_Column_ProductDetailName}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTextColumn.HeaderTemplate>
+                                        </DataGridTextColumn>
+                                        
                                         <!--<DataGridTemplateColumn Header="Plan">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>

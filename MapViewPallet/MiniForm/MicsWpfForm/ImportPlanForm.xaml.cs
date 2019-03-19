@@ -31,7 +31,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         {
             InitializeComponent();
         }
-        
 
         private void Import_Click(object sender, RoutedEventArgs e)
         {

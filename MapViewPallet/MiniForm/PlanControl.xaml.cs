@@ -283,7 +283,7 @@ namespace MapViewPallet.MiniForm
             postApiBody.updUsrId = 1;
             postApiBody.palletAmount = 1;
             string jsonData = JsonConvert.SerializeObject(postApiBody);
-
+            Console.WriteLine(jsonData);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/createPlanPallet");
             request.Method = "POST";
             request.ContentType = "application/json";
