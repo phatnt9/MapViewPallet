@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -154,10 +155,10 @@ namespace MapViewPallet.MiniForm
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             operation_model.UpdateAllCurrentPlansToDb();
-            Dispatcher.BeginInvoke(new ThreadStart(() =>
-            {
+            //Dispatcher.BeginInvoke(new ThreadStart(() =>
+            //{
                 operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
-            }));
+            //}));
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -316,6 +317,11 @@ namespace MapViewPallet.MiniForm
                     //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void Btn_Test_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(operation_model.BasePlans1);
         }
     }
 

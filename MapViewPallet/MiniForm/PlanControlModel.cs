@@ -334,8 +334,8 @@ namespace MapViewPallet.MiniForm
         public void RefreshData ()
         {
             GroupedDevices_S1.Refresh();
-            GroupedDevices_S2.Refresh();
-            GroupedDevices_S3.Refresh();
+            //GroupedDevices_S2.Refresh();
+            //GroupedDevices_S3.Refresh();
         }
 
 
@@ -424,8 +424,8 @@ namespace MapViewPallet.MiniForm
                 switch(planControl.TabControlShift.SelectedIndex)
                 {
                     case 0: { UpdatePlansToDb(BasePlans1); break; }
-                    case 1: { UpdatePlansToDb(BasePlans2); break; }
-                    case 2: { UpdatePlansToDb(BasePlans3); break; }
+                    //case 1: { UpdatePlansToDb(BasePlans2); break; }
+                    //case 2: { UpdatePlansToDb(BasePlans3); break; }
                     default: {  break; }
                 }
                 System.Windows.Forms.MessageBox.Show(
@@ -438,13 +438,49 @@ namespace MapViewPallet.MiniForm
 
         public void UpdatePlansToDb (List<Plan> listPlan)
         {
-            foreach (Plan item in listPlan)
+            //foreach (Plan plan in listPlan)
+            //{
+            //    {
+            //        //SendPlanToDb(item);
+            //        //********************************
+            //        dynamic postApiBody = new JObject();
+            //        postApiBody.planId = plan.planId;
+            //        postApiBody.deviceProductId = plan.deviceProductId;
+            //        postApiBody.timeWorkId = plan.timeWorkId;
+            //        postApiBody.productDetailId = plan.productDetailId;
+            //        postApiBody.palletAmount = plan.palletAmount;
+            //        postApiBody.activeDate = plan.activeDate;
+            //        postApiBody.deviceId = plan.deviceId;
+            //        postApiBody.productId = plan.productId;
+            //        postApiBody.creUsrId = Global_Object.userLogin;
+            //        postApiBody.updUsrId = Global_Object.userLogin;
+
+            //        //********************************
+            //        string jsonData = "[" + JsonConvert.SerializeObject(postApiBody) + "]";
+            //    }
+            //}
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/insertUpdatePlan");
+            request.Method = "POST";
+            request.ContentType = @"application/json";
+
+            string jsonData = JsonConvert.SerializeObject(listPlan);
+
+            int result = 0;
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
             {
-                //if(item.palletAmount != 0)
-                {
-                    SendPlanToDb(item);
-                }
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
             }
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                int.TryParse(reader.ReadToEnd(), out result);
+            }
+
         }
 
         public void SendPlanToDb (Plan plan)

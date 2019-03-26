@@ -788,7 +788,20 @@
                                 Content="{DynamicResource PlanControl_Import}" 
                                 Click="Btn_importPlan_Click"
                                 >
-
+                                </Button>
+                            </StackPanel>
+                            <StackPanel 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                                <Button
+                                Name="btn_test"
+                                Width="auto"
+                                Height="25"
+                                Padding="5 0"
+                                Margin="10 0"
+                                Content="Test" 
+                                Click="Btn_Test_Click"
+                                >
                                 </Button>
                             </StackPanel>
                             <Button Name="Btn_Accept" 

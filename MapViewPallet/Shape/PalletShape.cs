@@ -176,6 +176,29 @@ namespace MapViewPallet.Shape
                                    }
                                    break;
                                }
+                           case "H":
+                               {
+                                   if (replaceProductDetailName)
+                                   {
+                                       if (lbPallet2 != null && pallet.productDetailName != null)
+                                       {
+                                           if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
+                                           {
+                                               lbPallet2.Text = pallet.productDetailName;
+                                           }
+                                           else
+                                           {
+                                               lbPallet2.Text = "";
+                                           }
+
+                                       }
+                                   }
+                                   if (replaceStatus)
+                                   {
+                                       Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#EC9A29"));
+                                   }
+                                   break;
+                               }
                            default:
                                {
                                    if (replaceProductDetailName)
