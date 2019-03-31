@@ -127,8 +127,8 @@ namespace MapViewPallet.Shape
             //MouseLeftButtonDown += MouseLeftButtonDownStation;
             //MouseRightButtonDown += MouseRightButtonDownStation;
             //===================CREATE=====================
-            Width = Global_Object.StaticPalletWidth * props.bufferDb.maxBay;
-            Height = Global_Object.StaticPalletHeight * props.bufferDb.maxRow;
+            Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
+            Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
             props.NameID = props.bufferDb.bufferName; //label
             props._palletList = new SortedDictionary<string, PalletShape>();
             props._myTransformGroup = new TransformGroup();
@@ -215,8 +215,8 @@ namespace MapViewPallet.Shape
             props._myTransformGroup.Children[0] = props._myRotateTransform;
             props._myTransformGroup.Children[1] = props._myTranslateTransform;
 
-            Width = Global_Object.StaticPalletWidth * props.bufferDb.maxBay;
-            Height = Global_Object.StaticPalletHeight * props.bufferDb.maxRow;
+            Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
+            Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
 
         }
 
@@ -246,8 +246,8 @@ namespace MapViewPallet.Shape
                     props._stationGrid.RowDefinitions.Clear();
                     props._stationGrid.ColumnDefinitions.Clear();
 
-                    Width = Global_Object.StaticPalletWidth * props.bufferDb.maxBay;
-                    Height = Global_Object.StaticPalletHeight * props.bufferDb.maxRow;
+                    Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
+                    Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
 
 
                     for (int bayIndex = 0; bayIndex < props.bufferDb.maxBay; bayIndex++) //Column Index
@@ -303,8 +303,8 @@ namespace MapViewPallet.Shape
                         props._myTransformGroup.Children[0] = props._myRotateTransform;
                         props._myTransformGroup.Children[1] = props._myTranslateTransform;
 
-                        Width = Global_Object.StaticPalletWidth * props.bufferDb.maxBay;
-                        Height = Global_Object.StaticPalletHeight * props.bufferDb.maxRow;
+                        Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
+                        Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
 
                     }));
                 }

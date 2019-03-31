@@ -69,7 +69,7 @@ namespace MapViewPallet
 
 
             stationTimer = new System.Timers.Timer();
-            stationTimer.Interval = 5000;
+            stationTimer.Interval = 3000;
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
             //stationTimer.Enabled = true;
@@ -601,7 +601,8 @@ namespace MapViewPallet
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-
+            BufferSettingForm bufferSettingForm = new BufferSettingForm();
+            bufferSettingForm.Show();
         }
     }
 

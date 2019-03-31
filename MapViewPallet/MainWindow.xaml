@@ -93,7 +93,15 @@
                                             Kind="AccountMultiple" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="About us" Click="btn_AboutUs_Click" Height="25">
+                                <MenuItem 
+                                    Header="Buffer Properties"
+                                    Click="MenuItem_Click_1">
+                                    <MenuItem.Icon>
+                                        <iconPacks:Material
+                                            Kind="Settings" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="About" Click="btn_AboutUs_Click" Height="25">
                                     <MenuItem.Icon>
                                         <iconPacks:Material
                                             Kind="Information" />
@@ -120,17 +128,7 @@
                                 <MenuItem Header="{DynamicResource English}" Tag="en-US" Click="MenuItem_Click" IsCheckable="True" IsChecked="True"/>
                                 <MenuItem Header="{DynamicResource Vietnamese}" Tag="vi-VN" Click="MenuItem_Click" IsCheckable="True"/>
                             </MenuItem>
-                            <MenuItem Header="Tool">
-                                <MenuItem 
-                                    Header="Buffer Properties"
-                                    Click="MenuItem_Click_1">
-                                    <MenuItem.Icon>
-                                        <iconPacks:Material
-                                            Kind="Settings" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </MenuItem>
-                            
+
                         </Menu>
                     </DockPanel>
                 </StackPanel>
@@ -210,15 +208,15 @@
                                     <iconPacks:PackIconMaterial 
                                         Kind="Buffer"/>
                                 </Button>
-                                <Separator />
-                                <Button ToolTip="{DynamicResource MainWindow_Toolbar_UserManagement}"
+                                <!--<Separator />-->
+                                <!--<Button ToolTip="{DynamicResource MainWindow_Toolbar_UserManagement}"
                                         Name="btn_Statistics"
                                         ToolBar.OverflowMode="Never"
                                         Margin="5 0"
                                         Click="Btn_Statistics_Click">
                                     <iconPacks:PackIconMaterial 
                                         Kind="ChartBar" />
-                                </Button>
+                                </Button>-->
                                 <Separator />
                                 <Button ToolTip="{DynamicResource MainWindow_Toolbar_UserManagement}"
                                         Name="btn_UserManagement"
@@ -249,7 +247,7 @@
                                         Kind="MoveResize"/>
                                 </Button>
                                 <Separator />
-                                <Button 
+                                <!--<Button 
                                     Name="PlayMusic"
                                     ToolBar.OverflowMode="Never"
                                     Margin="5 0"
@@ -265,7 +263,7 @@
                                     Click="StopMusic_Click">
                                     <iconPacks:PackIconMaterial 
                                         Kind="MusicOff"/>
-                                </Button>
+                                </Button>-->
                                 <Separator />
                             </ToolBar>
                         </ToolBarTray>

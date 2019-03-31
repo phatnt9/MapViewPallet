@@ -45,6 +45,12 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             this.devicesManagement = devicesManagement;
             addProductDetailModel = new AddProductDetailModel { productDetailNameDuplicate = "Ready" };
             DataContext = addProductDetailModel;
+            Loaded += AddProductDetailForm_Loaded;
+        }
+
+        private void AddProductDetailForm_Loaded(object sender, RoutedEventArgs e)
+        {
+            productDetailNametb.Focus();
         }
 
         public void ApplyLanguage(string cultureName = null)
@@ -120,6 +126,14 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 Console.WriteLine(exc.Message);
             }
 
+        }
+
+        private void ProductDetailNametb_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Button_Click(sender, e);
+            }
         }
     }
 }

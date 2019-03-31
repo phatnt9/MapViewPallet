@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
         Title="BufferSettingForm" 
-        Height="250" 
-        Width="300"
+        Height="190" 
+        Width="310"
         ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid Margin="0,5,0,5">
@@ -21,41 +21,56 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <StackPanel 
+                    Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
-                            Margin="0 10 0 0">
-                    <Label>Width</Label>
-                    <TextBox 
+                            Margin="9 5">
+                        <Label>Width</Label>
+                        <TextBox 
                     Name="bufferWidth"
-                    Width="200"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
+                    Width="80"
+                            PreviewTextInput="Buffer_PreviewTextInput"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
-                            Margin="0 10 0 0">
-                    <Label>Height</Label>
-                    <TextBox 
+                            Margin="9 5">
+                        <Label>Height</Label>
+                        <TextBox 
                     Name="bufferHeight"
-                    Width="200"></TextBox>
+                    Width="80"
+                            PreviewTextInput="Buffer_PreviewTextInput"></TextBox>
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal"
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel
+                    Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
-                            Margin="0 10 0 0">
-                    <Label>Margin</Label>
-                    <TextBox 
+                            Margin="9 5">
+                        <Label>Margin</Label>
+                        <TextBox 
                     Name="bufferMargin"
-                         Width="200"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
+                         Width="80"
+                            PreviewTextInput="Buffer_PreviewTextInput"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
-                            Margin="0 10 0 0">
-                    <Label>Padding</Label>
-                    <TextBox 
+                            Margin="9 5">
+                        <Label>Padding</Label>
+                        <TextBox 
                     Name="bufferPadding"
-                    Width="200"></TextBox>
+                    Width="80"
+                            PreviewTextInput="Buffer_PreviewTextInput"></TextBox>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </Grid>
         <Grid Grid.Row="2">
             <StackPanel
@@ -63,8 +78,9 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 <Button 
-                    Width="80" 
-                    Height="20"
+                    Width="70" 
+                    Height="22"
+                    Margin="5"
                     Content="Apply"
                     Click="Button_Click">
                 </Button>

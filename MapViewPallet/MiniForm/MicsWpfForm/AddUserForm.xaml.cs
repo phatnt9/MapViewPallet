@@ -128,6 +128,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 //this.Title = "Thêm mới";
                 //functionTextBlock.Text = "Thêm mới";
             }
+            userNametb.Focus();
         }
 
         private void loadAuthor()

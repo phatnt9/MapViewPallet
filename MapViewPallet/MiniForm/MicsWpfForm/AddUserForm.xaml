@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
         Title="{DynamicResource AddUserForm_Title1}" 
-        Height="310" 
-        Width="380"
+        Height="250" 
+        Width="280"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
     <Grid>
@@ -40,32 +40,32 @@
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
                                Content="{DynamicResource AddUserForm_UserName}" 
-                               FontSize="14"></Label>
+                               ></Label>
                         <TextBox Name="userNametb" 
                              Width="180" 
-                             Height="25" 
-                             Margin="10"
+                             Height="20" 
+                             Margin="5"
                              ></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
                                Content="{DynamicResource AddUserForm_Password}" 
-                               FontSize="14"></Label>
+                               ></Label>
                         <TextBox Name="userPasswordtb" 
                              Width="180" 
-                             Height="25" 
-                             Margin="10"
+                             Height="20" 
+                             Margin="5"
                              ></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
                                Content="{DynamicResource AddUserForm_Author}" 
-                               FontSize="14"></Label>
+                               ></Label>
                         <ComboBox Width="180" 
-                                  Height="25" 
-                                  Margin="10"
+                                  Height="20" 
+                                  Margin="5"
                                   Name="cmbAuthor"
                                   SelectionChanged="CmbAuthor_SelectionChanged"
                                   DisplayMemberPath="userAuthorName"
@@ -79,10 +79,10 @@
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center" 
                                Content="{DynamicResource AddUserForm_Device}"
-                               FontSize="14"></Label>
+                               ></Label>
                         <ComboBox Width="180" 
-                                  Height="25" 
-                                  Margin="10"
+                                  Height="20" 
+                                  Margin="5"
                                   Name="cmbDevice"
                                   DisplayMemberPath="deviceName"
                                   SelectedValuePath="deviceId"

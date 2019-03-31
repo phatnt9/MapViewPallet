@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
 {
@@ -19,6 +8,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     /// </summary>
     public partial class BufferSettingForm : Window
     {
+        private static readonly Regex _regex = new Regex("[^0-9.-]+");
+
         public BufferSettingForm()
         {
             InitializeComponent();
@@ -27,10 +18,15 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void BufferSettingForm_Loaded(object sender, RoutedEventArgs e)
         {
-            bufferMargin.Text = Global_Object.StaticPalletMargin.ToString();
-            bufferWidth.Text = Global_Object.StaticPalletWidth.ToString();
-            bufferHeight.Text = Global_Object.StaticPalletHeight.ToString();
-            bufferPadding.Text = Global_Object.StaticPalletPadding.ToString();
+            bufferWidth.Text = Properties.Settings.Default["palletWidth"].ToString();
+            bufferHeight.Text = Properties.Settings.Default["palletHeight"].ToString();
+            bufferPadding.Text = Properties.Settings.Default["palletPadding"].ToString();
+            bufferMargin.Text = Properties.Settings.Default["palletMargin"].ToString();
+        }
+
+        private static bool IsTextAllowed(string text)
+        {
+            return !_regex.IsMatch(text);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -39,13 +35,27 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             double height = 0;
             if(double.TryParse(bufferWidth.Text.ToString().Trim().Replace(" ", ""),out width))
             {
-                Global_Object.StaticPalletWidth = width;
+                if (width.ToString().Trim() != "")
+                {
+                    Properties.Settings.Default.palletWidth = width;
+                    Properties.Settings.Default.Save();
+                }
             }
             if(double.TryParse(bufferHeight.Text.ToString().Trim().Replace(" ", ""),out height))
             {
-                Global_Object.StaticPalletHeight = height;
+                if (height.ToString().Trim() != "")
+                {
+                    Properties.Settings.Default.palletHeight = height;
+                    Properties.Settings.Default.Save();
+                }
             }
 
+        }
+        
+
+        private void Buffer_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
         }
     }
 }

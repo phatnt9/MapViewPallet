@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
 {
@@ -42,6 +43,12 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             this.devicesManagement = devicesManagement;
             addDeviceModel = new AddDeviceModel();
             DataContext = addDeviceModel;
+            Loaded += AddDeviceForm_Loaded;
+        }
+
+        private void AddDeviceForm_Loaded(object sender, RoutedEventArgs e)
+        {
+            deviceNametb.Focus();
         }
 
         public void ApplyLanguage(string cultureName = null)
@@ -124,7 +131,13 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         }
 
-        
+        private void DeviceNametb_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Button_Click(sender, e);
+            }
+        }
     }
 }
 

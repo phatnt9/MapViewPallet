@@ -500,7 +500,7 @@
 
                                                         <DataGridTextColumn
                                                             Width="*" 
-                                                            IsReadOnly="False"
+                                                            IsReadOnly="True"
                                                             Visibility="Visible"
                                                             Binding="{Binding Path=dataPallet}">
                                                             <DataGridTextColumn.HeaderTemplate>

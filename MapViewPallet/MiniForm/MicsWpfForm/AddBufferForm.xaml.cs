@@ -50,6 +50,12 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             this.devicesManagement = devicesManagement;
             addBufferModel = new AddBufferModel { bufferNameDuplicate = "Ready" };
             DataContext = addBufferModel;
+            Loaded += AddBufferForm_Loaded;
+        }
+
+        private void AddBufferForm_Loaded(object sender, RoutedEventArgs e)
+        {
+            bufferNametb.Focus();
         }
 
         public void ApplyLanguage(string cultureName = null)

@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
 {
@@ -43,6 +44,12 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             this.devicesManagement = devicesManagement;
             addProductModel = new AddProductModel { productNameDuplicate = "Ready" };
             DataContext = addProductModel;
+            Loaded += AddProductForm_Loaded;
+        }
+
+        private void AddProductForm_Loaded(object sender, RoutedEventArgs e)
+        {
+            productNametb.Focus();
         }
 
         public void ApplyLanguage(string cultureName = null)
@@ -122,6 +129,14 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 Console.WriteLine(exc.Message);
             }
 
+        }
+
+        private void ProductNametb_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Button_Click(sender, e);
+            }
         }
     }
 }

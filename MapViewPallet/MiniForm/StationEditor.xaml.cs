@@ -587,7 +587,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
-                pallet.palletStatus = "P";
+                pallet.palletStatus = "L";
                 string jsonData = JsonConvert.SerializeObject(pallet);
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");

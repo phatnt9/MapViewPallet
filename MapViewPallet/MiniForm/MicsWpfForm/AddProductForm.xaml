@@ -6,12 +6,9 @@
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
         Title="{DynamicResource AddProductForm_Title}" 
-        Height="130" 
-        Width="350" 
-        MaxHeight="130" 
-        MaxWidth="350" 
-        MinHeight="130" 
-        MinWidth="350"
+        Height="120" 
+        Width="320"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
@@ -29,7 +26,7 @@
                             VerticalAlignment="Center"
                             >
                     <TextBlock Text="{DynamicResource AddProductForm_ProductName}" 
-                               FontSize="20"
+                               FontSize="16"
                                FontWeight="DemiBold"/>
                 </StackPanel>
             </Grid>
@@ -39,13 +36,14 @@
                             VerticalAlignment="Top"
                             Margin="0,6,0,0">
                     <TextBox Name="productNametb" 
-                             Width="250" 
-                             Height="25" 
+                             Width="180" 
+                             Height="20" 
                              Margin="11,0"
-                             ></TextBox>
-                    <Button Width="60" 
-                            Height="25" 
-                            Margin="0,0,11,0"
+                             PreviewKeyDown="ProductNametb_PreviewKeyDown"></TextBox>
+                    <Button Width="Auto" 
+                            Height="20" 
+                            Margin="15 0"
+                            Padding="5 0"
                             Content="{DynamicResource AddProductForm_Add}" 
                             Click="Button_Click"/>
                 </StackPanel>

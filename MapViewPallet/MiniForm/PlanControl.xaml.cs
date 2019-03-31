@@ -323,6 +323,11 @@ namespace MapViewPallet.MiniForm
         {
             Console.WriteLine(operation_model.BasePlans1);
         }
+
+        private void Btn_Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+        }
     }
 
 }

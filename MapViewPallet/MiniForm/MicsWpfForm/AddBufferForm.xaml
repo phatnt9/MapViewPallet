@@ -6,19 +6,19 @@
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
         Title="{DynamicResource AddBufferForm_Title1}" 
-        Height="310" 
-        Width="320" 
+        Height="250" 
+        Width="300" 
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="25"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal" 
@@ -35,44 +35,61 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             Margin="0,6,0,0">
-                    <StackPanel Orientation="Horizontal" 
+                    <StackPanel Orientation="Vertical" 
                                 HorizontalAlignment="Right">
-                        <Label VerticalAlignment="Center" 
+                        <Label VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
                                Content="{DynamicResource AddBufferForm_BufferName}" 
                                FontSize="14"></Label>
                         <TextBox Name="bufferNametb" 
                              Width="200" 
-                             Height="25" 
-                             Margin="10"
+                             Height="20" 
+                             Margin="10,0"
                                  CharacterCasing="Upper"
                              ></TextBox>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-                        <Label VerticalAlignment="Center" 
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <StackPanel Orientation="Vertical" 
+                                HorizontalAlignment="Center">
+                                    <Label VerticalAlignment="Center"
+                               HorizontalAlignment="Center" 
                                Content="{DynamicResource AddBufferForm_Bay}" 
                                FontSize="14"></Label>
-                        <TextBox Name="bufferMaxBaytb" 
-                             Width="200" 
-                             Height="25" 
-                             Margin="10"
+                                    <TextBox Name="bufferMaxBaytb" 
+                             Width="70" 
+                             Height="20" 
+                             Margin="10,0"
                                  CharacterCasing="Upper"
                              PreviewTextInput="BufferMaxBaytb_PreviewTextInput"
                              ></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-                        <Label VerticalAlignment="Center" 
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Vertical" 
+                                HorizontalAlignment="Center">
+                                    <Label VerticalAlignment="Center" 
+                               HorizontalAlignment="Center"
                                Content="{DynamicResource AddBufferForm_Row}" 
                                FontSize="14"></Label>
-                        <TextBox Name="bufferMaxRowtb" 
-                             Width="200" 
-                             Height="25" 
-                             Margin="10"
+                                    <TextBox Name="bufferMaxRowtb" 
+                             Width="70" 
+                             Height="20" 
+                             Margin="10,0"
                                  CharacterCasing="Upper"
                                  PreviewTextInput ="BufferMaxRowtb_PreviewTextInput"
                              ></TextBox>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
                     </StackPanel>
+                    
+                    
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <CheckBox Name="bufferReturnCb" 

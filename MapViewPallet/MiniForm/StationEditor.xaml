@@ -691,10 +691,17 @@
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Header="Get">
+                                        <DataGridTemplateColumn Header="Free">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Click="Button_Click_2">Get</Button>
+                                                    <Button Click="Button_Click_2">Free</Button>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="Lock">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Click="Button_Click_3">Lock</Button>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
@@ -728,7 +735,7 @@
                                         </DataGridTemplateColumn>-->
                                         <DataGridTextColumn Header="Dữ liệu" 
                                                             Width="Auto" 
-                                                            IsReadOnly="False"
+                                                            IsReadOnly="True"
                                                             Visibility="Visible"
                                                             Binding="{Binding Path=dataPallet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                             <DataGridTextColumn.ElementStyle>
