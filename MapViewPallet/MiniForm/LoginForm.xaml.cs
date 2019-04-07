@@ -1,4 +1,5 @@
 ﻿
+using MapViewPallet.MiniForm.MicsWpfForm;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -74,76 +75,90 @@ namespace MapViewPallet.MiniForm
             userNametb.Focus();
         }
 
-        
+        public bool CheckAlive()
+        {
+            Console.WriteLine("CheckAlive()");
+            var client = new TcpClient();
+            var result = client.BeginConnect(Properties.Settings.Default.serverIp, int.Parse(Properties.Settings.Default.serverPort), null, null);
+            var success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+            if (!success)
+            {
+                Console.WriteLine("F");
+                return false; 
+            }
+            else
+            {
+                Console.WriteLine("T");
+                return true; 
+            }
+        }
 
 
         private void btn_login_Click(object sender, RoutedEventArgs e)
         {
-            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            if (!CheckAlive())
             {
-                if (!Global_Object.ServerAlive())
+                PingTestlb.Content = FindResource("LoginForm_LoginError");
+                return;
+            }
+            PingTestlb.Content = "";
+            try
+            {
+                if (string.IsNullOrEmpty(this.userNametb.Text) || this.userNametb.Text.Trim() == "")
                 {
-                    PingTestlb.Content = FindResource("LoginForm_LoginError");
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "User Name", "User Name"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.userNametb.Focus();
                     return;
                 }
-                try
+
+                if (string.IsNullOrEmpty(this.passwordtb.Password) || this.passwordtb.Password.Trim() == "")
                 {
-                    if (string.IsNullOrEmpty(this.userNametb.Text) || this.userNametb.Text.Trim() == "")
-                    {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "User Name", "User Name"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        this.userNametb.Focus();
-                        return;
-                    }
-
-                    if (string.IsNullOrEmpty(this.passwordtb.Password) || this.passwordtb.Password.Trim() == "")
-                    {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "Password", "Password"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        this.passwordtb.Focus();
-                        return;
-                    }
-
-                    dtUser user = new dtUser();
-                    user.userName = this.userNametb.Text;
-                    user.userPassword = this.passwordtb.Password;
-
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/getUserInfo");
-                    request.Method = "POST";
-                    request.ContentType = @"application/json";
-                    string jsonData = JsonConvert.SerializeObject(user);
-                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                    Byte[] byteArray = encoding.GetBytes(jsonData);
-                    request.ContentLength = byteArray.Length;
-                    using (Stream dataStream = request.GetRequestStream())
-                    {
-                        dataStream.Write(byteArray, 0, byteArray.Length);
-                        dataStream.Flush();
-                    }
-                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                    using (Stream responseStream = response.GetResponseStream())
-                    {
-                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                        string result = reader.ReadToEnd();
-                        user = JsonConvert.DeserializeObject<dtUser>(result);
-
-                        if (user.userAuthor == 0 || user.userAuthor == 1 || user.userAuthor == 2)
-                        {
-                            Global_Object.userAuthor = user.userAuthor;
-                            Global_Object.userLogin = user.userId;
-                            Global_Object.userName = user.userName;
-                            this.Close();
-                        }
-                        else
-                        {
-                            System.Windows.Forms.MessageBox.Show("Login Fail!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                    }
-
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "Password", "Password"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.passwordtb.Focus();
+                    return;
                 }
-                catch (Exception exc)
+
+                dtUser user = new dtUser();
+                user.userName = this.userNametb.Text;
+                user.userPassword = this.passwordtb.Password;
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/getUserInfo");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
+                string jsonData = JsonConvert.SerializeObject(user);
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
                 {
-                    Console.WriteLine(exc.Message);
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
                 }
-            }));
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+                    user = JsonConvert.DeserializeObject<dtUser>(result);
+
+                    if (user.userAuthor == 0 || user.userAuthor == 1 || user.userAuthor == 2)
+                    {
+                        Global_Object.userAuthor = user.userAuthor;
+                        Global_Object.userLogin = user.userId;
+                        Global_Object.userName = user.userName;
+                        this.Close();
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Login Fail!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+            }
 
         }
 
@@ -169,6 +184,10 @@ namespace MapViewPallet.MiniForm
             }
         }
 
-        
+        private void Btn_Setting_Click(object sender, RoutedEventArgs e)
+        {
+            SetupIpAndPort setupIpAndPort = new SetupIpAndPort(Thread.CurrentThread.CurrentCulture.ToString());
+            setupIpAndPort.ShowDialog();
+        }
     }
 }

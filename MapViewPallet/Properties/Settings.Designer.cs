@@ -70,5 +70,29 @@ namespace MapViewPallet.Properties {
                 this["palletMargin"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string serverIp {
+            get {
+                return ((string)(this["serverIp"]));
+            }
+            set {
+                this["serverIp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8081")]
+        public string serverPort {
+            get {
+                return ((string)(this["serverPort"]));
+            }
+            set {
+                this["serverPort"] = value;
+            }
+        }
     }
 }

@@ -37,8 +37,7 @@
                              Width="170"
                              CharacterCasing="Upper"
                              PreviewKeyDown="UserNametb_PreviewKeyDown">
-                        SELDATADMIN
-                    </TextBox>
+                    SELDATADMIN</TextBox>
                 </StackPanel>
                 <StackPanel Margin="0 0 0 10"
                             Orientation="Horizontal" 
@@ -94,15 +93,34 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                <StackPanel 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                    <StackPanel 
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-                    <Label 
+                        <Label 
                         Name="PingTestlb" 
                         Foreground="Red">
-                    </Label>
-                </StackPanel>
+                        </Label>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <StackPanel 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                        <Button Name="SettingBtn" 
+                                     Click="Btn_Setting_Click"
+                                     Margin="5 0 5 0"
+                                     Width="23" Height="22">
+                            <iconPacks:PackIconMaterial Kind="Settings"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                
             </Grid>
             
             

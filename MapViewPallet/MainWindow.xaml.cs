@@ -34,9 +34,8 @@ namespace MapViewPallet
         public bool drag = true;
         MainWindowModel mainWindowModel;
         public CanvasControlService canvasControlService;
-        System.Media.SoundPlayer snd;
-
         public WaitServerForm waitServerForm;
+        public LoginForm loginForm;
         public PlanControl planControl;
         public DevicesManagement devicesManagement;
         public UserManagement userManagement;
@@ -59,42 +58,17 @@ namespace MapViewPallet
             map.Background = img;
 
             canvasControlService = new CanvasControlService(this);
-
-            snd = new System.Media.SoundPlayer();
+            
 
             //===============DataGridView========
 
             mainWindowModel = new MainWindowModel(this);
             DataContext = canvasControlService;
-
-
             stationTimer = new System.Timers.Timer();
             stationTimer.Interval = 3000;
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
-            //stationTimer.Enabled = true;
 
-            //robotTimer = new System.Timers.Timer();
-            //robotTimer.Interval = 50;
-            //robotTimer.Elapsed += OnTimedRedrawRobotEvent;
-            //robotTimer.AutoReset = true;
-            //robotTimer.Enabled = true;
-
-            //Dispatcher.BeginInvoke(new ThreadStart(() =>
-            //{
-            //    for (int i = 1; i < 5; i++)
-            //    {
-            //        Random posX = new Random();
-            //        RobotShape rbot = new RobotShape(map);
-            //        rbot.rad = posX.Next(50, 120);
-            //        rbot.org = new Point(600 + posX.Next(10, 50), 386 + posX.Next(10, 50));
-            //        rbot.anglestep = posX.NextDouble() + 0.2;
-            //        rbot.ReDraw(new Point(0, 0), 0);
-            //        //rbot.ChangeTask("22");
-            //        palletViewEventControl.list_Robot.Add(i.ToString(), rbot);
-            //        Thread.Sleep(100);
-            //    }
-            //}));
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -150,6 +124,11 @@ namespace MapViewPallet
         {
             statistics = null;
         }
+        
+        private void LoginForm_Closed(object sender, EventArgs e)
+        {
+            loginForm = null;
+        }
 
         private void ApplyLanguage(string cultureName = null)
         {
@@ -201,22 +180,19 @@ namespace MapViewPallet
         {
             CenterWindowOnScreen();
             myManagementWindow.Visibility = Visibility.Hidden;
-            LoginForm frm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
-            frm.ShowDialog();
+            loginForm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
+            loginForm.Closed += LoginForm_Closed;
+            stationTimer.Enabled = false;
+            loginForm.ShowDialog();
             if (Global_Object.userAuthor <= 2)
             {
+                stationTimer.Enabled = true;
                 myManagementWindow.Visibility = Visibility.Visible;
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     canvasControlService.ReloadAllStation();
-                    stationTimer.Enabled = true;
                 }));
             }
-        }
-
-        private void OnTimedRedrawRobotEvent(object sender, ElapsedEventArgs e)
-        {
-            canvasControlService.RedrawAllRobot();
         }
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
@@ -283,75 +259,75 @@ namespace MapViewPallet
             finally { }
         }
 
-        public void LoadPath(string Path)
-        {
-            try
-            {
-                DataTable data = new DataTable();
-                data = Global_Object.LoadExcelFile(Path);
-                foreach (DataRow row in data.Rows)
-                {
-                    Shape.CanvasPath tempPath;
-                    double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
-                    double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
-                    Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
+        //public void LoadPath(string Path)
+        //{
+        //    try
+        //    {
+        //        DataTable data = new DataTable();
+        //        data = Global_Object.LoadExcelFile(Path);
+        //        foreach (DataRow row in data.Rows)
+        //        {
+        //            Shape.CanvasPath tempPath;
+        //            double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
+        //            double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
+        //            Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
 
-                    double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
-                    double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
-                    Point des = Global_Object.CoorCanvas(new Point(desX, desY));
+        //            double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
+        //            double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
+        //            Point des = Global_Object.CoorCanvas(new Point(desX, desY));
 
-                    // ... Write value of first field as integer.
-                    if (row.Field<string>("TYPE") == "CurvePath")
-                    {
-                        bool Curve = bool.Parse(row.Field<string>("CURVE"));
-                        tempPath = new CurveShape(map, ori, des, Curve);
-                    }
-                    else
-                    {
-                        tempPath = new StraightShape(map, ori, des);
-                    }
-                    tempPath.RemoveHandle += canvasControlService.PathRemove;
-                    canvasControlService.list_Path.Add(tempPath.Name, tempPath);
+        //            // ... Write value of first field as integer.
+        //            if (row.Field<string>("TYPE") == "CurvePath")
+        //            {
+        //                bool Curve = bool.Parse(row.Field<string>("CURVE"));
+        //                tempPath = new CurveShape(map, ori, des, Curve);
+        //            }
+        //            else
+        //            {
+        //                tempPath = new StraightShape(map, ori, des);
+        //            }
+        //            tempPath.RemoveHandle += canvasControlService.PathRemove;
+        //            canvasControlService.list_Path.Add(tempPath.Name, tempPath);
 
-                }
-            }
-            catch { }
-        }
+        //        }
+        //    }
+        //    catch { }
+        //}
 
 
-        private void btn_LoadExcel_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                DataTable data = new DataTable();
-                data = Global_Object.LoadExcelFile();
-                foreach (DataRow row in data.Rows)
-                {
-                    Shape.CanvasPath tempPath;
-                    double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
-                    double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
-                    Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
+        //private void btn_LoadExcel_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        DataTable data = new DataTable();
+        //        data = Global_Object.LoadExcelFile();
+        //        foreach (DataRow row in data.Rows)
+        //        {
+        //            Shape.CanvasPath tempPath;
+        //            double oriX = double.Parse(row.Field<string>("ORIGINAL").Split(',')[0]);
+        //            double oriY = double.Parse(row.Field<string>("ORIGINAL").Split(',')[1]);
+        //            Point ori = Global_Object.CoorCanvas(new Point(oriX, oriY));
 
-                    double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
-                    double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
-                    Point des = Global_Object.CoorCanvas(new Point(desX, desY));
+        //            double desX = double.Parse(row.Field<string>("DESTINATION").Split(',')[0]);
+        //            double desY = double.Parse(row.Field<string>("DESTINATION").Split(',')[1]);
+        //            Point des = Global_Object.CoorCanvas(new Point(desX, desY));
 
-                    // ... Write value of first field as integer.
-                    if (row.Field<string>("TYPE") == "CurvePath")
-                    {
-                        bool Curve = bool.Parse(row.Field<string>("CURVE"));
-                        tempPath = new CurveShape(map, ori, des, Curve);
-                    }
-                    else
-                    {
-                        tempPath = new StraightShape(map, ori, des);
-                    }
-                    tempPath.RemoveHandle += canvasControlService.PathRemove;
-                    canvasControlService.list_Path.Add(tempPath.Name, tempPath);
-                }
-            }
-            catch { }
-        }
+        //            // ... Write value of first field as integer.
+        //            if (row.Field<string>("TYPE") == "CurvePath")
+        //            {
+        //                bool Curve = bool.Parse(row.Field<string>("CURVE"));
+        //                tempPath = new CurveShape(map, ori, des, Curve);
+        //            }
+        //            else
+        //            {
+        //                tempPath = new StraightShape(map, ori, des);
+        //            }
+        //            tempPath.RemoveHandle += canvasControlService.PathRemove;
+        //            canvasControlService.list_Path.Add(tempPath.Name, tempPath);
+        //        }
+        //    }
+        //    catch { }
+        //}
 
 
 
@@ -438,14 +414,17 @@ namespace MapViewPallet
             Global_Object.userLogin = -2;
             Global_Object.userName = "";
 
-            LoginForm frm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
-            frm.ShowDialog();
+            loginForm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
+            loginForm.Closed += LoginForm_Closed;
+            stationTimer.Enabled = false;
+            loginForm.ShowDialog();
             if (Global_Object.userLogin <= 2)
             {
                 myManagementWindow.Visibility = Visibility.Visible;
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     canvasControlService.ReloadAllStation();
+                    stationTimer.Enabled = true;
                 }));
             }
         }
@@ -554,11 +533,6 @@ namespace MapViewPallet
             {
                 userManagement.Focus();
             }
-        }
-
-        private void Btn_MapReCenter_Click(object sender, RoutedEventArgs e)
-        {
-            canvasControlService.ReCenterMapCanvas();
         }
 
         private void Btn_Statistics_Click(object sender, RoutedEventArgs e)

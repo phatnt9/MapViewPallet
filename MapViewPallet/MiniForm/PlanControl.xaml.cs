@@ -37,6 +37,9 @@ namespace MapViewPallet.MiniForm
             DataContext = operation_model;
             pCalendar.Loaded += pCalendarLoaded;
             TabControlShift.SelectionChanged += TabControlShift_SelectionChanged;
+#if DEBUG
+            System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Critical;
+#endif
         }
 
         public void ApplyLanguage(string cultureName = null)
@@ -155,10 +158,10 @@ namespace MapViewPallet.MiniForm
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             operation_model.UpdateAllCurrentPlansToDb();
-            //Dispatcher.BeginInvoke(new ThreadStart(() =>
-            //{
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
                 operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
-            //}));
+            }));
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -242,10 +245,10 @@ namespace MapViewPallet.MiniForm
                         //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         if ((pCalendar.SelectedDate != null) && (TabControlShift.SelectedIndex >= 0) && (TabControlShift.IsLoaded))
                         {
-                            Dispatcher.BeginInvoke(new ThreadStart(() =>
-                            {
-                                operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
-                            }));
+                            //Dispatcher.BeginInvoke(new ThreadStart(() =>
+                            //{
+                            //    operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+                            //}));
                         }
                     }
                     else if (result == 2)
@@ -273,7 +276,7 @@ namespace MapViewPallet.MiniForm
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(sender);
+            //Console.WriteLine(sender);
             dtPlan selectedPlan = Shift1Dgv.SelectedItem as dtPlan;
             dynamic postApiBody = new JObject();
             postApiBody.timeWorkId = 0;

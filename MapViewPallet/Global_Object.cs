@@ -16,7 +16,8 @@ namespace MapViewPallet
         //#######################################
         public static StationShape bufferToMove;
 
-        public static string url = @"http://localhost:8081/robot/rest/";
+        public static string url = @"http://"+ Properties.Settings.Default.serverIp + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
+        //public static string url = @"http://"+ "192.168.0.5" + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
         public static string hostUrl = "localhost";
         public static string hostPort = "8081";
 
@@ -118,8 +119,36 @@ namespace MapViewPallet
         //        return false;
         //    }
         //}
-        public static bool ServerAlive(string hostUri="localhost", int portNumber=8081)
+        public static bool ServerAlive()
         {
+            //=====================================================
+            //var client = new TcpClient();
+            //try
+            //{
+            //    var result = client.BeginConnect(Properties.Settings.Default.serverIp, int.Parse(Properties.Settings.Default.serverPort), null, null);
+
+            //    var success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+
+            //    if (!success)
+            //    {
+            //        return false;
+            //    }
+            //    else
+            //    {
+            //        return true;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    return false;
+            //}
+            //=====================================================
+            //var client = new TcpClient();
+            //if (!client.ConnectAsync(Properties.Settings.Default.serverIp, int.Parse(Properties.Settings.Default.serverPort)).Wait(1000))
+            //{
+            //    return false;
+            //}
+            //return true;
             //=====================================================
             TcpClient tcpClient = new TcpClient();
             try
@@ -131,6 +160,16 @@ namespace MapViewPallet
             {
                 return false;
             }
+            //TcpClient tcpClient = new TcpClient();
+            //try
+            //{
+            //    tcpClient.Connect(Properties.Settings.Default.serverIp, int.Parse(Properties.Settings.Default.serverPort));
+            //    return true;
+            //}
+            //catch (Exception)
+            //{
+            //    return false;
+            //}
             //=====================================================
             //try
             //{

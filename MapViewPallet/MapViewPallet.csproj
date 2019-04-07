@@ -180,6 +180,9 @@
     <Compile Include="MiniForm\MicsWpfForm\ImportPlanForm.xaml.cs">
       <DependentUpon>ImportPlanForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiniForm\MicsWpfForm\SetupIpAndPort.xaml.cs">
+      <DependentUpon>SetupIpAndPort.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MiniForm\MicsWpfForm\WaitServerForm.xaml.cs">
       <DependentUpon>WaitServerForm.xaml</DependentUpon>
     </Compile>
@@ -293,6 +296,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MiniForm\MicsWpfForm\ImportPlanForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MiniForm\MicsWpfForm\SetupIpAndPort.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

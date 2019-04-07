@@ -652,7 +652,7 @@ namespace MapViewPallet.Shape
             if (list_Path.ContainsKey(name))
             {
                 list_Path.Remove(name);
-                Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
+                //Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
             }
         }
         public void StationRemove(string name)
@@ -660,7 +660,7 @@ namespace MapViewPallet.Shape
             if (list_Station.ContainsKey(name))
             {
                 list_Station.Remove(name);
-                Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Station.Count);
+                //Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Station.Count);
             }
         }
         public void ReloadAllStation()
@@ -673,9 +673,7 @@ namespace MapViewPallet.Shape
             {
                 for (int i = 0; i < list_Station.Count; i++)
                 {
-                    //Console.WriteLine(i);
                     StationShape temp = list_Station.ElementAt(i).Value;
-                    Console.WriteLine("Remove: " + list_Station.ElementAt(i).Key);
                     temp.Remove();
                 }
                 list_Station.Clear();

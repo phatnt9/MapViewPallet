@@ -60,17 +60,21 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 string deviceName = "";
                 for (int i = 3; i <= rowCount; i++)
                 {
+                    //Console.WriteLine("row:"+i);
                     if (xlRange.Cells[i, 3] != null && xlRange.Cells[i, 3].Value2 != null)
                     {
                         structExcel structExcel = new structExcel();
                         if (xlRange.Cells[i, 1] != null && xlRange.Cells[i, 1].Value2 != null)
                         {
                             deviceName = xlRange.Cells[i, 1].Value2.ToString();
-
+                            //Console.WriteLine("deviceName:" + deviceName);
                         }
                         //Device Name
                         string deviceNameRow = deviceName + " " + xlRange.Cells[i, 5].Value2.ToString();
+
+                        //Console.WriteLine("deviceNameRow:" + deviceNameRow);
                         deviceNameRow = System.Text.RegularExpressions.Regex.Replace(deviceNameRow, @"\s{2,}", " ").ToUpper();
+                        //Console.WriteLine("deviceNameRow2:" + deviceNameRow);
                         structExcel.deviceName = deviceNameRow;
 
                         //foreach(KeyValuePair<int, string> kvp in Constant.productImage)
@@ -88,16 +92,17 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                         formula = formula.Split(',')[0].ToString();
                         formula = formula.Replace("=", "").Replace("VLOOKUP(", "");
                         structExcel.productName = xlRange.get_Range(formula, formula).Value2.ToString();
-
+                        //Console.WriteLine("productName:" + structExcel.productName);
                         //product Detail Name
                         string productDetailNameRow = xlRange.Cells[i, 3].Value2.ToString() + " " + xlRange.Cells[i, 4].Value2.ToString();
                         productDetailNameRow = System.Text.RegularExpressions.Regex.Replace(productDetailNameRow, @"\s{2,}", " ").ToUpper();
                         structExcel.productDetailName = productDetailNameRow;
-
+                        //Console.WriteLine("productDetailName:" + structExcel.productDetailName);
                         //Amount Pallet
                         int palletAmount = 0;
-                        int.TryParse(xlRange.Cells[i, 13].Value2.ToString(), out palletAmount);
-                        structExcel.palletAmount = palletAmount;
+                        //int.TryParse(xlRange.Cells[i, 13].Value2.ToString(), out palletAmount);
+                        //structExcel.palletAmount = palletAmount;
+                        structExcel.palletAmount = 1;
 
                         structExcels.Add(structExcel);
                     }
@@ -186,7 +191,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void ChkDeleteInsert_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Console.WriteLine(chkDeleteInsert.IsChecked);
+            //Console.WriteLine(chkDeleteInsert.IsChecked);
         }
 
         private void ChkDeleteInsert_Checked(object sender, RoutedEventArgs e)

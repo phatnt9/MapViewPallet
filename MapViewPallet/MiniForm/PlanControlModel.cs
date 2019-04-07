@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using System.Threading;
+using System.Diagnostics;
 
 namespace MapViewPallet.MiniForm
 {
@@ -112,18 +113,19 @@ namespace MapViewPallet.MiniForm
             {
                 string date = selectedDate.Year + "-" + selectedDate.Month.ToString("00.") + "-" + selectedDate.Day.ToString("00.");
                 List<Plan> plansTemp = new List<Plan>();
+                
                 List<Plan> checkPlansList = CheckPlans(selectedShift, selectedDate);
-
+                
                 switch (DateTime.Now.Date.CompareTo(selectedDate.Date))
                 {
                     case -1:
                         {
-                            Console.WriteLine("Ngay hien tai nho hon ngay duoc chon_Aka ngay hom sau");
+                            //Console.WriteLine("Ngay hien tai nho hon ngay duoc chon_Aka ngay hom sau");
                             goto case 0;
                         }
                     case 0:
                         {
-                            Console.WriteLine("Ngay hien tai bang ngay duoc chon_Aka ngay hom nay");
+                            //Console.WriteLine("Ngay hien tai bang ngay duoc chon_Aka ngay hom nay");
                             foreach (dtDevice device in deviceList.listDevices)
                             {
                                 foreach (dtDeviceProduct product in device.deviceProducts)
@@ -201,7 +203,7 @@ namespace MapViewPallet.MiniForm
                         }
                     case 1:
                         {
-                            Console.WriteLine("Ngay hien tai lon hon ngay duoc chon_Aka ngay hom truoc");
+                            //Console.WriteLine("Ngay hien tai lon hon ngay duoc chon_Aka ngay hom truoc");
                             foreach (Plan item in checkPlansList)
                             {
                                 plansTemp.Add(item);
@@ -210,77 +212,14 @@ namespace MapViewPallet.MiniForm
                         }
                     default:
                         {
-                            Console.WriteLine("-100");
+                            //Console.WriteLine("-100");
                             break;
                         }
                 }
 
-                //foreach (dtDevice device in deviceList.listDevices)
-                //{
-                //    foreach (dtDeviceProduct product in device.deviceProducts)
-                //    {
-                //        Plan tempOpe = new Plan();
-
-                //        tempOpe.creUsrId = Global_Object.userLogin;
-                //        tempOpe.creDt = "";
-                //        tempOpe.updUsrId = Global_Object.userLogin;
-                //        tempOpe.updDt = "";
-
-                //        tempOpe.planId = 0;
-                //        if (product.productDetails.Count > 0)
-                //        {
-                //            tempOpe.productDetailId = product.productDetails.First().productDetailId;
-                //        }
-                //        tempOpe.palletAmount = 0;
-                //        //tempOpe.palletUse = 20;
-                //        //tempOpe.palletMiss = 11;
-
-                //        tempOpe.deviceProductId = product.deviceProductId;
-                //        tempOpe.timeWorkId = selectedShift;
-                //        tempOpe.activeDate = date;
-                //        tempOpe.deviceId = device.deviceId;
-                //        tempOpe.deviceName = device.deviceName;
-                //        tempOpe.productId = product.productId;
-                //        tempOpe.productName = product.productName;
-                //        tempOpe.listProductDetails = product.productDetails;
-
-                //        if (checkPlansList.Count != 0)
-                //        {
-                //            foreach (Plan tempPlan in checkPlansList)
-                //            {
-                //                if (EqualPlan(tempOpe, tempPlan))
-                //                {
-                //                    //tempOpe.creUsrId = tempPlan.creUsrId;
-                //                    tempOpe.creDt = tempPlan.creDt;
-                //                    //tempOpe.updUsrId = tempPlan.updUsrId;
-                //                    tempOpe.updDt = tempPlan.updDt;
-
-                //                    tempOpe.planId = tempPlan.planId;
-                //                    tempOpe.productDetailId = tempPlan.productDetailId;
-                //                    tempOpe.palletAmount = tempPlan.palletAmount;
-                //                    tempOpe.palletUse = tempPlan.palletUse;
-                //                    tempOpe.palletMiss = tempPlan.palletMiss;
-
-                //                    tempOpe.deviceProductId = tempPlan.deviceProductId;
-                //                    tempOpe.timeWorkId = tempPlan.timeWorkId;
-                //                    tempOpe.activeDate = tempPlan.activeDate;
-                //                    tempOpe.deviceId = tempPlan.deviceId;
-                //                    tempOpe.productId = tempPlan.productId;
-                //                    //**************************************
-                //                }
-                //            }
-                //            plansTemp.Add(tempOpe);
-                //        }
-                //        else
-                //        {
-                //            plansTemp.Add(tempOpe);
-                //        }
-                //    }
-
-                //}
-
                 switch (selectedShift)
                 {
+
                     /*
                      * Có lỗi ở đây sau khi nhập palletAmount bằng chữ và nhấn save, crash, kết quả không được lưu vào
                      * */
@@ -438,32 +377,20 @@ namespace MapViewPallet.MiniForm
 
         public void UpdatePlansToDb (List<Plan> listPlan)
         {
-            //foreach (Plan plan in listPlan)
-            //{
-            //    {
-            //        //SendPlanToDb(item);
-            //        //********************************
-            //        dynamic postApiBody = new JObject();
-            //        postApiBody.planId = plan.planId;
-            //        postApiBody.deviceProductId = plan.deviceProductId;
-            //        postApiBody.timeWorkId = plan.timeWorkId;
-            //        postApiBody.productDetailId = plan.productDetailId;
-            //        postApiBody.palletAmount = plan.palletAmount;
-            //        postApiBody.activeDate = plan.activeDate;
-            //        postApiBody.deviceId = plan.deviceId;
-            //        postApiBody.productId = plan.productId;
-            //        postApiBody.creUsrId = Global_Object.userLogin;
-            //        postApiBody.updUsrId = Global_Object.userLogin;
+            List<Plan> listPlanTemp = new List<Plan>();
+            foreach(Plan item in listPlan)
+            {
+                if(item.planId != 0 || item.palletAmount != 0)
+                {
+                    listPlanTemp.Add(item);
+                }
 
-            //        //********************************
-            //        string jsonData = "[" + JsonConvert.SerializeObject(postApiBody) + "]";
-            //    }
-            //}
+            }
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/insertUpdatePlan");
             request.Method = "POST";
             request.ContentType = @"application/json";
 
-            string jsonData = JsonConvert.SerializeObject(listPlan);
+            string jsonData = JsonConvert.SerializeObject(listPlanTemp);
 
             int result = 0;
             System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();

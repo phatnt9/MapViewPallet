@@ -52,7 +52,7 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListDeviceProductAllByDeviceId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListDeviceProductByDeviceId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -85,7 +85,8 @@ namespace MapViewPallet.MiniForm
                             deviceId = int.Parse(dr["deviceId"].ToString()),
                             productId = int.Parse(dr["productId"].ToString()),
                             productName = dr["productName"].ToString(),
-                            checkStatus = bool.Parse(dr["checkStatus"].ToString()),
+                            //checkStatus = bool.Parse(dr["checkStatus"].ToString()),
+                            checkStatus = true,
                             imageDeviceUrl = dr["imageDeviceUrl"].ToString(),
                             imageProductUrl = dr["imageProductUrl"].ToString()
                         };

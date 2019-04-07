@@ -3,6 +3,7 @@ using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -28,6 +29,7 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
+                Stopwatch stopwatch = Stopwatch.StartNew();
                 listDevices.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
                 request.Method = "GET";
@@ -53,10 +55,13 @@ namespace MapViewPallet.MiniForm
                         };
                         if (AddDevice(tempDevice))
                         {
+                            //Console.WriteLine(tempDevice.deviceId);
                             tempDevice.GetDeviceProductsList();
                         }
                     }
                 }
+                stopwatch.Stop();
+                Console.WriteLine(stopwatch.ElapsedMilliseconds);
                 return true;
             }
             catch (Exception exc)
