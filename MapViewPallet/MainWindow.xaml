@@ -208,15 +208,15 @@
                                     <iconPacks:PackIconMaterial 
                                         Kind="Buffer"/>
                                 </Button>
-                                <!--<Separator />-->
-                                <!--<Button ToolTip="{DynamicResource MainWindow_Toolbar_UserManagement}"
+                                <Separator />
+                                <Button ToolTip="{DynamicResource MainWindow_Toolbar_UserManagement}"
                                         Name="btn_Statistics"
                                         ToolBar.OverflowMode="Never"
                                         Margin="5 0"
                                         Click="Btn_Statistics_Click">
                                     <iconPacks:PackIconMaterial 
                                         Kind="ChartBar" />
-                                </Button>-->
+                                </Button>
                                 <Separator />
                                 <Button ToolTip="{DynamicResource MainWindow_Toolbar_UserManagement}"
                                         Name="btn_UserManagement"

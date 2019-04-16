@@ -175,7 +175,7 @@ namespace MapViewPallet.MiniForm
             UpdateTab1(false);
         }
 
-        private void SaveData_tab1(bool isDeviceProduct)
+        private void SaveData_tab1(bool isDeviceProduct, bool uncheckAll = false)
         {
             if (!Global_Object.ServerAlive())
             {
@@ -188,7 +188,7 @@ namespace MapViewPallet.MiniForm
                 {
                     return;
                 }
-                dtDevice device = GetDataSave();
+                dtDevice device = GetDataSave(uncheckAll);
                 string jsonData = JsonConvert.SerializeObject(device);
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateDevice");
                 request.Method = "POST";
@@ -216,7 +216,7 @@ namespace MapViewPallet.MiniForm
 
         }
 
-        private dtDevice GetDataSave()
+        private dtDevice GetDataSave(bool uncheckAll = false)
         {
             dtDevice deviceData = new dtDevice();
             if (DevicesListDg.SelectedItem == null)
@@ -237,7 +237,7 @@ namespace MapViewPallet.MiniForm
                     dtDeviceProduct deviceProductTemp = new dtDeviceProduct();
                     deviceProductTemp.deviceProductId = item.deviceProductId;
                     deviceProductTemp.productId = item.productId;
-                    deviceProductTemp.checkStatus = item.checkStatus;
+                    deviceProductTemp.checkStatus = uncheckAll ? false: item.checkStatus;
                     deviceProducts.Add(deviceProductTemp);
 
                 }
@@ -2088,9 +2088,13 @@ namespace MapViewPallet.MiniForm
             e.Handled = !IsTextAllowed(e.Text);
         }
 
-
-
-
-
+        private void chkSelectAll_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (DevicesListDg.Items.Count != 0)
+            {
+                SaveData_tab1(true,true);
+            }
+            UpdateTab1(false);
+        }
     }
 }

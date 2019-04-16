@@ -17,7 +17,7 @@ namespace MapViewPallet
         public static StationShape bufferToMove;
 
         public static string url = @"http://"+ Properties.Settings.Default.serverIp + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
-        //public static string url = @"http://"+ "192.168.0.5" + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
+        //public static string url = @"http://"+ "192.168.1.32" + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
         public static string hostUrl = "localhost";
         public static string hostPort = "8081";
 
@@ -150,26 +150,26 @@ namespace MapViewPallet
             //}
             //return true;
             //=====================================================
-            TcpClient tcpClient = new TcpClient();
-            try
-            {
-                tcpClient.Connect("localhost", 8081);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
             //TcpClient tcpClient = new TcpClient();
             //try
             //{
-            //    tcpClient.Connect(Properties.Settings.Default.serverIp, int.Parse(Properties.Settings.Default.serverPort));
+            //    tcpClient.Connect("localhost", 8081);
             //    return true;
             //}
             //catch (Exception)
             //{
             //    return false;
             //}
+            TcpClient tcpClient = new TcpClient();
+            try
+            {
+                tcpClient.Connect(Properties.Settings.Default.serverIp, int.Parse(Properties.Settings.Default.serverPort));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             //=====================================================
             //try
             //{

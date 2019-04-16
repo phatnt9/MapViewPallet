@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MapViewPallet.Shape
 {
@@ -811,7 +812,7 @@ namespace MapViewPallet.Shape
                 {
                     if (buffer.bufferId == list_Station.ElementAt(i).Value.props.bufferDb.bufferId)
                     {
-                        list_Station.ElementAt(i).Value.ReDraw(buffer);
+                            list_Station.ElementAt(i).Value.ReDraw(buffer);
                     }
                 }
             }

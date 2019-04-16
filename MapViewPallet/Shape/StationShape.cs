@@ -314,12 +314,41 @@ namespace MapViewPallet.Shape
             //props._posision = Global_Object.CoorCanvas(new Point(((bufferData != null) ? (((double)bufferData.x)) : 0), ((bufferData != null) ? (((double)bufferData.y)) : 0)));
             //props._rotate = (bufferData != null) ? (((double)bufferData.angle)) : 0;
             SetCoorAndRotate();
+            //if (props.bufferDb.bufferId == 67)
+            //{
+            //    Console.WriteLine();
+            //    foreach(dtPallet pl in props.bufferDb.pallets)
+            //    {
+            //        Console.WriteLine(pl.bay+"-"+pl.row+"-"+pl.palletStatus);
+            //    }
+            //}
             UpdateAllPalletStatus(props.bufferDb.pallets);
         }
 
         public void UpdateAllPalletStatus(List<dtPallet> listPallet)
         {
-            foreach (dtPallet dr in listPallet)
+            BackgroundWorker workerUpdateAllPalletStatus = new BackgroundWorker();
+            workerUpdateAllPalletStatus.WorkerSupportsCancellation = true;
+            workerUpdateAllPalletStatus.WorkerReportsProgress = true;
+            workerUpdateAllPalletStatus.DoWork += WorkerUpdateAllPalletStatus_DoWork;
+            workerUpdateAllPalletStatus.ProgressChanged += WorkerUpdateAllPalletStatus_ProgressChanged;
+            workerUpdateAllPalletStatus.RunWorkerCompleted += WorkerUpdateAllPalletStatus_RunWorkerCompleted;
+            workerUpdateAllPalletStatus.RunWorkerAsync();
+        }
+
+        private void WorkerUpdateAllPalletStatus_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            
+        }
+
+        private void WorkerUpdateAllPalletStatus_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            
+        }
+
+        private void WorkerUpdateAllPalletStatus_DoWork(object sender, DoWorkEventArgs e)
+        {
+            foreach (dtPallet dr in props.bufferDb.pallets)
             {
                 if (props._palletList.ContainsKey("Pallet" + "x" + dr.bay + "x" + dr.row))
                 {

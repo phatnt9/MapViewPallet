@@ -58,7 +58,9 @@ namespace MapViewPallet
             map.Background = img;
 
             canvasControlService = new CanvasControlService(this);
-            
+
+            FocusableChanged += MainWindow_FocusableChanged;
+            GotFocus += MainWindow_GotFocus;
 
             //===============DataGridView========
 
@@ -69,6 +71,16 @@ namespace MapViewPallet
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
 
+        }
+
+        private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("MainWindow_GotFocus: "+IsFocused);
+        }
+
+        private void MainWindow_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Console.WriteLine("MainWindow_FocusableChanged: " + IsFocused);
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -203,37 +215,16 @@ namespace MapViewPallet
                 {
                     if (!Global_Object.ServerAlive())
                     {
-                        if (true)
-                        {
-                            waitServerForm = new WaitServerForm(this);
-                            waitServerForm.Closed += WaitServerForm_Closed;
-                            waitServerForm.ShowDialog();
-                        }
-                        return;
+                        waitServerForm = new WaitServerForm(this);
+                        waitServerForm.Closed += WaitServerForm_Closed;
+                        waitServerForm.ShowDialog();
                     }
                     canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
                 }
             });
-
-            //Dispatcher.BeginInvoke(new ThreadStart(() =>
-            //{
-            //    if (!Global_Object.ServerAlive())
-            //    {
-            //        if (waitServerForm == null)
-            //        {
-            //            if (CloseAllWindows())
-            //            {
-            //                waitServerForm = new WaitServerForm(this);
-            //                waitServerForm.Closed += WaitServerForm_Closed;
-            //                waitServerForm.ShowDialog();
-            //            }
-
-            //        }
-            //        return;
-            //    }
-            //    canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
-            //}));
         }
+
+
         
         private void WaitServerForm_Closed(object sender, EventArgs e)
         {

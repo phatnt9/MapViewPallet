@@ -303,6 +303,7 @@ namespace MapViewPallet.MiniForm
                     StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
                     string result = reader.ReadToEnd();
                     DataTable deviceProducts = JsonConvert.DeserializeObject<DataTable>(result);
+                    //devicesManagement.chkSelectAll.IsChecked = false;
                     foreach (DataRow dr in deviceProducts.Rows)
                     {
                         dtDeviceProduct tempDeviceProduct = new dtDeviceProduct
@@ -322,6 +323,10 @@ namespace MapViewPallet.MiniForm
                         if (!ContainDeviceProduct(tempDeviceProduct, deviceProductsList))
                         {
                             deviceProductsList.Add(tempDeviceProduct);
+                            if (tempDeviceProduct.checkStatus == true)
+                            { 
+                                //devicesManagement.chkSelectAll.IsChecked = true;
+                            }
                         }
                     }
                 }

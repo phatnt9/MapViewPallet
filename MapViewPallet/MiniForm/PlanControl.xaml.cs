@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Net;
@@ -26,8 +27,9 @@ namespace MapViewPallet.MiniForm
     public partial class PlanControl : Window
     {
         //=================VARIABLE==================
-        PlanControlModel operation_model;
-        
+        public PlanControlModel operation_model;
+        public BackgroundWorker workerLoadPlan;
+
 
         public PlanControl(string cultureName = null)
         {
@@ -329,7 +331,15 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
-            operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+            try
+            {
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
+
+                }));
+            }
+            catch { }
         }
     }
 

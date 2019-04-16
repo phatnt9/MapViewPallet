@@ -123,10 +123,10 @@
                                                       SelectionMode="Single"
                                                       SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-
-
-
                                                     <DataGridTemplateColumn Width="Auto">
+                                                        <!--<DataGridTemplateColumn.Header>
+                                                            <CheckBox Name="chkSelectAll" Unchecked="chkSelectAll_Unchecked"></CheckBox>
+                                                        </DataGridTemplateColumn.Header>-->
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
                                                                 <CheckBox Name="DeviceProductCbRow" 

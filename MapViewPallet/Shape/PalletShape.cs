@@ -1,10 +1,13 @@
 ﻿using MapViewPallet.MiniForm;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Net;
 using System.Reflection;
 using System.Resources;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -81,9 +84,113 @@ namespace MapViewPallet.Shape
 
             Child = stackPanel;
 
+
+            ContextMenu = new ContextMenu();
+
+            MenuItem putPallet = new MenuItem();
+            putPallet.Header = "Put";
+            putPallet.Click += PutPallet;
+
+            MenuItem freePallet = new MenuItem();
+            freePallet.Header = "Free";
+            freePallet.Click += FreePallet;
+
+            MenuItem lockPallet = new MenuItem();
+            lockPallet.Header = "Lock";
+            lockPallet.Click += LockPallet;
+
+
+            ContextMenu.Items.Add(putPallet);
+            ContextMenu.Items.Add(freePallet);
+            ContextMenu.Items.Add(lockPallet);
+
             // Event handler
-            MouseDown += PalletMouseDown;
-          
+            //MouseDown += PalletMouseDown;
+            //MouseRightButtonDown += PalletShape_MouseRightButtonDown;
+
+        }
+
+        private void FreePallet(object sender, RoutedEventArgs e)
+        {
+            string preStatus = pallet.palletStatus;
+            pallet.palletStatus = "F";
+            string jsonData = JsonConvert.SerializeObject(pallet);
+            pallet.palletStatus = preStatus;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+            }
+        }
+
+        private void LockPallet(object sender, RoutedEventArgs e)
+        {
+            string preStatus = pallet.palletStatus;
+            pallet.palletStatus = "L";
+            string jsonData = JsonConvert.SerializeObject(pallet);
+            pallet.palletStatus = preStatus;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+            }
+        }
+
+        private void PutPallet(object sender, RoutedEventArgs e)
+        {
+            string preStatus = pallet.palletStatus;
+            pallet.palletStatus = "W";
+            string jsonData = JsonConvert.SerializeObject(pallet);
+            pallet.palletStatus = preStatus;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonData);
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Flush();
+            }
+
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+            }
+        }
+
+        private void PalletShape_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine(pallet);
+            MessageBox.Show("" + name);
         }
 
 
@@ -96,6 +203,7 @@ namespace MapViewPallet.Shape
             if (this.pallet != null)
             {
                 bool replaceStatus = (this.pallet.palletStatus != pPallet.palletStatus) ? true : false;
+                //bool replaceStatus = true;
                 bool replaceProductDetailName = (this.pallet.productDetailName != pPallet.productDetailName) ? true : false;
                 this.pallet = pPallet;
                 if (replaceProductDetailName || replaceStatus)
@@ -254,7 +362,7 @@ namespace MapViewPallet.Shape
 
         private void PalletMouseDown(object sender, MouseButtonEventArgs e)
         {
-            //MessageBox.Show(""+name);
+            MessageBox.Show(""+name);
         }
         
         //\\\\\\\\\\\\Action\\\\\\\\\\\\\\\

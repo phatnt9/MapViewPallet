@@ -10,7 +10,11 @@
         WindowStartupLocation="CenterOwner">
     
     <Grid>
-        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
@@ -821,6 +825,39 @@
                     </Grid>
                 </Grid>
             </Border>
+        </Grid>
+        <Grid Grid.Row="1">
+            <DockPanel>
+                <StatusBar DockPanel.Dock="Bottom">
+                    <StatusBarItem>
+                        <!--<Grid>
+                             <StackPanel
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Orientation="Horizontal">
+                             <Label Name="processStatusText" Margin="0 -1" Content="Ready"></Label>
+                             </StackPanel>
+                             </Grid>-->
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <Grid>
+                            <ProgressBar
+                                Name="pbStatus"
+                                Margin="5 0"
+                                Minimum="0"
+                                Maximum="100"
+                                Width="200"
+                                Height="20">
+                            </ProgressBar>
+                            <TextBlock 
+                                FontWeight="Bold"
+                                Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center" />
+                        </Grid>
+                    </StatusBarItem>
+                </StatusBar>
+            </DockPanel>
         </Grid>
     </Grid>
 </Window>
