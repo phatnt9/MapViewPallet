@@ -1,6 +1,7 @@
 ﻿using MapViewPallet.Shape;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -643,49 +644,21 @@ namespace MapViewPallet.MiniForm
             try
             {
                 dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
-                if (pallet.palletStatus == "F")
-                {
-                    string jsonData = JsonConvert.SerializeObject(pallet);
-                    
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
-                    request.Method = "POST";
-                    request.ContentType = "application/json";
 
-                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                    Byte[] byteArray = encoding.GetBytes(jsonData);
-                    request.ContentLength = byteArray.Length;
-                    using (Stream dataStream = request.GetRequestStream())
-                    {
-                        dataStream.Write(byteArray, 0, byteArray.Length);
-                        dataStream.Flush();
-                    }
+                dynamic postApiBody = new JObject();
+                postApiBody.userName = "WMS_Return";
+                postApiBody.productDetailId = pallet.productDetailId;
+                postApiBody.productDetailName = pallet.productDetailName;
+                postApiBody.productDetailName = pallet.productDetailName;
+                postApiBody.productId = pallet.productId;
+                //postApiBody.planId = pallet.planId;
+                postApiBody.deviceId = pallet.deviceId;
+                postApiBody.typeReq = 13;
+                string jsonData = JsonConvert.SerializeObject(postApiBody);
 
-                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                    using (Stream responseStream = response.GetResponseStream())
-                    {
-                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                        int result = 0;
-                        int.TryParse(reader.ReadToEnd(), out result);
-                        if (result == 1)
-                        {
-                            //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else if (result == -2)
-                        {
-                            // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-                //pallet.palletStatus = "P";
 
-                Dispatcher.BeginInvoke(new ThreadStart(() =>
-                {
-                    stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
-                }));
+                BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
+                bridgeClientRequest.PostCallAPI("http://"+ Properties.Settings.Default.serverReturnIp + ":12000", jsonData);
             }
             catch (Exception exc)
             {

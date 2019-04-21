@@ -94,5 +94,17 @@ namespace MapViewPallet.Properties {
                 this["serverPort"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.32")]
+        public string serverReturnIp {
+            get {
+                return ((string)(this["serverReturnIp"]));
+            }
+            set {
+                this["serverReturnIp"] = value;
+            }
+        }
     }
 }

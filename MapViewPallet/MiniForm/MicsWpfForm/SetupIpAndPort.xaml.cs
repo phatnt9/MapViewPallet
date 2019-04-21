@@ -41,6 +41,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         {
             tb_ip.Text = Properties.Settings.Default.serverIp;
             tb_port.Text = Properties.Settings.Default.serverPort;
+            tb_serverRobotip.Text = Properties.Settings.Default.serverReturnIp;
             tb_ip.Focus();
         }
 
@@ -122,6 +123,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 Properties.Settings.Default.serverIp = tb_ip.Text;
                 Properties.Settings.Default.Save();
             }
+            if (IsValidateIP(tb_serverRobotip.Text))
+            {
+                Properties.Settings.Default.serverReturnIp = tb_serverRobotip.Text;
+                Properties.Settings.Default.Save();
+            }
             if (IsValidatePort(tb_port.Text))
             {
                 Properties.Settings.Default.serverPort = tb_port.Text;
@@ -130,6 +136,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
             Console.WriteLine(Properties.Settings.Default.serverIp);
             Console.WriteLine(Properties.Settings.Default.serverPort);
+            Console.WriteLine(Properties.Settings.Default.serverReturnIp);
             Close();
         }
     }

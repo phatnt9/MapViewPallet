@@ -210,13 +210,17 @@ namespace MapViewPallet.Shape
                 props._posision = Global_Object.CoorCanvas(new Point(((bufferData != null) ? (((double)bufferData.x)) : 0), ((bufferData != null) ? (((double)bufferData.y)) : 0)));
                 props._rotate = (bufferData != null) ? (((double)bufferData.angle)) : 0;
             }
-            props._myRotateTransform.Angle = props._rotate;
-            props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
-            props._myTransformGroup.Children[0] = props._myRotateTransform;
-            props._myTransformGroup.Children[1] = props._myTranslateTransform;
 
-            Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
-            Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                props._myRotateTransform.Angle = props._rotate;
+                props._myTranslateTransform = new TranslateTransform(props._posision.X, props._posision.Y);
+                props._myTransformGroup.Children[0] = props._myRotateTransform;
+                props._myTransformGroup.Children[1] = props._myTranslateTransform;
+                Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
+                Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
+            }));
+
 
         }
 
@@ -240,58 +244,58 @@ namespace MapViewPallet.Shape
                 if ((this.props.bufferDb.maxBay != buffer.maxBay) || ((this.props.bufferDb.maxRow != buffer.maxRow)))
                 {
                     props.bufferDb = buffer;
-
                     props._palletList.Clear();
-                    props._stationGrid.Children.Clear();
-                    props._stationGrid.RowDefinitions.Clear();
-                    props._stationGrid.ColumnDefinitions.Clear();
-
-                    Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
-                    Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
-
-
-                    for (int bayIndex = 0; bayIndex < props.bufferDb.maxBay; bayIndex++) //Column Index
+                    Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
-                        //Create a Col
-                        ColumnDefinition colTemp = new ColumnDefinition();
-                        //colTemp.Name = Name + "xL" + bayIndex;
-                        props._stationGrid.ColumnDefinitions.Add(colTemp);
-                        //Create GridLine
-                        Grid gridLine = new Grid();
-                        // Create BorderLine
-                        Border borderLine = new Border();
-                        Grid.SetColumn(borderLine, bayIndex);
-                        borderLine.Child = gridLine;
-                        //
-                        props._stationGrid.Children.Add(borderLine);
-                        if (bayIndex > 0)
+                        props._stationGrid.Children.Clear();
+                        props._stationGrid.RowDefinitions.Clear();
+                        props._stationGrid.ColumnDefinitions.Clear();
+                        Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
+                        Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
+
+                        for (int bayIndex = 0; bayIndex < props.bufferDb.maxBay; bayIndex++) //Column Index
                         {
-                            borderLine.BorderBrush = new SolidColorBrush(Colors.Black);
-                            borderLine.BorderThickness = new Thickness(0.3, 0, 0, 0);
+                            //Create a Col
+                            ColumnDefinition colTemp = new ColumnDefinition();
+                            //colTemp.Name = Name + "xL" + bayIndex;
+                            props._stationGrid.ColumnDefinitions.Add(colTemp);
+                            //Create GridLine
+                            Grid gridLine = new Grid();
+                            // Create BorderLine
+                            Border borderLine = new Border();
+                            Grid.SetColumn(borderLine, bayIndex);
+                            borderLine.Child = gridLine;
+                            //
+                            props._stationGrid.Children.Add(borderLine);
+                            if (bayIndex > 0)
+                            {
+                                borderLine.BorderBrush = new SolidColorBrush(Colors.Black);
+                                borderLine.BorderThickness = new Thickness(0.3, 0, 0, 0);
+                            }
+                            //Add Pallet to GridPallet ==> add GridPallet to BorderLine
+                            for (int rowIndex = 0; rowIndex < props.bufferDb.maxRow; rowIndex++) //Row Index, start from 1, Row 0 use for Infomation
+                            {
+                                //Create Rows for Col
+                                RowDefinition rowTemp = new RowDefinition();
+                                //rowTemp.Name = Name + "xR" + rowIndex;
+                                //rowTemp.MinHeight = 10;
+                                gridLine.RowDefinitions.Add(rowTemp);
+
+                                dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
+                                //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
+                                PalletShape palletTemp = new PalletShape(
+                                    "Pallet"
+                                    + "x" +
+                                    ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
+                                    + "x" + rowIndex);
+
+                                Grid.SetRow(palletTemp, rowIndex);
+                                gridLine.Children.Add(palletTemp);
+                                props._palletList.Add(palletTemp.name, palletTemp);
+
+                            }
                         }
-                        //Add Pallet to GridPallet ==> add GridPallet to BorderLine
-                        for (int rowIndex = 0; rowIndex < props.bufferDb.maxRow; rowIndex++) //Row Index, start from 1, Row 0 use for Infomation
-                        {
-                            //Create Rows for Col
-                            RowDefinition rowTemp = new RowDefinition();
-                            //rowTemp.Name = Name + "xR" + rowIndex;
-                            //rowTemp.MinHeight = 10;
-                            gridLine.RowDefinitions.Add(rowTemp);
-
-                            dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
-                            //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
-                            PalletShape palletTemp = new PalletShape(
-                                "Pallet"
-                                + "x" +
-                                ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
-                                + "x" + rowIndex);
-
-                            Grid.SetRow(palletTemp, rowIndex);
-                            gridLine.Children.Add(palletTemp);
-                            props._palletList.Add(palletTemp.name, palletTemp);
-
-                        }
-                    }
+                    }));
                 }
                 else
                 {
@@ -308,45 +312,12 @@ namespace MapViewPallet.Shape
 
                     }));
                 }
-
             }
-            //dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
-            //props._posision = Global_Object.CoorCanvas(new Point(((bufferData != null) ? (((double)bufferData.x)) : 0), ((bufferData != null) ? (((double)bufferData.y)) : 0)));
-            //props._rotate = (bufferData != null) ? (((double)bufferData.angle)) : 0;
             SetCoorAndRotate();
-            //if (props.bufferDb.bufferId == 67)
-            //{
-            //    Console.WriteLine();
-            //    foreach(dtPallet pl in props.bufferDb.pallets)
-            //    {
-            //        Console.WriteLine(pl.bay+"-"+pl.row+"-"+pl.palletStatus);
-            //    }
-            //}
             UpdateAllPalletStatus(props.bufferDb.pallets);
         }
 
         public void UpdateAllPalletStatus(List<dtPallet> listPallet)
-        {
-            BackgroundWorker workerUpdateAllPalletStatus = new BackgroundWorker();
-            workerUpdateAllPalletStatus.WorkerSupportsCancellation = true;
-            workerUpdateAllPalletStatus.WorkerReportsProgress = true;
-            workerUpdateAllPalletStatus.DoWork += WorkerUpdateAllPalletStatus_DoWork;
-            workerUpdateAllPalletStatus.ProgressChanged += WorkerUpdateAllPalletStatus_ProgressChanged;
-            workerUpdateAllPalletStatus.RunWorkerCompleted += WorkerUpdateAllPalletStatus_RunWorkerCompleted;
-            workerUpdateAllPalletStatus.RunWorkerAsync();
-        }
-
-        private void WorkerUpdateAllPalletStatus_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            
-        }
-
-        private void WorkerUpdateAllPalletStatus_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            
-        }
-
-        private void WorkerUpdateAllPalletStatus_DoWork(object sender, DoWorkEventArgs e)
         {
             foreach (dtPallet dr in props.bufferDb.pallets)
             {

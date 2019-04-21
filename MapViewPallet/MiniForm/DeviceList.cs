@@ -74,11 +74,9 @@ namespace MapViewPallet.MiniForm
             // process the response using e.Result
             //MessageBox.Show("Processing is complete.");
             this.planControl.pbStatus.Value = 0;
-            //Application.Current.Dispatcher.BeginInvoke(new ThreadStart(() =>
-            //{
-                planControl.btn_importPlan.IsEnabled = true;
-                planControl.Btn_Accept.IsEnabled = true;
-            //}));
+            planControl.btn_importPlan.IsEnabled = true;
+            planControl.Btn_Accept.IsEnabled = true;
+            planControl.RefreshBtn.IsEnabled = true;
         }
 
         private void WorkerLoadDevice_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -92,6 +90,7 @@ namespace MapViewPallet.MiniForm
             {
                 planControl.btn_importPlan.IsEnabled = false;
                 planControl.Btn_Accept.IsEnabled = false;
+                planControl.RefreshBtn.IsEnabled = false;
             }));
             Stopwatch stopwatch = Stopwatch.StartNew();
             listDevices.Clear();

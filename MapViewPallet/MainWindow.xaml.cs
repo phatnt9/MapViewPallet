@@ -209,23 +209,28 @@ namespace MapViewPallet
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke((Action)delegate
+            if (waitServerForm == null)
             {
-                if (waitServerForm == null)
+                if (!Global_Object.ServerAlive())
                 {
-                    if (!Global_Object.ServerAlive())
-                    {
-                        waitServerForm = new WaitServerForm(this);
-                        waitServerForm.Closed += WaitServerForm_Closed;
-                        waitServerForm.ShowDialog();
-                    }
-                    canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
+                    waitServerForm = new WaitServerForm(this);
+                    waitServerForm.Closed += WaitServerForm_Closed;
+                    waitServerForm.ShowDialog();
                 }
-            });
+                else
+                {
+                    BackgroundWorker workerRedrawStation = new BackgroundWorker();
+                    workerRedrawStation.DoWork += WorkerRedrawStation_DoWork;
+                    workerRedrawStation.RunWorkerAsync();
+                }
+            }
         }
 
+        private void WorkerRedrawStation_DoWork(object sender, DoWorkEventArgs e)
+        {
+            canvasControlService.RedrawAllStation(canvasControlService.GetDataAllStation());
+        }
 
-        
         private void WaitServerForm_Closed(object sender, EventArgs e)
         {
             waitServerForm = null;

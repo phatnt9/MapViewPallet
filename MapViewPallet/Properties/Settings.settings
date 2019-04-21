@@ -20,5 +20,8 @@
     <Setting Name="serverPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">8081</Value>
     </Setting>
+    <Setting Name="serverReturnIp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.32</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
