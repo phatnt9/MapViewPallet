@@ -36,6 +36,7 @@ namespace MapViewPallet.MiniForm
     public class StatisticsModel
     {
         Statistics statistics;
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public ListCollectionView GroupedRobotProcess { get; private set; }
         public ListCollectionView GroupedRobotCharge { get; private set; }
@@ -176,59 +177,74 @@ namespace MapViewPallet.MiniForm
 
         public void ReloadListRobot(int tabIndex)
         {
-            Robots.Add(new dtRobot() { id = "", robotName = "No data" });
-            Robots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
-            Robots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
-            Robots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
-
-            AllRobots.Add(new dtRobot() { id = "", robotName = "No data" });
-            AllRobots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
-            AllRobots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
-            AllRobots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
-
-            switch (tabIndex)
+            try
             {
-                case 0:
-                    {
-                        
-                        break;
-                    }
-                case 1:
-                    {
-                        
-                        break;
-                    }
-                default:
-                    {
-                        
-                        break;
-                    }
+                Robots.Add(new dtRobot() { id = "", robotName = "No data" });
+                Robots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
+                Robots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
+                Robots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
+
+                AllRobots.Add(new dtRobot() { id = "", robotName = "No data" });
+                AllRobots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
+                AllRobots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
+                AllRobots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
+
+                switch (tabIndex)
+                {
+                    case 0:
+                        {
+
+                            break;
+                        }
+                    case 1:
+                        {
+
+                            break;
+                        }
+                    default:
+                        {
+
+                            break;
+                        }
+                }
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
             }
         }
 
         public void ReloadListOperationType()
         {
-            OperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 3, nameOperationType = "Machine To Return" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
+            try
+            {
+                OperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 3, nameOperationType = "Machine To Return" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
 
 
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 3, nameOperationType = "Machine To Return" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
-            
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 3, nameOperationType = "Machine To Return" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
 
-            listOperationType = OperationTypes.ToList();
+
+                listOperationType = OperationTypes.ToList();
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+
         }
 
         public void ReloadListDevice()
@@ -293,11 +309,11 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         public void ReloadListProduct()
@@ -426,11 +442,11 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         public void ReloadListProductDetail()
@@ -503,11 +519,11 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         public void ReloadListBuffer()
@@ -577,9 +593,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -642,11 +658,11 @@ namespace MapViewPallet.MiniForm
 
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         public void ReloadDataGridCharge()
@@ -764,12 +780,13 @@ namespace MapViewPallet.MiniForm
                     GroupedRobotCharge.CommitNew();
                 GroupedRobotCharge.Refresh();
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
-            public void ReloadDataGridTask()
+
+        public void ReloadDataGridTask()
         {
             if (!Global_Object.ServerAlive())
             {
@@ -896,32 +913,40 @@ namespace MapViewPallet.MiniForm
                     GroupedRobotProcess.CommitNew();
                 GroupedRobotProcess.Refresh();
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         public void loadDetail()
         {
-            if (statistics.grvReportRobotProcess.SelectedItem!=null)
+            try
             {
-                dtRobotProcess row = statistics.grvReportRobotProcess.SelectedItem as dtRobotProcess;
-                //robotProcessIdSelect = int.Parse(row.Cells["robotProcessId"].Value.ToString());
-                string detail = row.orderContent.ToString();
-                Dictionary<string, string> strDetail = JsonConvert.DeserializeObject<Dictionary<string, string>>(detail);
-                statistics.txtDetail.Text = "";
-                foreach (var item in strDetail)
+                if (statistics.grvReportRobotProcess.SelectedItem != null)
                 {
-                    if (statistics.txtDetail.Text != "")
+                    dtRobotProcess row = statistics.grvReportRobotProcess.SelectedItem as dtRobotProcess;
+                    //robotProcessIdSelect = int.Parse(row.Cells["robotProcessId"].Value.ToString());
+                    string detail = row.orderContent.ToString();
+                    Dictionary<string, string> strDetail = JsonConvert.DeserializeObject<Dictionary<string, string>>(detail);
+                    statistics.txtDetail.Text = "";
+                    foreach (var item in strDetail)
                     {
-                        statistics.txtDetail.AppendText(Environment.NewLine);
+                        if (statistics.txtDetail.Text != "")
+                        {
+                            statistics.txtDetail.AppendText(Environment.NewLine);
+                        }
+                        statistics.txtDetail.AppendText(" - " + item.Key + ": " + item.Value);
                     }
-                    statistics.txtDetail.AppendText(" - " + item.Key + ": " + item.Value);
+                    statistics.txtDetail.Foreground = new SolidColorBrush(Colors.Blue);
                 }
-                statistics.txtDetail.Foreground = new SolidColorBrush(Colors.Blue);
             }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
             
         }
         public bool ContainRobotProcess(dtRobotProcess tempOpe, List<dtRobotProcess> List)

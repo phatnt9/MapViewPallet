@@ -28,6 +28,7 @@ namespace MapViewPallet.MiniForm
     /// </summary>
     public partial class UserManagement : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public UserModel userModel;
 
@@ -157,11 +158,11 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
     }
 }

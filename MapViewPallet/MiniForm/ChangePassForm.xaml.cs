@@ -17,6 +17,8 @@ namespace MapViewPallet.MiniForm
     /// </summary>
     public partial class ChangePassForm : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public ChangePassForm(string cultureName = null)
         {
             Loaded += ChangePassForm_Loaded;
@@ -154,11 +156,11 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-
+                logFile.Error(ex.Message);
             }
-            
+
 
 
         }

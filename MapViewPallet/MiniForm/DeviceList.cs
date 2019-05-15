@@ -122,23 +122,6 @@ namespace MapViewPallet.MiniForm
                     }
                     (sender as BackgroundWorker).ReportProgress((i * 100) / devices.Rows.Count);
                 }
-                //foreach (DataRow dr in devices.Rows)
-                //{
-                //    dtDevice tempDevice = new dtDevice
-                //    {
-                //        creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                //        creDt = dr["creDt"].ToString(),
-                //        updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                //        updDt = dr["updDt"].ToString(),
-
-                //        deviceId = int.Parse(dr["deviceId"].ToString()),
-                //        deviceName = dr["deviceName"].ToString()
-                //    };
-                //    if (AddDevice(tempDevice))
-                //    {
-                //        tempDevice.GetDeviceProductsList();
-                //    }
-                //}
             }
             stopwatch.Stop();
             Console.WriteLine(stopwatch.ElapsedMilliseconds);

@@ -14,6 +14,7 @@ namespace MapViewPallet.MiniForm
 {
     class StationEditorModel : NotifyUIBase
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         StationEditor stationEditor;
 
@@ -99,9 +100,9 @@ namespace MapViewPallet.MiniForm
                     //devicesManagement.PalletsListDg.ScrollIntoView(devicesManagement.PalletsListDg.SelectedItem);
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 

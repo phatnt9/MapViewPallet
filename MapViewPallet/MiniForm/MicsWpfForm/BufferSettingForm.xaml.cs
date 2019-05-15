@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
@@ -9,6 +10,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     public partial class BufferSettingForm : Window
     {
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public BufferSettingForm()
         {
@@ -31,24 +33,32 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            double width = 0;
-            double height = 0;
-            if(double.TryParse(bufferWidth.Text.ToString().Trim().Replace(" ", ""),out width))
+            try
             {
-                if (width.ToString().Trim() != "")
+                double width = 0;
+                double height = 0;
+                if (double.TryParse(bufferWidth.Text.ToString().Trim().Replace(" ", ""), out width))
                 {
-                    Properties.Settings.Default.palletWidth = width;
-                    Properties.Settings.Default.Save();
+                    if (width.ToString().Trim() != "")
+                    {
+                        Properties.Settings.Default.palletWidth = width;
+                        Properties.Settings.Default.Save();
+                    }
+                }
+                if (double.TryParse(bufferHeight.Text.ToString().Trim().Replace(" ", ""), out height))
+                {
+                    if (height.ToString().Trim() != "")
+                    {
+                        Properties.Settings.Default.palletHeight = height;
+                        Properties.Settings.Default.Save();
+                    }
                 }
             }
-            if(double.TryParse(bufferHeight.Text.ToString().Trim().Replace(" ", ""),out height))
+            catch (Exception ex)
             {
-                if (height.ToString().Trim() != "")
-                {
-                    Properties.Settings.Default.palletHeight = height;
-                    Properties.Settings.Default.Save();
-                }
+                logFile.Error(ex.Message);
             }
+            
 
         }
         

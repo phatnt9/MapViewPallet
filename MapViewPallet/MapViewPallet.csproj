@@ -62,8 +62,8 @@
     <Reference Include="Han.Wpf.ViewportControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Han.Wpf.ViewportControl.1.0.1\lib\net461\Han.Wpf.ViewportControl.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\thanhhau89\seldatui\SeldatRobot\bin\Debug\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net46\MahApps.Metro.dll</HintPath>
@@ -124,8 +124,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Communication\HttpBridge\BridgeClientRequest.cs" />
-    <Compile Include="DataGridView\DgvStation.cs" />
-    <Compile Include="DataGridView\MainWindowModel.cs" />
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
     <Compile Include="MiniForm\ChangePassForm.xaml.cs">
@@ -349,8 +347,9 @@
     <EmbeddedResource Include="Shape\Properties.resx">
       <DependentUpon>Properties.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Excels\Path.xls" />
-    <None Include="Excels\StationMain.xls" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

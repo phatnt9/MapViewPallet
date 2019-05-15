@@ -23,6 +23,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         DevicesManagement devicesManagement;
 
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public class AddBufferModel : NotifyUIBase
         {
@@ -196,9 +197,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 }
                 devicesManagement.UpdateTab4(true);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }

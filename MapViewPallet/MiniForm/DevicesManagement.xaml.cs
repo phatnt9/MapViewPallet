@@ -21,6 +21,8 @@ namespace MapViewPallet.MiniForm
     /// </summary>
     public partial class DevicesManagement : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
         public DevicesManagementModel deviceManagementModel;
         private AddBufferForm addBufferForm;
@@ -209,9 +211,9 @@ namespace MapViewPallet.MiniForm
                     int.TryParse(reader.ReadToEnd(), out result);
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }
@@ -367,9 +369,9 @@ namespace MapViewPallet.MiniForm
                 }
 
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -488,9 +490,9 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateTab2(true);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }
@@ -577,9 +579,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -730,9 +732,9 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateTab3(true);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -779,9 +781,9 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateTab3(false);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -899,9 +901,9 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateTab3(true);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -992,9 +994,9 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateTab3(false);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -1074,9 +1076,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }
@@ -1099,9 +1101,9 @@ namespace MapViewPallet.MiniForm
                     deviceManagementModel.ReloadListPallets(temp.bufferId);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                logFile.Error(ex.Message);
             }
         }
 
@@ -1186,9 +1188,9 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateTab4(true);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }
@@ -1213,9 +1215,9 @@ namespace MapViewPallet.MiniForm
                     palletHasSubLine.Text = (devicePalletData.pallet.hasSubLine != null) ? ((devicePalletData.pallet.hasSubLine).ToString()) : "no";
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                logFile.Error(ex.Message);
             }
         }
 
@@ -1226,16 +1228,24 @@ namespace MapViewPallet.MiniForm
 
         private void Btn_Add_Buffer_Click(object sender, RoutedEventArgs e)
         {
-            if (addBufferForm == null)
+            try
             {
-                addBufferForm = new AddBufferForm(this, Thread.CurrentThread.CurrentCulture.ToString());
-                addBufferForm.Closed += AddBufferForm_Closed;
-                addBufferForm.ShowDialog();
+                if (addBufferForm == null)
+                {
+                    addBufferForm = new AddBufferForm(this, Thread.CurrentThread.CurrentCulture.ToString());
+                    addBufferForm.Closed += AddBufferForm_Closed;
+                    addBufferForm.ShowDialog();
+                }
+                else
+                {
+                    addBufferForm.Focus();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                addBufferForm.Focus();
+                logFile.Error(ex.Message);
             }
+            
 
         }
 
@@ -1330,9 +1340,9 @@ namespace MapViewPallet.MiniForm
                 }
                 //mainWindow.canvasControlService.ReloadAllStation();
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }
@@ -1401,9 +1411,9 @@ namespace MapViewPallet.MiniForm
                 }
                 //UpdateTab4(true);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -1469,9 +1479,9 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateTab4(false);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -1483,112 +1493,144 @@ namespace MapViewPallet.MiniForm
 
         public void UpdateTab1(bool isAddDevice)
         {
-            if (isAddDevice)
+            try
             {
-                deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
-            }
-            else
-            {
-                if (DevicesListDg.HasItems)
-                {
-                    if (DevicesListDg.SelectedItem == null)
-                    {
-                        DevicesListDg.SelectedItem = DevicesListDg.Items[0];
-                        DevicesListDg.ScrollIntoView(DevicesListDg.SelectedItem);
-                    }
-                    else
-                    {
-                        deviceManagementModel.ReloadListDeviceProducts((DevicesListDg.SelectedItem as dtDevice).deviceId);
-                        deviceManagementModel.ReloadListDeviceBuffers((DevicesListDg.SelectedItem as dtDevice).deviceId);
-                    }
-                }
-                else
+                if (isAddDevice)
                 {
                     deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                 }
+                else
+                {
+                    if (DevicesListDg.HasItems)
+                    {
+                        if (DevicesListDg.SelectedItem == null)
+                        {
+                            DevicesListDg.SelectedItem = DevicesListDg.Items[0];
+                            DevicesListDg.ScrollIntoView(DevicesListDg.SelectedItem);
+                        }
+                        else
+                        {
+                            deviceManagementModel.ReloadListDeviceProducts((DevicesListDg.SelectedItem as dtDevice).deviceId);
+                            deviceManagementModel.ReloadListDeviceBuffers((DevicesListDg.SelectedItem as dtDevice).deviceId);
+                        }
+                    }
+                    else
+                    {
+                        deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
 
         public void UpdateTab2(bool isAddDevice)
         {
-            if (isAddDevice)
+            try
             {
-                deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
-            }
-            else
-            {
-                if (DevicesListDg2.HasItems)
-                {
-                    if (DevicesListDg2.SelectedItem == null)
-                    {
-                        DevicesListDg2.SelectedItem = DevicesListDg2.Items[0];
-                        DevicesListDg2.ScrollIntoView(DevicesListDg2.SelectedItem);
-                    }
-                    else
-                    {
-                        deviceManagementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
-                    }
-                }
-                else
+                if (isAddDevice)
                 {
                     deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                 }
+                else
+                {
+                    if (DevicesListDg2.HasItems)
+                    {
+                        if (DevicesListDg2.SelectedItem == null)
+                        {
+                            DevicesListDg2.SelectedItem = DevicesListDg2.Items[0];
+                            DevicesListDg2.ScrollIntoView(DevicesListDg2.SelectedItem);
+                        }
+                        else
+                        {
+                            deviceManagementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
+                        }
+                    }
+                    else
+                    {
+                        deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
 
         public void UpdateTab3(bool isAddProduct)
         {
-            if (isAddProduct)
+            try
             {
-                deviceManagementModel.ReloadListProducts();
-            }
-            else
-            {
-                if (ProductsListDg.HasItems)
-                {
-                    if (ProductsListDg.SelectedItem == null)
-                    {
-                        ProductsListDg.SelectedItem = ProductsListDg.Items[0];
-                        ProductsListDg.ScrollIntoView(ProductsListDg.SelectedItem);
-                    }
-                    else
-                    {
-                        deviceManagementModel.ReloadListProductDetails((ProductsListDg.SelectedItem as dtProduct).productId);
-                    }
-                }
-                else
+                if (isAddProduct)
                 {
                     deviceManagementModel.ReloadListProducts();
                 }
+                else
+                {
+                    if (ProductsListDg.HasItems)
+                    {
+                        if (ProductsListDg.SelectedItem == null)
+                        {
+                            ProductsListDg.SelectedItem = ProductsListDg.Items[0];
+                            ProductsListDg.ScrollIntoView(ProductsListDg.SelectedItem);
+                        }
+                        else
+                        {
+                            deviceManagementModel.ReloadListProductDetails((ProductsListDg.SelectedItem as dtProduct).productId);
+                        }
+                    }
+                    else
+                    {
+                        deviceManagementModel.ReloadListProducts();
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
 
         public void UpdateTab4(bool isAddBuffer)
         {
-            if (isAddBuffer)
+            try
             {
-                deviceManagementModel.ReloadListBuffers();
-            }
-            else
-            {
-                if (BuffersListDg.HasItems)
-                {
-                    if (BuffersListDg.SelectedItem == null)
-                    {
-                        BuffersListDg.SelectedItem = BuffersListDg.Items[0];
-                        BuffersListDg.ScrollIntoView(BuffersListDg.SelectedItem);
-                    }
-                    else
-                    {
-                        deviceManagementModel.ReloadListPallets((BuffersListDg.SelectedItem as dtBuffer).bufferId);
-
-                    }
-                }
-                else
+                if (isAddBuffer)
                 {
                     deviceManagementModel.ReloadListBuffers();
                 }
+                else
+                {
+                    if (BuffersListDg.HasItems)
+                    {
+                        if (BuffersListDg.SelectedItem == null)
+                        {
+                            BuffersListDg.SelectedItem = BuffersListDg.Items[0];
+                            BuffersListDg.ScrollIntoView(BuffersListDg.SelectedItem);
+                        }
+                        else
+                        {
+                            deviceManagementModel.ReloadListPallets((BuffersListDg.SelectedItem as dtBuffer).bufferId);
+
+                        }
+                    }
+                    else
+                    {
+                        deviceManagementModel.ReloadListBuffers();
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
 
         //****************************************************************************************
@@ -1662,9 +1704,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -1836,9 +1878,9 @@ namespace MapViewPallet.MiniForm
                 }
                 return result;
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
                 return -5;
             }
 
@@ -1909,9 +1951,9 @@ namespace MapViewPallet.MiniForm
                 }
                 UpdateTab4(true);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -2075,9 +2117,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }

@@ -28,6 +28,8 @@ namespace MapViewPallet.MiniForm
     /// </summary>
     public partial class Statistics : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         StatisticsModel statisticsModel;
 
         public Statistics(string cultureName = null)
@@ -87,13 +89,21 @@ namespace MapViewPallet.MiniForm
 
         private void Statistics_Loaded(object sender, RoutedEventArgs e)
         {
-            statisticsModel.ReloadListProduct();
-            statisticsModel.ReloadListProductDetail();
-            statisticsModel.ReloadListOperationType();
-            statisticsModel.ReloadListRobot(0);
-            statisticsModel.ReloadListDevice();
-            statisticsModel.ReloadListBuffer();
-            statisticsModel.ReloadListTimeWork();
+            try
+            {
+                statisticsModel.ReloadListProduct();
+                statisticsModel.ReloadListProductDetail();
+                statisticsModel.ReloadListOperationType();
+                statisticsModel.ReloadListRobot(0);
+                statisticsModel.ReloadListDevice();
+                statisticsModel.ReloadListBuffer();
+                statisticsModel.ReloadListTimeWork();
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
         
 
@@ -105,42 +115,66 @@ namespace MapViewPallet.MiniForm
 
         private void CmbProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int productDetail = -1;
-            if (cmbProductDetail.SelectedValue != null && cmbProductDetail.SelectedValue.ToString() != "")
+            try
             {
-                productDetail = int.Parse(cmbProductDetail.SelectedValue.ToString());
+                int productDetail = -1;
+                if (cmbProductDetail.SelectedValue != null && cmbProductDetail.SelectedValue.ToString() != "")
+                {
+                    productDetail = int.Parse(cmbProductDetail.SelectedValue.ToString());
+                }
+                statisticsModel.ReloadListProductDetail();
+                if (productDetail != -1)
+                {
+                    cmbProductDetail.SelectedValue = productDetail;
+                }
             }
-            statisticsModel.ReloadListProductDetail();
-            if (productDetail != -1)
+            catch (Exception ex)
             {
-                cmbProductDetail.SelectedValue = productDetail;
+                logFile.Error(ex.Message);
             }
+            
         }
 
         private void CmbDevice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int product = -1;
-            if (cmbProduct.SelectedValue != null && cmbProduct.SelectedValue.ToString() != "")
+            try
             {
-                product = int.Parse(cmbProduct.SelectedValue.ToString());
+                int product = -1;
+                if (cmbProduct.SelectedValue != null && cmbProduct.SelectedValue.ToString() != "")
+                {
+                    product = int.Parse(cmbProduct.SelectedValue.ToString());
+                }
+                statisticsModel.ReloadListProduct();
+                if (product != -1)
+                {
+                    cmbProduct.SelectedValue = product;
+                }
             }
-            statisticsModel.ReloadListProduct();
-            if (product != -1)
+            catch (Exception ex)
             {
-                cmbProduct.SelectedValue = product;
+                logFile.Error(ex.Message);
             }
+            
         }
 
         private void CmbShift_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbShift.SelectedValue != null && int.Parse(cmbShift.SelectedValue.ToString()) > 0)
+            try
             {
-                dtpActiveDate.IsEnabled = true;
+                if (cmbShift.SelectedValue != null && int.Parse(cmbShift.SelectedValue.ToString()) > 0)
+                {
+                    dtpActiveDate.IsEnabled = true;
+                }
+                else
+                {
+                    dtpActiveDate.IsEnabled = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                dtpActiveDate.IsEnabled = false;
+                logFile.Error(ex.Message);
             }
+            
         }
         
 
@@ -303,6 +337,7 @@ namespace MapViewPallet.MiniForm
             catch (System.Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
+                logFile.Error(ex.Message);
             }
             finally
             {
@@ -315,21 +350,6 @@ namespace MapViewPallet.MiniForm
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
-            //Console.WriteLine(grvReportRobotProcess.DataContext);
-            //var rows = GetDataGridRows(grvReportRobotProcess);
-
-            //foreach (DataGridRow r in rows)
-            //{
-            //    //   DataRowView rv = (DataRowView)r.Item;
-            //    foreach (DataGridColumn column in grvReportRobotProcess.Columns)
-            //    {
-            //        if (column.GetCellContent(r) is TextBlock)
-            //        {
-            //            TextBlock cellContent = column.GetCellContent(r) as TextBlock;
-            //            System.Windows.MessageBox.Show(cellContent.Text);
-            //        }
-            //    }
-            //}
             string test = GetCellValue(grvReportRobotProcess, 0, 0);
             string test2 = GetCellValue(grvReportRobotProcess, 1, 0);
             string test3 = GetCellValue(grvReportRobotProcess, 2, 0);
@@ -349,9 +369,17 @@ namespace MapViewPallet.MiniForm
 
         private void GrvReportRobotProcess_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            txtDetail.Text = "";
-            Console.WriteLine(e.ToString());
-            statisticsModel.loadDetail();
+            try
+            {
+                txtDetail.Text = "";
+                Console.WriteLine(e.ToString());
+                statisticsModel.loadDetail();
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
 
         public string GetCellValue(System.Windows.Controls.DataGrid datagrid, int row, int column)

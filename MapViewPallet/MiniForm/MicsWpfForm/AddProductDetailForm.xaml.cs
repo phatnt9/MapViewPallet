@@ -17,6 +17,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     /// </summary>
     public partial class AddProductDetailForm : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public class AddProductDetailModel : NotifyUIBase
         {
             private string pProductDetailNameDuplicate = "Ready";
@@ -121,9 +123,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 devicesManagement.UpdateTab3(false);
                 productDetailNametb.Focus();
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }

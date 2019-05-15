@@ -21,6 +21,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     /// </summary>
     public partial class SetupIpAndPort : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private static readonly Regex _ipRegex = new Regex(
             @"^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\." +
             @"(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\." +
@@ -39,10 +41,17 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void SetupIpAndPort_Loaded(object sender, RoutedEventArgs e)
         {
-            tb_ip.Text = Properties.Settings.Default.serverIp;
-            tb_port.Text = Properties.Settings.Default.serverPort;
-            tb_serverRobotip.Text = Properties.Settings.Default.serverReturnIp;
-            tb_ip.Focus();
+            try
+            {
+                tb_ip.Text = Properties.Settings.Default.serverIp;
+                tb_port.Text = Properties.Settings.Default.serverPort;
+                tb_serverRobotip.Text = Properties.Settings.Default.serverReturnIp;
+                tb_ip.Focus();
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
         }
 
         public void ApplyLanguage(string cultureName = null)
@@ -118,26 +127,34 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void Btn_save_Click(object sender, RoutedEventArgs e)
         {
-            if (IsValidateIP(tb_ip.Text))
+            try
             {
-                Properties.Settings.Default.serverIp = tb_ip.Text;
-                Properties.Settings.Default.Save();
-            }
-            if (IsValidateIP(tb_serverRobotip.Text))
-            {
-                Properties.Settings.Default.serverReturnIp = tb_serverRobotip.Text;
-                Properties.Settings.Default.Save();
-            }
-            if (IsValidatePort(tb_port.Text))
-            {
-                Properties.Settings.Default.serverPort = tb_port.Text;
-                Properties.Settings.Default.Save();
-            }
+                if (IsValidateIP(tb_ip.Text))
+                {
+                    Properties.Settings.Default.serverIp = tb_ip.Text;
+                    Properties.Settings.Default.Save();
+                }
+                if (IsValidateIP(tb_serverRobotip.Text))
+                {
+                    Properties.Settings.Default.serverReturnIp = tb_serverRobotip.Text;
+                    Properties.Settings.Default.Save();
+                }
+                if (IsValidatePort(tb_port.Text))
+                {
+                    Properties.Settings.Default.serverPort = tb_port.Text;
+                    Properties.Settings.Default.Save();
+                }
 
-            Console.WriteLine(Properties.Settings.Default.serverIp);
-            Console.WriteLine(Properties.Settings.Default.serverPort);
-            Console.WriteLine(Properties.Settings.Default.serverReturnIp);
-            Close();
+                Console.WriteLine(Properties.Settings.Default.serverIp);
+                Console.WriteLine(Properties.Settings.Default.serverPort);
+                Console.WriteLine(Properties.Settings.Default.serverReturnIp);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
     }
 }

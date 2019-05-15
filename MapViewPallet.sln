@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapViewPallet", "MapViewPallet\MapViewPallet.csproj", "{F55558F8-B36E-4CFA-AF1E-7009EBF32799}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WarehouseManagementService", "Setup Project\WarehouseManagementService\WarehouseManagementService.vdproj", "{43626816-770E-4F81-AC77-D89E41126F00}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup Project\Setup\Setup.vdproj", "{9C008C58-E8E6-4874-A2D6-4E977943C69A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +17,8 @@ Global
 		{F55558F8-B36E-4CFA-AF1E-7009EBF32799}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F55558F8-B36E-4CFA-AF1E-7009EBF32799}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F55558F8-B36E-4CFA-AF1E-7009EBF32799}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43626816-770E-4F81-AC77-D89E41126F00}.Debug|Any CPU.ActiveCfg = Debug
-		{43626816-770E-4F81-AC77-D89E41126F00}.Release|Any CPU.ActiveCfg = Release
+		{9C008C58-E8E6-4874-A2D6-4E977943C69A}.Debug|Any CPU.ActiveCfg = Debug
+		{9C008C58-E8E6-4874-A2D6-4E977943C69A}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

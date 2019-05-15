@@ -19,6 +19,7 @@ namespace MapViewPallet.MiniForm
 
     public class PlanControlModel 
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public ListCollectionView GroupedDevices_S1 { get; private set; }
         public ListCollectionView GroupedDevices_S2 { get; private set; }
@@ -109,162 +110,176 @@ namespace MapViewPallet.MiniForm
 
         public void CreateListPlansFromShift(DateTime selectedDate,int selectedShift)
         {
-            if (deviceList.GetDevicesList(planControl))
+            try
             {
-                
+                if (deviceList.GetDevicesList(planControl))
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
             }
         }
 
         public void LoadListPlanToDataGrid()
         {
-            DateTime selectedDate = (DateTime)planControl.pCalendar.SelectedDate;
-            int selectedShift = planControl.TabControlShift.SelectedIndex + 1;
-            string date = selectedDate.Year + "-" + selectedDate.Month.ToString("00.") + "-" + selectedDate.Day.ToString("00.");
-            List<Plan> plansTemp = new List<Plan>();
-
-            List<Plan> checkPlansList = CheckPlans(selectedShift, selectedDate);
-
-            switch (DateTime.Now.Date.CompareTo(selectedDate.Date))
+            try
             {
-                case -1:
-                    {
-                        //Console.WriteLine("Ngay hien tai nho hon ngay duoc chon_Aka ngay hom sau");
-                        goto case 0;
-                    }
-                case 0:
-                    {
-                        //Console.WriteLine("Ngay hien tai bang ngay duoc chon_Aka ngay hom nay");
-                        foreach (dtDevice device in deviceList.listDevices)
+                DateTime selectedDate = (DateTime)planControl.pCalendar.SelectedDate;
+                int selectedShift = planControl.TabControlShift.SelectedIndex + 1;
+                string date = selectedDate.Year + "-" + selectedDate.Month.ToString("00.") + "-" + selectedDate.Day.ToString("00.");
+                List<Plan> plansTemp = new List<Plan>();
+
+                List<Plan> checkPlansList = CheckPlans(selectedShift, selectedDate);
+
+                switch (DateTime.Now.Date.CompareTo(selectedDate.Date))
+                {
+                    case -1:
                         {
-                            foreach (dtDeviceProduct product in device.deviceProducts)
+                            //Console.WriteLine("Ngay hien tai nho hon ngay duoc chon_Aka ngay hom sau");
+                            goto case 0;
+                        }
+                    case 0:
+                        {
+                            //Console.WriteLine("Ngay hien tai bang ngay duoc chon_Aka ngay hom nay");
+                            foreach (dtDevice device in deviceList.listDevices)
                             {
-                                Plan tempOpe = new Plan();
-                                tempOpe.creUsrId = Global_Object.userLogin;
-                                tempOpe.creDt = "";
-                                tempOpe.updUsrId = Global_Object.userLogin;
-                                tempOpe.updDt = "";
-                                tempOpe.planId = 0;
-                                tempOpe.palletAmount = 0;
-                                tempOpe.deviceProductId = product.deviceProductId;
-                                tempOpe.timeWorkId = selectedShift;
-                                tempOpe.activeDate = date;
-                                tempOpe.deviceId = device.deviceId;
-                                tempOpe.deviceName = device.deviceName;
-                                tempOpe.productId = product.productId;
-                                tempOpe.productName = product.productName;
-                                tempOpe.listProductDetails = product.productDetails;
-                                if (product.productDetails.Count > 0)
+                                foreach (dtDeviceProduct product in device.deviceProducts)
                                 {
-                                    tempOpe.productDetailId = product.productDetails.First().productDetailId;
-                                }
-
-                                if (checkPlansList.Count != 0)
-                                {
-                                    bool isPlaned = false;
-                                    foreach (Plan tempPlan in checkPlansList)
+                                    Plan tempOpe = new Plan();
+                                    tempOpe.creUsrId = Global_Object.userLogin;
+                                    tempOpe.creDt = "";
+                                    tempOpe.updUsrId = Global_Object.userLogin;
+                                    tempOpe.updDt = "";
+                                    tempOpe.planId = 0;
+                                    tempOpe.palletAmount = 0;
+                                    tempOpe.deviceProductId = product.deviceProductId;
+                                    tempOpe.timeWorkId = selectedShift;
+                                    tempOpe.activeDate = date;
+                                    tempOpe.deviceId = device.deviceId;
+                                    tempOpe.deviceName = device.deviceName;
+                                    tempOpe.productId = product.productId;
+                                    tempOpe.productName = product.productName;
+                                    tempOpe.listProductDetails = product.productDetails;
+                                    if (product.productDetails.Count > 0)
                                     {
-                                        if (EqualPlan(tempOpe, tempPlan))
+                                        tempOpe.productDetailId = product.productDetails.First().productDetailId;
+                                    }
+
+                                    if (checkPlansList.Count != 0)
+                                    {
+                                        bool isPlaned = false;
+                                        foreach (Plan tempPlan in checkPlansList)
                                         {
-                                            //tempOpe.creUsrId = tempPlan.creUsrId;
-                                            //tempOpe.creDt = tempPlan.creDt;
-                                            //tempOpe.updUsrId = tempPlan.updUsrId;
-                                            //tempOpe.updDt = tempPlan.updDt;
+                                            if (EqualPlan(tempOpe, tempPlan))
+                                            {
+                                                //tempOpe.creUsrId = tempPlan.creUsrId;
+                                                //tempOpe.creDt = tempPlan.creDt;
+                                                //tempOpe.updUsrId = tempPlan.updUsrId;
+                                                //tempOpe.updDt = tempPlan.updDt;
 
-                                            tempOpe.planId = tempPlan.planId;
-                                            tempOpe.productDetailId = tempPlan.productDetailId;
-                                            tempOpe.palletAmount = tempPlan.palletAmount;
-                                            tempOpe.palletUse = tempPlan.palletUse;
-                                            tempOpe.palletMiss = tempPlan.palletMiss;
+                                                tempOpe.planId = tempPlan.planId;
+                                                tempOpe.productDetailId = tempPlan.productDetailId;
+                                                tempOpe.palletAmount = tempPlan.palletAmount;
+                                                tempOpe.palletUse = tempPlan.palletUse;
+                                                tempOpe.palletMiss = tempPlan.palletMiss;
 
-                                            tempOpe.deviceProductId = tempPlan.deviceProductId;
-                                            tempOpe.timeWorkId = tempPlan.timeWorkId;
-                                            tempOpe.activeDate = tempPlan.activeDate;
-                                            tempOpe.deviceId = tempPlan.deviceId;
-                                            tempOpe.productId = tempPlan.productId;
-                                            tempOpe.imageDeviceUrl = tempPlan.imageDeviceUrl;
-                                            tempOpe.imageProductUrl = tempPlan.imageProductUrl;
-                                            ////**************************************
-                                            isPlaned = true;
-                                            //break;
+                                                tempOpe.deviceProductId = tempPlan.deviceProductId;
+                                                tempOpe.timeWorkId = tempPlan.timeWorkId;
+                                                tempOpe.activeDate = tempPlan.activeDate;
+                                                tempOpe.deviceId = tempPlan.deviceId;
+                                                tempOpe.productId = tempPlan.productId;
+                                                tempOpe.imageDeviceUrl = tempPlan.imageDeviceUrl;
+                                                tempOpe.imageProductUrl = tempPlan.imageProductUrl;
+                                                ////**************************************
+                                                isPlaned = true;
+                                                //break;
+                                            }
+                                        }
+                                        if (isPlaned)
+                                        {
+                                            plansTemp.Add(tempOpe);
+                                        }
+                                        else if (product.checkStatus)
+                                        {
+                                            plansTemp.Add(tempOpe);
                                         }
                                     }
-                                    if (isPlaned)
+                                    else
                                     {
-                                        plansTemp.Add(tempOpe);
-                                    }
-                                    else if (product.checkStatus)
-                                    {
-                                        plansTemp.Add(tempOpe);
-                                    }
-                                }
-                                else
-                                {
-                                    if (product.checkStatus)
-                                    {
-                                        plansTemp.Add(tempOpe);
+                                        if (product.checkStatus)
+                                        {
+                                            plansTemp.Add(tempOpe);
+                                        }
                                     }
                                 }
+
                             }
-
+                            break;
                         }
-                        break;
-                    }
-                case 1:
-                    {
-                        //Console.WriteLine("Ngay hien tai lon hon ngay duoc chon_Aka ngay hom truoc");
-                        foreach (Plan item in checkPlansList)
+                    case 1:
                         {
-                            plansTemp.Add(item);
+                            //Console.WriteLine("Ngay hien tai lon hon ngay duoc chon_Aka ngay hom truoc");
+                            foreach (Plan item in checkPlansList)
+                            {
+                                plansTemp.Add(item);
+                            }
+                            break;
                         }
-                        break;
-                    }
-                default:
-                    {
-                        //Console.WriteLine("-100");
-                        break;
-                    }
+                    default:
+                        {
+                            //Console.WriteLine("-100");
+                            break;
+                        }
+                }
+
+                switch (selectedShift)
+                {
+
+                    /*
+                     * Có lỗi ở đây sau khi nhập palletAmount bằng chữ và nhấn save, crash, kết quả không được lưu vào
+                     * */
+                    case 1:
+                        {
+                            BasePlans1.Clear();
+                            AddPlans(plansTemp, BasePlans1);
+                            if (GroupedDevices_S1.IsEditingItem)
+                                GroupedDevices_S1.CommitEdit();
+                            if (GroupedDevices_S1.IsAddingNew)
+                                GroupedDevices_S1.CommitNew();
+                            GroupedDevices_S1.Refresh(); break;
+                        }
+                    case 2:
+                        {
+                            BasePlans2.Clear();
+                            AddPlans(plansTemp, BasePlans2);
+                            if (GroupedDevices_S2.IsEditingItem)
+                                GroupedDevices_S2.CommitEdit();
+                            if (GroupedDevices_S2.IsAddingNew)
+                                GroupedDevices_S2.CommitNew();
+                            GroupedDevices_S2.Refresh(); break;
+                        }
+                    case 3:
+                        {
+                            BasePlans3.Clear();
+                            AddPlans(plansTemp, BasePlans3);
+                            if (GroupedDevices_S3.IsEditingItem)
+                                GroupedDevices_S3.CommitEdit();
+                            if (GroupedDevices_S3.IsAddingNew)
+                                GroupedDevices_S3.CommitNew();
+                            GroupedDevices_S3.Refresh(); break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
             }
-
-            switch (selectedShift)
+            catch (Exception ex)
             {
-
-                /*
-                 * Có lỗi ở đây sau khi nhập palletAmount bằng chữ và nhấn save, crash, kết quả không được lưu vào
-                 * */
-                case 1:
-                    {
-                        BasePlans1.Clear();
-                        AddPlans(plansTemp, BasePlans1);
-                        if (GroupedDevices_S1.IsEditingItem)
-                            GroupedDevices_S1.CommitEdit();
-                        if (GroupedDevices_S1.IsAddingNew)
-                            GroupedDevices_S1.CommitNew();
-                        GroupedDevices_S1.Refresh(); break;
-                    }
-                case 2:
-                    {
-                        BasePlans2.Clear();
-                        AddPlans(plansTemp, BasePlans2);
-                        if (GroupedDevices_S2.IsEditingItem)
-                            GroupedDevices_S2.CommitEdit();
-                        if (GroupedDevices_S2.IsAddingNew)
-                            GroupedDevices_S2.CommitNew();
-                        GroupedDevices_S2.Refresh(); break;
-                    }
-                case 3:
-                    {
-                        BasePlans3.Clear();
-                        AddPlans(plansTemp, BasePlans3);
-                        if (GroupedDevices_S3.IsEditingItem)
-                            GroupedDevices_S3.CommitEdit();
-                        if (GroupedDevices_S3.IsAddingNew)
-                            GroupedDevices_S3.CommitNew();
-                        GroupedDevices_S3.Refresh(); break;
-                    }
-                default:
-                    {
-                        break;
-                    }
+                logFile.Error(ex.Message);
             }
         }
 
@@ -357,66 +372,82 @@ namespace MapViewPallet.MiniForm
                     return returnList;
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
                 return null;
             }
         }
 
         public void UpdateAllCurrentPlansToDb()
         {
-            if ((planControl.pCalendar.SelectedDate != null) &&
-                (planControl.TabControlShift.SelectedIndex >= 0) &&
-                (planControl.TabControlShift.IsLoaded))
+            try
             {
-                switch(planControl.TabControlShift.SelectedIndex)
+                if ((planControl.pCalendar.SelectedDate != null) &&
+                                (planControl.TabControlShift.SelectedIndex >= 0) &&
+                                (planControl.TabControlShift.IsLoaded))
                 {
-                    case 0: { UpdatePlansToDb(BasePlans1); break; }
-                    //case 1: { UpdatePlansToDb(BasePlans2); break; }
-                    //case 2: { UpdatePlansToDb(BasePlans3); break; }
-                    default: {  break; }
+                    switch (planControl.TabControlShift.SelectedIndex)
+                    {
+                        case 0: { UpdatePlansToDb(BasePlans1); break; }
+                        //case 1: { UpdatePlansToDb(BasePlans2); break; }
+                        //case 2: { UpdatePlansToDb(BasePlans3); break; }
+                        default: { break; }
+                    }
+                    System.Windows.Forms.MessageBox.Show(
+                        String.Format(Global_Object.messageSaveSucced),
+                        Global_Object.messageTitileInformation,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
-                System.Windows.Forms.MessageBox.Show(
-                    String.Format(Global_Object.messageSaveSucced), 
-                    Global_Object.messageTitileInformation, 
-                    MessageBoxButtons.OK, 
-                    MessageBoxIcon.Information);
             }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
 
         public void UpdatePlansToDb (List<Plan> listPlan)
         {
-            List<Plan> listPlanTemp = new List<Plan>();
-            foreach(Plan item in listPlan)
+            try
             {
-                if(item.planId != 0 || item.palletAmount != 0)
+                List<Plan> listPlanTemp = new List<Plan>();
+                foreach (Plan item in listPlan)
                 {
-                    listPlanTemp.Add(item);
+                    if (item.planId != 0 || item.palletAmount != 0)
+                    {
+                        listPlanTemp.Add(item);
+                    }
+
                 }
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/insertUpdatePlan");
+                request.Method = "POST";
+                request.ContentType = @"application/json";
 
+                string jsonData = JsonConvert.SerializeObject(listPlanTemp);
+
+                int result = 0;
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int.TryParse(reader.ReadToEnd(), out result);
+                }
             }
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/insertUpdatePlan");
-            request.Method = "POST";
-            request.ContentType = @"application/json";
-
-            string jsonData = JsonConvert.SerializeObject(listPlanTemp);
-
-            int result = 0;
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
+            catch (Exception ex)
             {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
+                logFile.Error(ex.Message);
             }
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
-                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                int.TryParse(reader.ReadToEnd(), out result);
-            }
+            
 
         }
 
@@ -463,9 +494,9 @@ namespace MapViewPallet.MiniForm
                     int.TryParse(reader.ReadToEnd(), out result);
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 

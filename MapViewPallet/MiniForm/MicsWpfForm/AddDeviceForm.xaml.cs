@@ -16,6 +16,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     /// </summary>
     public partial class AddDeviceForm : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public class AddDeviceModel : NotifyUIBase
         {
             private string pDeviceNameDuplicate = "Ready";
@@ -124,9 +126,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 }
                 devicesManagement.UpdateTab1(true);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }

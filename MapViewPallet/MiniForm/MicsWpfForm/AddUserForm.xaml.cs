@@ -36,6 +36,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     /// </summary>
     public partial class AddUserForm : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public bool flgEdit;
         dtUser userEdit;
 
@@ -85,75 +87,99 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void CmbAuthor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Console.WriteLine((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString());
-            if (cmbAuthor.SelectedItem == null)
+            try
             {
-                return;
-            }
-            cmbDevice.IsEnabled = false;
-            //if ((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString() == "3")
-
-            //if (((cmbAuthor.SelectedValue==null)? (cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString(): cmbAuthor.SelectedValue.ToString()) == "3")
-            if ((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString() == "3")
-            {
-                cmbDevice.IsEnabled = true;
-            }
-            else
-            {
-                if (cmbDevice.SelectedIndex > 0)
+                Console.WriteLine((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString());
+                if (cmbAuthor.SelectedItem == null)
                 {
-                    cmbDevice.SelectedIndex = 0;
+                    return;
+                }
+                cmbDevice.IsEnabled = false;
+                //if ((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString() == "3")
+
+                //if (((cmbAuthor.SelectedValue==null)? (cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString(): cmbAuthor.SelectedValue.ToString()) == "3")
+                if ((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString() == "3")
+                {
+                    cmbDevice.IsEnabled = true;
+                }
+                else
+                {
+                    if (cmbDevice.SelectedIndex > 0)
+                    {
+                        cmbDevice.SelectedIndex = 0;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
 
         private void AddUserForm_Loaded(object sender, RoutedEventArgs e)
         {
-            CenterWindowOnScreen();
-            loadAuthor();
-            loadDevice();
+            try
+            {
+                CenterWindowOnScreen();
+                loadAuthor();
+                loadDevice();
 
-            if (flgEdit)
-            {
-                //this.Title = "Tùy chỉnh";
-                //functionTextBlock.Text = "Tùy chỉnh";
-                this.userNametb.Text = (userManagement.UsersListDg.SelectedItem as dtUser).userName.ToString();
-                this.userNametb.IsReadOnly = true;
-                cmbAuthor.SelectedValue = int.Parse((userManagement.UsersListDg.SelectedItem as dtUser).userAuthor.ToString());
-                cmbDevice.SelectedValue = (userManagement.UsersListDg.SelectedItem as dtUser).deviceId.ToString();
+                if (flgEdit)
+                {
+                    //this.Title = "Tùy chỉnh";
+                    //functionTextBlock.Text = "Tùy chỉnh";
+                    this.userNametb.Text = (userManagement.UsersListDg.SelectedItem as dtUser).userName.ToString();
+                    this.userNametb.IsReadOnly = true;
+                    cmbAuthor.SelectedValue = int.Parse((userManagement.UsersListDg.SelectedItem as dtUser).userAuthor.ToString());
+                    cmbDevice.SelectedValue = (userManagement.UsersListDg.SelectedItem as dtUser).deviceId.ToString();
+                }
+                else
+                {
+                    this.userNametb.IsReadOnly = false;
+                    //this.Title = "Thêm mới";
+                    //functionTextBlock.Text = "Thêm mới";
+                }
+                userNametb.Focus();
             }
-            else
+            catch (Exception ex)
             {
-                this.userNametb.IsReadOnly = false;
-                //this.Title = "Thêm mới";
-                //functionTextBlock.Text = "Thêm mới";
+                logFile.Error(ex.Message);
             }
-            userNametb.Focus();
+            
         }
 
         private void loadAuthor()
         {
-            List<SimpleAuthor> dt = new List<SimpleAuthor>();
+            try
+            {
+                List<SimpleAuthor> dt = new List<SimpleAuthor>();
 
-            if (Global_Object.userAuthor == 0)
-            {
-                dt.Add(new SimpleAuthor(){userAuthor = 1,userAuthorName = "Admin",});
-                dt.Add(new SimpleAuthor(){userAuthor = 2,userAuthorName = "Head of department", });
-                dt.Add(new SimpleAuthor(){userAuthor = 3,userAuthorName = "Worker", });
-                dt.Add(new SimpleAuthor(){userAuthor = 4,userAuthorName = "Forklift", });
+                if (Global_Object.userAuthor == 0)
+                {
+                    dt.Add(new SimpleAuthor() { userAuthor = 1, userAuthorName = "Admin", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 2, userAuthorName = "Head of department", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
+                }
+                else if (Global_Object.userAuthor == 1)
+                {
+                    dt.Add(new SimpleAuthor() { userAuthor = 2, userAuthorName = "Head of department", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
+                }
+                else if (Global_Object.userAuthor == 2)
+                {
+                    dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
+                }
+                cmbAuthor.ItemsSource = dt;
             }
-            else if (Global_Object.userAuthor == 1)
+            catch (Exception ex)
             {
-                dt.Add(new SimpleAuthor() { userAuthor = 2, userAuthorName = "Head of department", });
-                dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
-                dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
+                logFile.Error(ex.Message);
             }
-            else if (Global_Object.userAuthor == 2)
-            {
-                dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
-                dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
-            }
-            cmbAuthor.ItemsSource = dt;
+            
         }
 
         private void loadDevice()
@@ -195,11 +221,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 }
                 cmbDevice.ItemsSource = dt;
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         public bool ContainDevice(dtDevice tempOpe, List<dtDevice> List)
@@ -303,9 +329,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -316,12 +342,20 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void CenterWindowOnScreen()
         {
-            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-            double windowWidth = this.Width;
-            double windowHeight = this.Height;
-            this.Left = (screenWidth / 2) - (windowWidth / 2);
-            this.Top = (screenHeight / 2) - (windowHeight / 2);
+            try
+            {
+                double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+                double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+                double windowWidth = this.Width;
+                double windowHeight = this.Height;
+                this.Left = (screenWidth / 2) - (windowWidth / 2);
+                this.Top = (screenHeight / 2) - (windowHeight / 2);
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
     }
 }

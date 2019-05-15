@@ -13,6 +13,8 @@ namespace MapViewPallet.MiniForm
 {
     public class DevicesManagementModel : NotifyUIBase
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private string pStatusData;
         public string statusData { get => pStatusData; set { pStatusData = value; RaisePropertyChanged("statusData"); } }
 
@@ -147,9 +149,9 @@ namespace MapViewPallet.MiniForm
                         }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -204,9 +206,9 @@ namespace MapViewPallet.MiniForm
                     devicesManagement.ProductsListDg.SelectedItem = devicesManagement.ProductsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -267,9 +269,9 @@ namespace MapViewPallet.MiniForm
                     devicesManagement.BuffersListDg.SelectedItem = devicesManagement.BuffersListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -340,9 +342,9 @@ namespace MapViewPallet.MiniForm
                     devicesManagement.DeviceProductsListDg.SelectedItem = devicesManagement.DeviceProductsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -410,9 +412,9 @@ namespace MapViewPallet.MiniForm
                     devicesManagement.DeviceBuffersListDg.SelectedItem = devicesManagement.DeviceBuffersListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -474,9 +476,9 @@ namespace MapViewPallet.MiniForm
                     devicesManagement.ProductDetailsListDg.SelectedItem = devicesManagement.ProductDetailsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -549,9 +551,9 @@ namespace MapViewPallet.MiniForm
                     devicesManagement.PalletsListDg.SelectedItem = devicesManagement.PalletsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-
+                logFile.Error(ex.Message);
             }
         }
 
@@ -618,9 +620,9 @@ namespace MapViewPallet.MiniForm
                     devicesManagement.DevicePalletsListDg.SelectedItem = devicesManagement.DevicePalletsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
         

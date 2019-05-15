@@ -32,6 +32,7 @@ namespace MapViewPallet.MiniForm
         StationShape stationShape;
         StationEditorModel stationEditorModel;
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public StationEditor()
         {
@@ -94,16 +95,16 @@ namespace MapViewPallet.MiniForm
                     palletHasSubLine.Text = (palletData.pallet.hasSubLine != null) ? ((palletData.pallet.hasSubLine).ToString()) : "no";
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                logFile.Error(ex.Message);
             }
 
         }
 
         private void StationEditor_Loaded(object sender, RoutedEventArgs e)
         {
-            //try
+            try
             {
                 bufferNamelb.Content = stationShape.props.bufferDb.bufferName;
                 bufferMaxRowlb.Content = stationShape.props.bufferDb.maxRow;
@@ -130,11 +131,11 @@ namespace MapViewPallet.MiniForm
                     stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
                 }));
             }
-            //catch
+            catch (Exception ex)
             {
-
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void Btn_exit_Click(object sender, RoutedEventArgs e)
@@ -221,9 +222,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -316,9 +317,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -398,9 +399,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -456,11 +457,11 @@ namespace MapViewPallet.MiniForm
                     stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
                 }));
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -516,11 +517,11 @@ namespace MapViewPallet.MiniForm
                     stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
                 }));
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -572,11 +573,11 @@ namespace MapViewPallet.MiniForm
                     stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
                 }));
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -628,11 +629,11 @@ namespace MapViewPallet.MiniForm
                     stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
                 }));
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -644,25 +645,48 @@ namespace MapViewPallet.MiniForm
             try
             {
                 dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
-
-                dynamic postApiBody = new JObject();
-                postApiBody.userName = "WMS_Return";
-                postApiBody.productDetailId = pallet.productDetailId;
-                postApiBody.productDetailName = pallet.productDetailName;
-                postApiBody.productDetailName = pallet.productDetailName;
-                postApiBody.productId = pallet.productId;
-                //postApiBody.planId = pallet.planId;
-                postApiBody.deviceId = pallet.deviceId;
-                postApiBody.typeReq = 13;
-                string jsonData = JsonConvert.SerializeObject(postApiBody);
-
-
-                BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
-                bridgeClientRequest.PostCallAPI("http://"+ Properties.Settings.Default.serverReturnIp + ":12000", jsonData);
+                if ((stationShape.props.bufferDb.bufferReturn == false) && (pallet.palletStatus == "W"))
+                {
+                    bool sendToReturn = true;
+                    //Any pallet before needed send pallet need to be "Free"
+                    foreach (dtPallet palletItem in stationShape.props.bufferDb.pallets)
+                    {
+                        if ((palletItem.bay == pallet.bay) && (palletItem.row < pallet.row))
+                        {
+                            if (pallet.palletStatus != "F")
+                            {
+                                sendToReturn = false;
+                                Console.WriteLine("Khong cho phep Return!");
+                                break;
+                            }
+                        }
+                    }
+                    if (sendToReturn)
+                    {
+                        Console.WriteLine("Duoc phep Return!");
+                        dynamic postApiBody = new JObject();
+                        postApiBody.userName = "WMS_Return";
+                        postApiBody.bufferId = pallet.bufferId;
+                        postApiBody.productDetailId = pallet.productDetailId;
+                        postApiBody.productDetailName = pallet.productDetailName;
+                        postApiBody.productDetailName = pallet.productDetailName;
+                        postApiBody.productId = pallet.productId;
+                        //postApiBody.planId = pallet.planId;
+                        postApiBody.deviceId = pallet.deviceId;
+                        postApiBody.typeReq = 13;
+                        string jsonData = JsonConvert.SerializeObject(postApiBody);
+                        BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
+                        bridgeClientRequest.PostCallAPI("http://" + Properties.Settings.Default.serverReturnIp + ":12000", jsonData);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Khong cho phep Return!");
+                }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 

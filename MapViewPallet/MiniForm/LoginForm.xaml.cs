@@ -155,9 +155,9 @@ namespace MapViewPallet.MiniForm
                 }
 
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
 
         }

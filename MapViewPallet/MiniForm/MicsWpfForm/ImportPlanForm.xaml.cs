@@ -223,24 +223,34 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void btnSelectFile_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            try
             {
-                Title = "Browse Excel Files",
+                OpenFileDialog openFileDialog1 = new OpenFileDialog
+                {
+                    Title = "Browse Excel Files",
 
-                CheckFileExists = true,
-                CheckPathExists = true,
+                    CheckFileExists = true,
+                    CheckPathExists = true,
 
-                DefaultExt = "Excel",
-                Filter = "All Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx",
-                FilterIndex = 2,
-                RestoreDirectory = true                //ReadOnlyChecked = true,
-                //ShowReadOnly = true
-            };
+                    DefaultExt = "Excel",
+                    Filter = "All Excel Files (*.xls;*.xlsx)|*.xls;*.xlsx",
+                    FilterIndex = 2,
+                    RestoreDirectory = true                //ReadOnlyChecked = true,
+                                                           //ShowReadOnly = true
+                };
 
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                this.txtFile.Text = openFileDialog1.FileName;
+                if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    this.txtFile.Text = openFileDialog1.FileName;
+                    string folderPath = System.IO.Path.GetDirectoryName(openFileDialog1.FileName);
+                    Console.WriteLine("");
+                }
             }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            
         }
     }
 }
