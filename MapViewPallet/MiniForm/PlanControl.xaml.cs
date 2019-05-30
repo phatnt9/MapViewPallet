@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -41,6 +42,7 @@ namespace MapViewPallet.MiniForm
             DataContext = operation_model;
             pCalendar.Loaded += pCalendarLoaded;
             TabControlShift.SelectionChanged += TabControlShift_SelectionChanged;
+            Shift1Dgv.IsTextSearchEnabled = true;
 #if DEBUG
             System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Critical;
 #endif
@@ -79,9 +81,9 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-           
+
         }
-        
+
         private void TabControlShift_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -107,7 +109,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void PCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -134,10 +136,10 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
-        
-        
+
+
         /// <summary>
         /// -1: Ngày hôm trước trở đi, 0: Ngày hôm nay, 1: Ngày hôm sau trở đi
         /// </summary>
@@ -189,9 +191,9 @@ namespace MapViewPallet.MiniForm
                 logFile.Error(ex.Message);
                 return -5;
             }
-            
+
         }
-        
+
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -206,7 +208,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -229,7 +231,7 @@ namespace MapViewPallet.MiniForm
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
                 postApiBody.activeDate = activeDate;
-                postApiBody.timeWorkId = TabControlShift.SelectedIndex+1;
+                postApiBody.timeWorkId = TabControlShift.SelectedIndex + 1;
                 postApiBody.updUsrId = Global_Object.userLogin;
                 string jsonData = JsonConvert.SerializeObject(postApiBody);
                 System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
@@ -372,7 +374,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void Btn_Test_Click(object sender, RoutedEventArgs e)
@@ -394,6 +396,15 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //operation_model.FilterString = tb_searchPlan.Text.Trim();
+            var view = CollectionViewSource.GetDefaultView(operation_model.BasePlans1);
+            view.Filter = (o => (o as Plan).productDetailName.Contains((sender as System.Windows.Controls.TextBox).Text));
+            //view.Filter = PlansFilter;
+
         }
     }
 

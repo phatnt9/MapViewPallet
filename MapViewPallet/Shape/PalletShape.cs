@@ -1,7 +1,10 @@
 ﻿using MapViewPallet.MiniForm;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Net;
@@ -22,17 +25,24 @@ namespace MapViewPallet.Shape
 {
     public class PalletShape : Border
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private double palletMargin = 0.1; //metters
 
         private dtPallet pPallet;
         public dtPallet pallet { get => pPallet; set => pPallet = value; }
 
+
+        private dtBuffer pBuffer;
+        public dtBuffer buffer { get => pBuffer; set => pBuffer = value; }
+
         public string name = "";
         public TextBlock lbPallet;
         public TextBlock lbPallet2;
 
-        public PalletShape(string name)
+        public PalletShape(dtBuffer buffer,string name)
         {
+            this.buffer = buffer;
             pallet = new dtPallet();
             this.name = name;
             Name = name;
@@ -99,10 +109,15 @@ namespace MapViewPallet.Shape
             lockPallet.Header = "Lock";
             lockPallet.Click += LockPallet;
 
+            MenuItem returnPallet = new MenuItem();
+            returnPallet.Header = "Return";
+            returnPallet.Click += ReturnPallet;
+
 
             ContextMenu.Items.Add(putPallet);
             ContextMenu.Items.Add(freePallet);
             ContextMenu.Items.Add(lockPallet);
+            ContextMenu.Items.Add(returnPallet);
 
             // Event handler
             //MouseDown += PalletMouseDown;
@@ -110,81 +125,261 @@ namespace MapViewPallet.Shape
 
         }
 
+        private void ReturnPallet(object sender, RoutedEventArgs e)
+        {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
+            {
+                if (System.Windows.Forms.MessageBox.Show
+                        (
+                        string.Format("Do you want to return the selected {0}?", "Pallet"),
+                        Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
+                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
+                        )
+                {
+                    List<dtPallet> palletsList = new List<dtPallet>();
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                    request.Method = "POST";
+                    request.ContentType = @"application/json";
+                    dynamic postApiBody = new JObject();
+                    postApiBody.bufferId = pallet.bufferId;
+                    string jsonData = JsonConvert.SerializeObject(postApiBody);
+                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                    Byte[] byteArray = encoding.GetBytes(jsonData);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
+                    {
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        dataStream.Flush();
+                    }
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    using (Stream responseStream = response.GetResponseStream())
+                    {
+                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        string result = reader.ReadToEnd();
+                        DataTable pallets = JsonConvert.DeserializeObject<DataTable>(result);
+                        foreach (DataRow dr in pallets.Rows)
+                        {
+                            dtPallet tempPallet = new dtPallet
+                            {
+                                creUsrId = int.Parse(dr["creUsrId"].ToString()),
+                                creDt = dr["creDt"].ToString(),
+                                updUsrId = int.Parse(dr["updUsrId"].ToString()),
+                                updDt = dr["updDt"].ToString(),
+                                palletId = int.Parse(dr["palletId"].ToString()),
+                                deviceBufferId = int.Parse(dr["deviceBufferId"].ToString()),
+                                bufferId = int.Parse(dr["bufferId"].ToString()),
+                                planId = int.Parse(dr["planId"].ToString()),
+                                row = int.Parse(dr["row"].ToString()),
+                                bay = int.Parse(dr["bay"].ToString()),
+                                dataPallet = dr["dataPallet"].ToString(),
+                                palletStatus = dr["palletStatus"].ToString(),
+                                deviceId = int.Parse(dr["deviceId"].ToString()),
+                                deviceName = dr["deviceName"].ToString(),
+                                productId = int.Parse(dr["productId"].ToString()),
+                                productName = dr["productName"].ToString(),
+                                productDetailId = int.Parse(dr["productDetailId"].ToString()),
+                                productDetailName = dr["productDetailName"].ToString(),
+                            };
+                            if (!ContainPallet(tempPallet, palletsList))
+                            {
+                                palletsList.Add(tempPallet);
+                            }
+                        }
+                    }
+
+
+                    //Check if pallet is return able an then return it
+                    if ((buffer.bufferReturn == false) && (pallet.palletStatus == "W"))
+                    {
+                        bool sendToReturn = true;
+                        //Any pallet before needed send pallet need to be "Free"
+                        foreach (dtPallet palletItem in palletsList)
+                        {
+                            if ((palletItem.bay == pallet.bay) && (palletItem.row < pallet.row))
+                            {
+                                if (palletItem.palletStatus != "F")
+                                {
+                                    sendToReturn = false;
+                                    Console.WriteLine("Khong cho phep Return!");
+                                    break;
+                                }
+                            }
+                        }
+                        if (sendToReturn)
+                        {
+                            Console.WriteLine("Duoc phep Return!");
+                            dynamic postApiBody2 = new JObject();
+                            postApiBody2.userName = "WMS_Return";
+                            postApiBody2.bufferId = pallet.bufferId;
+                            postApiBody2.productDetailId = pallet.productDetailId;
+                            postApiBody2.productDetailName = pallet.productDetailName;
+                            postApiBody2.productDetailName = pallet.productDetailName;
+                            postApiBody2.productId = pallet.productId;
+                            //postApiBody2.planId = pallet.planId;
+                            postApiBody2.deviceId = pallet.deviceId;
+                            postApiBody2.typeReq = 13;
+                            string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
+                            BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
+                            bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
+
+                            string preStatus = pallet.palletStatus;
+                            pallet.palletStatus = "R";
+                            string jsonDataPallet = JsonConvert.SerializeObject(pallet);
+                            pallet.palletStatus = preStatus;
+
+                            HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                            request2.Method = "POST";
+                            request2.ContentType = "application/json";
+
+                            System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
+                            Byte[] byteArray2 = encoding2.GetBytes(jsonDataPallet);
+                            request2.ContentLength = byteArray2.Length;
+                            using (Stream dataStream = request2.GetRequestStream())
+                            {
+                                dataStream.Write(byteArray2, 0, byteArray2.Length);
+                                dataStream.Flush();
+                            }
+
+                            HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse;
+                            using (Stream responseStream = response2.GetResponseStream())
+                            {
+                                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                                int result = 0;
+                                int.TryParse(reader.ReadToEnd(), out result);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Khong cho phep Return!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+        }
+
+        public bool ContainPallet(dtPallet tempOpe, List<dtPallet> List)
+        {
+            foreach (dtPallet temp in List)
+            {
+                if (temp.palletId > 0)
+                {
+                    if (temp.palletId == tempOpe.palletId)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
         private void FreePallet(object sender, RoutedEventArgs e)
         {
-            string preStatus = pallet.palletStatus;
-            pallet.palletStatus = "F";
-            string jsonData = JsonConvert.SerializeObject(pallet);
-            pallet.palletStatus = preStatus;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
-            request.Method = "POST";
-            request.ContentType = "application/json";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
+            if (System.Windows.Forms.MessageBox.Show
+                        (string.Format("Do you want to free the selected {0}?", "Pallet"),
+                        Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
+                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
             {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
+                string preStatus = pallet.palletStatus;
+                pallet.palletStatus = "F";
+                string jsonData = JsonConvert.SerializeObject(pallet);
+                pallet.palletStatus = preStatus;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                request.Method = "POST";
+                request.ContentType = "application/json";
 
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                }
             }
+               
         }
 
         private void LockPallet(object sender, RoutedEventArgs e)
         {
-            string preStatus = pallet.palletStatus;
-            pallet.palletStatus = "L";
-            string jsonData = JsonConvert.SerializeObject(pallet);
-            pallet.palletStatus = preStatus;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
-            request.Method = "POST";
-            request.ContentType = "application/json";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
+            if (System.Windows.Forms.MessageBox.Show
+                        (string.Format("Do you want to lock the selected {0}?", "Pallet"),
+                        Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
+                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
             {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
+                string preStatus = pallet.palletStatus;
+                pallet.palletStatus = "L";
+                string jsonData = JsonConvert.SerializeObject(pallet);
+                pallet.palletStatus = preStatus;
 
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                }
             }
+                
         }
 
         private void PutPallet(object sender, RoutedEventArgs e)
         {
-            string preStatus = pallet.palletStatus;
-            pallet.palletStatus = "W";
-            string jsonData = JsonConvert.SerializeObject(pallet);
-            pallet.palletStatus = preStatus;
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
-            request.Method = "POST";
-            request.ContentType = "application/json";
-
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonData);
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
+            if (System.Windows.Forms.MessageBox.Show
+                        (string.Format("Do you want to put the selected {0}?", "Pallet"),
+                        Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
+                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
             {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();
-            }
+                string preStatus = pallet.palletStatus;
+                pallet.palletStatus = "W";
+                string jsonData = JsonConvert.SerializeObject(pallet);
+                pallet.palletStatus = preStatus;
 
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-            using (Stream responseStream = response.GetResponseStream())
-            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                }
             }
+                
         }
 
         private void PalletShape_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -327,6 +522,29 @@ namespace MapViewPallet.Shape
                                    if (replaceStatus)
                                    {
                                        Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#808080"));
+                                   }
+                                   break;
+                               }
+                           case "R":
+                               {
+                                   if (replaceProductDetailName)
+                                   {
+                                       if (lbPallet2 != null && pallet.productDetailName != null)
+                                       {
+                                           if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
+                                           {
+                                               lbPallet2.Text = pallet.productDetailName;
+                                           }
+                                           else
+                                           {
+                                               lbPallet2.Text = "";
+                                           }
+
+                                       }
+                                   }
+                                   if (replaceStatus)
+                                   {
+                                       Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFF00"));
                                    }
                                    break;
                                }

@@ -653,7 +653,7 @@ namespace MapViewPallet.MiniForm
                     {
                         if ((palletItem.bay == pallet.bay) && (palletItem.row < pallet.row))
                         {
-                            if (pallet.palletStatus != "F")
+                            if (palletItem.palletStatus != "F")
                             {
                                 sendToReturn = false;
                                 Console.WriteLine("Khong cho phep Return!");
@@ -677,6 +677,46 @@ namespace MapViewPallet.MiniForm
                         string jsonData = JsonConvert.SerializeObject(postApiBody);
                         BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
                         bridgeClientRequest.PostCallAPI("http://" + Properties.Settings.Default.serverReturnIp + ":12000", jsonData);
+
+                        pallet.palletStatus = "R";
+                        string jsonDataPallet = JsonConvert.SerializeObject(pallet);
+
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                        request.Method = "POST";
+                        request.ContentType = "application/json";
+
+                        System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                        Byte[] byteArray = encoding.GetBytes(jsonDataPallet);
+                        request.ContentLength = byteArray.Length;
+                        using (Stream dataStream = request.GetRequestStream())
+                        {
+                            dataStream.Write(byteArray, 0, byteArray.Length);
+                            dataStream.Flush();
+                        }
+
+                        HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                        using (Stream responseStream = response.GetResponseStream())
+                        {
+                            StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                            int result = 0;
+                            int.TryParse(reader.ReadToEnd(), out result);
+                            if (result == 1)
+                            {
+                                //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else if (result == -2)
+                            {
+                                // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
+                            {
+                                //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        Dispatcher.BeginInvoke(new ThreadStart(() =>
+                        {
+                            stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                        }));
                     }
                 }
                 else

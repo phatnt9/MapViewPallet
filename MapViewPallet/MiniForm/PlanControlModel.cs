@@ -17,9 +17,20 @@ using System.Diagnostics;
 namespace MapViewPallet.MiniForm
 {
 
-    public class PlanControlModel 
+    public class PlanControlModel : NotifyUIBase
     {
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private string _filterString;
+        public string FilterString
+        {
+            get { return _filterString; }
+            set
+            {
+                _filterString = value;
+                RaisePropertyChanged("FilterString");
+                GroupedDevices_S1.Refresh();
+            }
+        }
 
         public ListCollectionView GroupedDevices_S1 { get; private set; }
         public ListCollectionView GroupedDevices_S2 { get; private set; }
@@ -43,8 +54,22 @@ namespace MapViewPallet.MiniForm
             BasePlans2 = new List<Plan>();
             BasePlans3 = new List<Plan>();
             GroupedDevices_S1 = (ListCollectionView)CollectionViewSource.GetDefaultView(BasePlans1);
+            //GroupedDevices_S1.Filter = PlansFilter;
             GroupedDevices_S2 = (ListCollectionView)CollectionViewSource.GetDefaultView(BasePlans2);
             GroupedDevices_S3 = (ListCollectionView)CollectionViewSource.GetDefaultView(BasePlans3);
+        }
+
+
+
+        private bool PlansFilter(object item)
+        {
+            Plan plan = item as Plan;
+            if (plan.productDetailName != null)
+            {
+                return plan.productDetailName.Contains(_filterString);
+            }
+
+            return false;
         }
 
         public bool ContainPlan(Plan tempOpe, List<Plan> List)
@@ -163,6 +188,19 @@ namespace MapViewPallet.MiniForm
                                     tempOpe.productId = product.productId;
                                     tempOpe.productName = product.productName;
                                     tempOpe.listProductDetails = product.productDetails;
+                                    tempOpe.productDetailName = "";
+                                    if (tempOpe.listProductDetails.Count != 0)
+                                    {
+                                        for (int i = 0; i < tempOpe.listProductDetails.Count; i++)
+                                        {
+                                            if (!(string.IsNullOrEmpty(tempOpe.listProductDetails[i].productDetailName)) && !(tempOpe.listProductDetails[i].productDetailName.Trim() == ""))
+                                            {
+                                                tempOpe.productDetailName = tempOpe.listProductDetails[i].productDetailName;
+                                                break;
+                                            }
+                                        }
+                                        tempOpe.productDetailName = tempOpe.listProductDetails[0].productDetailName;
+                                    }
                                     if (product.productDetails.Count > 0)
                                     {
                                         tempOpe.productDetailId = product.productDetails.First().productDetailId;

@@ -169,7 +169,7 @@ namespace MapViewPallet.Shape
                     {
                         dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
                         //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
-                        PalletShape palletTemp = new PalletShape(
+                        PalletShape palletTemp = new PalletShape(props.bufferDb,
                             "Pallet"
                             + "x" +
                             ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
@@ -283,7 +283,7 @@ namespace MapViewPallet.Shape
 
                                 dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
                                 //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
-                                PalletShape palletTemp = new PalletShape(
+                                PalletShape palletTemp = new PalletShape(props.bufferDb,
                                     "Pallet"
                                     + "x" +
                                     ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
