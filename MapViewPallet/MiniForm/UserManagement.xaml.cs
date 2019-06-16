@@ -121,7 +121,7 @@ namespace MapViewPallet.MiniForm
 
                     string jsonData = JsonConvert.SerializeObject(listDelete);
 
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/deleteListUser");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "user/deleteListUser");
                     request.Method = "DELETE";
                     request.ContentType = "application/json";
 

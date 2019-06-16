@@ -94,7 +94,7 @@ namespace MapViewPallet.MiniForm
             }));
             Stopwatch stopwatch = Stopwatch.StartNew();
             listDevices.Clear();
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevice");
             request.Method = "GET";
             request.ContentType = @"application/json";
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;

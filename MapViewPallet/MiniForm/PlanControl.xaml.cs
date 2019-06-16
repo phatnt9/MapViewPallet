@@ -226,7 +226,7 @@ namespace MapViewPallet.MiniForm
             {
                 DateTime selectedDate = (DateTime)pCalendar.SelectedDate;
                 string activeDate = selectedDate.Year + "-" + selectedDate.Month.ToString("00.") + "-" + selectedDate.Day.ToString("00.");
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/createPlanPallet");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "plan/createPlanPallet");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -268,7 +268,7 @@ namespace MapViewPallet.MiniForm
                 listPlanDelete.Add(plan);
                 string jsonData = JsonConvert.SerializeObject(listPlanDelete);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/deleteListPlan");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "plan/deleteListPlan");
                 request.Method = "DELETE";
                 request.ContentType = "application/json";
 
@@ -337,7 +337,7 @@ namespace MapViewPallet.MiniForm
                 postApiBody.palletAmount = 1;
                 string jsonData = JsonConvert.SerializeObject(postApiBody);
                 Console.WriteLine(jsonData);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/createPlanPallet");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "plan/createPlanPallet");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -401,7 +401,7 @@ namespace MapViewPallet.MiniForm
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             //operation_model.FilterString = tb_searchPlan.Text.Trim();
-            var view = CollectionViewSource.GetDefaultView(operation_model.BasePlans1);
+            var view = operation_model.GroupedDevices_S1;
             view.Filter = (o => (o as Plan).productDetailName.Contains((sender as System.Windows.Controls.TextBox).Text));
             //view.Filter = PlansFilter;
 

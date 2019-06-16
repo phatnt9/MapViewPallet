@@ -78,7 +78,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 devicesList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevice");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -165,7 +165,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 productsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProduct");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListProduct");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -222,7 +222,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 buffersList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListBuffer");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -285,7 +285,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 deviceProductsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListDeviceProductAllByDeviceId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListDeviceProductAllByDeviceId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -358,7 +358,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 deviceBuffersList.Clear(); 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListDeviceBufferAllByDeviceId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListDeviceBufferAllByDeviceId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -428,7 +428,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 productDetailsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProductDetailByProductId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListProductDetailByProductId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -492,7 +492,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 palletsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/getListPalletBufferId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -568,7 +568,7 @@ namespace MapViewPallet.MiniForm
             {
 
                 devicePalletsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevicePallet");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevicePallet");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dtDevice device = new dtDevice();

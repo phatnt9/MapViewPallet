@@ -149,7 +149,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     return;
                 }
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/insertBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/insertBuffer");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dtBuffer buffer = new dtBuffer();

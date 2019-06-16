@@ -81,7 +81,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             }
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProduct");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/insertUpdateProduct");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dtProduct productNew = new dtProduct();

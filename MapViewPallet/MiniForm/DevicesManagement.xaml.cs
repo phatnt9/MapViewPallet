@@ -192,7 +192,7 @@ namespace MapViewPallet.MiniForm
                 }
                 dtDevice device = GetDataSave(uncheckAll);
                 string jsonData = JsonConvert.SerializeObject(device);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateDevice");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/updateDevice");
                 request.Method = "POST";
                 request.ContentType = "application/json";
                 System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
@@ -311,7 +311,7 @@ namespace MapViewPallet.MiniForm
 
                             string jsonData = JsonConvert.SerializeObject(devices);
 
-                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateListNameDevice");
+                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/updateListNameDevice");
                             request.Method = "POST";
                             request.ContentType = "application/json";
 
@@ -453,7 +453,7 @@ namespace MapViewPallet.MiniForm
                         listDelete.Add(device);
                         string jsonData = JsonConvert.SerializeObject(listDelete);
 
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/deleteDevice");
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/deleteDevice");
                         request.Method = "DELETE";
                         request.ContentType = "application/json";
 
@@ -543,7 +543,7 @@ namespace MapViewPallet.MiniForm
 
                 string jsonData = JsonConvert.SerializeObject(devices);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/updateListNameDevice");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/updateListNameDevice");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -687,7 +687,7 @@ namespace MapViewPallet.MiniForm
                 if (ProductsListDg.SelectedItem != null)
                 {
                     dtProduct selectedProduct = (ProductsListDg.SelectedItem as dtProduct);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProduct");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/insertUpdateProduct");
                     request.Method = "POST";
                     request.ContentType = @"application/json";
 
@@ -751,7 +751,7 @@ namespace MapViewPallet.MiniForm
                 if (ProductsListDg.SelectedItem != null)
                 {
                     dtProductDetail selectedProductDetail = (ProductDetailsListDg.SelectedItem as dtProductDetail);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/insertUpdateProductDetail");
                     request.Method = "POST";
                     request.ContentType = @"application/json";
 
@@ -861,7 +861,7 @@ namespace MapViewPallet.MiniForm
                         MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
                         )
                     {
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/deleteProduct");
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/deleteProduct");
                         request.Method = "DELETE";
                         request.ContentType = @"application/json";
 
@@ -954,7 +954,7 @@ namespace MapViewPallet.MiniForm
                         MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
                         )
                     {
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/deleteProductDetail");
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/deleteProductDetail");
                         request.Method = "DELETE";
                         request.ContentType = @"application/json";
 
@@ -1040,7 +1040,7 @@ namespace MapViewPallet.MiniForm
 
                 string jsonData = JsonConvert.SerializeObject(products);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateListProduct");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/insertUpdateListProduct");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -1154,7 +1154,7 @@ namespace MapViewPallet.MiniForm
 
                 string jsonData = JsonConvert.SerializeObject(buffers);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/updateListBuffer");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -1287,7 +1287,7 @@ namespace MapViewPallet.MiniForm
 
                     string jsonData = JsonConvert.SerializeObject(listDelete);
 
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/deleteListBuffer");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/deleteListBuffer");
                     request.Method = "DELETE";
                     request.ContentType = "application/json";
 
@@ -1377,7 +1377,7 @@ namespace MapViewPallet.MiniForm
 
                 string jsonData = JsonConvert.SerializeObject(buffers);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/updateListBuffer");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -1445,7 +1445,7 @@ namespace MapViewPallet.MiniForm
 
                 string jsonData = JsonConvert.SerializeObject(pallets);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updateListPalletData");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updateListPalletData");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -1672,7 +1672,7 @@ namespace MapViewPallet.MiniForm
 
                     string jsonData = JsonConvert.SerializeObject(devicePallets);
 
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/insertUpdateDevicePallet");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/insertUpdateDevicePallet");
                     request.Method = "POST";
                     request.ContentType = "application/json";
 
@@ -1775,7 +1775,7 @@ namespace MapViewPallet.MiniForm
             }
             if (files.Count > 0)
             {
-                return UploadFilesToRemoteUrl(Global_Object.url + "upload", files);
+                return UploadFilesToRemoteUrl(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "upload", files);
             }
             return 1;
         }
@@ -1792,7 +1792,7 @@ namespace MapViewPallet.MiniForm
             }
             if (files.Count > 0)
             {
-                return UploadFilesToRemoteUrl(Global_Object.url + "upload", files);
+                return UploadFilesToRemoteUrl(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "upload", files);
             }
             return 1;
         }
@@ -1917,7 +1917,7 @@ namespace MapViewPallet.MiniForm
 
                 string jsonData = JsonConvert.SerializeObject(buffers);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/updateListBuffer");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -2084,7 +2084,7 @@ namespace MapViewPallet.MiniForm
 
                     string jsonData = JsonConvert.SerializeObject(devicePallets);
 
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/insertUpdateDevicePallet");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/insertUpdateDevicePallet");
                     request.Method = "POST";
                     request.ContentType = "application/json";
 

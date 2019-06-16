@@ -122,7 +122,7 @@ namespace MapViewPallet.MiniForm
                 user.userName = this.userNametb.Text;
                 user.userPassword = this.passwordtb.Password;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/getUserInfo");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "user/getUserInfo");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 string jsonData = JsonConvert.SerializeObject(user);

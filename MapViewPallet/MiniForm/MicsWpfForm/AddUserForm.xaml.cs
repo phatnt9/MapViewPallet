@@ -191,7 +191,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             try
             {
                 List<dtDevice> dt = new List<dtDevice>();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevice");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -292,7 +292,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 user.creUsrId = Global_Object.userLogin;
                 user.updUsrId = Global_Object.userLogin;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/insertUpdateUserInfo");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "user/insertUpdateUserInfo");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 string jsonData = JsonConvert.SerializeObject(user);

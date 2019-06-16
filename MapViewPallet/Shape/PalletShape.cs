@@ -141,7 +141,7 @@ namespace MapViewPallet.Shape
                         )
                 {
                     List<dtPallet> palletsList = new List<dtPallet>();
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/getListPalletBufferId");
                     request.Method = "POST";
                     request.ContentType = @"application/json";
                     dynamic postApiBody = new JObject();
@@ -231,7 +231,7 @@ namespace MapViewPallet.Shape
                             string jsonDataPallet = JsonConvert.SerializeObject(pallet);
                             pallet.palletStatus = preStatus;
 
-                            HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                            HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
                             request2.Method = "POST";
                             request2.ContentType = "application/json";
 
@@ -295,7 +295,7 @@ namespace MapViewPallet.Shape
                 pallet.palletStatus = "F";
                 string jsonData = JsonConvert.SerializeObject(pallet);
                 pallet.palletStatus = preStatus;
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -328,7 +328,7 @@ namespace MapViewPallet.Shape
                 string jsonData = JsonConvert.SerializeObject(pallet);
                 pallet.palletStatus = preStatus;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -361,7 +361,7 @@ namespace MapViewPallet.Shape
                 string jsonData = JsonConvert.SerializeObject(pallet);
                 pallet.palletStatus = preStatus;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/updatePalletStatus");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 

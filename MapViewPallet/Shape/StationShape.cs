@@ -381,7 +381,7 @@ namespace MapViewPallet.Shape
 
                 string jsonData = JsonConvert.SerializeObject(buffers);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/updateListBuffer");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 

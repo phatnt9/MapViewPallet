@@ -119,7 +119,7 @@ namespace MapViewPallet.MiniForm
                 user.userPasswordOld = this.passwordCurrenttb.Password;
                 user.userPassword = this.passwordNewtb.Password;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/changPasswordUser");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "user/changPasswordUser");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 string jsonData = JsonConvert.SerializeObject(user);

@@ -139,7 +139,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
                 string jsonData = JsonConvert.SerializeObject(clImportPlan);
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/importPlan");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "plan/importPlan");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 

@@ -46,7 +46,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 usersList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/getListUser");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "user/getListUser");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dtUser userSend = new dtUser();

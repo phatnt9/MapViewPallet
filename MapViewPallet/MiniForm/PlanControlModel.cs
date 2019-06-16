@@ -220,6 +220,7 @@ namespace MapViewPallet.MiniForm
 
                                                 tempOpe.planId = tempPlan.planId;
                                                 tempOpe.productDetailId = tempPlan.productDetailId;
+                                                tempOpe.productDetailName = tempPlan.productDetailName;
                                                 tempOpe.palletAmount = tempPlan.palletAmount;
                                                 tempOpe.palletUse = tempPlan.palletUse;
                                                 tempOpe.palletMiss = tempPlan.palletMiss;
@@ -351,7 +352,7 @@ namespace MapViewPallet.MiniForm
             {
                 List<Plan> returnList = new List<Plan>();
                 string activeDate = selectedDate.Year + "-" + selectedDate.Month.ToString("00.") + "-" + selectedDate.Day.ToString("00.");
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/getPlanByShift");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "plan/getPlanByShift");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -459,7 +460,7 @@ namespace MapViewPallet.MiniForm
                     }
 
                 }
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/insertUpdatePlan");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "plan/insertUpdatePlan");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
 
@@ -497,7 +498,7 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "plan/insertUpdatePlan");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "plan/insertUpdatePlan");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
 

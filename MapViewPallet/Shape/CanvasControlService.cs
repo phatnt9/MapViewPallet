@@ -490,7 +490,7 @@ namespace MapViewPallet.Shape
 
                             string jsonData = JsonConvert.SerializeObject(buffers);
 
-                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/updateListBuffer");
                             request.Method = "POST";
                             request.ContentType = "application/json";
 
@@ -679,7 +679,7 @@ namespace MapViewPallet.Shape
                 }
                 list_Station.Clear();
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListBuffer");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -826,7 +826,7 @@ namespace MapViewPallet.Shape
             try
             {
                 List<dtBuffer> listBuffer = new List<dtBuffer>();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListBuffer");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -862,6 +862,7 @@ namespace MapViewPallet.Shape
                         listBuffer.Add(tempBuffer);
                     }
                 }
+                response.Close();
                 return listBuffer;
             }
             catch (Exception exc)
@@ -878,7 +879,7 @@ namespace MapViewPallet.Shape
             }
             try
             {
-                HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/getListPalletBufferId");
                 request2.Method = "POST";
                 request2.ContentType = @"application/json";
 

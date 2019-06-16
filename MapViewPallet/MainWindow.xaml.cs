@@ -63,7 +63,7 @@ namespace MapViewPallet
             
             DataContext = canvasControlService;
             stationTimer = new System.Timers.Timer();
-            stationTimer.Interval = 3000;
+            stationTimer.Interval = 1000;
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
 
@@ -71,7 +71,7 @@ namespace MapViewPallet
 
         private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("MainWindow_GotFocus: "+IsFocused);
+            //Console.WriteLine("MainWindow_GotFocus: "+IsFocused);
         }
 
         private void MainWindow_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -182,11 +182,13 @@ namespace MapViewPallet
                 myManagementWindow.Visibility = Visibility.Hidden;
                 loginForm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
                 loginForm.Closed += LoginForm_Closed;
-                stationTimer.Enabled = false;
+                //stationTimer.Enabled = false;
+                stationTimer.Stop();
                 loginForm.ShowDialog();
                 if (Global_Object.userAuthor <= 2)
                 {
-                    stationTimer.Enabled = true;
+                    //stationTimer.Enabled = true;
+                    stationTimer.Start();
                     myManagementWindow.Visibility = Visibility.Visible;
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
@@ -202,6 +204,7 @@ namespace MapViewPallet
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
         {
+            Console.WriteLine("GET IN ON TIME REDRAW STATION TIMER!!!");
             try
             {
                 if (Global_Object.ServerAlive())
@@ -352,7 +355,8 @@ namespace MapViewPallet
 
                 loginForm = new LoginForm(Thread.CurrentThread.CurrentCulture.ToString());
                 loginForm.Closed += LoginForm_Closed;
-                stationTimer.Enabled = false;
+                //stationTimer.Enabled = false;
+                stationTimer.Stop();
                 loginForm.ShowDialog();
                 if (Global_Object.userLogin <= 2)
                 {
@@ -360,7 +364,8 @@ namespace MapViewPallet
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
                         canvasControlService.ReloadAllStation();
-                        stationTimer.Enabled = true;
+                        //stationTimer.Enabled = true;
+                        stationTimer.Start();
                     }));
                 }
             }

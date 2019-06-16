@@ -16,7 +16,7 @@ namespace MapViewPallet
         //#######################################
         public static StationShape bufferToMove;
 
-        public static string url = @"http://"+ Properties.Settings.Default.serverIp + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
+        //public static string url = @"http://"+ Properties.Settings.Default.serverIp + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
         //public static string url = @"http://"+ "192.168.1.32" + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
         public static string hostUrl = "localhost";
         public static string hostPort = "8081";
