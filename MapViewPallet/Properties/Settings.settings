@@ -23,5 +23,8 @@
     <Setting Name="serverReturnIp" Type="System.String" Scope="User">
       <Value Profile="(Default)">192.168.1.32</Value>
     </Setting>
+    <Setting Name="bufferRefreshInterval" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">2000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

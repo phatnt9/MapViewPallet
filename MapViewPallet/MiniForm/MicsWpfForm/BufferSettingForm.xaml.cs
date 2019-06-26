@@ -11,11 +11,12 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     {
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        public BufferSettingForm()
+        MainWindow mainW;
+        public BufferSettingForm(MainWindow mainW)
         {
             InitializeComponent();
             Loaded += BufferSettingForm_Loaded;
+            this.mainW = mainW;
         }
 
         private void BufferSettingForm_Loaded(object sender, RoutedEventArgs e)
@@ -24,6 +25,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             bufferHeight.Text = Properties.Settings.Default["palletHeight"].ToString();
             bufferPadding.Text = Properties.Settings.Default["palletPadding"].ToString();
             bufferMargin.Text = Properties.Settings.Default["palletMargin"].ToString();
+            refreshRate.Text = Properties.Settings.Default["bufferRefreshInterval"].ToString();
         }
 
         private static bool IsTextAllowed(string text)
@@ -37,12 +39,13 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 double width = 0;
                 double height = 0;
+                double interval = 2000;
                 if (double.TryParse(bufferWidth.Text.ToString().Trim().Replace(" ", ""), out width))
                 {
                     if (width.ToString().Trim() != "")
                     {
                         Properties.Settings.Default.palletWidth = width;
-                        Properties.Settings.Default.Save();
+                        //Properties.Settings.Default.Save();
                     }
                 }
                 if (double.TryParse(bufferHeight.Text.ToString().Trim().Replace(" ", ""), out height))
@@ -50,9 +53,19 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     if (height.ToString().Trim() != "")
                     {
                         Properties.Settings.Default.palletHeight = height;
-                        Properties.Settings.Default.Save();
+                        //Properties.Settings.Default.Save();
                     }
                 }
+                if (double.TryParse(refreshRate.Text.ToString().Trim().Replace(" ", ""), out interval))
+                {
+                    if (interval.ToString().Trim() != "")
+                    {
+                        Properties.Settings.Default.bufferRefreshInterval = interval;
+                        //Properties.Settings.Default.Save();
+                    }
+                }
+                Properties.Settings.Default.Save();
+                mainW.SetTimerInterval(mainW.stationTimer);
             }
             catch (Exception ex)
             {

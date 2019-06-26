@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
         Title="BufferSettingForm" 
-        Height="190" 
+        Height="220" 
         Width="310"
         ResizeMode="NoResize">
     <Grid>
@@ -21,56 +21,80 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <StackPanel 
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                            Margin="9 5">
+                    <Label>Refresh interval</Label>
+                    <TextBox 
+                    Name="refreshRate"
+                    Width="80"
+                            Height="20"
+                            PreviewTextInput="Buffer_PreviewTextInput"></TextBox>
+                    <Label>second(s)</Label>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <StackPanel 
                     Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal"
+                        <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                             Margin="9 5">
-                        <Label>Width</Label>
-                        <TextBox 
+                            <Label>Width</Label>
+                            <TextBox 
                     Name="bufferWidth"
                     Width="80"
+                            Height="20"
                             PreviewTextInput="Buffer_PreviewTextInput"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                             Margin="9 5">
-                        <Label>Height</Label>
-                        <TextBox 
+                            <Label>Height</Label>
+                            <TextBox 
                     Name="bufferHeight"
                     Width="80"
+                            Height="20"
                             PreviewTextInput="Buffer_PreviewTextInput"></TextBox>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Column="1">
-                <StackPanel
+                </Grid>
+                <Grid Grid.Column="1">
+                    <StackPanel
                     Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal"
+                        <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                             Margin="9 5">
-                        <Label>Margin</Label>
-                        <TextBox 
+                            <Label>Margin</Label>
+                            <TextBox 
                     Name="bufferMargin"
                          Width="80"
+                            Height="20"
                             PreviewTextInput="Buffer_PreviewTextInput"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                             Margin="9 5">
-                        <Label>Padding</Label>
-                        <TextBox 
+                            <Label>Padding</Label>
+                            <TextBox 
                     Name="bufferPadding"
                     Width="80"
+                            Height="20"
                             PreviewTextInput="Buffer_PreviewTextInput"></TextBox>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </Grid>
             </Grid>
+            
         </Grid>
         <Grid Grid.Row="2">
             <StackPanel

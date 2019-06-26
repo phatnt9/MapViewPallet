@@ -63,10 +63,25 @@ namespace MapViewPallet
             
             DataContext = canvasControlService;
             stationTimer = new System.Timers.Timer();
-            stationTimer.Interval = 1000;
+            SetTimerInterval(stationTimer);
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
 
+        }
+
+        public void SetTimerInterval(System.Timers.Timer timer)
+        {
+            bool backToWork = false;
+            if (timer.Enabled)
+            {
+                backToWork = true;
+                timer.Stop();
+            }
+            timer.Interval = Properties.Settings.Default.bufferRefreshInterval;
+            if (backToWork)
+            {
+                timer.Start();
+            }
         }
 
         private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
@@ -602,14 +617,13 @@ namespace MapViewPallet
         {
             try
             {
-                BufferSettingForm bufferSettingForm = new BufferSettingForm();
+                BufferSettingForm bufferSettingForm = new BufferSettingForm(this);
                 bufferSettingForm.Show();
             }
             catch (Exception ex)
             {
                 logFile.Error(ex.Message);
             }
-           
         }
     }
 

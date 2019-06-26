@@ -215,9 +215,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Shape\CurveShape.cs" />
-    <Compile Include="Shape\Edit.xaml.cs">
-      <DependentUpon>Edit.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Shape\PalletShape.cs" />
     <Compile Include="Shape\CanvasControlService.cs" />
     <Compile Include="Shape\Properties.cs">
@@ -230,9 +227,6 @@
     <Compile Include="Shape\RobotShape.cs" />
     <Compile Include="Shape\StationShape.cs" />
     <Compile Include="Shape\StraightShape.cs" />
-    <Compile Include="TEST.xaml.cs">
-      <DependentUpon>TEST.xaml</DependentUpon>
-    </Compile>
     <Page Include="Lang\English.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -318,14 +312,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MiniForm\UserManagement.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Shape\Edit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TEST.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -535,9 +521,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MAPMAIN.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\MAPMAIN - Copy.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MAPMAIN2.jpg" />

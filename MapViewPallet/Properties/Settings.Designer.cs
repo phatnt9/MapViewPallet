@@ -106,5 +106,17 @@ namespace MapViewPallet.Properties {
                 this["serverReturnIp"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
+        public double bufferRefreshInterval {
+            get {
+                return ((double)(this["bufferRefreshInterval"]));
+            }
+            set {
+                this["bufferRefreshInterval"] = value;
+            }
+        }
     }
 }
