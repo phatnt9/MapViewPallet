@@ -121,11 +121,14 @@ namespace MapViewPallet.MiniForm
                 bufferHeadPointY.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.y).ToString()) : "0";
                 bufferHeadPointA.Text = (buffercheckin.headpoint != null) ? (((double)buffercheckin.headpoint.angle).ToString()) : "0";
 
+                //cbEditable.Text = (buffercheckin.content != null) ? (((bool)buffercheckin.content.canOpEdit).ToString()) : "False";
+
                 dynamic bufferdata = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferData);
                 bufferPosX.Text = (bufferdata != null) ? (((double)bufferdata.x).ToString()) : "0";
                 bufferPosY.Text = (bufferdata != null) ? (((double)bufferdata.y).ToString()) : "0";
                 bufferPosA.Text = (bufferdata != null) ? (((double)bufferdata.angle).ToString()) : "0";
                 bufferArr.Text = (bufferdata != null) ? ((bufferdata.arrange).ToString()) : "bigEndian";
+                cbEditable.Text = (bufferdata.canOpEdit != null) ? ((bufferdata.canOpEdit).ToString()) : "False";
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
@@ -165,6 +168,7 @@ namespace MapViewPallet.MiniForm
                 dynamic postApiBody = new JObject();
                 dynamic checkin = new JObject();
                 dynamic headpoint = new JObject();
+                //dynamic content = new JObject();
 
                 checkin.x = Math.Round((double.Parse((bufferX.Text != "") ? bufferX.Text : "0")), 2);
                 checkin.y = Math.Round((double.Parse((bufferY.Text != "") ? bufferY.Text : "0")), 2);
@@ -174,8 +178,11 @@ namespace MapViewPallet.MiniForm
                 headpoint.y = Math.Round((double.Parse((bufferHeadPointY.Text != "") ? bufferHeadPointY.Text : "0")), 2);
                 headpoint.angle = Math.Round((double.Parse((bufferHeadPointA.Text != "") ? bufferHeadPointA.Text : "0")), 2);
 
+                //content.canOpEdit = bool.Parse(cbEditable.Text);
+
                 postApiBody.checkin = checkin;
                 postApiBody.headpoint = headpoint;
+                //postApiBody.content = content;
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferCheckIn = jsonBufferData;
 
@@ -353,6 +360,7 @@ namespace MapViewPallet.MiniForm
                 postApiBody.y = Math.Round((double.Parse((bufferPosY.Text != "") ? bufferPosY.Text : "0")), 2);
                 postApiBody.angle = Math.Round((double.Parse((bufferPosA.Text != "") ? bufferPosA.Text : "0")), 2);
                 postApiBody.arrange = (bufferArr.Text != "") ? bufferArr.Text : "bigEndian";
+                postApiBody.canOpEdit = (cbEditable.Text != "") ? cbEditable.Text : "False";
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 
@@ -730,6 +738,93 @@ namespace MapViewPallet.MiniForm
             }
         }
 
-        
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
+            {
+                dtPallet temp = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
+                //dtPallet temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtPallet;
+                //temp.updUsrId = Global_Object.userLogin;
+                //string palletCellEdit = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
+                List<dtPallet> pallets = new List<dtPallet>();
+
+                //dtPallet pallet = PalletsListDg.SelectedItem as dtPallet;
+                dtPallet pallet = temp;
+
+                dynamic palletData = new JObject();
+                dynamic palletLine = new JObject();
+                dynamic palletPallet = new JObject();
+
+                palletLine.x = double.Parse((palletX.Text != "") ? palletX.Text : "0");
+                palletLine.y = double.Parse((palletY.Text != "") ? palletY.Text : "0");
+                palletLine.angle = double.Parse((palletA.Text != "") ? palletA.Text : "0");
+
+                palletPallet.row = int.Parse((palletR.Text != "") ? palletR.Text : "0");
+                palletPallet.bay = int.Parse((palletB.Text != "") ? palletB.Text : "0");
+                palletPallet.dir_main = int.Parse((palletD_Main.Text != "") ? palletD_Main.Text : "0");
+                palletPallet.dir_sub = int.Parse((palletD_Sub.Text != "") ? palletD_Sub.Text : "0");
+                palletPallet.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
+                palletPallet.line_ord = int.Parse((palletL_Ord.Text != "") ? palletL_Ord.Text : "0");
+                palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
+
+                palletData.line = palletLine;
+                palletData.pallet = palletPallet;
+
+                string jsonBufferData = JsonConvert.SerializeObject(palletData);
+                pallet.dataPallet = jsonBufferData;
+
+
+                pallets.Add(pallet);
+
+                if (pallets.Count == 0)
+                {
+                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string jsonData = JsonConvert.SerializeObject(pallets);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updateListPalletData");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+        }
     }
 }

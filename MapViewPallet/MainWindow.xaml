@@ -10,47 +10,6 @@
         Title="{DynamicResource MainWindow_Title}" Height="450" Width="800" MinWidth="600" MinHeight="400"
         >
     <Window.Resources>
-        <ContextMenu x:Key="PATH-MENU" Name="pathMenu" >
-            <MenuItem Header="Edit" Name="pathEdit"/>
-            <MenuItem Header="Remove" Name="pathRemove"/>
-        </ContextMenu>
-        <Style x:Key="GridSplitterPreviewStyle" >
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Fill="#80000000"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="GridSplitterStyle1" TargetType="{x:Type GridSplitter}">
-            <Setter Property="Background"
-                    Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-            <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GridSplitter}">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}"
-                                >
-                            <Canvas RenderOptions.EdgeMode="Aliased" UseLayoutRounding="True"
-                                    Height="6" VerticalAlignment="Center"
-                                    Width="50" HorizontalAlignment="Center">
-                                <Line X1="23" X2="23" Y1="-25" Y2="20"
-                                      Stroke="White" StrokeThickness="1"/>
-                                <Line X1="24" X2="24" Y1="-25" Y2="20"
-                                      Stroke="#A0A0A0" StrokeThickness="1"/>
-                                <Line X1="27" X2="27" Y1="-25" Y2="20"
-                                      Stroke="White" StrokeThickness="1"/>
-                                <Line X1="28" X2="28" Y1="-25" Y2="20"
-                                      Stroke="#A0A0A0" StrokeThickness="1"/>
-                            </Canvas>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Window.Resources>
     <Grid x:Name="myManagementWindow">
         <Grid.RowDefinitions>

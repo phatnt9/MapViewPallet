@@ -158,7 +158,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 buffer.maxBay = maxBay;
                 buffer.bufferReturn = (bool)bufferReturnCb.IsChecked;
                 buffer.bufferData = "{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\",\"arrange\":\"bigEndian\"}";
-                buffer.bufferCheckIn = "{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"}";
+                //buffer.bufferCheckIn = "{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"}";
+                buffer.bufferCheckIn = "{\"checkin\":{\"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"},\"headpoint\":{ \"x\":\"0\",\"y\":\"0\",\"angle\":\"0\"}}";
                 buffer.creUsrId = Global_Object.userLogin;
                 buffer.updUsrId = Global_Object.userLogin;
 

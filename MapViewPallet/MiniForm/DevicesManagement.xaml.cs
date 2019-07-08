@@ -861,13 +861,22 @@ namespace MapViewPallet.MiniForm
                         MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
                         )
                     {
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/deleteProduct");
+                        HttpWebRequest request = 
+                            (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" 
+                            + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/deleteListProduct");
                         request.Method = "DELETE";
                         request.ContentType = @"application/json";
 
+                        List<dtProduct> listJson = new List<dtProduct>();
                         dynamic postApiBody = new JObject();
-                        postApiBody.productId = (ProductsListDg.SelectedItem as dtProduct).productId;
-                        string jsonData = JsonConvert.SerializeObject(postApiBody);
+                        foreach (dtProduct selectedItem in ProductsListDg.SelectedItems)
+                        {
+                            listJson.Add(selectedItem);
+                        }
+                        string jsonData = JsonConvert.SerializeObject(listJson);
+                        //dynamic postApiBody = new JObject();
+                        //postApiBody.productId = (ProductsListDg.SelectedItem as dtProduct).productId;
+                        //string jsonData = JsonConvert.SerializeObject(postApiBody);
 
                         System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
                         Byte[] byteArray = encoding.GetBytes(jsonData);
@@ -885,16 +894,20 @@ namespace MapViewPallet.MiniForm
                             int.TryParse(reader.ReadToEnd(), out result);
                             if (result == 1)
                             {
-                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), 
+                                    Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                             }
                             else if (result == 2)
                             {
-                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, "Products", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, 
+                                    "Products", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, 
+                                    MessageBoxIcon.Warning);
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), 
+                                    Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
@@ -1213,6 +1226,8 @@ namespace MapViewPallet.MiniForm
                     palletD_Out.Text = (devicePalletData.pallet.dir_out != null) ? ((devicePalletData.pallet.dir_out).ToString()) : "0";
                     palletL_Ord.Text = (devicePalletData.pallet.line_ord != null) ? ((devicePalletData.pallet.line_ord).ToString()) : "0";
                     palletHasSubLine.Text = (devicePalletData.pallet.hasSubLine != null) ? ((devicePalletData.pallet.hasSubLine).ToString()) : "no";
+                    palletType.Text = (devicePalletData.pallet.palletType != null) ? ((devicePalletData.pallet.palletType).ToString()) : "Working";
+                    palletPhase.Text = (devicePalletData.pallet.palletPhase != null) ? ((devicePalletData.pallet.palletPhase).ToString()) : "0";
                 }
             }
             catch (Exception ex)
@@ -1996,6 +2011,8 @@ namespace MapViewPallet.MiniForm
                     palletPallet.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
                     palletPallet.line_ord = int.Parse((palletL_Ord.Text != "") ? palletL_Ord.Text : "0");
                     palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
+                    palletPallet.palletType = (palletType.Text != "") ? palletType.Text : "working";
+                    palletPallet.palletPhase = (palletPhase.Text != "") ? palletPhase.Text : "0";
 
                     palletData.line = palletLine;
                     palletData.pallet = palletPallet;
@@ -2045,6 +2062,8 @@ namespace MapViewPallet.MiniForm
                         palletPalletOld.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
                         palletPalletOld.line_ord = int.Parse((palletL_Ord.Text != "") ? palletL_Ord.Text : "0");
                         palletPalletOld.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
+                        palletPalletOld.palletType = (palletType.Text != "") ? palletType.Text : "working";
+                        palletPalletOld.palletPhase = (palletPhase.Text != "") ? palletPhase.Text : "0";
 
                         palletDataOld.line = palletLineOld;
                         palletDataOld.pallet = palletPalletOld;
