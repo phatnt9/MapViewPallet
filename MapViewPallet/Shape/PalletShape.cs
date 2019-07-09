@@ -199,53 +199,93 @@ namespace MapViewPallet.Shape
                         System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
                         )
                 {
-                    List<dtPallet> palletsList = new List<dtPallet>();
-                    palletsList = GetAllPallets(pallet.bufferId);
+                    int deviceIdToReturn = 0;
+                    int bufferIdToReturn = 0;
 
+                    dynamic postApiBody = new JObject();
 
-                    //Check if pallet is return able an then return it
-                    if (CanPalletReturn(palletsList))
+                    postApiBody.userName = MapViewPallet.Properties.Settings.Default["returnMainUser"].ToString();
+                    postApiBody.userPassword = MapViewPallet.Properties.Settings.Default["returnMainPassword"].ToString();
+                    string jsonData = JsonConvert.SerializeObject(postApiBody);
+                    string contentJson = RequestDataAPI(jsonData, "user/getUserInfo", RequestMethod.POST);
+
+                    dynamic response = JsonConvert.DeserializeObject(contentJson);
+                    dtUser userInfo = response.ToObject<dtUser>();
+
+                    //Check any device connect to account
+                    foreach (dtUserDevice device in userInfo.userDevices)
                     {
-                        Console.WriteLine("Duoc phep Return!");
-                        dynamic postApiBody2 = new JObject();
-                        postApiBody2.userName = "WMS_Return";
-                        postApiBody2.bufferId = pallet.bufferId;
-                        postApiBody2.productDetailId = pallet.productDetailId;
-                        postApiBody2.productDetailName = pallet.productDetailName;
-                        postApiBody2.productId = pallet.productId;
-                        //postApiBody2.planId = pallet.planId;
-                        postApiBody2.deviceId = pallet.deviceId;
-                        postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
-                        string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
-                        BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
-                        bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
+                        deviceIdToReturn = device.deviceId;
 
-                        string preStatus = pallet.palletStatus;
-                        pallet.palletStatus = "R";
-                        string jsonDataPallet = JsonConvert.SerializeObject(pallet);
-                        pallet.palletStatus = preStatus;
+                        postApiBody = new JObject();
+                        postApiBody.deviceId = device.deviceId;
+                        jsonData = JsonConvert.SerializeObject(postApiBody);
+                        contentJson = RequestDataAPI(jsonData, "buffer/getListDeviceBufferByDeviceId", RequestMethod.POST);
 
-                        HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
-                        request2.Method = "POST";
-                        request2.ContentType = "application/json";
+                        response = JsonConvert.DeserializeObject(contentJson);
+                        List<dtBuffer> listBuffer = response.ToObject<List<dtBuffer>>();
 
-                        System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
-                        Byte[] byteArray2 = encoding2.GetBytes(jsonDataPallet);
-                        request2.ContentLength = byteArray2.Length;
-                        using (Stream dataStream = request2.GetRequestStream())
+                        //Check number of free pallet
+                        foreach (dtBuffer buffer in listBuffer)
                         {
-                            dataStream.Write(byteArray2, 0, byteArray2.Length);
-                            dataStream.Flush();
-                        }
+                            postApiBody = new JObject();
+                            postApiBody.bufferId = buffer.bufferId;
+                            postApiBody.palletStatus = "F";
+                            jsonData = JsonConvert.SerializeObject(postApiBody);
+                            contentJson = RequestDataAPI(jsonData, "pallet/getListPalletBufferId", RequestMethod.POST);
 
-                        HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse;
-                        using (Stream responseStream = response2.GetResponseStream())
-                        {
-                            StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                            int result = 0;
-                            int.TryParse(reader.ReadToEnd(), out result);
+                            response = JsonConvert.DeserializeObject(contentJson);
+                            List<dtPallet> listPallet = response.ToObject<List<dtPallet>>();
+                            if (listPallet.Count > 0)
+                            {
+                                bufferIdToReturn = buffer.bufferId;
+                                break;
+                            }
                         }
                     }
+
+
+                    if ((deviceIdToReturn > 0) && (bufferIdToReturn > 0))
+                    {
+                        List<dtPallet> palletsList = new List<dtPallet>();
+                        palletsList = GetAllPallets(pallet.bufferId);
+
+
+                        //Check if pallet is return able an then return it
+                        if (CanPalletReturn(palletsList))
+                        {
+                            Console.WriteLine("Duoc phep Return!");
+                            dynamic postApiBody2 = new JObject();
+                            postApiBody2.userName = "WMS_Return";
+
+                            postApiBody2.bufferId = pallet.bufferId;
+                            postApiBody2.deviceId = pallet.deviceId;
+
+                            postApiBody2.bufferIdPut = bufferIdToReturn;
+                            postApiBody2.deviceIdPut = deviceIdToReturn;
+
+                            postApiBody2.row = pallet.row;
+                            postApiBody2.bay = pallet.bay;
+
+                            postApiBody2.productDetailId = pallet.productDetailId;
+                            postApiBody2.productDetailName = pallet.productDetailName;
+                            postApiBody2.productId = pallet.productId;
+                            //postApiBody2.planId = pallet.planId;
+                            postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
+                            string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
+                            Console.WriteLine("Data request Return: " + jsonData2);
+                            BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
+                            bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
+
+                            string preStatus = pallet.palletStatus;
+                            pallet.palletStatus = "R";
+                            string jsonDataPallet = JsonConvert.SerializeObject(pallet);
+                            pallet.palletStatus = preStatus;
+
+                            RequestDataAPI(jsonDataPallet, "pallet/updatePalletStatus", RequestMethod.POST);
+                        }
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -256,6 +296,10 @@ namespace MapViewPallet.Shape
 
         private void ReturnPallet401_Click(object sender, RoutedEventArgs e)
         {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
             if (System.Windows.Forms.MessageBox.Show
                         (
                         string.Format("Do you want to return the selected {0}?", "Pallet"),
@@ -337,6 +381,7 @@ namespace MapViewPallet.Shape
                         //postApiBody2.planId = pallet.planId;
                         postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
                         string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
+                        Console.WriteLine("Data request Return: "+ jsonData2);
                         BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
                         bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
 
@@ -345,31 +390,10 @@ namespace MapViewPallet.Shape
                         string jsonDataPallet = JsonConvert.SerializeObject(pallet);
                         pallet.palletStatus = preStatus;
 
-                        HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
-                        request2.Method = "POST";
-                        request2.ContentType = "application/json";
-
-                        System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
-                        Byte[] byteArray2 = encoding2.GetBytes(jsonDataPallet);
-                        request2.ContentLength = byteArray2.Length;
-                        using (Stream dataStream = request2.GetRequestStream())
-                        {
-                            dataStream.Write(byteArray2, 0, byteArray2.Length);
-                            dataStream.Flush();
-                        }
-
-                        HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse;
-                        using (Stream responseStream = response2.GetResponseStream())
-                        {
-                            StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                            int result = 0;
-                            int.TryParse(reader.ReadToEnd(), out result);
-                        }
+                        RequestDataAPI(jsonDataPallet, "pallet/updatePalletStatus", RequestMethod.POST);
                     }
                 }
             }
-            
-
         }
         
 
@@ -388,6 +412,10 @@ namespace MapViewPallet.Shape
                         System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
                         )
                 {
+                    int deviceIdToReturn = 0;
+                    int bufferIdToReturn = 0;
+
+
                     List<dtPallet> palletsList = new List<dtPallet>();
                     palletsList = GetAllPallets(pallet.bufferId);
 
@@ -398,12 +426,20 @@ namespace MapViewPallet.Shape
                         Console.WriteLine("Duoc phep Return!");
                         dynamic postApiBody2 = new JObject();
                         postApiBody2.userName = "WMS_Return";
+
                         postApiBody2.bufferId = pallet.bufferId;
+                        postApiBody2.deviceId = pallet.deviceId;
+
+                        postApiBody2.bufferIdPut = bufferIdToReturn;
+                        postApiBody2.deviceIdPut = deviceIdToReturn;
+
+                        postApiBody2.row = pallet.row;
+                        postApiBody2.bay = pallet.bay;
+
                         postApiBody2.productDetailId = pallet.productDetailId;
                         postApiBody2.productDetailName = pallet.productDetailName;
                         postApiBody2.productId = pallet.productId;
                         //postApiBody2.planId = pallet.planId;
-                        postApiBody2.deviceId = pallet.deviceId;
                         postApiBody2.typeReq = (int)ReturnType.ReturnAreaGate;
                         string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
                         BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
@@ -507,13 +543,13 @@ namespace MapViewPallet.Shape
             return palletsList;
         }
 
-        public bool CanPalletReturn(List<dtPallet> palletsList, string filter1="", string filter2 = "", string filter3 = "")
+        public bool CanPalletReturn(List<dtPallet> palletsList, string filter1= "", string filter2 = "")
         {
             //Check if pallet is return able and then return it
             bool sendToReturn = true;
             if ((buffer.bufferReturn == false) && 
                 (pallet.palletStatus == "W") && 
-                (buffer.bufferName.Contains(filter1)||(buffer.bufferName.Contains(filter2)) ||(buffer.bufferName.Contains(filter3))))
+                (buffer.bufferName.Contains(filter1)||(buffer.bufferName.Contains(filter2))))
             {
                 //Any pallet before needed send pallet need to be "Free"
                 foreach (dtPallet palletItem in palletsList)
@@ -862,5 +898,52 @@ namespace MapViewPallet.Shape
                 " \n End: " +
                 " \n Rotate: ";
         }
+
+
+        //List<dtPallet> palletsList = new List<dtPallet>();
+        //palletsList = GetAllPallets(pallet.bufferId);
+        ////Check if pallet is return able an then return it
+        //if (CanPalletReturn(palletsList))
+        //{
+        //    Console.WriteLine("Duoc phep Return!");
+        //    dynamic postApiBody2 = new JObject();
+        //    postApiBody2.userName = "WMS_Return";
+        //    postApiBody2.bufferId = pallet.bufferId;
+        //    postApiBody2.productDetailId = pallet.productDetailId;
+        //    postApiBody2.productDetailName = pallet.productDetailName;
+        //    postApiBody2.productId = pallet.productId;
+        //    //postApiBody2.planId = pallet.planId;
+        //    postApiBody2.deviceId = pallet.deviceId;
+        //    postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
+        //    string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
+        //    BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
+        //    bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
+
+        //    string preStatus = pallet.palletStatus;
+        //    pallet.palletStatus = "R";
+        //    string jsonDataPallet = JsonConvert.SerializeObject(pallet);
+        //    pallet.palletStatus = preStatus;
+
+        //    HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
+        //    request2.Method = "POST";
+        //    request2.ContentType = "application/json";
+
+        //    System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
+        //    Byte[] byteArray2 = encoding2.GetBytes(jsonDataPallet);
+        //    request2.ContentLength = byteArray2.Length;
+        //    using (Stream dataStream = request2.GetRequestStream())
+        //    {
+        //        dataStream.Write(byteArray2, 0, byteArray2.Length);
+        //        dataStream.Flush();
+        //    }
+
+        //    HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse;
+        //    using (Stream responseStream = response2.GetResponseStream())
+        //    {
+        //        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+        //        int result = 0;
+        //        int.TryParse(reader.ReadToEnd(), out result);
+        //    }
+        //}
     }
 }

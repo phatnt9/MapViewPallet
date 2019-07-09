@@ -243,14 +243,14 @@ namespace MapViewPallet.MiniForm
                                         }
                                         else if (product.checkStatus)
                                         {
-                                            plansTemp.Add(tempOpe);
+                                            //plansTemp.Add(tempOpe);
                                         }
                                     }
                                     else
                                     {
                                         if (product.checkStatus)
                                         {
-                                            plansTemp.Add(tempOpe);
+                                            //plansTemp.Add(tempOpe);
                                         }
                                     }
                                 }
