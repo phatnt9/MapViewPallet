@@ -26,6 +26,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             bufferPadding.Text = Properties.Settings.Default["palletPadding"].ToString();
             bufferMargin.Text = Properties.Settings.Default["palletMargin"].ToString();
             refreshRate.Text = Properties.Settings.Default["bufferRefreshInterval"].ToString();
+
+            returnMainUser.Text = Properties.Settings.Default["returnMainUser"].ToString();
+            returnMainPassword.Text = Properties.Settings.Default["returnMainPassword"].ToString();
+            return401User.Text = Properties.Settings.Default["return401User"].ToString();
+            return401Password.Text = Properties.Settings.Default["return401Password"].ToString();
         }
 
         private static bool IsTextAllowed(string text)
@@ -40,6 +45,12 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 double width = 0;
                 double height = 0;
                 double interval = 2000;
+
+                string rmU = "rm";
+                string rmP = "rm";
+                string r4U = "r4";
+                string r4P = "r4";
+
                 if (double.TryParse(bufferWidth.Text.ToString().Trim().Replace(" ", ""), out width))
                 {
                     if (width.ToString().Trim() != "")
@@ -64,6 +75,14 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                         //Properties.Settings.Default.Save();
                     }
                 }
+
+                Properties.Settings.Default.returnMainUser = returnMainUser.Text;
+                Properties.Settings.Default.returnMainPassword = returnMainPassword.Text;
+                Properties.Settings.Default.return401User = return401User.Text;
+                Properties.Settings.Default.return401Password = return401Password.Text;
+
+
+
                 Properties.Settings.Default.Save();
                 mainW.SetTimerInterval(mainW.stationTimer);
             }

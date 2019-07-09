@@ -118,5 +118,53 @@ namespace MapViewPallet.Properties {
                 this["bufferRefreshInterval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("rm")]
+        public string returnMainUser {
+            get {
+                return ((string)(this["returnMainUser"]));
+            }
+            set {
+                this["returnMainUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("rm")]
+        public string returnMainPassword {
+            get {
+                return ((string)(this["returnMainPassword"]));
+            }
+            set {
+                this["returnMainPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("r4")]
+        public string return401User {
+            get {
+                return ((string)(this["return401User"]));
+            }
+            set {
+                this["return401User"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("r4")]
+        public string return401Password {
+            get {
+                return ((string)(this["return401Password"]));
+            }
+            set {
+                this["return401Password"] = value;
+            }
+        }
     }
 }

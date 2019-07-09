@@ -26,5 +26,17 @@
     <Setting Name="bufferRefreshInterval" Type="System.Double" Scope="User">
       <Value Profile="(Default)">2000</Value>
     </Setting>
+    <Setting Name="returnMainUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">rm</Value>
+    </Setting>
+    <Setting Name="returnMainPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">rm</Value>
+    </Setting>
+    <Setting Name="return401User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">r4</Value>
+    </Setting>
+    <Setting Name="return401Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">r4</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
