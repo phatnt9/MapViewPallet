@@ -24,7 +24,7 @@
         </Grid>
         <Grid Grid.Row="1">
             <TabControl Name="DeviceManagementTabControl">
-                <TabItem Header="{DynamicResource DevicesManagement_TabItem_Operation}">
+                <TabItem Header="Operation">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -37,7 +37,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_Device}">
+                                <GroupBox Header="Device">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -84,7 +84,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Device_Column_DeviceName}" />
+                                                                    <TextBlock Text="DeviceName" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -97,7 +97,7 @@
                                 </GroupBox>
                             </Grid>
                             <Grid Grid.Column="1">
-                                <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_Product}">
+                                <GroupBox Header="Product">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -158,7 +158,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Product_Column_ProductName}" />
+                                                                    <TextBlock Text="ProductName" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -171,7 +171,7 @@
                                 </GroupBox>
                             </Grid>
                             <Grid Grid.Column="2">
-                                <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_Buffer}">
+                                <GroupBox Header="Buffer">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -232,7 +232,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferName}" />
+                                                                    <TextBlock Text="BufferName" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -245,7 +245,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferSort}" />
+                                                                    <TextBlock Text="BufferSort" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -267,12 +267,12 @@
                                     Margin="10,0"
                                     Padding="5,0"
                                     Click="Btn_Exit_Device_Click"
-                                    Content="{DynamicResource DevicesManagement_Button_Exit}" />
+                                    Content="Exit" />
                             </StackPanel>
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="{DynamicResource DevicesManagement_TabItem_Device}">
+                <TabItem Header="Device">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -280,12 +280,12 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="4" />
                                 <ColumnDefinition Width="2*" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_Device}">
+                                <GroupBox Header="Device">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -349,7 +349,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Device_Column_DeviceName}" />
+                                                                    <TextBlock Text="DeviceName" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -362,7 +362,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Device_Column_ImageDeviceUrl}" />
+                                                                    <TextBlock Text="ImageDeviceUrl" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -393,10 +393,10 @@
                             <Grid Grid.Column="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
-                                    <RowDefinition Height="100" />
+                                    <RowDefinition Height="150" />
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
-                                    <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_DevicePalletData}">
+                                    <GroupBox Header="DevicePalletData">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="30" />
@@ -409,7 +409,7 @@
                                                     VerticalAlignment="Center"
                                                     Orientation="Horizontal">
                                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                        <Label VerticalAlignment="Center" Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Bay}" />
+                                                        <Label VerticalAlignment="Center" Content="Bay" />
                                                         <TextBox
                                                             Name="MaxBaytb"
                                                             Width="Auto"
@@ -417,7 +417,7 @@
                                                             PreviewTextInput="MaxBaytb_PreviewTextInput" />
                                                     </StackPanel>
                                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                        <Label VerticalAlignment="Center" Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Row}" />
+                                                        <Label VerticalAlignment="Center" Content="Row" />
                                                         <TextBox
                                                             Name="MaxRowtb"
                                                             Width="Auto"
@@ -463,7 +463,7 @@
                                                         <DataGridTextColumn
                                                             Width="Auto"
                                                             Binding="{Binding Path=devicePalletId}"
-                                                            Header="devicePalletId"
+                                                            Header="DevicePalletId"
                                                             IsReadOnly="True"
                                                             Visibility="Visible" />
 
@@ -474,7 +474,7 @@
                                                             <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
-                                                                        <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Column_Row}" />
+                                                                        <TextBlock Text="Row" />
                                                                     </StackPanel>
                                                                 </DataTemplate>
                                                             </DataGridTextColumn.HeaderTemplate>
@@ -487,38 +487,38 @@
                                                             <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
-                                                                        <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Column_Bay}" />
+                                                                        <TextBlock Text="Bay" />
                                                                     </StackPanel>
                                                                 </DataTemplate>
                                                             </DataGridTextColumn.HeaderTemplate>
                                                         </DataGridTextColumn>
 
                                                         <DataGridTextColumn
-                                                            Width="*"
+                                                            Width="Auto"
                                                             Binding="{Binding Path=devicePalletName}"
                                                             IsReadOnly="True">
                                                             <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
-                                                                        <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Column_DevicePalletName}" />
+                                                                        <TextBlock Text="DevicePalletName" />
                                                                     </StackPanel>
                                                                 </DataTemplate>
                                                             </DataGridTextColumn.HeaderTemplate>
                                                         </DataGridTextColumn>
 
                                                         <DataGridTextColumn
-                                                            Width="*"
+                                                            Width="Auto"
                                                             Binding="{Binding Path=dataPallet}"
                                                             IsReadOnly="True"
                                                             Visibility="Visible">
                                                             <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
-                                                                        <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Column_DataPallet}" />
+                                                                        <TextBlock Text="DataPallet" />
                                                                     </StackPanel>
                                                                 </DataTemplate>
                                                             </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
+                                                            <!--<DataGridTextColumn.ElementStyle>
                                                                 <Style TargetType="TextBlock">
                                                                     <Setter Property="TextWrapping" Value="Wrap" />
                                                                 </Style>
@@ -528,7 +528,7 @@
                                                                     <Setter Property="TextWrapping" Value="Wrap" />
                                                                     <Setter Property="AcceptsReturn" Value="true" />
                                                                 </Style>
-                                                            </DataGridTextColumn.EditingElementStyle>
+                                                            </DataGridTextColumn.EditingElementStyle>-->
                                                         </DataGridTextColumn>
                                                     </DataGrid.Columns>
                                                 </DataGrid>
@@ -537,61 +537,69 @@
                                     </GroupBox>
                                 </Grid>
                                 <Grid Grid.Row="1">
-                                    <StackPanel HorizontalAlignment="Center">
-                                        <Grid>
-                                            <StackPanel Orientation="Vertical">
-                                                <Grid Margin="0,4,0,0">
-                                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                                            <Label
-                                                                VerticalAlignment="Center"
-                                                                Content="{DynamicResource DevicesManagement_Groupbox_DevicePallet_Position}"
-                                                                FontSize="16" />
-                                                        </StackPanel>
-                                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                                            <Label
-                                                                VerticalAlignment="Center"
-                                                                Content="X"
-                                                                FontSize="12" />
-                                                            <TextBox
-                                                                Name="palletLineX"
-                                                                Width="Auto"
-                                                                Height="17"
-                                                                PreviewTextInput="PalletLine_PreviewTextInput" />
-                                                        </StackPanel>
-                                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                                            <Label
-                                                                VerticalAlignment="Center"
-                                                                Content="Y"
-                                                                FontSize="12" />
-                                                            <TextBox
-                                                                Name="palletLineY"
-                                                                Width="Auto"
-                                                                Height="17"
-                                                                PreviewTextInput="PalletLine_PreviewTextInput" />
-                                                        </StackPanel>
-                                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                                            <Label
-                                                                VerticalAlignment="Center"
-                                                                Content="A"
-                                                                FontSize="12" />
-                                                            <TextBox
-                                                                Name="palletLineA"
-                                                                Width="Auto"
-                                                                Height="17"
-                                                                PreviewTextInput="PalletLine_PreviewTextInput" />
-                                                        </StackPanel>
+                                    <ScrollViewer>
+                                        <Grid MinWidth="500">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" Margin="0,4,0,0">
+                                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                                        <Label
+                                                            VerticalAlignment="Center"
+                                                            Content="Pos:"
+                                                            FontSize="12" />
                                                     </StackPanel>
-                                                </Grid>
-                                                <Grid Margin="0,4,0,0">
-                                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                                            <Label
-                                                                VerticalAlignment="Center"
-                                                                Content="Pallet:"
-                                                                FontSize="12" />
-                                                        </StackPanel>
-                                                        <!--<StackPanel Orientation="Horizontal"
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            VerticalAlignment="Center"
+                                                            Content="X"
+                                                            FontSize="12" />
+                                                        <TextBox
+                                                            Name="palletLineX"
+                                                            Width="Auto"
+                                                            Height="17"
+                                                            HorizontalAlignment="Stretch"
+                                                            PreviewTextInput="PalletLine_PreviewTextInput" />
+                                                    </DockPanel>
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            VerticalAlignment="Center"
+                                                            Content="Y"
+                                                            FontSize="12" />
+                                                        <TextBox
+                                                            Name="palletLineY"
+                                                            Width="Auto"
+                                                            Height="17"
+                                                            HorizontalAlignment="Stretch"
+                                                            PreviewTextInput="PalletLine_PreviewTextInput" />
+                                                    </DockPanel>
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            VerticalAlignment="Center"
+                                                            Content="A"
+                                                            FontSize="12" />
+                                                        <TextBox
+                                                            Name="palletLineA"
+                                                            Width="Auto"
+                                                            Height="17"
+                                                            HorizontalAlignment="Stretch"
+                                                            PreviewTextInput="PalletLine_PreviewTextInput" />
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Column="1" Margin="0,4,0,0">
+                                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                                        <Label
+                                                            VerticalAlignment="Center"
+                                                            Content="Pallet:"
+                                                            FontSize="12" />
+                                                    </StackPanel>
+                                                    <!--<StackPanel Orientation="Horizontal"
                                                              HorizontalAlignment="Center">
                                                              <Label VerticalAlignment="Center"
                                                              Content="D" FontSize="12"/>
@@ -600,162 +608,163 @@
                                                              Height="17"
                                                              PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                              </StackPanel>-->
-                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                            <Label
-                                                                Width="Auto"
-                                                                VerticalAlignment="Center"
-                                                                Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_main}"
-                                                                FontSize="12" />
-                                                            <ComboBox
-                                                                Name="palletD_Main"
-                                                                Width="Auto"
-                                                                Height="20"
-                                                                FontSize="12">
-                                                                <ComboBoxItem>0</ComboBoxItem>
-                                                                <ComboBoxItem>1</ComboBoxItem>
-                                                                <ComboBoxItem>2</ComboBoxItem>
-                                                            </ComboBox>
-                                                        </StackPanel>
-                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                            <Label
-                                                                Width="Auto"
-                                                                VerticalAlignment="Center"
-                                                                Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_sub}"
-                                                                FontSize="12" />
-                                                            <ComboBox
-                                                                Name="palletD_Sub"
-                                                                Width="Auto"
-                                                                Height="20"
-                                                                FontSize="12">
-                                                                <ComboBoxItem>0</ComboBoxItem>
-                                                                <ComboBoxItem>1</ComboBoxItem>
-                                                                <ComboBoxItem>2</ComboBoxItem>
-                                                            </ComboBox>
-                                                        </StackPanel>
-                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                            <Label
-                                                                Width="Auto"
-                                                                VerticalAlignment="Center"
-                                                                Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletDirection_out}"
-                                                                FontSize="12" />
-                                                            <ComboBox
-                                                                Name="palletD_Out"
-                                                                Width="Auto"
-                                                                Height="20"
-                                                                FontSize="12">
-                                                                <ComboBoxItem>0</ComboBoxItem>
-                                                                <ComboBoxItem>1</ComboBoxItem>
-                                                                <ComboBoxItem>2</ComboBoxItem>
-                                                            </ComboBox>
-                                                        </StackPanel>
-                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                            <Label
-                                                                Width="Auto"
-                                                                VerticalAlignment="Center"
-                                                                Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletLine_ord}"
-                                                                FontSize="12" />
-                                                            <ComboBox
-                                                                Name="palletL_Ord"
-                                                                Width="Auto"
-                                                                Height="20"
-                                                                FontSize="12">
-                                                                <ComboBoxItem>0</ComboBoxItem>
-                                                                <ComboBoxItem>1</ComboBoxItem>
-                                                                <ComboBoxItem>2</ComboBoxItem>
-                                                                <ComboBoxItem>3</ComboBoxItem>
-                                                                <ComboBoxItem>4</ComboBoxItem>
-                                                            </ComboBox>
-                                                        </StackPanel>
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            Width="Auto"
+                                                            VerticalAlignment="Center"
+                                                            Content="PalletDirection_main"
+                                                            FontSize="12" />
+                                                        <ComboBox
+                                                            Name="palletD_Main"
+                                                            Width="Auto"
+                                                            Height="20"
+                                                            FontSize="12">
+                                                            <ComboBoxItem>0</ComboBoxItem>
+                                                            <ComboBoxItem>1</ComboBoxItem>
+                                                            <ComboBoxItem>2</ComboBoxItem>
+                                                        </ComboBox>
+                                                    </DockPanel>
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            Width="Auto"
+                                                            VerticalAlignment="Center"
+                                                            Content="PalletDirection_sub"
+                                                            FontSize="12" />
+                                                        <ComboBox
+                                                            Name="palletD_Sub"
+                                                            Width="Auto"
+                                                            Height="20"
+                                                            FontSize="12">
+                                                            <ComboBoxItem>0</ComboBoxItem>
+                                                            <ComboBoxItem>1</ComboBoxItem>
+                                                            <ComboBoxItem>2</ComboBoxItem>
+                                                        </ComboBox>
+                                                    </DockPanel>
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            Width="Auto"
+                                                            VerticalAlignment="Center"
+                                                            Content="PalletDirection_out"
+                                                            FontSize="12" />
+                                                        <ComboBox
+                                                            Name="palletD_Out"
+                                                            Width="Auto"
+                                                            Height="20"
+                                                            FontSize="12">
+                                                            <ComboBoxItem>0</ComboBoxItem>
+                                                            <ComboBoxItem>1</ComboBoxItem>
+                                                            <ComboBoxItem>2</ComboBoxItem>
+                                                        </ComboBox>
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Column="2" Margin="10,4,0,0">
+                                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            Width="Auto"
+                                                            VerticalAlignment="Center"
+                                                            Content="PalletLine_ord"
+                                                            FontSize="12" />
+                                                        <ComboBox
+                                                            Name="palletL_Ord"
+                                                            Width="Auto"
+                                                            Height="20"
+                                                            FontSize="12">
+                                                            <ComboBoxItem>0</ComboBoxItem>
+                                                            <ComboBoxItem>1</ComboBoxItem>
+                                                            <ComboBoxItem>2</ComboBoxItem>
+                                                            <ComboBoxItem>3</ComboBoxItem>
+                                                            <ComboBoxItem>4</ComboBoxItem>
+                                                        </ComboBox>
+                                                    </DockPanel>
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            VerticalAlignment="Center"
+                                                            Content="Subline"
+                                                            FontSize="12" />
+                                                        <ComboBox
+                                                            Name="palletHasSubLine"
+                                                            Height="20"
+                                                            HorizontalAlignment="Stretch"
+                                                            FontSize="12">
+                                                            <ComboBoxItem>yes</ComboBoxItem>
+                                                            <ComboBoxItem>no</ComboBoxItem>
+                                                        </ComboBox>
+                                                        <!--<TextBox Name="bufferHeadPointHasSubLine"
+                                                                 Width="35"
+                                                                 Height="17"
+                                                                 FontSize="12"
+                                                                 CharacterCasing="Upper"
+                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>-->
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Column="3" Margin="10,4,7,0">
+                                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            VerticalAlignment="Center"
+                                                            Content="Type"
+                                                            FontSize="12" />
+                                                        <ComboBox
+                                                            Name="palletType"
+                                                            Height="20"
+                                                            HorizontalAlignment="Stretch"
+                                                            FontSize="12">
+                                                            <ComboBoxItem>Working</ComboBoxItem>
+                                                            <ComboBoxItem>Empty</ComboBoxItem>
+                                                        </ComboBox>
+                                                        <!--<TextBox Name="bufferHeadPointHasSubLine"
+                                                                 Width="35"
+                                                                 Height="17"
+                                                                 FontSize="12"
+                                                                 CharacterCasing="Upper"
+                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>-->
+                                                    </DockPanel>
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            VerticalAlignment="Center"
+                                                            Content="Phase"
+                                                            FontSize="12" />
+                                                        <ComboBox
+                                                            Name="palletPhase"
+                                                            Height="20"
+                                                            HorizontalAlignment="Stretch"
+                                                            FontSize="12">
+                                                            <ComboBoxItem>0</ComboBoxItem>
+                                                            <ComboBoxItem>1</ComboBoxItem>
+                                                            <ComboBoxItem>2</ComboBoxItem>
+                                                            <ComboBoxItem>3</ComboBoxItem>
+                                                            <ComboBoxItem>4</ComboBoxItem>
+                                                            <ComboBoxItem>5</ComboBoxItem>
+                                                            <ComboBoxItem>6</ComboBoxItem>
+                                                            <ComboBoxItem>7</ComboBoxItem>
+                                                            <ComboBoxItem>8</ComboBoxItem>
+                                                            <ComboBoxItem>9</ComboBoxItem>
+                                                            <ComboBoxItem>10</ComboBoxItem>
+                                                        </ComboBox>
+                                                        <!--<TextBox Name="bufferHeadPointHasSubLine"
+                                                                 Width="35"
+                                                                 Height="17"
+                                                                 FontSize="12"
+                                                                 CharacterCasing="Upper"
+                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>-->
+                                                    </DockPanel>
+                                                    <StackPanel VerticalAlignment="Center">
+                                                        <Button
+                                                            Name="btn_SetPalletDataPallet"
+                                                            Width="70"
+                                                            Height="20"
+                                                            Margin="0,5"
+                                                            Click="Btn_SetPalletDataPallet_Click">
+                                                            Save
+                                                        </Button>
                                                     </StackPanel>
-                                                </Grid>
-                                                <Grid Margin="0,4,0,0">
-                                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                            <Label
-                                                                VerticalAlignment="Center"
-                                                                Content="Subline"
-                                                                FontSize="12" />
-                                                            <ComboBox
-                                                                Name="palletHasSubLine"
-                                                                Width="Auto"
-                                                                Height="20"
-                                                                FontSize="12">
-                                                                <ComboBoxItem>yes</ComboBoxItem>
-                                                                <ComboBoxItem>no</ComboBoxItem>
-                                                            </ComboBox>
-                                                            <!--<TextBox Name="bufferHeadPointHasSubLine"
-                                                                 Width="35"
-                                                                 Height="17"
-                                                                 FontSize="12"
-                                                                 CharacterCasing="Upper"
-                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>-->
-                                                        </StackPanel>
-                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                            <Label
-                                                                VerticalAlignment="Center"
-                                                                Content="Type"
-                                                                FontSize="12" />
-                                                            <ComboBox
-                                                                Name="palletType"
-                                                                Width="Auto"
-                                                                Height="20"
-                                                                FontSize="12">
-                                                                <ComboBoxItem>Working</ComboBoxItem>
-                                                                <ComboBoxItem>Empty</ComboBoxItem>
-                                                            </ComboBox>
-                                                            <!--<TextBox Name="bufferHeadPointHasSubLine"
-                                                                 Width="35"
-                                                                 Height="17"
-                                                                 FontSize="12"
-                                                                 CharacterCasing="Upper"
-                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>-->
-                                                        </StackPanel>
-                                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                            <Label
-                                                                VerticalAlignment="Center"
-                                                                Content="Phase"
-                                                                FontSize="12" />
-                                                            <ComboBox
-                                                                Name="palletPhase"
-                                                                Width="Auto"
-                                                                Height="20"
-                                                                FontSize="12">
-                                                                <ComboBoxItem>0</ComboBoxItem>
-                                                                <ComboBoxItem>1</ComboBoxItem>
-                                                                <ComboBoxItem>2</ComboBoxItem>
-                                                                <ComboBoxItem>3</ComboBoxItem>
-                                                                <ComboBoxItem>4</ComboBoxItem>
-                                                                <ComboBoxItem>5</ComboBoxItem>
-                                                                <ComboBoxItem>6</ComboBoxItem>
-                                                                <ComboBoxItem>7</ComboBoxItem>
-                                                                <ComboBoxItem>8</ComboBoxItem>
-                                                                <ComboBoxItem>9</ComboBoxItem>
-                                                                <ComboBoxItem>10</ComboBoxItem>
-                                                            </ComboBox>
-                                                            <!--<TextBox Name="bufferHeadPointHasSubLine"
-                                                                 Width="35"
-                                                                 Height="17"
-                                                                 FontSize="12"
-                                                                 CharacterCasing="Upper"
-                                                                 PreviewTextInput="myPreviewTextInput"></TextBox>-->
-                                                        </StackPanel>
-                                                        <StackPanel VerticalAlignment="Center">
-                                                            <Button
-                                                                Name="btn_SetPalletDataPallet"
-                                                                Width="25"
-                                                                Height="20"
-                                                                Margin="15,0,0,0"
-                                                                Click="Btn_SetPalletDataPallet_Click">
-                                                                <iconPacks:PackIconMaterial Kind="ContentSave" />
-                                                            </Button>
-                                                        </StackPanel>
-                                                    </StackPanel>
-                                                </Grid>
-                                            </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
                                         </Grid>
-                                    </StackPanel>
-
-
+                                    </ScrollViewer>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -768,7 +777,7 @@
                                     Margin="10,0"
                                     Padding="5,0"
                                     Click="Btn_Save_Devices_Click"
-                                    Content="{DynamicResource DevicesManagement_Button_Save}" />
+                                    Content="Save" />
                                 <Button
                                     Name="Btn_Exit_DevicePallet"
                                     Width="Auto"
@@ -776,12 +785,12 @@
                                     Margin="10,0"
                                     Padding="5,0"
                                     Click="Btn_Exit_DevicePallet_Click"
-                                    Content="{DynamicResource DevicesManagement_Button_Exit}" />
+                                    Content="Exit" />
                             </StackPanel>
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="{DynamicResource DevicesManagement_TabItem_Product}">
+                <TabItem Header="Product">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -794,7 +803,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_Product}">
+                                <GroupBox Header="Product">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -856,7 +865,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Product_Column_ProductName}" />
+                                                                    <TextBlock Text="ProductName" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -869,7 +878,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Product_Column_ImageProductUrl}" />
+                                                                    <TextBlock Text="ImageProductUrl" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -898,7 +907,7 @@
                                 HorizontalAlignment="Stretch"
                                 Background="Ivory" />
                             <Grid Grid.Column="2">
-                                <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_ProductDetail}">
+                                <GroupBox Header="ProductDetail">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -963,7 +972,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_ProductDetail_Column_ProductDetailName}" />
+                                                                    <TextBlock Text="ProductDetailName" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -985,7 +994,7 @@
                                     Margin="10,0"
                                     Padding="5,0"
                                     Click="Btn_Save_Products_Click"
-                                    Content="{DynamicResource DevicesManagement_Button_Save}" />
+                                    Content="Save" />
                                 <Button
                                     Name="Btn_Exit_Product"
                                     Width="Auto"
@@ -993,12 +1002,12 @@
                                     Margin="10,0"
                                     Padding="5,0"
                                     Click="Btn_Exit_Product_Click"
-                                    Content="{DynamicResource DevicesManagement_Button_Exit}" />
+                                    Content="Exit" />
                             </StackPanel>
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="{DynamicResource DevicesManagement_TabItem_Buffer}">
+                <TabItem Header="Buffer">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -1011,7 +1020,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_Buffer}">
+                                <GroupBox Header="Buffer">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -1077,7 +1086,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferName}" />
+                                                                    <TextBlock Text="BufferName" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -1090,7 +1099,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferBay}" />
+                                                                    <TextBlock Text="Bay" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -1103,7 +1112,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferRow}" />
+                                                                    <TextBlock Text="Row" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -1113,7 +1122,7 @@
                                                         <DataGridTemplateColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Buffer_Column_BufferReturn}" />
+                                                                    <TextBlock Text="Return" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.HeaderTemplate>
@@ -1245,7 +1254,7 @@
                                 HorizontalAlignment="Stretch"
                                 Background="Ivory" />
                             <Grid Grid.Column="2">
-                                <GroupBox Header="{DynamicResource DevicesManagement_Groupbox_Pallet}">
+                                <GroupBox Header="Pallet">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
@@ -1299,7 +1308,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Pallet_Column_Row}" />
+                                                                    <TextBlock Text="Row" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -1311,7 +1320,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Pallet_Column_Bay}" />
+                                                                    <TextBlock Text="Bay" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -1323,7 +1332,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Pallet_Column_Status}" />
+                                                                    <TextBlock Text="Status" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -1335,7 +1344,7 @@
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
-                                                                    <TextBlock Text="{DynamicResource DevicesManagement_Groupbox_Pallet_Column_ProductDetailName}" />
+                                                                    <TextBlock Text="ProductDetailName" />
                                                                 </StackPanel>
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
@@ -1343,7 +1352,7 @@
                                                     <DataGridTextColumn
                                                         Width="Auto"
                                                         Binding="{Binding Path=dataPallet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                        Header="Dữ liệu"
+                                                        Header="Data"
                                                         IsReadOnly="True"
                                                         Visibility="Visible">
                                                         <DataGridTextColumn.ElementStyle>
@@ -1376,12 +1385,12 @@
                                      Click="Btn_Save_Buffer_Click"/>-->
                                 <Button
                                     Name="Btn_Exit_Buffer"
-                                    Width="Auto"
+                                    Width="70"
                                     Height="25"
                                     Margin="10,0"
                                     Padding="5,0"
                                     Click="Btn_Exit_Buffer_Click"
-                                    Content="{DynamicResource DevicesManagement_Button_Exit}" />
+                                    Content="Exit" />
                             </StackPanel>
                         </Grid>
                     </Grid>

@@ -6,6 +6,7 @@
         private int pDeviceBufferId;
         private int pBufferId;
         private int pPlanId;
+        private string pActiveDate;
         private int pRow;
         private int pBay;
         private string pDataPallet;
@@ -15,6 +16,7 @@
         public int palletId { get => pPalletId; set => pPalletId = value; }
         public int deviceBufferId { get => pDeviceBufferId; set => pDeviceBufferId = value; }
         public int planId { get => pPlanId; set => pPlanId = value; }
+        public string activeDate { get => pActiveDate; set => pActiveDate = value; }
         public int row { get => pRow; set => pRow = value; }
         public int bay { get => pBay; set => pBay = value; }
         public string dataPallet { get => pDataPallet; set { pDataPallet = value; RaisePropertyChanged("dataPallet"); } }

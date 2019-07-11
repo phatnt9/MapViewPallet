@@ -916,6 +916,7 @@ namespace MapViewPallet.Shape
                             deviceBufferId = int.Parse(dr2["deviceBufferId"].ToString()),
                             bufferId = int.Parse(dr2["bufferId"].ToString()),
                             planId = int.Parse(dr2["planId"].ToString()),
+                            activeDate = dr2["activeDate"].ToString(),
                             row = int.Parse(dr2["row"].ToString()),
                             bay = int.Parse(dr2["bay"].ToString()),
                             dataPallet = dr2["dataPallet"].ToString(),

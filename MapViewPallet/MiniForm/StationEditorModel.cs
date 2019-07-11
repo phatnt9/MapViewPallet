@@ -39,7 +39,11 @@ namespace MapViewPallet.MiniForm
             try
             {
                 palletsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/getListPalletBufferId");
+                HttpWebRequest request = 
+                    (HttpWebRequest)WebRequest.Create(@"http://" + 
+                    Properties.Settings.Default.serverIp + ":" + 
+                    Properties.Settings.Default.serverPort + 
+                    @"/robot/rest/" + "pallet/getListPalletBufferId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -72,6 +76,7 @@ namespace MapViewPallet.MiniForm
                             deviceBufferId = int.Parse(dr["deviceBufferId"].ToString()),
                             bufferId = int.Parse(dr["bufferId"].ToString()),
                             planId = int.Parse(dr["planId"].ToString()),
+                            activeDate = dr["activeDate"].ToString(),
                             row = int.Parse(dr["row"].ToString()),
                             bay = int.Parse(dr["bay"].ToString()),
                             dataPallet = dr["dataPallet"].ToString(),

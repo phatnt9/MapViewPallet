@@ -360,7 +360,7 @@ namespace MapViewPallet.MiniForm
                 postApiBody.y = Math.Round((double.Parse((bufferPosY.Text != "") ? bufferPosY.Text : "0")), 2);
                 postApiBody.angle = Math.Round((double.Parse((bufferPosA.Text != "") ? bufferPosA.Text : "0")), 2);
                 postApiBody.arrange = (bufferArr.Text != "") ? bufferArr.Text : "bigEndian";
-                postApiBody.canOpEdit = (cbEditable.Text != "") ? cbEditable.Text : "False";
+                postApiBody.canOpEdit = (cbEditable.Text != "") ? bool.Parse(cbEditable.Text) : false;
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 

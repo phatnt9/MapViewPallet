@@ -337,7 +337,13 @@ namespace MapViewPallet.MiniForm
                 postApiBody.palletAmount = 1;
                 string jsonData = JsonConvert.SerializeObject(postApiBody);
                 Console.WriteLine(jsonData);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "plan/createPlanPallet");
+
+                HttpWebRequest request = 
+                    (HttpWebRequest)WebRequest.Create(@"http://" + 
+                    Properties.Settings.Default.serverIp + ":" + 
+                    Properties.Settings.Default.serverPort + 
+                    @"/robot/rest/" + "plan/createPlanPallet");
+
                 request.Method = "POST";
                 request.ContentType = "application/json";
 

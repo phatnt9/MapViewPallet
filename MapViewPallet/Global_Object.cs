@@ -3,7 +3,10 @@ using MapViewPallet.Shape;
 using System;
 using System.Data;
 using System.Data.OleDb;
+using System.IO;
+using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -12,6 +15,13 @@ namespace MapViewPallet
 
     public static class Global_Object
     {
+        public enum RequestMethod
+        {
+            GET,
+            POST,
+            DELETE
+        }
+
         public static readonly object syncLock = new object();
         //#######################################
         public static StationShape bufferToMove;
@@ -49,7 +59,76 @@ namespace MapViewPallet
         public static string messageTitileError = "Error";
         public static string messageTitileWarning = "Warning";
 
-        
+
+
+        //#######################################
+        public static string RequestDataAPI(string jsonData, string apiUrl, RequestMethod method)
+        {
+            string resultData = "";
+            try
+            {
+                switch (method)
+                {
+                    case RequestMethod.GET:
+                        {
+                            HttpWebRequest request =
+                                (HttpWebRequest)WebRequest.Create(@"http://" +
+                                MapViewPallet.Properties.Settings.Default.serverIp + ":" +
+                                MapViewPallet.Properties.Settings.Default.serverPort +
+                                @"/robot/rest/" + apiUrl);
+                            request.Method = method.ToString();
+                            request.ContentType = @"application/json";
+                            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                            using (Stream responseStream = response.GetResponseStream())
+                            {
+                                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                                resultData = reader.ReadToEnd();
+                            }
+                            break;
+                        }
+                    case RequestMethod.POST:
+                        {
+                            goto default;
+                        }
+                    case RequestMethod.DELETE:
+                        {
+                            goto default;
+                        }
+                    default:
+                        {
+                            HttpWebRequest request =
+                                (HttpWebRequest)WebRequest.Create(@"http://" +
+                                MapViewPallet.Properties.Settings.Default.serverIp + ":" +
+                                MapViewPallet.Properties.Settings.Default.serverPort +
+                                @"/robot/rest/" + apiUrl);
+                            request.Method = method.ToString();
+                            request.ContentType = @"application/json";
+
+                            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                            Byte[] byteArray = encoding.GetBytes(jsonData);
+                            request.ContentLength = byteArray.Length;
+                            using (Stream dataStream = request.GetRequestStream())
+                            {
+                                dataStream.Write(byteArray, 0, byteArray.Length);
+                                dataStream.Flush();
+                            }
+                            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                            using (Stream responseStream = response.GetResponseStream())
+                            {
+                                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                                resultData = reader.ReadToEnd();
+                            }
+                            break;
+                        }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+            }
+            return resultData;
+        }
+
 
         //#######################################
         public static MusicPlayerOld musicPlayerOld = new MusicPlayerOld("ALARM.mp3");

@@ -1,22 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
 {
@@ -95,9 +83,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     return;
                 }
                 cmbDevice.IsEnabled = false;
-                //if ((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString() == "3")
-
-                //if (((cmbAuthor.SelectedValue==null)? (cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString(): cmbAuthor.SelectedValue.ToString()) == "3")
                 if ((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString() == "3")
                 {
                     cmbDevice.IsEnabled = true;
@@ -114,7 +99,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void AddUserForm_Loaded(object sender, RoutedEventArgs e)
@@ -127,18 +112,16 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
                 if (flgEdit)
                 {
-                    //this.Title = "Tùy chỉnh";
-                    //functionTextBlock.Text = "Tùy chỉnh";
-                    this.userNametb.Text = (userManagement.UsersListDg.SelectedItem as dtUser).userName.ToString();
+                    dtUser user = userManagement.UsersListDg.SelectedItem as dtUser;
+
+                    this.userNametb.Text = user.userName.ToString();
                     this.userNametb.IsReadOnly = true;
-                    cmbAuthor.SelectedValue = int.Parse((userManagement.UsersListDg.SelectedItem as dtUser).userAuthor.ToString());
-                    cmbDevice.SelectedValue = (userManagement.UsersListDg.SelectedItem as dtUser).deviceId.ToString();
+                    cmbAuthor.SelectedValue = int.Parse(user.userAuthor.ToString());
+                    cmbDevice.SelectedValue = user.deviceId.ToString();
                 }
                 else
                 {
                     this.userNametb.IsReadOnly = false;
-                    //this.Title = "Thêm mới";
-                    //functionTextBlock.Text = "Thêm mới";
                 }
                 userNametb.Focus();
             }
@@ -146,7 +129,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void loadAuthor()
@@ -179,7 +162,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         private void loadDevice()
@@ -191,32 +174,15 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             try
             {
                 List<dtDevice> dt = new List<dtDevice>();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevice");
-                request.Method = "GET";
-                request.ContentType = @"application/json";
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
+                string contentJson = Global_Object.RequestDataAPI("", "device/getListDevice", Global_Object.RequestMethod.GET);
+                dynamic response = JsonConvert.DeserializeObject(contentJson);
+                List<dtDevice> listDevice = response.ToObject<List<dtDevice>>();
+
+                foreach (dtDevice device in listDevice)
                 {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    string result = reader.ReadToEnd();
-
-                    DataTable devices = JsonConvert.DeserializeObject<DataTable>(result);
-                    foreach (DataRow dr in devices.Rows)
+                    if (!ContainDevice(device, dt))
                     {
-                        dtDevice tempDevice = new dtDevice
-                        {
-                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                            creDt = dr["creDt"].ToString(),
-                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                            updDt = dr["updDt"].ToString(),
-                            deviceId = int.Parse(dr["deviceId"].ToString()),
-                            deviceName = dr["deviceName"].ToString()
-                        };
-                        if (!ContainDevice(tempDevice, dt))
-                        {
-                            dt.Add(tempDevice);
-                        }
-
+                        dt.Add(device);
                     }
                 }
                 cmbDevice.ItemsSource = dt;
@@ -257,7 +223,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 if (string.IsNullOrEmpty(this.userNametb.Text) || this.userNametb.Text.Trim() == "")
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "User Name", "User Name"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Windows.Forms.MessageBox.Show(
+                            String.Format(Global_Object.messageValidate, "User Name", "User Name"),
+                            Global_Object.messageTitileWarning,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
                     this.userNametb.Focus();
                     return;
                 }
@@ -266,7 +236,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 {
                     if (string.IsNullOrEmpty(this.userPasswordtb.Text) || this.userPasswordtb.Text.Trim() == "")
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "Password", "Password"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        System.Windows.Forms.MessageBox.Show(
+                                       String.Format(Global_Object.messageValidate, "Password", "Password"),
+                                       Global_Object.messageTitileWarning,
+                                       MessageBoxButtons.OK,
+                                       MessageBoxIcon.Warning);
                         this.userPasswordtb.Focus();
                         return;
                     }
@@ -274,7 +248,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
                 if (cmbAuthor.SelectedValue.ToString() == "3" && cmbDevice.SelectedValue.ToString() == "")
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "Device", "Device"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Windows.Forms.MessageBox.Show(String.Format(
+                            Global_Object.messageValidate, "Device", "Device"),
+                            Global_Object.messageTitileWarning,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
                     this.cmbDevice.Focus();
                     return;
                 }
@@ -292,41 +270,40 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 user.creUsrId = Global_Object.userLogin;
                 user.updUsrId = Global_Object.userLogin;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "user/insertUpdateUserInfo");
-                request.Method = "POST";
-                request.ContentType = @"application/json";
+
+
                 string jsonData = JsonConvert.SerializeObject(user);
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonData);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
+                string contentJson = Global_Object.RequestDataAPI(jsonData, "user/insertUpdateUserInfo", Global_Object.RequestMethod.POST);
+                dynamic response = JsonConvert.DeserializeObject(contentJson);
+                dtUser userInfo = response.ToObject<dtUser>();
+                if (userInfo.flagModify == -2)
                 {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
+                    System.Windows.Forms.MessageBox.Show(
+                        String.Format(Global_Object.messageDuplicated, "User Name"),
+                        Global_Object.messageTitileError,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    this.userNametb.Focus();
+                    return;
                 }
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
+                else if (userInfo.flagModify > 0)
                 {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    string result = reader.ReadToEnd();
-                    dtUser dtUser = JsonConvert.DeserializeObject<dtUser>(result);
-                    if (dtUser.flagModify == -2)
-                    {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "User Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.userNametb.Focus();
-                        return;
-                    }
-                    else if (dtUser.flagModify > 0)
-                    {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        //frm.userIdSelect = dtUser.userId;
-                        userManagement.userModel.ReloadListUsers();
-                    }
-                    else if (dtUser.flagModify == -1)
-                    {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    System.Windows.Forms.MessageBox.Show(
+                                           String.Format(Global_Object.messageSaveSucced),
+                                           Global_Object.messageTitileInformation,
+                                           MessageBoxButtons.OK,
+                                           MessageBoxIcon.Information);
+                    //frm.userIdSelect = dtUser.userId;
+                    userManagement.userModel.ReloadListUsers();
+                }
+                else if (userInfo.flagModify == -1)
+                {
+                    System.Windows.Forms.MessageBox.Show(
+                        String.Format(Global_Object.messageSaveFail),
+                        Global_Object.messageTitileError,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
                 }
             }
             catch (Exception ex)
@@ -335,10 +312,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             }
         }
 
-        private void Btn_exit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
 
         private void CenterWindowOnScreen()
         {
@@ -355,7 +328,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
     }
 }

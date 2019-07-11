@@ -419,6 +419,18 @@
                                             </DataGridTextColumn>
                                             <DataGridTextColumn
                                                 Width="Auto"
+                                                Binding="{Binding Path=activeDate}"
+                                                Header="ActiveDate"
+                                                IsReadOnly="True"
+                                                Visibility="Visible">
+                                                <DataGridTextColumn.EditingElementStyle>
+                                                    <Style TargetType="TextBox">
+                                                        <Setter Property="CharacterCasing" Value="Upper" />
+                                                    </Style>
+                                                </DataGridTextColumn.EditingElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn
+                                                Width="Auto"
                                                 Binding="{Binding Path=row}"
                                                 IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
