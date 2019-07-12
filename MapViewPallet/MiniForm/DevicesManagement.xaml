@@ -1015,7 +1015,7 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="400" />
                                 <ColumnDefinition Width="4" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
@@ -1025,7 +1025,7 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="30" />
                                             <RowDefinition />
-                                            <RowDefinition Height="50" />
+                                            <RowDefinition Height="120" />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
                                             <StackPanel
@@ -1177,74 +1177,159 @@
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
-                                        <Grid Grid.Row="2">
-                                            <Grid>
-                                                <StackPanel
-                                                    Margin="0,0,0,5"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Orientation="Horizontal">
-                                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                        <Label
+                                        <Grid Grid.Row="2" Background="#f1f1f1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition Height="30" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Grid Width="360">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="100" />
+                                                        <ColumnDefinition Width="200" />
+                                                        <ColumnDefinition Width="60" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0">
+                                                        <StackPanel
+                                                            Margin="0,0,5,0"
+                                                            HorizontalAlignment="Stretch"
                                                             VerticalAlignment="Center"
-                                                            Content="X"
-                                                            FontSize="12" />
-                                                        <TextBox
-                                                            Name="bufferX"
-                                                            Width="Auto"
-                                                            Height="17"
-                                                            FontSize="12"
-                                                            PreviewTextInput="BufferX_PreviewTextInput" />
-                                                    </StackPanel>
-                                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                        <Label
+                                                            Orientation="Vertical">
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <Label
+                                                                    VerticalAlignment="Center"
+                                                                    Content="X"
+                                                                    FontSize="12" />
+                                                                <TextBox
+                                                                    Name="bufferX"
+                                                                    Height="17"
+                                                                    FontSize="12"
+                                                                    PreviewTextInput="BufferX_PreviewTextInput" />
+                                                            </DockPanel>
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <Label
+                                                                    VerticalAlignment="Center"
+                                                                    Content="Y"
+                                                                    FontSize="12" />
+                                                                <TextBox
+                                                                    Name="bufferY"
+                                                                    Height="17"
+                                                                    FontSize="12"
+                                                                    PreviewTextInput="BufferY_PreviewTextInput" />
+                                                            </DockPanel>
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <Label
+                                                                    VerticalAlignment="Center"
+                                                                    Content="A"
+                                                                    FontSize="12" />
+                                                                <TextBox
+                                                                    Name="bufferA"
+                                                                    Height="17"
+                                                                    FontSize="12"
+                                                                    PreviewTextInput="BufferA_PreviewTextInput" />
+                                                            </DockPanel>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1">
+                                                        <StackPanel
+                                                            Margin="0,0,5,0"
+                                                            HorizontalAlignment="Stretch"
                                                             VerticalAlignment="Center"
-                                                            Content="Y"
-                                                            FontSize="12" />
-                                                        <TextBox
-                                                            Name="bufferY"
-                                                            Width="Auto"
-                                                            Height="17"
-                                                            FontSize="12"
-                                                            PreviewTextInput="BufferY_PreviewTextInput" />
-                                                    </StackPanel>
-                                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                        <Label
+                                                            Orientation="Vertical">
+
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <Label
+                                                                    VerticalAlignment="Center"
+                                                                    Content="Arrange"
+                                                                    FontSize="12" />
+                                                                <ComboBox
+                                                                    Name="bufferArr"
+                                                                    Height="20"
+                                                                    FontSize="12">
+                                                                    <ComboBoxItem>bigEndian</ComboBoxItem>
+                                                                    <ComboBoxItem>littleEndian</ComboBoxItem>
+                                                                </ComboBox>
+                                                            </DockPanel>
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <Label
+                                                                    VerticalAlignment="Center"
+                                                                    Content="Editable"
+                                                                    FontSize="12" />
+                                                                <ComboBox
+                                                                    Name="cbEditable"
+                                                                    Height="20"
+                                                                    FontSize="12">
+                                                                    <ComboBoxItem>True</ComboBoxItem>
+                                                                    <ComboBoxItem>False</ComboBoxItem>
+                                                                </ComboBox>
+                                                            </DockPanel>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    <Grid Grid.Column="2">
+                                                        <StackPanel
+                                                            Margin="0,0,0,5"
+                                                            HorizontalAlignment="Stretch"
                                                             VerticalAlignment="Center"
-                                                            Content="A"
-                                                            FontSize="12" />
-                                                        <TextBox
-                                                            Name="bufferA"
-                                                            Width="Auto"
-                                                            Height="17"
-                                                            FontSize="12"
-                                                            PreviewTextInput="BufferA_PreviewTextInput" />
-                                                    </StackPanel>
-                                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                                        <Label
-                                                            Width="Auto"
-                                                            VerticalAlignment="Center"
-                                                            Content="Arr"
-                                                            FontSize="12" />
-                                                        <ComboBox
-                                                            Name="bufferArr"
-                                                            Width="Auto"
-                                                            Height="20"
-                                                            FontSize="12">
-                                                            <ComboBoxItem>bigEndian</ComboBoxItem>
-                                                            <ComboBoxItem>littleEndian</ComboBoxItem>
-                                                        </ComboBox>
-                                                    </StackPanel>
-                                                    <Button
-                                                        Name="btn_SetBufferData"
-                                                        Width="25"
-                                                        Height="20"
-                                                        Margin="15,0,0,0"
-                                                        Click="Btn_SetBufferData_Click">
-                                                        <iconPacks:PackIconMaterial Kind="ContentSave" />
-                                                    </Button>
-                                                </StackPanel>
+                                                            Orientation="Vertical">
+
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <Label
+                                                                    Width="30"
+                                                                    VerticalAlignment="Center"
+                                                                    HorizontalContentAlignment="Right"
+                                                                    Content="RG"
+                                                                    FontSize="12" />
+                                                                <CheckBox
+                                                                    Name="cbReturnGate"
+                                                                    Height="20"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalContentAlignment="Center"
+                                                                    FontSize="12" />
+                                                            </DockPanel>
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <Label
+                                                                    Width="30"
+                                                                    VerticalAlignment="Center"
+                                                                    HorizontalContentAlignment="Right"
+                                                                    Content="RM"
+                                                                    FontSize="12" />
+                                                                <CheckBox
+                                                                    Name="cbReturnMain"
+                                                                    Height="20"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalContentAlignment="Center"
+                                                                    FontSize="12" />
+                                                            </DockPanel>
+
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <Label
+                                                                    Width="30"
+                                                                    VerticalAlignment="Center"
+                                                                    HorizontalContentAlignment="Right"
+                                                                    Content="R4"
+                                                                    FontSize="12" />
+                                                                <CheckBox
+                                                                    Name="cbReturn401"
+                                                                    Height="20"
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalContentAlignment="Center"
+                                                                    FontSize="12" />
+                                                            </DockPanel>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </Grid>
                                             </Grid>
+                                            <Grid Grid.Row="1">
+                                                <Button
+                                                    Name="btn_SetBufferData"
+                                                    Width="70"
+                                                    Height="20"
+                                                    Margin="15,0,0,0"
+                                                    Click="Btn_SetBufferData_Click">
+                                                    Save
+                                                </Button>
+                                            </Grid>
+
                                         </Grid>
                                     </Grid>
                                 </GroupBox>

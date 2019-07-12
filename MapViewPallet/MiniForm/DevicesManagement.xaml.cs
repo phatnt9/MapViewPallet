@@ -92,25 +92,25 @@ namespace MapViewPallet.MiniForm
                 switch (((e.Source as System.Windows.Controls.TabControl).SelectedIndex))
                 {
                     case 0:
-                        {
-                            deviceManagementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
-                            break;
-                        }
+                    {
+                        deviceManagementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                        break;
+                    }
                     case 1:
-                        {
-                            deviceManagementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
-                            break;
-                        }
+                    {
+                        deviceManagementModel.ReloadListDevices(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                        break;
+                    }
                     case 2:
-                        {
-                            deviceManagementModel.ReloadListProducts();
-                            break;
-                        }
+                    {
+                        deviceManagementModel.ReloadListProducts();
+                        break;
+                    }
                     case 3:
-                        {
-                            deviceManagementModel.ReloadListBuffers();
-                            break;
-                        }
+                    {
+                        deviceManagementModel.ReloadListBuffers();
+                        break;
+                    }
                 }
             }
         }
@@ -239,7 +239,7 @@ namespace MapViewPallet.MiniForm
                     dtDeviceProduct deviceProductTemp = new dtDeviceProduct();
                     deviceProductTemp.deviceProductId = item.deviceProductId;
                     deviceProductTemp.productId = item.productId;
-                    deviceProductTemp.checkStatus = uncheckAll ? false: item.checkStatus;
+                    deviceProductTemp.checkStatus = uncheckAll ? false : item.checkStatus;
                     deviceProducts.Add(deviceProductTemp);
 
                 }
@@ -289,83 +289,83 @@ namespace MapViewPallet.MiniForm
                 switch (e.Column.DisplayIndex)
                 {
                     case 1:
-                        {
-                            dtDevice temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtDevice;
-                            string deviceName = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
-                            List<dtDevice> devices = new List<dtDevice>();
-                            temp.deviceName = deviceName;
-                            temp.updUsrId = Global_Object.userLogin;
-                            devices.Add(temp);
+                    {
+                        dtDevice temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtDevice;
+                        string deviceName = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
+                        List<dtDevice> devices = new List<dtDevice>();
+                        temp.deviceName = deviceName;
+                        temp.updUsrId = Global_Object.userLogin;
+                        devices.Add(temp);
 
-                            if (devices.Count == 0)
+                        if (devices.Count == 0)
+                        {
+                            System.Windows.Forms.MessageBox.Show
+                                (
+                                String.Format(Global_Object.messageNoDataSave),
+                                Global_Object.messageTitileWarning,
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning
+                                );
+                            return;
+                        }
+
+                        string jsonData = JsonConvert.SerializeObject(devices);
+
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/updateListNameDevice");
+                        request.Method = "POST";
+                        request.ContentType = "application/json";
+
+                        System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                        Byte[] byteArray = encoding.GetBytes(jsonData);
+                        request.ContentLength = byteArray.Length;
+                        using (Stream dataStream = request.GetRequestStream())
+                        {
+                            dataStream.Write(byteArray, 0, byteArray.Length);
+                            dataStream.Flush();
+                        }
+
+                        HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                        using (Stream responseStream = response.GetResponseStream())
+                        {
+                            StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                            int result = 0;
+                            int.TryParse(reader.ReadToEnd(), out result);
+                            if (result == 1)
+                            {
+                                //System.Windows.Forms.MessageBox.Show
+                                //    (
+                                //    String.Format(Global_Object.messageSaveSucced),
+                                //    Global_Object.messageTitileInformation,
+                                //    MessageBoxButtons.OK,
+                                //    MessageBoxIcon.Information
+                                //    );
+
+                                deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                            }
+                            else if (result == -2)
                             {
                                 System.Windows.Forms.MessageBox.Show
                                     (
-                                    String.Format(Global_Object.messageNoDataSave),
-                                    Global_Object.messageTitileWarning,
+                                    String.Format(Global_Object.messageDuplicated, "Devices Name"),
+                                    Global_Object.messageTitileError,
                                     MessageBoxButtons.OK,
-                                    MessageBoxIcon.Warning
+                                    MessageBoxIcon.Error
                                     );
-                                return;
                             }
-
-                            string jsonData = JsonConvert.SerializeObject(devices);
-
-                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/updateListNameDevice");
-                            request.Method = "POST";
-                            request.ContentType = "application/json";
-
-                            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                            Byte[] byteArray = encoding.GetBytes(jsonData);
-                            request.ContentLength = byteArray.Length;
-                            using (Stream dataStream = request.GetRequestStream())
+                            else
                             {
-                                dataStream.Write(byteArray, 0, byteArray.Length);
-                                dataStream.Flush();
+                                System.Windows.Forms.MessageBox.Show
+                                    (
+                                    String.Format(Global_Object.messageSaveFail),
+                                    Global_Object.messageTitileError,
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                    );
                             }
-
-                            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                            using (Stream responseStream = response.GetResponseStream())
-                            {
-                                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                                int result = 0;
-                                int.TryParse(reader.ReadToEnd(), out result);
-                                if (result == 1)
-                                {
-                                    //System.Windows.Forms.MessageBox.Show
-                                    //    (
-                                    //    String.Format(Global_Object.messageSaveSucced),
-                                    //    Global_Object.messageTitileInformation,
-                                    //    MessageBoxButtons.OK,
-                                    //    MessageBoxIcon.Information
-                                    //    );
-
-                                    deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
-                                }
-                                else if (result == -2)
-                                {
-                                    System.Windows.Forms.MessageBox.Show
-                                        (
-                                        String.Format(Global_Object.messageDuplicated, "Devices Name"),
-                                        Global_Object.messageTitileError,
-                                        MessageBoxButtons.OK,
-                                        MessageBoxIcon.Error
-                                        );
-                                }
-                                else
-                                {
-                                    System.Windows.Forms.MessageBox.Show
-                                        (
-                                        String.Format(Global_Object.messageSaveFail),
-                                        Global_Object.messageTitileError,
-                                        MessageBoxButtons.OK,
-                                        MessageBoxIcon.Error
-                                        );
-                                }
-                            }
-                            UpdateTab2(true);
-                            break;
                         }
+                        UpdateTab2(true);
+                        break;
+                    }
                 }
 
             }
@@ -385,16 +385,16 @@ namespace MapViewPallet.MiniForm
             switch (dgci.Column.DisplayIndex)
             {
                 case 2:
+                {
+                    OpenFileDialog fileDialog = new OpenFileDialog();
+                    fileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+                    if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        OpenFileDialog fileDialog = new OpenFileDialog();
-                        fileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
-                        if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        {
-                            (DevicesListDg2.SelectedItem as dtDevice).pathFile = fileDialog.FileName;
-                            (DevicesListDg2.SelectedItem as dtDevice).imageDeviceUrl = Path.GetFileName(fileDialog.FileName);
-                        }
-                        break;
+                        (DevicesListDg2.SelectedItem as dtDevice).pathFile = fileDialog.FileName;
+                        (DevicesListDg2.SelectedItem as dtDevice).imageDeviceUrl = Path.GetFileName(fileDialog.FileName);
                     }
+                    break;
+                }
             }
 
             if (uploadFileDevices() == 0)
@@ -798,17 +798,17 @@ namespace MapViewPallet.MiniForm
             switch (dgci.Column.DisplayIndex)
             {
                 case 2:
+                {
+                    OpenFileDialog fileDialog = new OpenFileDialog();
+                    fileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+                    if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        OpenFileDialog fileDialog = new OpenFileDialog();
-                        fileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
-                        if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        {
 
-                            (ProductsListDg.SelectedItem as dtProduct).pathFile = fileDialog.FileName;
-                            (ProductsListDg.SelectedItem as dtProduct).imageProductUrl = Path.GetFileName(fileDialog.FileName);
-                        }
-                        break;
+                        (ProductsListDg.SelectedItem as dtProduct).pathFile = fileDialog.FileName;
+                        (ProductsListDg.SelectedItem as dtProduct).imageProductUrl = Path.GetFileName(fileDialog.FileName);
                     }
+                    break;
+                }
             }
 
             if (uploadFileProducts() == 0)
@@ -861,8 +861,8 @@ namespace MapViewPallet.MiniForm
                         MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
                         )
                     {
-                        HttpWebRequest request = 
-                            (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" 
+                        HttpWebRequest request =
+                            (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":"
                             + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/deleteListProduct");
                         request.Method = "DELETE";
                         request.ContentType = @"application/json";
@@ -894,19 +894,19 @@ namespace MapViewPallet.MiniForm
                             int.TryParse(reader.ReadToEnd(), out result);
                             if (result == 1)
                             {
-                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), 
+                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced),
                                     Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                             }
                             else if (result == 2)
                             {
-                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse, 
-                                    "Products", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, 
+                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteUse,
+                                    "Products", "Other Screen"), Global_Object.messageTitileWarning, MessageBoxButtons.OK,
                                     MessageBoxIcon.Warning);
                             }
                             else
                             {
-                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail), 
+                                System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteFail),
                                     Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
@@ -1111,6 +1111,10 @@ namespace MapViewPallet.MiniForm
                     bufferY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "0";
                     bufferA.Text = (bufferData != null) ? (((double)bufferData.angle).ToString()) : "0";
                     bufferArr.Text = (bufferData != null) ? ((bufferData.arrange).ToString()) : "bigEndian";
+                    cbEditable.Text = (bufferData.canOpEdit != null) ? ((bufferData.canOpEdit).ToString()) : "False";
+                    cbReturnGate.IsChecked = (bufferData.returnGate != null) ? (bufferData.returnGate) : false;
+                    cbReturnMain.IsChecked = (bufferData.returnMain != null) ? (bufferData.returnMain) : false;
+                    cbReturn401.IsChecked = (bufferData.return401 != null) ? (bufferData.return401) : false;
                     deviceManagementModel.ReloadListPallets(temp.bufferId);
                 }
             }
@@ -1137,25 +1141,25 @@ namespace MapViewPallet.MiniForm
                 switch (e.Column.DisplayIndex)
                 {
                     case 1:
-                        {
-                            temp.bufferName = bufferCellEdit;
-                            break;
-                        }
+                    {
+                        temp.bufferName = bufferCellEdit;
+                        break;
+                    }
                     case 2:
-                        {
-                            temp.maxBay = int.Parse(bufferCellEdit);
-                            break;
-                        }
+                    {
+                        temp.maxBay = int.Parse(bufferCellEdit);
+                        break;
+                    }
                     case 3:
-                        {
-                            temp.maxRow = int.Parse(bufferCellEdit);
-                            break;
-                        }
+                    {
+                        temp.maxRow = int.Parse(bufferCellEdit);
+                        break;
+                    }
                     case 5:
-                        {
-                            temp.bufferCheckIn = bufferCellEdit;
-                            break;
-                        }
+                    {
+                        temp.bufferCheckIn = bufferCellEdit;
+                        break;
+                    }
                 }
                 buffers.Add(temp);
 
@@ -1260,7 +1264,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
 
         }
 
@@ -1379,6 +1383,10 @@ namespace MapViewPallet.MiniForm
                 postApiBody.y = Math.Round((double.Parse((bufferY.Text != "") ? bufferY.Text : "0")), 2);
                 postApiBody.angle = Math.Round((double.Parse((bufferA.Text != "") ? bufferA.Text : "0")), 2);
                 postApiBody.arrange = (bufferArr.Text != "") ? bufferArr.Text : "bigEndian";
+                postApiBody.canOpEdit = (cbEditable.Text != "") ? bool.Parse(cbEditable.Text) : false;
+                postApiBody.returnGate = (bool)cbReturnGate.IsChecked;
+                postApiBody.returnMain = (bool)cbReturnMain.IsChecked;
+                postApiBody.return401 = (bool)cbReturn401.IsChecked;
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 
@@ -1413,6 +1421,7 @@ namespace MapViewPallet.MiniForm
                     int.TryParse(reader.ReadToEnd(), out result);
                     if (result == 1)
                     {
+                        deviceManagementModel.ReloadListBuffers();
                         //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (result == -2)
@@ -1539,7 +1548,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         public void UpdateTab2(bool isAddDevice)
@@ -1574,7 +1583,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         public void UpdateTab3(bool isAddProduct)
@@ -1609,7 +1618,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         public void UpdateTab4(bool isAddBuffer)
@@ -1645,7 +1654,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
+
         }
 
         //****************************************************************************************
@@ -2125,7 +2134,7 @@ namespace MapViewPallet.MiniForm
                         if (result == 1)
                         {
                             //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                           // deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
+                            // deviceManagementModel.ReloadListDevices(DeviceManagementTabControl.SelectedIndex);
                             deviceManagementModel.ReloadListDevicePallets((DevicesListDg2.SelectedItem as dtDevice).deviceId);
                         }
                         else
@@ -2153,7 +2162,7 @@ namespace MapViewPallet.MiniForm
         {
             if (DevicesListDg.Items.Count != 0)
             {
-                SaveData_tab1(true,true);
+                SaveData_tab1(true, true);
             }
             UpdateTab1(false);
         }

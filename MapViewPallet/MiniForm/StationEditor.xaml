@@ -39,7 +39,7 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <GroupBox FontSize="20" Header="{DynamicResource StationEditor_Groupbox_BufferInfo}">
-                                    <Grid>
+                                    <Grid Width="170">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
@@ -109,7 +109,8 @@
                                                                 <Label FontSize="12">X</Label>
                                                                 <TextBox
                                                                     Name="bufferX"
-                                                                    Height="20"
+                                                                    Width="100"
+                                                                    Height="17"
                                                                     HorizontalContentAlignment="Center"
                                                                     CharacterCasing="Upper"
                                                                     FontSize="12"
@@ -120,7 +121,8 @@
                                                                 <Label FontSize="12">Y</Label>
                                                                 <TextBox
                                                                     Name="bufferY"
-                                                                    Height="20"
+                                                                    Width="100"
+                                                                    Height="17"
                                                                     HorizontalContentAlignment="Center"
                                                                     CharacterCasing="Upper"
                                                                     FontSize="12"
@@ -131,7 +133,8 @@
                                                                 <Label FontSize="12">A</Label>
                                                                 <TextBox
                                                                     Name="bufferA"
-                                                                    Height="20"
+                                                                    Width="100"
+                                                                    Height="17"
                                                                     HorizontalContentAlignment="Center"
                                                                     CharacterCasing="Upper"
                                                                     FontSize="12"
@@ -157,7 +160,8 @@
                                                                     FontSize="12" />
                                                                 <TextBox
                                                                     Name="bufferHeadPointX"
-                                                                    Height="20"
+                                                                    Width="100"
+                                                                    Height="17"
                                                                     HorizontalContentAlignment="Center"
                                                                     CharacterCasing="Upper"
                                                                     FontSize="12"
@@ -171,7 +175,8 @@
                                                                     FontSize="12" />
                                                                 <TextBox
                                                                     Name="bufferHeadPointY"
-                                                                    Height="20"
+                                                                    Width="100"
+                                                                    Height="17"
                                                                     HorizontalContentAlignment="Center"
                                                                     CharacterCasing="Upper"
                                                                     FontSize="12"
@@ -185,7 +190,8 @@
                                                                     FontSize="12" />
                                                                 <TextBox
                                                                     Name="bufferHeadPointA"
-                                                                    Height="20"
+                                                                    Width="100"
+                                                                    Height="17"
                                                                     HorizontalContentAlignment="Center"
                                                                     CharacterCasing="Upper"
                                                                     FontSize="12"
@@ -210,7 +216,7 @@
                             </Grid>
                             <Grid Grid.Row="1">
                                 <GroupBox FontSize="20" Header="{DynamicResource StationEditor_Groupbox_BufferDetail}">
-                                    <Grid>
+                                    <Grid Width="170">
                                         <StackPanel
                                             Margin="0,0,0,5"
                                             HorizontalAlignment="Stretch"
@@ -225,7 +231,8 @@
                                                     FontSize="12" />
                                                 <TextBox
                                                     Name="bufferPosX"
-                                                    Height="20"
+                                                    Width="100"
+                                                    Height="17"
                                                     HorizontalContentAlignment="Center"
                                                     FontSize="12"
                                                     PreviewTextInput="myPreviewTextInput" />
@@ -239,7 +246,8 @@
                                                     FontSize="12" />
                                                 <TextBox
                                                     Name="bufferPosY"
-                                                    Height="20"
+                                                    Width="100"
+                                                    Height="17"
                                                     HorizontalContentAlignment="Center"
                                                     FontSize="12"
                                                     PreviewTextInput="myPreviewTextInput" />
@@ -254,23 +262,76 @@
                                                     FontSize="12" />
                                                 <TextBox
                                                     Name="bufferPosA"
-                                                    Height="20"
+                                                    Width="100"
+                                                    Height="17"
                                                     HorizontalContentAlignment="Center"
                                                     FontSize="12"
                                                     PreviewTextInput="myPreviewTextInput" />
                                             </DockPanel>
 
+                                            <DockPanel>
+                                                <StackPanel
+                                                    Margin="0,0,0,5"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal">
+
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            Width="30"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="RG"
+                                                            FontSize="12" />
+                                                        <CheckBox
+                                                            Name="cbReturnGate"
+                                                            Height="20"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalContentAlignment="Center"
+                                                            FontSize="12" />
+                                                    </DockPanel>
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            Width="30"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="RM"
+                                                            FontSize="12" />
+                                                        <CheckBox
+                                                            Name="cbReturnMain"
+                                                            Height="20"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalContentAlignment="Center"
+                                                            FontSize="12" />
+                                                    </DockPanel>
+
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label
+                                                            Width="30"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="R4"
+                                                            FontSize="12" />
+                                                        <CheckBox
+                                                            Name="cbReturn401"
+                                                            Height="20"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalContentAlignment="Center"
+                                                            FontSize="12" />
+                                                    </DockPanel>
+                                                </StackPanel>
+                                            </DockPanel>
 
 
                                             <DockPanel>
                                                 <Label
-                                                    Width="Auto"
+                                                    Width="70"
                                                     VerticalAlignment="Center"
-                                                    Content="Arr"
+                                                    Content="Arrange"
                                                     FontSize="12" />
                                                 <ComboBox
                                                     Name="bufferArr"
-                                                    Width="130"
+                                                    Width="90"
                                                     Height="25"
                                                     HorizontalAlignment="Right"
                                                     HorizontalContentAlignment="Center"
@@ -282,12 +343,13 @@
 
                                             <DockPanel>
                                                 <Label
+                                                    Width="70"
                                                     VerticalAlignment="Center"
                                                     Content="Editable"
                                                     FontSize="12" />
                                                 <ComboBox
                                                     Name="cbEditable"
-                                                    Width="130"
+                                                    Width="90"
                                                     Height="20"
                                                     HorizontalAlignment="Right"
                                                     HorizontalContentAlignment="Center"

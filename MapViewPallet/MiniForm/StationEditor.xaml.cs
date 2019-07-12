@@ -5,21 +5,14 @@ using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MapViewPallet.MiniForm
 {
@@ -123,12 +116,15 @@ namespace MapViewPallet.MiniForm
 
                 //cbEditable.Text = (buffercheckin.content != null) ? (((bool)buffercheckin.content.canOpEdit).ToString()) : "False";
 
-                dynamic bufferdata = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferData);
-                bufferPosX.Text = (bufferdata != null) ? (((double)bufferdata.x).ToString()) : "0";
-                bufferPosY.Text = (bufferdata != null) ? (((double)bufferdata.y).ToString()) : "0";
-                bufferPosA.Text = (bufferdata != null) ? (((double)bufferdata.angle).ToString()) : "0";
-                bufferArr.Text = (bufferdata != null) ? ((bufferdata.arrange).ToString()) : "bigEndian";
-                cbEditable.Text = (bufferdata.canOpEdit != null) ? ((bufferdata.canOpEdit).ToString()) : "False";
+                dynamic bufferData = JsonConvert.DeserializeObject(stationShape.props.bufferDb.bufferData);
+                bufferPosX.Text = (bufferData != null) ? (((double)bufferData.x).ToString()) : "0";
+                bufferPosY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "0";
+                bufferPosA.Text = (bufferData != null) ? (((double)bufferData.angle).ToString()) : "0";
+                bufferArr.Text = (bufferData != null) ? ((bufferData.arrange).ToString()) : "bigEndian";
+                cbEditable.Text = (bufferData.canOpEdit != null) ? ((bufferData.canOpEdit).ToString()) : "False";
+                cbReturnGate.IsChecked = (bufferData.returnGate != null) ? (bufferData.returnGate) : false;
+                cbReturnMain.IsChecked = (bufferData.returnMain != null) ? (bufferData.returnMain) : false;
+                cbReturn401.IsChecked = (bufferData.return401 != null) ? (bufferData.return401) : false;
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
@@ -178,7 +174,6 @@ namespace MapViewPallet.MiniForm
                 headpoint.y = Math.Round((double.Parse((bufferHeadPointY.Text != "") ? bufferHeadPointY.Text : "0")), 2);
                 headpoint.angle = Math.Round((double.Parse((bufferHeadPointA.Text != "") ? bufferHeadPointA.Text : "0")), 2);
 
-                //content.canOpEdit = bool.Parse(cbEditable.Text);
 
                 postApiBody.checkin = checkin;
                 postApiBody.headpoint = headpoint;
@@ -361,6 +356,9 @@ namespace MapViewPallet.MiniForm
                 postApiBody.angle = Math.Round((double.Parse((bufferPosA.Text != "") ? bufferPosA.Text : "0")), 2);
                 postApiBody.arrange = (bufferArr.Text != "") ? bufferArr.Text : "bigEndian";
                 postApiBody.canOpEdit = (cbEditable.Text != "") ? bool.Parse(cbEditable.Text) : false;
+                postApiBody.returnGate = (bool)cbReturnGate.IsChecked;
+                postApiBody.returnMain = (bool)cbReturnMain.IsChecked;
+                postApiBody.return401 = (bool)cbReturn401.IsChecked;
                 string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                 buffer.bufferData = jsonBufferData;
 

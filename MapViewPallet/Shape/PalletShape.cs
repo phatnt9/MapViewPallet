@@ -8,8 +8,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Net;
-using System.Reflection;
-using System.Resources;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -18,8 +16,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static MapViewPallet.Global_Object;
 
 namespace MapViewPallet.Shape
 {
@@ -54,7 +50,7 @@ namespace MapViewPallet.Shape
             DELETE
         }
 
-        public PalletShape(dtBuffer buffer,string name)
+        public PalletShape(dtBuffer buffer, string name)
         {
             this.buffer = buffer;
             pallet = new dtPallet();
@@ -63,10 +59,10 @@ namespace MapViewPallet.Shape
             // Specific Size of Pallet
             Margin = new Thickness
                 (
-                (palletMargin / Global_Object.resolution)+0,
-                (palletMargin / Global_Object.resolution)+0,
-                (palletMargin / Global_Object.resolution)+0,
-                (palletMargin / Global_Object.resolution)+0
+                (palletMargin / Global_Object.resolution) + 0,
+                (palletMargin / Global_Object.resolution) + 0,
+                (palletMargin / Global_Object.resolution) + 0,
+                (palletMargin / Global_Object.resolution) + 0
                 );
             //Padding = new Thickness(5,0,5,0);
             // Style Pallet Border
@@ -85,7 +81,7 @@ namespace MapViewPallet.Shape
             lbPallet.TextWrapping = TextWrapping.Wrap;
             lbPallet.Width = this.Width;
             lbPallet.FontSize = 2;
-            lbPallet.Text = this.name.Split('x')[1] +"-"+ this.name.Split('x')[2];
+            lbPallet.Text = this.name.Split('x')[1] + "-" + this.name.Split('x')[2];
 
             lbPallet2 = new TextBlock();
             lbPallet2.TextWrapping = TextWrapping.Wrap;
@@ -123,25 +119,40 @@ namespace MapViewPallet.Shape
             lockPallet.Header = "Lock";
             lockPallet.Click += LockPallet;
 
-            //MenuItem returnPallet = new MenuItem();
-            //returnPallet.Header = "Return";
-            //returnPallet.Click += ReturnPallet;
+            MenuItem returnPallet = new MenuItem();
+            returnPallet.Header = "Return";
+            returnPallet.Click += ReturnPallet;
 
             MenuItem returnPalletGate = new MenuItem();
             returnPalletGate.Header = "Return Gate";
-            returnPalletGate.Click += ReturnPalletGate_Click; ;
+            returnPalletGate.Click += ReturnPalletGate_Click;
+
 
             MenuItem returnPallet401 = new MenuItem();
             returnPallet401.Header = "Return 401";
-            returnPallet401.Click += ReturnPallet401_Click; ;
+            returnPallet401.Click += ReturnPallet401_Click;
+
 
 
             ContextMenu.Items.Add(putPallet);
             ContextMenu.Items.Add(freePallet);
             ContextMenu.Items.Add(lockPallet);
-            //ContextMenu.Items.Add(returnPallet);
-            ContextMenu.Items.Add(returnPalletGate);
-            ContextMenu.Items.Add(returnPallet401);
+
+            dynamic bufferData = JsonConvert.DeserializeObject(buffer.bufferData);
+            if ((bufferData.returnGate != null) ? (bool)(bufferData.returnGate) : false)
+            {
+                ContextMenu.Items.Add(returnPalletGate);
+            }
+
+            if ((bufferData.returnMain != null) ? (bool)(bufferData.returnMain) : false)
+            {
+                ContextMenu.Items.Add(returnPallet);
+            }
+
+            if ((bufferData.return401 != null) ? (bool)(bufferData.return401) : false)
+            {
+                ContextMenu.Items.Add(returnPallet401);
+            }
 
             // Event handler
             //MouseDown += PalletMouseDown;
@@ -149,19 +160,19 @@ namespace MapViewPallet.Shape
 
         }
 
-        public string RequestDataAPI(string jsonData, string apiUrl,RequestMethod method)
+        public string RequestDataAPI(string jsonData, string apiUrl, RequestMethod method)
         {
             string resultData = "";
             try
             {
-                HttpWebRequest request = 
-                    (HttpWebRequest)WebRequest.Create(@"http://" + 
-                    MapViewPallet.Properties.Settings.Default.serverIp + ":" + 
-                    MapViewPallet.Properties.Settings.Default.serverPort + 
+                HttpWebRequest request =
+                    (HttpWebRequest)WebRequest.Create(@"http://" +
+                    MapViewPallet.Properties.Settings.Default.serverIp + ":" +
+                    MapViewPallet.Properties.Settings.Default.serverPort +
                     @"/robot/rest/" + apiUrl);
                 request.Method = method.ToString();
                 request.ContentType = @"application/json";
-                
+
                 System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
                 Byte[] byteArray = encoding.GetBytes(jsonData);
                 request.ContentLength = byteArray.Length;
@@ -184,115 +195,103 @@ namespace MapViewPallet.Shape
             return resultData;
         }
 
-        //private void ReturnPallet(object sender, RoutedEventArgs e)
-        //{
-        //    if (!Global_Object.ServerAlive())
-        //    {
-        //        return;
-        //    }
-        //    try
-        //    {
-        //        if (System.Windows.Forms.MessageBox.Show
-        //                (
-        //                string.Format("Do you want to return the selected {0}?", "Pallet"),
-        //                Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
-        //                System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
-        //                )
-        //        {
-        //            int deviceIdToReturn = 0;
-        //            int bufferIdToReturn = 0;
+        private void ReturnPallet(object sender, RoutedEventArgs e)
+        {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
+            {
+                if (System.Windows.Forms.MessageBox.Show
+                        (
+                        string.Format("Do you want to return the selected {0}?", "Pallet"),
+                        Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
+                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
+                        )
+                {
+                    int deviceIdToReturn = 0;
+                    int bufferIdToReturn = 0;
 
-        //            dynamic postApiBody = new JObject();
+                    List<dtPallet> palletsList = new List<dtPallet>();
+                    palletsList = GetAllPallets(pallet.bufferId);
 
-        //            postApiBody.userName = MapViewPallet.Properties.Settings.Default["returnMainUser"].ToString();
-        //            postApiBody.userPassword = MapViewPallet.Properties.Settings.Default["returnMainPassword"].ToString();
-        //            string jsonData = JsonConvert.SerializeObject(postApiBody);
-        //            string contentJson = RequestDataAPI(jsonData, "user/getUserInfo", RequestMethod.POST);
+                    //Check if pallet is return able an then return it
+                    if (CanPalletReturn(palletsList))
+                    {
+                        dynamic postApiBody = new JObject();
+                        postApiBody.userName = MapViewPallet.Properties.Settings.Default["returnMainUser"].ToString();
+                        postApiBody.userPassword = MapViewPallet.Properties.Settings.Default["returnMainPassword"].ToString();
+                        string jsonData = JsonConvert.SerializeObject(postApiBody);
+                        string contentJson = RequestDataAPI(jsonData, "user/getUserInfo", RequestMethod.POST);
 
-        //            dynamic response = JsonConvert.DeserializeObject(contentJson);
-        //            dtUser userInfo = response.ToObject<dtUser>();
+                        dynamic response = JsonConvert.DeserializeObject(contentJson);
+                        dtUser userInfo = response.ToObject<dtUser>();
 
-        //            //Check any device connect to account
-        //            foreach (dtUserDevice device in userInfo.userDevices)
-        //            {
-        //                deviceIdToReturn = device.deviceId;
+                        //Check any device connect to account
+                        foreach (dtUserDevice device in userInfo.userDevices)
+                        {
+                            deviceIdToReturn = device.deviceId;
 
-        //                postApiBody = new JObject();
-        //                postApiBody.deviceId = device.deviceId;
-        //                jsonData = JsonConvert.SerializeObject(postApiBody);
-        //                contentJson = RequestDataAPI(jsonData, "buffer/getListDeviceBufferByDeviceId", RequestMethod.POST);
+                            postApiBody = new JObject();
 
-        //                response = JsonConvert.DeserializeObject(contentJson);
-        //                List<dtBuffer> listBuffer = response.ToObject<List<dtBuffer>>();
+                            postApiBody.timeWorkId = 0;
+                            postApiBody.activeDate = pallet.activeDate;
+                            postApiBody.deviceId = device.deviceId;
+                            postApiBody.productId = pallet.productId;
+                            postApiBody.productDetailId = pallet.productDetailId;
+                            postApiBody.updUsrId = 1;
+                            postApiBody.palletAmount = 1;
 
-        //                //Check number of free pallet
-        //                foreach (dtBuffer buffer in listBuffer)
-        //                {
-        //                    postApiBody = new JObject();
-        //                    postApiBody.bufferId = buffer.bufferId;
-        //                    postApiBody.palletStatus = "F";
-        //                    jsonData = JsonConvert.SerializeObject(postApiBody);
-        //                    contentJson = RequestDataAPI(jsonData, "pallet/getListPalletBufferId", RequestMethod.POST);
+                            jsonData = JsonConvert.SerializeObject(postApiBody);
+                            contentJson = RequestDataAPI(jsonData, "plan/createPlanPallet", RequestMethod.POST);
 
-        //                    response = JsonConvert.DeserializeObject(contentJson);
-        //                    List<dtPallet> listPallet = response.ToObject<List<dtPallet>>();
-        //                    if (listPallet.Count > 0)
-        //                    {
-        //                        bufferIdToReturn = buffer.bufferId;
-        //                        break;
-        //                    }
-        //                }
-        //            }
+                            response = JsonConvert.DeserializeObject(contentJson);
+                            //List<dtBuffer> listBuffer = response.ToObject<List<dtBuffer>>();
+                            if (response == 1)
+                            {
+                                if ((deviceIdToReturn > 0) && (bufferIdToReturn == 0))
+                                {
+                                    Console.WriteLine("Duoc phep Return!");
+                                    dynamic postApiBody2 = new JObject();
+                                    postApiBody2.userName = "WMS_Return";
 
+                                    postApiBody2.bufferId = pallet.bufferId;
+                                    postApiBody2.deviceId = pallet.deviceId;
 
-        //            if ((deviceIdToReturn > 0) && (bufferIdToReturn > 0))
-        //            {
-        //                List<dtPallet> palletsList = new List<dtPallet>();
-        //                palletsList = GetAllPallets(pallet.bufferId);
+                                    postApiBody2.bufferIdPut = bufferIdToReturn;
+                                    postApiBody2.deviceIdPut = deviceIdToReturn;
 
+                                    postApiBody2.row = pallet.row;
+                                    postApiBody2.bay = pallet.bay;
 
-        //                //Check if pallet is return able an then return it
-        //                if (CanPalletReturn(palletsList))
-        //                {
-        //                    Console.WriteLine("Duoc phep Return!");
-        //                    dynamic postApiBody2 = new JObject();
-        //                    postApiBody2.userName = "WMS_Return";
+                                    postApiBody2.productDetailId = pallet.productDetailId;
+                                    postApiBody2.productDetailName = pallet.productDetailName;
+                                    postApiBody2.productId = pallet.productId;
+                                    //postApiBody2.planId = pallet.planId;
+                                    postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
+                                    string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
+                                    Console.WriteLine("Data request Return: " + jsonData2);
+                                    BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
+                                    bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
 
-        //                    postApiBody2.bufferId = pallet.bufferId;
-        //                    postApiBody2.deviceId = pallet.deviceId;
+                                    string preStatus = pallet.palletStatus;
+                                    pallet.palletStatus = "H";
+                                    string jsonDataPallet = JsonConvert.SerializeObject(pallet);
+                                    pallet.palletStatus = preStatus;
 
-        //                    postApiBody2.bufferIdPut = bufferIdToReturn;
-        //                    postApiBody2.deviceIdPut = deviceIdToReturn;
-
-        //                    postApiBody2.row = pallet.row;
-        //                    postApiBody2.bay = pallet.bay;
-
-        //                    postApiBody2.productDetailId = pallet.productDetailId;
-        //                    postApiBody2.productDetailName = pallet.productDetailName;
-        //                    postApiBody2.productId = pallet.productId;
-        //                    //postApiBody2.planId = pallet.planId;
-        //                    postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
-        //                    string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
-        //                    Console.WriteLine("Data request Return: " + jsonData2);
-        //                    BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
-        //                    bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
-
-        //                    string preStatus = pallet.palletStatus;
-        //                    pallet.palletStatus = "R";
-        //                    string jsonDataPallet = JsonConvert.SerializeObject(pallet);
-        //                    pallet.palletStatus = preStatus;
-
-        //                    RequestDataAPI(jsonDataPallet, "pallet/updatePalletStatus", RequestMethod.POST);
-        //                }
-        //            }
-
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logFile.Error(ex.Message);
-        //    }
-        //}
+                                    RequestDataAPI(jsonDataPallet, "pallet/updatePalletStatus", RequestMethod.POST);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+        }
 
         private void ReturnPallet401_Click(object sender, RoutedEventArgs e)
         {
@@ -321,6 +320,7 @@ namespace MapViewPallet.Shape
                     postApiBody.userPassword = MapViewPallet.Properties.Settings.Default["return401Password"].ToString();
                     string jsonData = JsonConvert.SerializeObject(postApiBody);
                     string contentJson = RequestDataAPI(jsonData, "user/getUserInfo", RequestMethod.POST);
+
                     dynamic response = JsonConvert.DeserializeObject(contentJson);
                     dtUser userInfo = response.ToObject<dtUser>();
 
@@ -365,7 +365,7 @@ namespace MapViewPallet.Shape
                                 postApiBody2.productDetailName = pallet.productDetailName;
                                 postApiBody2.productId = pallet.productId;
                                 //postApiBody2.planId = pallet.planId;
-                                postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
+                                postApiBody2.typeReq = (int)ReturnType.ReturnArea401;
                                 string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
                                 Console.WriteLine("Data request Return: " + jsonData2);
                                 BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
@@ -384,38 +384,38 @@ namespace MapViewPallet.Shape
             }
         }
 
-        public string GetActiveDate(int productId, int productDetailId, int deviceId)
-        {
-            string returnActiveData = DateTime.Now.Year + "-" + DateTime.Now.Month.ToString("00.") + "-" + DateTime.Now.Day.ToString("00.");
-            try
-            {
-                dynamic postApiBody = new JObject();
-                postApiBody.timeWorkId = 0;
-                postApiBody.activeDate = null;
-                postApiBody.productId = productId;
-                postApiBody.productDetailId = productDetailId;
-                postApiBody.deviceId = deviceId;
+        //public string GetActiveDate(int productId, int productDetailId, int deviceId)
+        //{
+        //    string returnActiveData = DateTime.Now.Year + "-" + DateTime.Now.Month.ToString("00.") + "-" + DateTime.Now.Day.ToString("00.");
+        //    try
+        //    {
+        //        dynamic postApiBody = new JObject();
+        //        postApiBody.timeWorkId = 0;
+        //        postApiBody.activeDate = null;
+        //        postApiBody.productId = productId;
+        //        postApiBody.productDetailId = productDetailId;
+        //        postApiBody.deviceId = deviceId;
 
-                string jsonData = JsonConvert.SerializeObject(postApiBody);
-                string contentJson = RequestDataAPI(jsonData, "plan/getPlanByShift", RequestMethod.POST);
-                dynamic response = JsonConvert.DeserializeObject(contentJson);
-                List<dtPlan> listPlanInfo = response.ToObject<List<dtPlan>>();
-                foreach(dtPlan plan in listPlanInfo)
-                {
-                    if (plan.deviceId == deviceId)
-                    {
-                        returnActiveData = plan.activeDate;
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.Error(ex.Message);
-            }
-            return returnActiveData;
-        }
-        
+        //        string jsonData = JsonConvert.SerializeObject(postApiBody);
+        //        string contentJson = RequestDataAPI(jsonData, "plan/getPlanByShift", RequestMethod.POST);
+        //        dynamic response = JsonConvert.DeserializeObject(contentJson);
+        //        List<dtPlan> listPlanInfo = response.ToObject<List<dtPlan>>();
+        //        foreach (dtPlan plan in listPlanInfo)
+        //        {
+        //            if (plan.deviceId == deviceId)
+        //            {
+        //                returnActiveData = plan.activeDate;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        logFile.Error(ex.Message);
+        //    }
+        //    return returnActiveData;
+        //}
+
         private void ReturnPalletGate_Click(object sender, RoutedEventArgs e)
         {
             if (!Global_Object.ServerAlive())
@@ -465,7 +465,7 @@ namespace MapViewPallet.Shape
                         bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
 
                         string preStatus = pallet.palletStatus;
-                        pallet.palletStatus = "R";
+                        pallet.palletStatus = "H";
                         string jsonDataPallet = JsonConvert.SerializeObject(pallet);
                         pallet.palletStatus = preStatus;
 
@@ -497,7 +497,7 @@ namespace MapViewPallet.Shape
                 logFile.Error(ex.Message);
             }
         }
-        
+
         public List<dtPallet> GetAllPallets(int bufferId)
         {
             List<dtPallet> palletsList = new List<dtPallet>();
@@ -562,13 +562,13 @@ namespace MapViewPallet.Shape
             return palletsList;
         }
 
-        public bool CanPalletReturn(List<dtPallet> palletsList, string filter1= "", string filter2 = "")
+        public bool CanPalletReturn(List<dtPallet> palletsList, string filter1 = "", string filter2 = "")
         {
             //Check if pallet is return able and then return it
             bool sendToReturn = true;
-            if ((buffer.bufferReturn == false) && 
-                (pallet.palletStatus == "W") && 
-                (buffer.bufferName.Contains(filter1)||(buffer.bufferName.Contains(filter2))))
+            if ((buffer.bufferReturn == false) &&
+                (pallet.palletStatus == "W") &&
+                (buffer.bufferName.Contains(filter1) || (buffer.bufferName.Contains(filter2))))
             {
                 //Any pallet before needed send pallet need to be "Free"
                 foreach (dtPallet palletItem in palletsList)
@@ -586,7 +586,7 @@ namespace MapViewPallet.Shape
             }
             return sendToReturn;
         }
-        
+
         public bool ContainPallet(dtPallet tempOpe, List<dtPallet> List)
         {
             foreach (dtPallet temp in List)
@@ -635,7 +635,7 @@ namespace MapViewPallet.Shape
                 {
                 }
             }
-               
+
         }
 
         private void LockPallet(object sender, RoutedEventArgs e)
@@ -668,7 +668,7 @@ namespace MapViewPallet.Shape
                 {
                 }
             }
-                
+
         }
 
         private void PutPallet(object sender, RoutedEventArgs e)
@@ -701,7 +701,7 @@ namespace MapViewPallet.Shape
                 {
                 }
             }
-                
+
         }
 
         private void PalletShape_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -709,7 +709,7 @@ namespace MapViewPallet.Shape
             Console.WriteLine(pallet);
             MessageBox.Show("" + name);
         }
-        
+
         public void StatusChanged(dtPallet pPallet)
         {
             if (this.pallet != null)
@@ -727,167 +727,167 @@ namespace MapViewPallet.Shape
                        switch (pPallet.palletStatus)
                        {
                            case "F":
+                           {
+                               if (replaceProductDetailName)
                                {
-                                   if (replaceProductDetailName)
+                                   if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
-                                       if (lbPallet2 != null && pallet.productDetailName != null)
+                                       if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
-                                           {
-                                               lbPallet2.Text = pallet.productDetailName;
-                                           }
-                                           else
-                                           {
-                                               lbPallet2.Text = "";
-                                           }
-
+                                           lbPallet2.Text = pallet.productDetailName;
                                        }
-                                   }
-                                   if (replaceStatus)
-                                   {
-                                       Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8FFE5"));
-                                   }
+                                       else
+                                       {
+                                           lbPallet2.Text = "";
+                                       }
 
-                                   break;
+                                   }
                                }
+                               if (replaceStatus)
+                               {
+                                   Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8FFE5"));
+                               }
+
+                               break;
+                           }
                            case "P":
+                           {
+                               if (replaceProductDetailName)
                                {
-                                   if (replaceProductDetailName)
+                                   if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
-                                       if (lbPallet2 != null && pallet.productDetailName != null)
+                                       if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
-                                           {
-                                               lbPallet2.Text = pallet.productDetailName;
-                                           }
-                                           else
-                                           {
-                                               lbPallet2.Text = "";
-                                           }
-
+                                           lbPallet2.Text = pallet.productDetailName;
                                        }
+                                       else
+                                       {
+                                           lbPallet2.Text = "";
+                                       }
+
                                    }
-                                   if (replaceStatus)
-                                   {
-                                       Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1B9AAA"));
-                                   }
-                                   break;
                                }
+                               if (replaceStatus)
+                               {
+                                   Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1B9AAA"));
+                               }
+                               break;
+                           }
                            case "W":
+                           {
+                               if (replaceProductDetailName)
                                {
-                                   if (replaceProductDetailName)
+                                   if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
-                                       if (lbPallet2 != null && pallet.productDetailName != null)
+                                       if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
-                                           {
-                                               lbPallet2.Text = pallet.productDetailName;
-                                           }
-                                           else
-                                           {
-                                               lbPallet2.Text = "";
-                                           }
-
+                                           lbPallet2.Text = pallet.productDetailName;
                                        }
+                                       else
+                                       {
+                                           lbPallet2.Text = "";
+                                       }
+
                                    }
-                                   if (replaceStatus)
-                                   {
-                                       Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00FF99"));
-                                   }
-                                   break;
                                }
+                               if (replaceStatus)
+                               {
+                                   Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#00FF99"));
+                               }
+                               break;
+                           }
                            case "H":
+                           {
+                               if (replaceProductDetailName)
                                {
-                                   if (replaceProductDetailName)
+                                   if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
-                                       if (lbPallet2 != null && pallet.productDetailName != null)
+                                       if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
-                                           {
-                                               lbPallet2.Text = pallet.productDetailName;
-                                           }
-                                           else
-                                           {
-                                               lbPallet2.Text = "";
-                                           }
-
+                                           lbPallet2.Text = pallet.productDetailName;
                                        }
+                                       else
+                                       {
+                                           lbPallet2.Text = "";
+                                       }
+
                                    }
-                                   if (replaceStatus)
-                                   {
-                                       Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#EC9A29"));
-                                   }
-                                   break;
                                }
+                               if (replaceStatus)
+                               {
+                                   Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#EC9A29"));
+                               }
+                               break;
+                           }
                            case "L":
+                           {
+                               if (replaceProductDetailName)
                                {
-                                   if (replaceProductDetailName)
+                                   if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
-                                       if (lbPallet2 != null && pallet.productDetailName != null)
+                                       if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
-                                           {
-                                               lbPallet2.Text = pallet.productDetailName;
-                                           }
-                                           else
-                                           {
-                                               lbPallet2.Text = "";
-                                           }
-
+                                           lbPallet2.Text = pallet.productDetailName;
                                        }
+                                       else
+                                       {
+                                           lbPallet2.Text = "";
+                                       }
+
                                    }
-                                   if (replaceStatus)
-                                   {
-                                       Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#808080"));
-                                   }
-                                   break;
                                }
+                               if (replaceStatus)
+                               {
+                                   Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#808080"));
+                               }
+                               break;
+                           }
                            case "R":
+                           {
+                               if (replaceProductDetailName)
                                {
-                                   if (replaceProductDetailName)
+                                   if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
-                                       if (lbPallet2 != null && pallet.productDetailName != null)
+                                       if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
-                                           {
-                                               lbPallet2.Text = pallet.productDetailName;
-                                           }
-                                           else
-                                           {
-                                               lbPallet2.Text = "";
-                                           }
-
+                                           lbPallet2.Text = pallet.productDetailName;
                                        }
+                                       else
+                                       {
+                                           lbPallet2.Text = "";
+                                       }
+
                                    }
-                                   if (replaceStatus)
-                                   {
-                                       Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFF00"));
-                                   }
-                                   break;
                                }
+                               if (replaceStatus)
+                               {
+                                   Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFF00"));
+                               }
+                               break;
+                           }
                            default:
+                           {
+                               if (replaceProductDetailName)
                                {
-                                   if (replaceProductDetailName)
+                                   if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
-                                       if (lbPallet2 != null && pallet.productDetailName != null)
+                                       if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
-                                           {
-                                               lbPallet2.Text = pallet.productDetailName;
-                                           }
-                                           else
-                                           {
-                                               lbPallet2.Text = "";
-                                           }
-
+                                           lbPallet2.Text = pallet.productDetailName;
                                        }
+                                       else
+                                       {
+                                           lbPallet2.Text = "";
+                                       }
+
                                    }
-                                   if (replaceStatus)
-                                   {
-                                       Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF1F1F"));
-                                   }
-                                   break;
                                }
+                               if (replaceStatus)
+                               {
+                                   Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF1F1F"));
+                               }
+                               break;
+                           }
 
                        }
                    }));
@@ -897,9 +897,9 @@ namespace MapViewPallet.Shape
 
         private void PalletMouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show(""+name);
+            MessageBox.Show("" + name);
         }
-        
+
         private ImageSource ImageSourceForBitmap(Bitmap bmp)
         {
             var handle = bmp.GetHbitmap();
@@ -912,7 +912,7 @@ namespace MapViewPallet.Shape
 
         private void ChangeToolTipContent(object sender, ToolTipEventArgs e)
         {
-            ToolTip = "Name: " + 
+            ToolTip = "Name: " +
                 "\n Start: " +
                 " \n End: " +
                 " \n Rotate: ";
