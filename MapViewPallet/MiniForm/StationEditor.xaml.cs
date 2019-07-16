@@ -19,11 +19,11 @@ namespace MapViewPallet.MiniForm
     /// <summary>
     /// Interaction logic for StationEditor.xaml
     /// </summary>
-    /// 
+    ///
     public partial class StationEditor : Window
     {
-        StationShape stationShape;
-        StationEditorModel stationEditorModel;
+        private StationShape stationShape;
+        private StationEditorModel stationEditorModel;
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -46,7 +46,9 @@ namespace MapViewPallet.MiniForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -92,7 +94,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void StationEditor_Loaded(object sender, RoutedEventArgs e)
@@ -134,7 +135,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Btn_exit_Click(object sender, RoutedEventArgs e)
@@ -173,7 +173,6 @@ namespace MapViewPallet.MiniForm
                 headpoint.x = Math.Round((double.Parse((bufferHeadPointX.Text != "") ? bufferHeadPointX.Text : "0")), 2);
                 headpoint.y = Math.Round((double.Parse((bufferHeadPointY.Text != "") ? bufferHeadPointY.Text : "0")), 2);
                 headpoint.angle = Math.Round((double.Parse((bufferHeadPointA.Text != "") ? bufferHeadPointA.Text : "0")), 2);
-
 
                 postApiBody.checkin = checkin;
                 postApiBody.headpoint = headpoint;
@@ -275,7 +274,6 @@ namespace MapViewPallet.MiniForm
                 string jsonBufferData = JsonConvert.SerializeObject(palletData);
                 pallet.dataPallet = jsonBufferData;
 
-
                 pallets.Add(pallet);
 
                 if (pallets.Count == 0)
@@ -334,10 +332,6 @@ namespace MapViewPallet.MiniForm
         {
             e.Handled = !IsTextAllowed(e.Text);
         }
-
-
-
-
 
         private void Btn_SetBufferPosData_Click(object sender, RoutedEventArgs e)
         {
@@ -456,7 +450,6 @@ namespace MapViewPallet.MiniForm
                             //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-
                 }
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
@@ -467,7 +460,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -527,7 +519,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -583,7 +574,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -639,7 +629,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -774,7 +763,6 @@ namespace MapViewPallet.MiniForm
 
                 string jsonBufferData = JsonConvert.SerializeObject(palletData);
                 pallet.dataPallet = jsonBufferData;
-
 
                 pallets.Add(pallet);
 

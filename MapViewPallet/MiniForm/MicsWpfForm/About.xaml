@@ -16,7 +16,7 @@
             <StackPanel>
                 <Grid Width="400" Height="100">
                     <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"
-                           Width="400" Height="90"/>
+                           Width="400" Height="90" />
                 </Grid>
             </StackPanel>
         </Grid>
@@ -60,8 +60,6 @@
     Height="80">
                 </TextBox>-->
             </Grid>
-            
-            
         </Grid>
     </Grid>
 </Window>

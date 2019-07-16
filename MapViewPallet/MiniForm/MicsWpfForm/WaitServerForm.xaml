@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title=""
         ResizeMode="NoResize"
-        Height="100" 
+        Height="100"
         Width="200"
         WindowStartupLocation="CenterOwner">
     <Grid>
-        <StackPanel 
+        <StackPanel
             Orientation="Vertical"
             HorizontalAlignment="Center"
             VerticalAlignment="Top">
@@ -20,14 +20,13 @@
                     Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-                    
                 </StackPanel>
                 <Label
                     Content="Please connect to Server">
                 </Label>
             </Grid>
             <Grid>
-                <StackPanel 
+                <StackPanel
                     Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
@@ -35,9 +34,7 @@
                         Content="Waiting...">
                     </Label>
                 </StackPanel>
-                
             </Grid>
-            
         </StackPanel>
     </Grid>
 </Window>

@@ -1,24 +1,12 @@
-﻿using MapViewPallet.MiniForm.Database;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MapViewPallet.MiniForm
@@ -30,7 +18,7 @@ namespace MapViewPallet.MiniForm
     {
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        StatisticsModel statisticsModel;
+        private StatisticsModel statisticsModel;
 
         public Statistics(string cultureName = null)
         {
@@ -49,21 +37,21 @@ namespace MapViewPallet.MiniForm
                 switch (((e.Source as System.Windows.Controls.TabControl).SelectedIndex))
                 {
                     case 0:
-                        {
-                            statisticsModel.ReloadListProduct();
-                            statisticsModel.ReloadListProductDetail();
-                            statisticsModel.ReloadListOperationType();
-                            statisticsModel.ReloadListRobot((e.Source as System.Windows.Controls.TabControl).SelectedIndex);
-                            statisticsModel.ReloadListDevice();
-                            statisticsModel.ReloadListBuffer();
-                            statisticsModel.ReloadListTimeWork();
-                            break;
-                        }
+                    {
+                        statisticsModel.ReloadListProduct();
+                        statisticsModel.ReloadListProductDetail();
+                        statisticsModel.ReloadListOperationType();
+                        statisticsModel.ReloadListRobot((e.Source as System.Windows.Controls.TabControl).SelectedIndex);
+                        statisticsModel.ReloadListDevice();
+                        statisticsModel.ReloadListBuffer();
+                        statisticsModel.ReloadListTimeWork();
+                        break;
+                    }
                     case 1:
-                        {
-                            statisticsModel.ReloadListRobot(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
-                            break;
-                        }
+                    {
+                        statisticsModel.ReloadListRobot(((e.Source as System.Windows.Controls.TabControl).SelectedIndex));
+                        break;
+                    }
                 }
             }
         }
@@ -71,7 +59,9 @@ namespace MapViewPallet.MiniForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -103,15 +93,12 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
         }
-        
 
         private void CmbDevice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             statisticsModel.ReloadListProduct();
         }
-        
 
         private void CmbProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -132,7 +119,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void CmbDevice_SelectedIndexChanged(object sender, EventArgs e)
@@ -154,7 +140,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void CmbShift_SelectedIndexChanged(object sender, EventArgs e)
@@ -174,15 +159,13 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
         }
-        
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
             statisticsModel.ReloadDataGridTask();
         }
-        
+
         private void BtnSearchRobotCharge_Click(object sender, RoutedEventArgs e)
         {
             statisticsModel.ReloadDataGridCharge();
@@ -190,7 +173,6 @@ namespace MapViewPallet.MiniForm
 
         private void BtxExportRobotCharge_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
@@ -353,17 +335,23 @@ namespace MapViewPallet.MiniForm
             string test = GetCellValue(grvReportRobotProcess, 0, 0);
             string test2 = GetCellValue(grvReportRobotProcess, 1, 0);
             string test3 = GetCellValue(grvReportRobotProcess, 2, 0);
-
         }
 
         public IEnumerable<DataGridRow> GetDataGridRows(System.Windows.Controls.DataGrid grid)
         {
             var itemsSource = grid.ItemsSource as IEnumerable;
-            if (null == itemsSource) yield return null;
+            if (null == itemsSource)
+            {
+                yield return null;
+            }
+
             foreach (var item in itemsSource)
             {
                 var row = grid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
-                if (null != row) yield return row;
+                if (null != row)
+                {
+                    yield return row;
+                }
             }
         }
 
@@ -379,7 +367,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         public string GetCellValue(System.Windows.Controls.DataGrid datagrid, int row, int column)
@@ -390,27 +377,47 @@ namespace MapViewPallet.MiniForm
             System.Windows.Controls.DataGridCell cell = null;
             var cellContent = cellInfo.Column.GetCellContent(cellInfo.Item);
             if (cellContent != null)
+            {
                 cell = (System.Windows.Controls.DataGridCell)cellContent.Parent;
+            }
 
-            if (cell == null) return string.Empty;
+            if (cell == null)
+            {
+                return string.Empty;
+            }
 
-            // if DataGridTextColumn / DataGridComboBoxColumn is used 
+            // if DataGridTextColumn / DataGridComboBoxColumn is used
             // or AutoGeneratedColumns is True
             if (cell.Content is TextBlock)
+            {
                 return ((TextBlock)cell.Content).Text;
+            }
             else if (cell.Content is System.Windows.Controls.ComboBox)
+            {
                 return ((System.Windows.Controls.ComboBox)cell.Content).Text;
+            }
 
-            // if DataGridTemplateColumn is used 
+            // if DataGridTemplateColumn is used
             // assuming cells are either TextBox, TextBlock or ComboBox. Other Types could be handled the same way.
             else
             {
                 var txtPresenter = FindVisualChild<System.Windows.Controls.TextBox>((ContentPresenter)cell.Content);
-                if (txtPresenter != null) return txtPresenter.Text;
+                if (txtPresenter != null)
+                {
+                    return txtPresenter.Text;
+                }
+
                 var txbPresenter = FindVisualChild<TextBlock>((ContentPresenter)cell.Content);
-                if (txbPresenter != null) return txbPresenter.Text;
+                if (txbPresenter != null)
+                {
+                    return txbPresenter.Text;
+                }
+
                 var cmbPresenter = FindVisualChild<System.Windows.Controls.ComboBox>((ContentPresenter)cell.Content);
-                if (cmbPresenter != null) return cmbPresenter.Text;
+                if (cmbPresenter != null)
+                {
+                    return cmbPresenter.Text;
+                }
             }
             return string.Empty;
         }
@@ -421,12 +428,16 @@ namespace MapViewPallet.MiniForm
             {
                 DependencyObject child = VisualTreeHelper.GetChild(obj, i);
                 if (child != null && child is T)
+                {
                     return (T)child;
+                }
                 else
                 {
                     T childOfChild = FindVisualChild<T>(child);
                     if (childOfChild != null)
+                    {
                         return childOfChild;
+                    }
                 }
             }
             return null;

@@ -11,7 +11,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     {
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        MainWindow mainW;
+        private MainWindow mainW;
+
         public BufferSettingForm(MainWindow mainW)
         {
             InitializeComponent();
@@ -81,8 +82,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 Properties.Settings.Default.return401User = return401User.Text;
                 Properties.Settings.Default.return401Password = return401Password.Text;
 
-
-
                 Properties.Settings.Default.Save();
                 mainW.SetTimerInterval(mainW.stationTimer);
             }
@@ -90,10 +89,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-            
-
         }
-        
 
         private void Buffer_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {

@@ -25,10 +25,8 @@ namespace MapViewPallet.MiniForm
         public string pathFile { get => pPathFile; set { pPathFile = value; RaisePropertyChanged("pathFile"); } }
         public string imageProductUrlOld { get => pImageProductUrlOld; set { pImageProductUrlOld = value; RaisePropertyChanged("imageProductUrlOld"); } }
 
-
         public dtProduct()
         {
-            
         }
 
         public void GetProductDetailsList()
@@ -75,14 +73,12 @@ namespace MapViewPallet.MiniForm
                         };
                         if (AddProductDetail(tempProductDetail))
                         {
-
                         }
                     }
                 }
             }
             catch (Exception exc)
             {
-
             }
         }
 
@@ -98,6 +94,5 @@ namespace MapViewPallet.MiniForm
             productDetails.Add(productDetail);
             return true;
         }
-
     }
 }

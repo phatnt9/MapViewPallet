@@ -2,9 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:local="clr-namespace:MapViewPallet.Lang">
-    
-    
-    
+
     <sys:String x:Key="Language">Ngôn ngữ</sys:String>
     <sys:String x:Key="English">English</sys:String>
     <sys:String x:Key="Vietnamese">Tiếng Việt</sys:String>
@@ -18,7 +16,7 @@
     <sys:String x:Key="MainWindow_Menu_Account">_Tài khoản</sys:String>
     <sys:String x:Key="MainWindow_Menu_Account_ChangePass">_Thay đổi mật khẩu</sys:String>
     <sys:String x:Key="MainWindow_Menu_Account_Logout">_Đăng xuất</sys:String>
-    
+
     <!--MenuItem-->
     <sys:String x:Key="Station_Menu_Item_Properties">Thông tin</sys:String>
     <sys:String x:Key="Station_Menu_Item_Edit">Tùy chỉnh</sys:String>
@@ -109,20 +107,17 @@
     <sys:String x:Key="PlanControl_Import">Nhập file</sys:String>
     <sys:String x:Key="PlanControl_Exit">Thoát</sys:String>
 
-
     <!--DevicesManagement-->
     <sys:String x:Key="DevicesManagement_Title">Quản Lý</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Operation">Quy trình</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Device">Thiết bị</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Product">Sản phẩm</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Buffer">Buffer</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_Device">Thiết bị</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Device_Column_DeviceName">Tên thiết bị</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Device_Column_ImageDeviceUrl">Hình ảnh</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePalletData">Dữ liệu Pallet Cấp</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Bay">Cột</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Row">Hàng</sys:String>
@@ -131,56 +126,49 @@
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Column_Row">Hàng</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Column_Bay">Cột</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Column_DataPallet">Dữ liệu</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_Product">Sản phẩm</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Product_Column_ProductName">Tên sản phẩm</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Product_Column_ImageProductUrl">Hình ảnh</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_ProductDetail">Mã sản phẩm</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_ProductDetail_Column_ProductDetailName">Mã</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer">Vùng Buffer</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferName">Tên Buffer</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferBay">Cột</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferRow">Hàng</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferReturn">Trả hàng</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferSort">Ưu tiên</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet">Danh sách Pallet</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Row">Hàng</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Bay">Cột</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Status">Trạng thái</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_ProductDetailName">Mã hàng</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Button_Save">Lưu</sys:String>
     <sys:String x:Key="DevicesManagement_Button_Exit">Thoát</sys:String>
 
-
     <!--StationEditor-->
     <sys:String x:Key="StationEditor_Title">Quản lý Buffer</sys:String>
-    
-    
+
     <sys:String x:Key="StationEditor_Groupbox_BufferInfo">Thông tin Buffer</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferName">Tên: </sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferType">Loại: </sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferNumberOfRow">Số hàng: </sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferNumberOfBay">Số cột: </sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferCoordinate">Tọa độ: </sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferName">Tên:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferType">Loại:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferNumberOfRow">Số hàng:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferNumberOfBay">Số cột:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferCoordinate">Tọa độ:</sys:String>
 
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo">Thông tin Pallet</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletRow">Hàng: </sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletRow">Hàng:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletBay">Cột:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletPosition">Tọa độ:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletCoordinate">Cột:</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_main">dirM: </sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_main">dirM:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_sub">dirS:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletLine_ord">lineOrd:</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_out">dirO: </sys:String>
-    
-    
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_out">dirO:</sys:String>
+
     <sys:String x:Key="StationEditor_Groupbox_BufferDetail">Chi tiết Buffer</sys:String>
 
     <sys:String x:Key="StationEditor_Groupbox_PalletList">Danh sách Pallet</sys:String>
@@ -188,14 +176,11 @@
     <sys:String x:Key="StationEditor_Groupbox_PalletList_Column_Bay">Cột</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletList_Column_Status">Trạng thái</sys:String>
 
-
     <sys:String x:Key="StationEditor_Button_Save">Lưu</sys:String>
     <sys:String x:Key="StationEditor_Button_Exit">Thoát</sys:String>
-    
-    
+
     <sys:String x:Key="StationEditor_BufferType_Return">Trả hàng</sys:String>
     <sys:String x:Key="StationEditor_BufferType_Buffer">Lưu hàng</sys:String>
-
 
     <!--UserManagement-->
     <sys:String x:Key="UserManagement_Title">Quản lý người dùng</sys:String>
@@ -205,7 +190,6 @@
     <sys:String x:Key="UserManagement_AccountList_Column_Device">Thiết bị</sys:String>
 
     <sys:String x:Key="UserManagement_Button_Exit">Thoát</sys:String>
-
 
     <!--Statistics-->
     <sys:String x:Key="Statistics_Title">Thống kê quy trình</sys:String>
@@ -221,7 +205,4 @@
     <sys:String x:Key="Statistics_Statistic_Detail">Chi tiết</sys:String>
     <sys:String x:Key="Statistics_Button_Search">Tìm kiếm</sys:String>
     <sys:String x:Key="Statistics_Button_Export">Xuất file</sys:String>
-
-
-
 </ResourceDictionary>

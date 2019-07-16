@@ -18,7 +18,7 @@ namespace MapViewPallet.MiniForm
         private string pStatusData;
         public string statusData { get => pStatusData; set { pStatusData = value; RaisePropertyChanged("statusData"); } }
 
-        DevicesManagement devicesManagement;
+        private DevicesManagement devicesManagement;
 
         public ListCollectionView GroupedDevices { get; private set; }
         public ListCollectionView GroupedDeviceProducts { get; private set; }
@@ -28,7 +28,6 @@ namespace MapViewPallet.MiniForm
         public ListCollectionView GroupedBuffers { get; private set; }
         public ListCollectionView GroupedPallets { get; private set; }
         public ListCollectionView GroupedDevicePallets { get; private set; }
-        
 
         public List<dtDevice> devicesList;
         public List<dtDeviceBuffer> deviceBuffersList;
@@ -38,8 +37,6 @@ namespace MapViewPallet.MiniForm
         public List<dtBuffer> buffersList;
         public List<dtPallet> palletsList;
         public List<dtDevicePallet> devicePalletsList;
-
-        
 
         public DevicesManagementModel(DevicesManagement devicesManagement)
         {
@@ -53,7 +50,7 @@ namespace MapViewPallet.MiniForm
             buffersList = new List<dtBuffer>();
             palletsList = new List<dtPallet>();
             devicePalletsList = new List<dtDevicePallet>();
-            
+
             GroupedDevices = (ListCollectionView)CollectionViewSource.GetDefaultView(devicesList);
             GroupedDeviceProducts = (ListCollectionView)CollectionViewSource.GetDefaultView(deviceProductsList);
             GroupedDeviceBuffers = (ListCollectionView)CollectionViewSource.GetDefaultView(deviceBuffersList);
@@ -62,9 +59,7 @@ namespace MapViewPallet.MiniForm
             GroupedBuffers = (ListCollectionView)CollectionViewSource.GetDefaultView(buffersList);
             GroupedPallets = (ListCollectionView)CollectionViewSource.GetDefaultView(palletsList);
             GroupedDevicePallets = (ListCollectionView)CollectionViewSource.GetDefaultView(devicePalletsList);
-
         }
-
 
         //*********************************************************************************************
 
@@ -113,40 +108,46 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedDevices.IsEditingItem)
+                {
                     GroupedDevices.CommitEdit();
+                }
+
                 if (GroupedDevices.IsAddingNew)
+                {
                     GroupedDevices.CommitNew();
+                }
+
                 GroupedDevices.Refresh();
                 switch (tabIndex)
                 {
                     case 0:
+                    {
+                        if (devicesManagement.DevicesListDg.HasItems)
                         {
-                            if (devicesManagement.DevicesListDg.HasItems)
-                            {
-                                devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
-                            }
-                            break;
+                            devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
                         }
+                        break;
+                    }
                     case 1:
+                    {
+                        if (devicesManagement.DevicesListDg2.HasItems)
                         {
-                            if (devicesManagement.DevicesListDg2.HasItems)
-                            {
-                                devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
-                            }
-                            break;
+                            devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
                         }
+                        break;
+                    }
                     default:
+                    {
+                        if (devicesManagement.DevicesListDg.HasItems)
                         {
-                            if (devicesManagement.DevicesListDg.HasItems)
-                            {
-                                devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
-                            }
-                            if (devicesManagement.DevicesListDg2.HasItems)
-                            {
-                                devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
-                            }
-                            break;
+                            devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
                         }
+                        if (devicesManagement.DevicesListDg2.HasItems)
+                        {
+                            devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
+                        }
+                        break;
+                    }
                 }
             }
             catch (Exception ex)
@@ -197,9 +198,15 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedProducts.IsEditingItem)
+                {
                     GroupedProducts.CommitEdit();
+                }
+
                 if (GroupedProducts.IsAddingNew)
+                {
                     GroupedProducts.CommitNew();
+                }
+
                 GroupedProducts.Refresh();
                 if (devicesManagement.ProductsListDg.HasItems)
                 {
@@ -260,9 +267,15 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedBuffers.IsEditingItem)
+                {
                     GroupedBuffers.CommitEdit();
+                }
+
                 if (GroupedBuffers.IsAddingNew)
+                {
                     GroupedBuffers.CommitNew();
+                }
+
                 GroupedBuffers.Refresh();
                 if (devicesManagement.BuffersListDg.HasItems)
                 {
@@ -326,16 +339,22 @@ namespace MapViewPallet.MiniForm
                         {
                             deviceProductsList.Add(tempDeviceProduct);
                             if (tempDeviceProduct.checkStatus == true)
-                            { 
+                            {
                                 //devicesManagement.chkSelectAll.IsChecked = true;
                             }
                         }
                     }
                 }
                 if (GroupedDeviceProducts.IsEditingItem)
+                {
                     GroupedDeviceProducts.CommitEdit();
+                }
+
                 if (GroupedDeviceProducts.IsAddingNew)
+                {
                     GroupedDeviceProducts.CommitNew();
+                }
+
                 GroupedDeviceProducts.Refresh();
                 if (devicesManagement.DeviceProductsListDg.HasItems)
                 {
@@ -357,7 +376,7 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
-                deviceBuffersList.Clear(); 
+                deviceBuffersList.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListDeviceBufferAllByDeviceId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
@@ -393,7 +412,7 @@ namespace MapViewPallet.MiniForm
                             bufferName = dr["bufferName"].ToString(),
                             bufferSort = int.Parse(dr["bufferSort"].ToString()),
                             maxRow = int.Parse(dr["maxRow"].ToString()),
-                            maxBay  = int.Parse(dr["maxBay"].ToString()),
+                            maxBay = int.Parse(dr["maxBay"].ToString()),
                             checkStatus = bool.Parse(dr["checkStatus"].ToString())
                         };
                         if (!ContainDeviceBuffer(tempDeviceBuffer, deviceBuffersList))
@@ -403,9 +422,15 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedDeviceBuffers.IsEditingItem)
+                {
                     GroupedDeviceBuffers.CommitEdit();
+                }
+
                 if (GroupedDeviceBuffers.IsAddingNew)
+                {
                     GroupedDeviceBuffers.CommitNew();
+                }
+
                 GroupedDeviceBuffers.Refresh();
                 if (devicesManagement.DeviceBuffersListDg.HasItems)
                 {
@@ -467,9 +492,15 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedProductDetails.IsEditingItem)
+                {
                     GroupedProductDetails.CommitEdit();
+                }
+
                 if (GroupedProductDetails.IsAddingNew)
+                {
                     GroupedProductDetails.CommitNew();
+                }
+
                 GroupedProductDetails.Refresh();
                 if (devicesManagement.ProductDetailsListDg.HasItems)
                 {
@@ -542,9 +573,15 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedPallets.IsEditingItem)
+                {
                     GroupedPallets.CommitEdit();
+                }
+
                 if (GroupedPallets.IsAddingNew)
+                {
                     GroupedPallets.CommitNew();
+                }
+
                 GroupedPallets.Refresh();
                 if (devicesManagement.PalletsListDg.HasItems)
                 {
@@ -557,7 +594,7 @@ namespace MapViewPallet.MiniForm
             }
         }
 
-        public void ReloadListDevicePallets (int deviceId)
+        public void ReloadListDevicePallets(int deviceId)
         {
             if (!Global_Object.ServerAlive())
             {
@@ -566,7 +603,6 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
-
                 devicePalletsList.Clear();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevicePallet");
                 request.Method = "POST";
@@ -611,9 +647,15 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedDevicePallets.IsEditingItem)
+                {
                     GroupedDevicePallets.CommitEdit();
+                }
+
                 if (GroupedDevicePallets.IsAddingNew)
+                {
                     GroupedDevicePallets.CommitNew();
+                }
+
                 GroupedDevicePallets.Refresh();
                 if (devicesManagement.DevicePalletsListDg.HasItems)
                 {
@@ -625,12 +667,8 @@ namespace MapViewPallet.MiniForm
                 logFile.Error(ex.Message);
             }
         }
-        
-
-
 
         //*********************************************************************************************
-
 
         public bool ContainDevice(dtDevice tempOpe, List<dtDevice> List)
         {
@@ -783,8 +821,5 @@ namespace MapViewPallet.MiniForm
             }
             return false;
         }
-        
-        
-
     }
 }

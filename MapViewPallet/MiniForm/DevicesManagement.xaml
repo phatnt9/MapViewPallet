@@ -89,7 +89,6 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -163,7 +162,6 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -190,7 +188,6 @@
                                                     Click="Btn_Refresh_DeviceBuffer_Click">
                                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                                 </Button>
-
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
@@ -250,7 +247,6 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -379,7 +375,6 @@
                                                         Binding="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                         Header="pathFile"
                                                         Visibility="Hidden" />
-
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -602,7 +597,7 @@
                                                     <!--<StackPanel Orientation="Horizontal"
                                                              HorizontalAlignment="Center">
                                                              <Label VerticalAlignment="Center"
-                                                             Content="D" FontSize="12"/>
+                                                             Content="D" FontSize="12" />
                                                              <TextBox Name="palletPalletD"
                                                              Width="35"
                                                              Height="17"
@@ -895,7 +890,6 @@
                                                         Binding="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                         Header="pathFile"
                                                         Visibility="Hidden" />
-
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -918,7 +912,6 @@
                                                 HorizontalAlignment="Right"
                                                 VerticalAlignment="Center"
                                                 Orientation="Horizontal">
-
 
                                                 <Button
                                                     Name="btn_Add_ProductDetail"
@@ -977,7 +970,6 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
@@ -1032,7 +1024,6 @@
                                                 HorizontalAlignment="Right"
                                                 VerticalAlignment="Center"
                                                 Orientation="Horizontal">
-
 
                                                 <Button
                                                     Name="btn_Add_Buffer"
@@ -1150,8 +1141,8 @@
                                                         </DataGridTextColumn.ElementStyle>
                                                         <DataGridTextColumn.EditingElementStyle>
                                                             <Style TargetType="TextBox">
-                                                                <Setter Property="TextWrapping" Value="Wrap" />
                                                                 <Setter Property="AcceptsReturn" Value="true" />
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
                                                             </Style>
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
@@ -1169,8 +1160,8 @@
                                                         </DataGridTextColumn.ElementStyle>
                                                         <DataGridTextColumn.EditingElementStyle>
                                                             <Style TargetType="TextBox">
-                                                                <Setter Property="TextWrapping" Value="Wrap" />
                                                                 <Setter Property="AcceptsReturn" Value="true" />
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
                                                             </Style>
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
@@ -1329,7 +1320,6 @@
                                                     Save
                                                 </Button>
                                             </Grid>
-
                                         </Grid>
                                     </Grid>
                                 </GroupBox>
@@ -1447,8 +1437,8 @@
                                                         </DataGridTextColumn.ElementStyle>
                                                         <DataGridTextColumn.EditingElementStyle>
                                                             <Style TargetType="TextBox">
-                                                                <Setter Property="TextWrapping" Value="Wrap" />
                                                                 <Setter Property="AcceptsReturn" Value="true" />
+                                                                <Setter Property="TextWrapping" Value="Wrap" />
                                                             </Style>
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
@@ -1467,7 +1457,7 @@
                                      Padding="5 0"
                                      Margin="10 0"
                                      Content="{DynamicResource DevicesManagement_Button_Save}"
-                                     Click="Btn_Save_Buffer_Click"/>-->
+                                     Click="Btn_Save_Buffer_Click" />-->
                                 <Button
                                     Name="Btn_Exit_Buffer"
                                     Width="70"
@@ -1483,5 +1473,4 @@
             </TabControl>
         </Grid>
     </Grid>
-
 </Window>

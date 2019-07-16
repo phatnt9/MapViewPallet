@@ -253,7 +253,6 @@
                                                     PreviewTextInput="myPreviewTextInput" />
                                             </DockPanel>
 
-
                                             <DockPanel>
                                                 <Label
                                                     Width="Auto"
@@ -322,7 +321,6 @@
                                                 </StackPanel>
                                             </DockPanel>
 
-
                                             <DockPanel>
                                                 <Label
                                                     Width="70"
@@ -368,9 +366,7 @@
                                                 Click="Btn_SetBufferPosData_Click"
                                                 Content="{DynamicResource StationEditor_Button_Save}"
                                                 FontSize="12" />
-
                                         </StackPanel>
-
                                     </Grid>
                                 </GroupBox>
                             </Grid>
@@ -622,7 +618,6 @@
                                                     </Style>
                                                 </DataGridTextColumn.EditingElementStyle>
                                             </DataGridTextColumn>
-
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </Grid>
@@ -748,10 +743,9 @@
                                                              Width="35"
                                                              Height="20"
                                                              FontSize="12"
-                                                             Content="Lưu"/>-->
+                                                             Content="Lưu" />-->
                                                     </StackPanel>
                                                 </Grid>
-
                                             </Grid>
                                         </StackPanel>
                                     </Grid>
@@ -930,6 +924,5 @@
                 </Grid>
             </StackPanel>
         </Grid>
-
     </Grid>
 </Window>

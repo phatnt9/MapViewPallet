@@ -1,35 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace MapViewPallet
 {
     public class MusicPlayerOld
     {
-
         //System.Media.SoundPlayer Player;
         //WMPLib.WindowsMediaPlayer Player;
         public bool IsBeingPlayed = false;
+
         private bool IsLooping = false;
         public string FileName;
         public string TrackName;
+
         //private int Timer = 0;//in minutes
         //BackgroundWorker Player;
         private long lngVolume = 500; //between 0-1000
-
 
         public MusicPlayerOld(string fileName)
         {
             this.TrackName = fileName;
             if (fileName.Contains("\\"))
+            {
                 this.FileName = fileName;
+            }
             else
+            {
                 this.FileName = AppDomain.CurrentDomain.BaseDirectory + fileName;
+            }
             //Player = new BackgroundWorker();
             //Player.DoWork += new DoWorkEventHandler(Player_DoWork);
 
@@ -75,7 +77,6 @@ namespace MapViewPallet
             //set the initial volume - Changed by Prahlad for phase-2
             //sb = new StringBuilder("................................................................................................................................");
             //mciSendString("setaudio " + this.TrackName + " volume to " + lngVolume.ToString(), sb, sb.Length, IntPtr.Zero);
-
 
             while (IsBeingPlayed)
             {
@@ -139,7 +140,10 @@ namespace MapViewPallet
             try
             {
                 if (IsBeingPlayed)
+                {
                     return;
+                }
+
                 if (!File.Exists(FileName))
                 {
                     IsBeingPlayed = true;
@@ -173,34 +177,33 @@ namespace MapViewPallet
 
         //sound api functions
         [DllImport("winmm.dll")]
-        static extern Int32 mciSendString(string command, StringBuilder buffer, int bufferSize, IntPtr hwndCallback);
+        private static extern Int32 mciSendString(string command, StringBuilder buffer, int bufferSize, IntPtr hwndCallback);
 
         [DllImport("winmm.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
-        static extern bool PlaySound(
+        private static extern bool PlaySound(
             string pszSound,
             IntPtr hMod,
             SoundFlags sf);
 
-        // Flags for playing sounds.  For this example, we are reading 
-        // the sound from a filename, so we need only specify 
+        // Flags for playing sounds.  For this example, we are reading
+        // the sound from a filename, so we need only specify
         // SND_FILENAME | SND_ASYNC
 
         [Flags]
         public enum SoundFlags : int
         {
-            SND_SYNC = 0x0000,  // play synchronously (default) 
-            SND_ASYNC = 0x0001,  // play asynchronously 
-            SND_NODEFAULT = 0x0002,  // silence (!default) if sound not found 
+            SND_SYNC = 0x0000,  // play synchronously (default)
+            SND_ASYNC = 0x0001,  // play asynchronously
+            SND_NODEFAULT = 0x0002,  // silence (!default) if sound not found
             SND_MEMORY = 0x0004,  // pszSound points to a memory file
-            SND_LOOP = 0x0008,  // loop the sound until next sndPlaySound 
-            SND_NOSTOP = 0x0010,  // don't stop any currently playing sound 
+            SND_LOOP = 0x0008,  // loop the sound until next sndPlaySound
+            SND_NOSTOP = 0x0010,  // don't stop any currently playing sound
             SND_PURGE = 0x40, // <summary>Stop Playing Wave</summary>
-            SND_NOWAIT = 0x00002000, // don't wait if the driver is busy 
-            SND_ALIAS = 0x00010000, // name is a registry alias 
+            SND_NOWAIT = 0x00002000, // don't wait if the driver is busy
+            SND_ALIAS = 0x00010000, // name is a registry alias
             SND_ALIAS_ID = 0x00110000, // alias is a predefined ID
-            SND_FILENAME = 0x00020000, // name is file name 
-            SND_RESOURCE = 0x00040004  // name is resource name or atom 
+            SND_FILENAME = 0x00020000, // name is file name
+            SND_RESOURCE = 0x00040004  // name is resource name or atom
         }
-
     }
 }

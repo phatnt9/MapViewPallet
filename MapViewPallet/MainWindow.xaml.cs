@@ -1,10 +1,8 @@
 ﻿using MapViewPallet.MiniForm;
+using MapViewPallet.MiniForm.MicsWpfForm;
 using MapViewPallet.Shape;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Threading;
 using System.Timers;
 using System.Windows;
@@ -12,9 +10,6 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using MapViewPallet.MiniForm.MicsWpfForm;
-using System.IO;
-using System.Media;
 
 namespace MapViewPallet
 {
@@ -22,17 +17,19 @@ namespace MapViewPallet
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-
-   
     public partial class MainWindow : Window
     {
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         //=================VARIABLE==================
         public System.Timers.Timer stationTimer;
+
         public bool drag = true;
         public CanvasControlService canvasControlService;
+
         //public WaitServerForm waitServerForm;
         public LoginForm loginForm;
+
         public PlanControl planControl;
         public DevicesManagement devicesManagement;
         public UserManagement userManagement;
@@ -61,13 +58,12 @@ namespace MapViewPallet
             GotFocus += MainWindow_GotFocus;
 
             //===============DataGridView========
-            
+
             DataContext = canvasControlService;
             stationTimer = new System.Timers.Timer();
             SetTimerInterval(stationTimer);
             stationTimer.Elapsed += OnTimedRedrawStationEvent;
             stationTimer.AutoReset = true;
-
         }
 
         public void SetTimerInterval(System.Timers.Timer timer)
@@ -102,14 +98,13 @@ namespace MapViewPallet
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            
         }
 
         private void DevicesManagement_Closed(object sender, EventArgs e)
         {
             devicesManagement = null;
         }
-        
+
         private void PlanControl_Closed(object sender, EventArgs e)
         {
             planControl = null;
@@ -119,12 +114,12 @@ namespace MapViewPallet
         {
             userManagement = null;
         }
-        
+
         private void Statistics_Closed(object sender, EventArgs e)
         {
             statistics = null;
         }
-        
+
         private void LoginForm_Closed(object sender, EventArgs e)
         {
             loginForm = null;
@@ -133,7 +128,9 @@ namespace MapViewPallet
         private void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -153,9 +150,13 @@ namespace MapViewPallet
             {
                 MenuItem menuItem = item as MenuItem;
                 if (menuItem.Tag.ToString() == Thread.CurrentThread.CurrentCulture.Name)
+                {
                     menuItem.IsChecked = true;
+                }
                 else
+                {
                     menuItem.IsChecked = false;
+                }
             }
         }
 
@@ -172,17 +173,16 @@ namespace MapViewPallet
             }
         }
 
-
         private void CenterWindowOnScreen()
         {
             try
             {
-            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-            double windowWidth = this.Width;
-            double windowHeight = this.Height;
-            this.Left = (screenWidth / 2) - (windowWidth / 2);
-            this.Top = (screenHeight / 2) - (windowHeight / 2);
+                double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+                double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+                double windowWidth = this.Width;
+                double windowHeight = this.Height;
+                this.Left = (screenWidth / 2) - (windowWidth / 2);
+                this.Top = (screenHeight / 2) - (windowHeight / 2);
             }
             catch (Exception ex)
             {
@@ -250,7 +250,6 @@ namespace MapViewPallet
 
         public ImageBrush LoadImage(string name)
         {
-
             try
             {
                 System.Drawing.Bitmap bmp = (System.Drawing.Bitmap)Properties.Resources.ResourceManager.GetObject(name);
@@ -294,7 +293,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void btn_DevicesManagement_Click(object sender, RoutedEventArgs e)
@@ -317,7 +315,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void btn_UsersManagement_Click(object sender, RoutedEventArgs e)
@@ -326,7 +323,6 @@ namespace MapViewPallet
             {
                 if (userManagement == null)
                 {
-
                     userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
                     userManagement.Closed += UserManagement_Closed;
                     userManagement.Show();
@@ -340,10 +336,7 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
-
-        
 
         private void btn_ChangePassword_Click(object sender, RoutedEventArgs e)
         {
@@ -356,7 +349,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
@@ -389,7 +381,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void Reloadallstation_Click(object sender, RoutedEventArgs e)
@@ -402,7 +393,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void Btn_MapOnOff_Click(object sender, RoutedEventArgs e)
@@ -420,7 +410,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void Btn_PlanManagement_Click(object sender, RoutedEventArgs e)
@@ -442,7 +431,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void Btn_OperationManagement_Click(object sender, RoutedEventArgs e)
@@ -465,7 +453,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void Btn_DeviceManagement_Click(object sender, RoutedEventArgs e)
@@ -488,8 +475,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
-
         }
 
         private void Btn_ProductManagement_Click(object sender, RoutedEventArgs e)
@@ -512,8 +497,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
-
         }
 
         private void Btn_BufferManagement_Click(object sender, RoutedEventArgs e)
@@ -536,7 +519,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void Btn_UserManagement_Click(object sender, RoutedEventArgs e)
@@ -545,7 +527,6 @@ namespace MapViewPallet
             {
                 if (userManagement == null)
                 {
-
                     userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
                     userManagement.Closed += UserManagement_Closed;
                     userManagement.Show();
@@ -559,7 +540,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void Btn_Statistics_Click(object sender, RoutedEventArgs e)
@@ -581,9 +561,7 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
-
 
         private void MoveBuffer_Click(object sender, RoutedEventArgs e)
         {
@@ -597,7 +575,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void btn_AboutUs_Click(object sender, RoutedEventArgs e)
@@ -611,7 +588,6 @@ namespace MapViewPallet
             {
                 logFile.Error(ex.Message);
             }
-            
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
@@ -627,5 +603,4 @@ namespace MapViewPallet
             }
         }
     }
-
 }

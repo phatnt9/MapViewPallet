@@ -15,11 +15,11 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <StackPanel 
+            <StackPanel
                 Orientation="Vertical">
-                <StackPanel 
+                <StackPanel
                     HorizontalAlignment="Center">
-                    <Label 
+                    <Label
                         Margin="0 -3"
                         Content="Database IP:"></Label>
                 </StackPanel>
@@ -32,11 +32,11 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel 
+            <StackPanel
                 Orientation="Vertical">
                 <StackPanel
                     HorizontalAlignment="Center">
-                    <Label 
+                    <Label
                         Margin="0 -3"
                         Content="Port:"></Label>
                 </StackPanel>
@@ -49,11 +49,11 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel 
+            <StackPanel
                 Orientation="Vertical">
-                <StackPanel 
+                <StackPanel
                     HorizontalAlignment="Center">
-                    <Label 
+                    <Label
                         Margin="0 -3"
                         Content="Robot Server IP:"></Label>
                 </StackPanel>
@@ -66,8 +66,8 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="3">
-            <StackPanel 
-                Orientation="Horizontal" 
+            <StackPanel
+                Orientation="Horizontal"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 <Grid Margin="5 0">

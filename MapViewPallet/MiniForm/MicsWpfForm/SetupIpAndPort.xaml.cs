@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
 {
@@ -28,9 +18,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             @"(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\." +
             @"(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\." +
             @"(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$");
+
         private static readonly Regex _portRegex = new Regex(
             @":(6553[0-5]|655[0-2][0-9]\d|65[0-4](\d){2}|6[0-4](\d){3}|[1-5](\d){4}|[1-9](\d){0,3})");
-
 
         public SetupIpAndPort(string cultureName = null)
         {
@@ -57,7 +47,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -85,34 +77,42 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         public bool IsValidateIP(string Address)
         {
-            //Match pattern for IP address    
+            //Match pattern for IP address
             string Pattern = @"^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$";
-            //Regular Expression object    
+            //Regular Expression object
             Regex check = new Regex(Pattern);
 
-            //check to make sure an ip address was provided    
+            //check to make sure an ip address was provided
             if (string.IsNullOrEmpty(Address))
-                //returns false if IP is not provided    
+            {
+                //returns false if IP is not provided
                 return false;
+            }
             else
-                //Matching the pattern    
+            {
+                //Matching the pattern
                 return check.IsMatch(Address, 0);
+            }
         }
 
         public bool IsValidatePort(string Port)
         {
-            //Match pattern for IP address    
+            //Match pattern for IP address
             string Pattern = @"^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$";
-            //Regular Expression object    
+            //Regular Expression object
             Regex check = new Regex(Pattern);
 
-            //check to make sure an ip address was provided    
+            //check to make sure an ip address was provided
             if (string.IsNullOrEmpty(Port))
-                //returns false if IP is not provided    
+            {
+                //returns false if IP is not provided
                 return false;
+            }
             else
-                //Matching the pattern    
+            {
+                //Matching the pattern
                 return check.IsMatch(Port, 0);
+            }
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -154,7 +154,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-            
         }
     }
 }

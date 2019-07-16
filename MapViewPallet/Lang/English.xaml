@@ -5,7 +5,7 @@
     <sys:String x:Key="Language">Language</sys:String>
     <sys:String x:Key="English">English</sys:String>
     <sys:String x:Key="Vietnamese">Tiếng Việt</sys:String>
-    
+
     <!--MainWindow-->
     <sys:String x:Key="MainWindow_Title">Warehouse Management Software</sys:String>
     <sys:String x:Key="MainWindow_Menu_Management">_Management</sys:String>
@@ -106,7 +106,6 @@
     <sys:String x:Key="PlanControl_Import">Import</sys:String>
     <sys:String x:Key="PlanControl_Exit">Close</sys:String>
 
-
     <!--DevicesManagement-->
     <sys:String x:Key="DevicesManagement_Title">Manage</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Operation">Operation</sys:String>
@@ -114,11 +113,9 @@
     <sys:String x:Key="DevicesManagement_TabItem_Product">Product</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Buffer">Buffer</sys:String>
 
-
     <sys:String x:Key="DevicesManagement_Groupbox_Device">Device</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Device_Column_DeviceName">Device name</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Device_Column_ImageDeviceUrl">Picture</sys:String>
-
 
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePalletData">Pallet data</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Bay">Bay</sys:String>
@@ -129,13 +126,11 @@
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Column_Bay">Bay</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Column_DataPallet">Data</sys:String>
 
-
     <sys:String x:Key="DevicesManagement_Groupbox_Product">Product</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Product_Column_ProductName">Product name</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Product_Column_ImageProductUrl">Picture</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_ProductDetail">Product Detail</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_ProductDetail_Column_ProductDetailName">Serial</sys:String>
-
 
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer">Buffer Areas</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferName">Buffer name</sys:String>
@@ -143,7 +138,6 @@
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferRow">Row</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferReturn">Return</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferSort">Priority</sys:String>
-
 
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet">Pallet List</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Row">Row</sys:String>
@@ -154,10 +148,8 @@
     <sys:String x:Key="DevicesManagement_Button_Save">Save</sys:String>
     <sys:String x:Key="DevicesManagement_Button_Exit">Close</sys:String>
 
-
     <!--StationEditor-->
     <sys:String x:Key="StationEditor_Title">Buffer Management</sys:String>
-
 
     <sys:String x:Key="StationEditor_Groupbox_BufferInfo">Buffer Info</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferName">Name:</sys:String>
@@ -176,7 +168,6 @@
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletLine_ord">lineOrd:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_out">dirO:</sys:String>
 
-
     <sys:String x:Key="StationEditor_Groupbox_BufferDetail">Buffer Detail</sys:String>
 
     <sys:String x:Key="StationEditor_Groupbox_PalletList">Pallet List</sys:String>
@@ -184,14 +175,11 @@
     <sys:String x:Key="StationEditor_Groupbox_PalletList_Column_Bay">Bay</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletList_Column_Status">Status</sys:String>
 
-
     <sys:String x:Key="StationEditor_Button_Save">Save</sys:String>
     <sys:String x:Key="StationEditor_Button_Exit">Close</sys:String>
 
-
     <sys:String x:Key="StationEditor_BufferType_Return">Return</sys:String>
     <sys:String x:Key="StationEditor_BufferType_Buffer">Buffer</sys:String>
-
 
     <!--UserManagement-->
     <sys:String x:Key="UserManagement_Title">User Management</sys:String>
@@ -202,7 +190,6 @@
 
     <sys:String x:Key="UserManagement_Button_Exit">Close</sys:String>
 
-    
     <!--Statistics-->
     <sys:String x:Key="Statistics_Title">Statistics</sys:String>
     <sys:String x:Key="Statistics_TabItem_RobotProcess">Robot Process</sys:String>
@@ -217,5 +204,4 @@
     <sys:String x:Key="Statistics_Statistic_Detail">Detail</sys:String>
     <sys:String x:Key="Statistics_Button_Search">Search</sys:String>
     <sys:String x:Key="Statistics_Button_Export">Export</sys:String>
-
 </ResourceDictionary>

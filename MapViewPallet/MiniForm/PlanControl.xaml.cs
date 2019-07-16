@@ -4,18 +4,14 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace MapViewPallet.MiniForm
 {
@@ -24,15 +20,14 @@ namespace MapViewPallet.MiniForm
     /// </summary>
     ///
 
-
     public partial class PlanControl : Window
     {
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //=================VARIABLE==================
         public PlanControlModel operation_model;
-        public BackgroundWorker workerLoadPlan;
 
+        public BackgroundWorker workerLoadPlan;
 
         public PlanControl(string cultureName = null)
         {
@@ -51,7 +46,9 @@ namespace MapViewPallet.MiniForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -81,7 +78,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void TabControlShift_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -109,7 +105,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void PCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -120,8 +115,10 @@ namespace MapViewPallet.MiniForm
                 {
                     switch (UpdateDateStatus((DateTime)pCalendar.SelectedDate))
                     {
-                        case -1: { Shift1Dgv.IsReadOnly = Shift2Dgv.IsReadOnly = Shift3Dgv.IsReadOnly = false; break; }
-                        default: { Shift1Dgv.IsReadOnly = Shift2Dgv.IsReadOnly = Shift3Dgv.IsReadOnly = false; break; }
+                        case -1:
+                        { Shift1Dgv.IsReadOnly = Shift2Dgv.IsReadOnly = Shift3Dgv.IsReadOnly = false; break; }
+                        default:
+                        { Shift1Dgv.IsReadOnly = Shift2Dgv.IsReadOnly = Shift3Dgv.IsReadOnly = false; break; }
                     }
                     if (TabControlShift.IsLoaded)
                     {
@@ -136,9 +133,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
-
 
         /// <summary>
         /// -1: Ngày hôm trước trở đi, 0: Ngày hôm nay, 1: Ngày hôm sau trở đi
@@ -152,14 +147,22 @@ namespace MapViewPallet.MiniForm
                 string ngay = "";
                 switch (pDate.DayOfWeek)
                 {
-                    case DayOfWeek.Monday: { ngay = "Thứ Hai"; break; }
-                    case DayOfWeek.Tuesday: { ngay = "Thứ Ba"; break; }
-                    case DayOfWeek.Wednesday: { ngay = "Thứ Tư"; break; }
-                    case DayOfWeek.Thursday: { ngay = "Thứ Năm"; break; }
-                    case DayOfWeek.Friday: { ngay = "Thứ Sáu"; break; }
-                    case DayOfWeek.Saturday: { ngay = "Thứ Bảy"; break; }
-                    case DayOfWeek.Sunday: { ngay = "Chủ Nhật"; break; }
-                    default: { ngay = "Chủ Nhật"; break; }
+                    case DayOfWeek.Monday:
+                    { ngay = "Thứ Hai"; break; }
+                    case DayOfWeek.Tuesday:
+                    { ngay = "Thứ Ba"; break; }
+                    case DayOfWeek.Wednesday:
+                    { ngay = "Thứ Tư"; break; }
+                    case DayOfWeek.Thursday:
+                    { ngay = "Thứ Năm"; break; }
+                    case DayOfWeek.Friday:
+                    { ngay = "Thứ Sáu"; break; }
+                    case DayOfWeek.Saturday:
+                    { ngay = "Thứ Bảy"; break; }
+                    case DayOfWeek.Sunday:
+                    { ngay = "Chủ Nhật"; break; }
+                    default:
+                    { ngay = "Chủ Nhật"; break; }
                 }
                 if (DateTime.Now.ToShortDateString() == pDate.ToShortDateString())
                 {
@@ -191,7 +194,6 @@ namespace MapViewPallet.MiniForm
                 logFile.Error(ex.Message);
                 return -5;
             }
-
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
@@ -208,7 +210,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -312,7 +313,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Btn_importPlan_Click(object sender, RoutedEventArgs e)
@@ -338,10 +338,10 @@ namespace MapViewPallet.MiniForm
                 string jsonData = JsonConvert.SerializeObject(postApiBody);
                 Console.WriteLine(jsonData);
 
-                HttpWebRequest request = 
-                    (HttpWebRequest)WebRequest.Create(@"http://" + 
-                    Properties.Settings.Default.serverIp + ":" + 
-                    Properties.Settings.Default.serverPort + 
+                HttpWebRequest request =
+                    (HttpWebRequest)WebRequest.Create(@"http://" +
+                    Properties.Settings.Default.serverIp + ":" +
+                    Properties.Settings.Default.serverPort +
                     @"/robot/rest/" + "plan/createPlanPallet");
 
                 request.Method = "POST";
@@ -380,7 +380,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Btn_Test_Click(object sender, RoutedEventArgs e)
@@ -395,7 +394,6 @@ namespace MapViewPallet.MiniForm
                 Dispatcher.BeginInvoke(new ThreadStart(() =>
                 {
                     operation_model.CreateListPlansFromShift((DateTime)pCalendar.SelectedDate, TabControlShift.SelectedIndex + 1);
-
                 }));
             }
             catch (Exception ex)
@@ -410,8 +408,6 @@ namespace MapViewPallet.MiniForm
             var view = operation_model.GroupedDevices_S1;
             view.Filter = (o => (o as Plan).productDetailName.Contains((sender as System.Windows.Controls.TextBox).Text));
             //view.Filter = PlansFilter;
-
         }
     }
-
 }

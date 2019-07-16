@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
-        Title="ImportPlanForm" 
-        Height="234" 
+        Title="ImportPlanForm"
+        Height="234"
         Width="700"
         ResizeMode="NoResize">
     <Grid>
@@ -43,7 +43,7 @@
         </Grid>
         <Grid Grid.Column="1">
             <StackPanel>
-                <StackPanel 
+                <StackPanel
                     Margin="0,10,0,0"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
@@ -53,7 +53,7 @@
                         ></Label>
                     <DatePicker
                         Name="dtpImport"
-                        Width="100"/>
+                        Width="100" />
                 </StackPanel>
                 <StackPanel
                     Margin="0,10,0,0"
@@ -61,14 +61,13 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
                     <Label
-                        Content="File excel:"
-                        >
+                        Content="File excel:">
                     </Label>
-                    <TextBox 
+                    <TextBox
                         Name="txtFile"
                         IsEnabled="False"
                         Width="100"></TextBox>
-                    <Button 
+                    <Button
                         Margin="10,0,0,0"
                         Width="50"
                         Content="..."
@@ -81,18 +80,18 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
                     <Button
-                        Width="Auto" 
+                        Width="Auto"
                         Height="25"
                         Padding="5 0"
-                        Content="Import" 
-                        Margin="10 0" 
+                        Content="Import"
+                        Margin="10 0"
                         Click="Import_Click"></Button>
                     <Button
-                        Width="Auto" 
+                        Width="Auto"
                         Height="25"
                         Padding="5 0"
-                        Content="Close" 
-                        Margin="10 0" 
+                        Content="Close"
+                        Margin="10 0"
                         Click="Close_Click"></Button>
                 </StackPanel>
             </StackPanel>

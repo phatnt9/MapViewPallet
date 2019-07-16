@@ -2,19 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
@@ -25,7 +17,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     public partial class ImportPlanForm : Window
     {
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
 
         public ImportPlanForm()
         {
@@ -60,7 +51,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 string deviceName = "";
                 for (int i = 3; i <= rowCount; i++)
                 {
-                    Console.WriteLine("row:"+i);
+                    Console.WriteLine("row:" + i);
                     if (xlRange.Cells[i, 3] != null && xlRange.Cells[i, 3].Value2 != null)
                     {
                         structExcel structExcel = new structExcel();
@@ -175,7 +166,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 System.Windows.Forms.MessageBox.Show("Lỗi nhập File hãy kiểm tra lại!", Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 logFile.Error(ex.Message);
             }
-
             finally
             {
                 xlWorkbook.Close();
@@ -250,7 +240,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-            
         }
     }
 }

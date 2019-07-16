@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
-        Title="{DynamicResource AddBufferForm_Title1}" 
-        Height="250" 
-        Width="300" 
+        Title="{DynamicResource AddBufferForm_Title1}"
+        Height="250"
+        Width="300"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
     <Grid>
@@ -21,29 +21,28 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center"
-                            >
-                    <TextBlock Text="{DynamicResource AddBufferForm_Title1}" 
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="{DynamicResource AddBufferForm_Title1}"
                                FontSize="20"
-                               FontWeight="DemiBold"/>
+                               FontWeight="DemiBold" />
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                <StackPanel Orientation="Vertical" 
+                <StackPanel Orientation="Vertical"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             Margin="0,6,0,0">
-                    <StackPanel Orientation="Vertical" 
+                    <StackPanel Orientation="Vertical"
                                 HorizontalAlignment="Right">
                         <Label VerticalAlignment="Center"
                                HorizontalAlignment="Center"
-                               Content="{DynamicResource AddBufferForm_BufferName}" 
+                               Content="{DynamicResource AddBufferForm_BufferName}"
                                FontSize="14"></Label>
-                        <TextBox Name="bufferNametb" 
-                             Width="200" 
-                             Height="20" 
+                        <TextBox Name="bufferNametb"
+                             Width="200"
+                             Height="20"
                              Margin="10,0"
                                  CharacterCasing="Upper"
                              ></TextBox>
@@ -55,15 +54,15 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <StackPanel Orientation="Vertical" 
+                                <StackPanel Orientation="Vertical"
                                 HorizontalAlignment="Center">
                                     <Label VerticalAlignment="Center"
-                               HorizontalAlignment="Center" 
-                               Content="{DynamicResource AddBufferForm_Bay}" 
+                               HorizontalAlignment="Center"
+                               Content="{DynamicResource AddBufferForm_Bay}"
                                FontSize="14"></Label>
-                                    <TextBox Name="bufferMaxBaytb" 
-                             Width="70" 
-                             Height="20" 
+                                    <TextBox Name="bufferMaxBaytb"
+                             Width="70"
+                             Height="20"
                              Margin="10,0"
                                  CharacterCasing="Upper"
                              PreviewTextInput="BufferMaxBaytb_PreviewTextInput"
@@ -71,15 +70,15 @@
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Column="1">
-                                <StackPanel Orientation="Vertical" 
+                                <StackPanel Orientation="Vertical"
                                 HorizontalAlignment="Center">
-                                    <Label VerticalAlignment="Center" 
+                                    <Label VerticalAlignment="Center"
                                HorizontalAlignment="Center"
-                               Content="{DynamicResource AddBufferForm_Row}" 
+                               Content="{DynamicResource AddBufferForm_Row}"
                                FontSize="14"></Label>
-                                    <TextBox Name="bufferMaxRowtb" 
-                             Width="70" 
-                             Height="20" 
+                                    <TextBox Name="bufferMaxRowtb"
+                             Width="70"
+                             Height="20"
                              Margin="10,0"
                                  CharacterCasing="Upper"
                                  PreviewTextInput ="BufferMaxRowtb_PreviewTextInput"
@@ -88,24 +87,23 @@
                             </Grid>
                         </Grid>
                     </StackPanel>
-                    
-                    
-                    <StackPanel Orientation="Horizontal" 
+
+                    <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right">
-                        <CheckBox Name="bufferReturnCb" 
-                             Width="200" 
-                             Height="25" 
+                        <CheckBox Name="bufferReturnCb"
+                             Width="200"
+                             Height="25"
                              Margin="10"
                                   FontSize="14"
-                             Content="{DynamicResource AddBufferForm_BufferReturn}" 
+                             Content="{DynamicResource AddBufferForm_BufferReturn}"
                              ></CheckBox>
                     </StackPanel>
                     <Button Width="70"
                                 Height="25"
                                 Margin="15 0"
                                 Padding="5 0"
-                            Content="{DynamicResource AddBufferForm_ButtonAccept}" 
-                            Click="Button_Click"/>
+                            Content="{DynamicResource AddBufferForm_ButtonAccept}"
+                            Click="Button_Click" />
                 </StackPanel>
             </Grid>
         </Grid>
@@ -114,7 +112,7 @@
                 <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                    <TextBlock Foreground="Red" Text="{Binding deviceNameDuplicate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <TextBlock Foreground="Red" Text="{Binding deviceNameDuplicate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </StackPanel>
             </Border>
         </Grid>

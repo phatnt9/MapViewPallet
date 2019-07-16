@@ -132,6 +132,5 @@
                 Click="Button_Click"
                 Content="Apply" />
         </Grid>
-
     </Grid>
 </Window>

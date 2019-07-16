@@ -1,6 +1,4 @@
-﻿using MapViewPallet.Shape;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net;
@@ -13,14 +11,13 @@ using System.Windows.Input;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
 {
-
     /// <summary>
     /// Interaction logic for AddBufferForm.xaml
     /// </summary>
-    /// 
+    ///
     public partial class AddBufferForm : Window
     {
-        DevicesManagement devicesManagement;
+        private DevicesManagement devicesManagement;
 
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -28,9 +25,10 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public class AddBufferModel : NotifyUIBase
         {
             private string pBufferNameDuplicate = "Ready";
+
             public string bufferNameDuplicate
             {
-                get { return pBufferNameDuplicate; }
+                get => pBufferNameDuplicate;
                 set
                 {
                     if (pBufferNameDuplicate != value)
@@ -62,7 +60,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -202,9 +202,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
-        
 
         private static bool IsTextAllowed(string text)
         {
@@ -220,7 +218,5 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         {
             e.Handled = !IsTextAllowed(e.Text);
         }
-
-
     }
 }

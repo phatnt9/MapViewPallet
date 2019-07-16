@@ -1,22 +1,21 @@
-﻿using System.Windows;
-using System.Windows.Media;
-using System.Windows.Controls;
+﻿using MapViewPallet.MiniForm;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Net;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.IO;
+using System.Net;
 using System.Text;
-using MapViewPallet.MiniForm;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace MapViewPallet.Shape
 {
     public class StationShape : Border
     {
-
         //public event Action<string> RemoveHandle;
         //int StaticWidth = 16;
         //int StaticHeight = 18;
@@ -28,49 +27,38 @@ namespace MapViewPallet.Shape
             public dtBuffer bufferDb;
             public Canvas _canvas;
 
-
             public Border _stationInfoBorder;
             public Grid _stationGrid; // Grid to hold all Pallet in Station
             public Point _posision; // Where station will be render,only accept Cavnas Coordinate
             public double _rotate; // Station rotate
 
-
             public TransformGroup _myTransformGroup;
             public TranslateTransform _myTranslateTransform;
             public RotateTransform _myRotateTransform;
 
-
             public List<Point> _eightCorner;
             public SortedDictionary<string, PalletShape> _palletList;
-
 
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID { get; set; }
 
-
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point Position
-            {
-                get { return Global_Object.CoorLaser(_posision); }
-            }
-
+            public Point Position => Global_Object.CoorLaser(_posision);
 
             [CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public double Rotation
             {
-                get { return _rotate; }
-                set { _rotate = value; }
+                get => _rotate;
+                set => _rotate = value;
             }
-
 
             //[CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             //public int Bays { get; set; }
 
-
             //[CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             //public int Rows { get; set; }
-
         }
+
         public Properties stationProperties;
         public Props props;
 
@@ -220,8 +208,6 @@ namespace MapViewPallet.Shape
                 Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
                 Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
             }));
-
-
         }
 
         private void StationShape_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -235,7 +221,6 @@ namespace MapViewPallet.Shape
                 }
             }
         }
-
 
         public void ReDraw(dtBuffer buffer)
         {
@@ -292,7 +277,6 @@ namespace MapViewPallet.Shape
                                 Grid.SetRow(palletTemp, rowIndex);
                                 gridLine.Children.Add(palletTemp);
                                 props._palletList.Add(palletTemp.name, palletTemp);
-
                             }
                         }
                     }));
@@ -309,7 +293,6 @@ namespace MapViewPallet.Shape
 
                         Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
                         Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
-
                     }));
                 }
             }
@@ -338,6 +321,7 @@ namespace MapViewPallet.Shape
         {
             stationProperties.ShowDialog();
         }
+
         private void RotateMenu(object sender, RoutedEventArgs e)
         {
             //double rotate = props.rotate * Math.PI / 180.0;
@@ -465,12 +449,10 @@ namespace MapViewPallet.Shape
         {
             BorderBrush = new SolidColorBrush(Colors.Red);
         }
+
         public void DeselectedStyle()
         {
             BorderBrush = new SolidColorBrush(Colors.Transparent);
         }
-
-
-
     }
 }

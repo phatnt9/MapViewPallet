@@ -2,21 +2,19 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace MapViewPallet.Shape
 {
-
-    public class CurveShape: CanvasPath
+    public class CurveShape : CanvasPath
     {
-        readonly double rate = 0.3;
-        readonly double t = 0.65;
-        Point controlPoint;
-        BezierSegment bezierSegment;
-        bool direction; // true= Up, false = Down
+        private readonly double rate = 0.3;
+        private readonly double t = 0.65;
+        private Point controlPoint;
+        private BezierSegment bezierSegment;
+        private readonly bool direction; // true= Up, false = Down
+
         public CurveShape(Canvas canvas, Point Start, Point End, bool direction) : base(canvas, Start, End)
         {
-            
             bezierSegment = new BezierSegment();
             Name = "CurvePathx" + Global_Mouse.EncodeTransmissionTimestamp();
             props.name = Name;
@@ -33,8 +31,8 @@ namespace MapViewPallet.Shape
         public override void Draw()
         {
             Width = Global_Object.LengthBetweenPoints(props._oriMousePos, props._desMousePos);
-            Height = Width* rate;
-            if(Height > 40)
+            Height = Width * rate;
+            if (Height > 40)
             {
                 Height = 40;
             }
@@ -66,7 +64,7 @@ namespace MapViewPallet.Shape
             bezierSegment.Point2 = controlPoint;
             bezierSegment.Point3 = props._end;
             bezierSegment.IsStroked = true;
-            if(props.pathSegments.Count>0)
+            if (props.pathSegments.Count > 0)
             {
                 props.pathSegments[0] = bezierSegment;
             }

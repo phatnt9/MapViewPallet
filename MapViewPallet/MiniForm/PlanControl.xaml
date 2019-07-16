@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="{DynamicResource PlanControl_Title}" Height="500" Width="800"
         WindowStartupLocation="CenterOwner">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -26,25 +26,24 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid Margin="0,10">
-                        <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
+                        <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png" />
                     </Grid>
                 </Grid>
-                <Border Name="pCalendarCalendarBorder" Grid.Row="1" BorderThickness="0" 
+                <Border Name="pCalendarCalendarBorder" Grid.Row="1" BorderThickness="0"
                         BorderBrush="Black" Background="White">
                     <StackPanel Orientation="Vertical">
                         <StackPanel VerticalAlignment="Top"
                                 HorizontalAlignment="Center"
                                 Margin="0 30 0 0">
                             <Viewbox Width="220">
-                                <Calendar Name="pCalendar" 
-                                      HorizontalAlignment="Center" 
+                                <Calendar Name="pCalendar"
+                                      HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       SelectionMode="SingleDate"
-                                      SelectedDatesChanged="PCalendar_SelectedDatesChanged"/>
+                                      SelectedDatesChanged="PCalendar_SelectedDatesChanged" />
                             </Viewbox>
                         </StackPanel>
                     </StackPanel>
-                    
                 </Border>
             </Grid>
             <Border Grid.Column="1" BorderThickness="1,0,0,0" BorderBrush="Gray">
@@ -59,25 +58,23 @@
                             <RowDefinition Height="45"></RowDefinition>
                             <RowDefinition Height="45"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" HorizontalAlignment="Center" 
+                        <Border Grid.Row="0" HorizontalAlignment="Center"
                                 Background="Transparent" CornerRadius="7"
                                 Width="300" Margin="0,10,0,0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock TextAlignment="Center" VerticalAlignment="Center" 
+                                <TextBlock TextAlignment="Center" VerticalAlignment="Center"
                                            FontSize="25" Text="{DynamicResource PlanControl_MainLabel}" FontWeight="Bold"
-                                           Foreground="Black" Margin="5,0"/>
-
-
+                                           Foreground="Black" Margin="5,0" />
                             </StackPanel>
                         </Border>
-                        <Border Name="DateTimeBorder" Grid.Row="1" HorizontalAlignment="Center" 
-                        
+                        <Border Name="DateTimeBorder" Grid.Row="1" HorizontalAlignment="Center"
+
                                 Width="300" Margin="0,0,0,15">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <!--<TextBlock Name="lb_Date" TextAlignment="Center" 
-                                     VerticalAlignment="Center" FontSize="20" 
+                                <!--<TextBlock Name="lb_Date" TextAlignment="Center"
+                                     VerticalAlignment="Center" FontSize="20"
                                      Text="Thứ X, xx/ x/ xxxx" FontWeight="Heavy"
-                                     Foreground="Black" Margin="5,0"/>-->
+                                     Foreground="Black" Margin="5,0" />-->
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -96,19 +93,19 @@
                                 <TabItem Name="Plan_Shift1" Header="{DynamicResource PlanControl_Shift1_Label}">
                                     <DataGrid Name="Shift1Dgv"
                                               ItemsSource="{Binding GroupedDevices_S1}"
-                                              CanUserReorderColumns="False" 
+                                              CanUserReorderColumns="False"
                                               CanUserAddRows="False"
-                                              CanUserResizeColumns="True" 
+                                              CanUserResizeColumns="True"
                                               CanUserResizeRows="False"
-                                              CanUserDeleteRows="False" 
+                                              CanUserDeleteRows="False"
                                               CanUserSortColumns="True"
                                               AutoGenerateColumns="False"
                                               SelectionMode="Single"
                                               SelectionUnit="FullRow">
                                         <DataGrid.ItemContainerStyle>
                                             <Style TargetType="DataGridRow">
-                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
                                             </Style>
                                         </DataGrid.ItemContainerStyle>
                                         <DataGrid.Resources>
@@ -119,7 +116,7 @@
                                                 <GroupStyle.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
-                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
+                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </GroupStyle.HeaderTemplate>
@@ -132,8 +129,8 @@
                                                                         <Expander.Header>
                                                                             <StackPanel Orientation="Horizontal">
                                                                                 <TextBlock Text="{Binding Path=Name}" />
-                                                                                <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
-                                                                                <TextBlock Text="Items"/>
+                                                                                <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0" />
+                                                                                <TextBlock Text="Items" />
                                                                             </StackPanel>
                                                                         </Expander.Header>
                                                                         <ItemsPresenter />
@@ -146,8 +143,8 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible"/>
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible" />
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible" />
                                             <DataGridTemplateColumn Header="Plan">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
@@ -156,13 +153,13 @@
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
                                             <DataGridTextColumn
-                                                Binding="{Binding Path=deviceName}" 
+                                                Binding="{Binding Path=deviceName}"
                                                 IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_Deivce}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Deivce}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -174,7 +171,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_Product}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Product}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -184,19 +181,18 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <ComboBox 
+                                                        <ComboBox
                                                             IsEnabled="{Binding ElementName=Shift1Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
                                                             ItemsSource="{Binding Path=listProductDetails}"
                                                             DisplayMemberPath="productDetailName"
                                                             SelectedValuePath="productDetailId"
-                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            >
+                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                         </ComboBox>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
@@ -207,19 +203,19 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn
-                                                Binding="{Binding Path=palletUse}" 
+                                                Binding="{Binding Path=palletUse}"
                                                 IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletUse}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletUse}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -229,7 +225,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_Delete}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Delete}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
@@ -246,17 +242,17 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
-                                <TabItem 
-                                    Name="Plan_Shift2" 
+                                <TabItem
+                                    Name="Plan_Shift2"
                                     Visibility="Hidden"
                                     Header="{DynamicResource PlanControl_Shift2_Label}">
                                     <DataGrid Name="Shift2Dgv"
                                               ItemsSource="{Binding GroupedDevices_S2}"
-                                              CanUserReorderColumns="False" 
+                                              CanUserReorderColumns="False"
                                               CanUserAddRows="False"
-                                              CanUserResizeColumns="True" 
+                                              CanUserResizeColumns="True"
                                               CanUserResizeRows="False"
-                                              CanUserDeleteRows="False" 
+                                              CanUserDeleteRows="False"
                                               CanUserSortColumns="False"
                                               AutoGenerateColumns="False"
                                               SelectionMode="Single"
@@ -269,7 +265,7 @@
                                                 <GroupStyle.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
-                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
+                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </GroupStyle.HeaderTemplate>
@@ -282,8 +278,8 @@
                                                                         <Expander.Header>
                                                                             <StackPanel Orientation="Horizontal">
                                                                                 <TextBlock Text="{Binding Path=Name}" />
-                                                                                <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
-                                                                                <TextBlock Text="Items"/>
+                                                                                <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0" />
+                                                                                <TextBlock Text="Items" />
                                                                             </StackPanel>
                                                                         </Expander.Header>
                                                                         <ItemsPresenter />
@@ -296,50 +292,49 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible"/>
-                                            <DataGridTextColumn 
-                                                Binding="{Binding Path=deviceName}" 
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible" />
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible" />
+                                            <DataGridTextColumn
+                                                Binding="{Binding Path=deviceName}"
                                                 IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_Deivce}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Deivce}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn
-                                                Binding="{Binding Path=productName}" 
+                                                Binding="{Binding Path=productName}"
                                                 IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_Product}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Product}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
                                             </DataGridTextColumn>
-                                            <DataGridTemplateColumn >
+                                            <DataGridTemplateColumn>
                                                 <DataGridTemplateColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <ComboBox 
+                                                        <ComboBox
                                                             IsEnabled="{Binding ElementName=Shift2Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
                                                             ItemsSource="{Binding Path=listProductDetails}"
                                                             DisplayMemberPath="productDetailName"
                                                             SelectedValuePath="productDetailId"
-                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            />
+                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -349,19 +344,19 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn
-                                                Binding="{Binding Path=palletUse}" 
+                                                Binding="{Binding Path=palletUse}"
                                                 IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletUse}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletUse}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -372,7 +367,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_Delete}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Delete}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
@@ -386,21 +381,20 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
-                                <TabItem 
-                                    Name="Plan_Shift3" 
+                                <TabItem
+                                    Name="Plan_Shift3"
                                     Visibility="Hidden"
-                                    Header="{DynamicResource PlanControl_Shift3_Label}" >
+                                    Header="{DynamicResource PlanControl_Shift3_Label}">
                                     <DataGrid Name="Shift3Dgv"
                                               ItemsSource="{Binding GroupedDevices_S3}"
-                                              CanUserReorderColumns="False" 
+                                              CanUserReorderColumns="False"
                                               CanUserAddRows="False"
-                                              CanUserResizeColumns="True" 
+                                              CanUserResizeColumns="True"
                                               CanUserResizeRows="False"
-                                              CanUserDeleteRows="False" 
+                                              CanUserDeleteRows="False"
                                               CanUserSortColumns="False"
                                               AutoGenerateColumns="False"
                                               SelectionMode="Single"
@@ -413,7 +407,7 @@
                                                 <GroupStyle.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
-                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3"/>
+                                                            <TextBlock Text="{Binding Path=Name}" FontWeight="Bold" Padding="3" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </GroupStyle.HeaderTemplate>
@@ -426,8 +420,8 @@
                                                                         <Expander.Header>
                                                                             <StackPanel Orientation="Horizontal">
                                                                                 <TextBlock Text="{Binding Path=Name}" />
-                                                                                <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0"/>
-                                                                                <TextBlock Text="Items"/>
+                                                                                <TextBlock Text="{Binding Path=ItemCount}" Margin="8,0,4,0" />
+                                                                                <TextBlock Text="Items" />
                                                                             </StackPanel>
                                                                         </Expander.Header>
                                                                         <ItemsPresenter />
@@ -440,28 +434,28 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible"/>
-                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible"/>
-                                            <DataGridTextColumn 
-                                                Binding="{Binding Path=deviceName}" 
+                                            <DataGridTextColumn Header="Id" Binding="{Binding Path=planId}" IsReadOnly="True" Visibility="Visible" />
+                                            <DataGridTextColumn Header="deviceId" Binding="{Binding Path=deviceId}" IsReadOnly="True" Visibility="Visible" />
+                                            <DataGridTextColumn
+                                                Binding="{Binding Path=deviceName}"
                                                 IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_Deivce}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Deivce}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn
-                                                Binding="{Binding Path=productName}" 
+                                                Binding="{Binding Path=productName}"
                                                 IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_Product}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Product}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -471,41 +465,40 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_ProductDetailName}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <ComboBox 
+                                                        <ComboBox
                                                             IsEnabled="{Binding ElementName=Shift3Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
                                                             ItemsSource="{Binding Path=listProductDetails}"
                                                             DisplayMemberPath="productDetailName"
                                                             SelectedValuePath="productDetailId"
-                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            />
+                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn 
+                                            <DataGridTextColumn
                                                 Binding="{Binding Path=palletAmount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletAmount}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
                                             </DataGridTextColumn>
                                             <DataGridTextColumn
-                                                Binding="{Binding Path=palletUse}" 
+                                                Binding="{Binding Path=palletUse}"
                                                 IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletUse}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_PalletUse}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTextColumn.HeaderTemplate>
@@ -516,7 +509,7 @@
                                                     <DataTemplate>
                                                         <StackPanel>
                                                             <TextBlock
-                                                                Text="{DynamicResource PlanControl_Shift_Column_Delete}"/>
+                                                                Text="{DynamicResource PlanControl_Shift_Column_Delete}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.HeaderTemplate>
@@ -530,49 +523,47 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
                             </TabControl>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
-                            <StackPanel Orientation="Horizontal" 
-                                        HorizontalAlignment="Right" 
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Margin="0 -40 0 0"
-                                        >
+                                        Margin="0 -40 0 0">
                                 <Label>Search</Label>
-                                <TextBox 
+                                <TextBox
                                     Name="tb_searchPlan"
                                     TextChanged="TextBox_TextChanged"
                                      Margin="5 0 5 0"
                                          Width="170">
                                 </TextBox>
-                                <Button Name="RefreshBtn" 
+                                <Button Name="RefreshBtn"
                                      Click="Btn_Refresh_Click"
                                      Margin="5 0 5 0"
                                      Width="20" Height="20">
-                                    <iconPacks:PackIconMaterial Kind="Refresh"/>
+                                    <iconPacks:PackIconMaterial Kind="Refresh" />
                                 </Button>
-                                <!--<Button Name="ClearBtn" 
+                                <!--<Button Name="ClearBtn"
                                      Foreground="Black"
                                      Margin="5,0,4,0"  Width="20" Height="20" Click="Btn_Clear_Click">
-                                     <Image Source="pack://siteoforigin:,,,/Resources/icon_clear.png"/>
+                                     <Image Source="pack://siteoforigin:,,,/Resources/icon_clear.png" />
                                      </Button>-->
                             </StackPanel>
                         </Grid>
                     </Grid>
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <!--<Button Name="Btn_CreatePlanPallet" 
-                                    Width="Auto" 
+                            <!--<Button Name="Btn_CreatePlanPallet"
+                                    Width="Auto"
                                     Height="25"
                                     Padding="5 0"
                                     Margin="10 0"
-                                    Content="Apply" 
-                                    Click="Btn_CreatePlanPallet_Click"/>-->
-                            <StackPanel 
+                                    Content="Apply"
+                                    Click="Btn_CreatePlanPallet_Click" />-->
+                            <StackPanel
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
                                 <Button
@@ -581,12 +572,11 @@
                                 Height="25"
                                 Padding="5 0"
                                 Margin="10 0"
-                                Content="{DynamicResource PlanControl_Import}" 
-                                Click="Btn_importPlan_Click"
-                                >
+                                Content="{DynamicResource PlanControl_Import}"
+                                Click="Btn_importPlan_Click">
                                 </Button>
                             </StackPanel>
-                            <!--<StackPanel 
+                            <!--<StackPanel
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
                                 <Button
@@ -595,25 +585,24 @@
                                 Height="25"
                                 Padding="5 0"
                                 Margin="10 0"
-                                Content="Test" 
-                                Click="Btn_Test_Click"
-                                >
+                                Content="Test"
+                                Click="Btn_Test_Click">
                                 </Button>
                             </StackPanel>-->
-                            <Button Name="Btn_Accept" 
-                                    Width="Auto" 
+                            <Button Name="Btn_Accept"
+                                    Width="Auto"
                                     Height="25"
                                     Padding="5 0"
-                                    Content="{DynamicResource PlanControl_Save}" 
+                                    Content="{DynamicResource PlanControl_Save}"
                                     Margin="10 0"
-                                    Click="Btn_Accept_Click"/>
-                            <Button Name="Btn_Cancel" 
-                                    Width="Auto" 
+                                    Click="Btn_Accept_Click" />
+                            <Button Name="Btn_Cancel"
+                                    Width="Auto"
                                     Height="25"
                                     Padding="5 0"
-                                    Content="{DynamicResource PlanControl_Exit}" 
-                                    Margin="10 0" 
-                                    Click="Btn_Cancel_Click"/>
+                                    Content="{DynamicResource PlanControl_Exit}"
+                                    Margin="10 0"
+                                    Click="Btn_Cancel_Click" />
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -642,10 +631,10 @@
                                 Width="200"
                                 Height="20">
                             </ProgressBar>
-                            <TextBlock 
+                            <TextBlock
                                 FontWeight="Bold"
-                                Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" 
-                                HorizontalAlignment="Center" 
+                                Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}"
+                                HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
                         </Grid>
                     </StatusBarItem>

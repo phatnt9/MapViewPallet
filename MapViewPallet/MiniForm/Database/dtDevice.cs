@@ -1,14 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MapViewPallet.MiniForm
 {
@@ -35,8 +32,6 @@ namespace MapViewPallet.MiniForm
         public string imageDeviceUrl { get => pImageDeviceUrl; set { pImageDeviceUrl = value; RaisePropertyChanged("imageDeviceUrl"); } }
         public string pathFile { get => pPathFile; set { pPathFile = value; RaisePropertyChanged("pathFile"); } }
         public string imageDeviceUrlOld { get => pImageDeviceUrlOld; set { pImageDeviceUrlOld = value; RaisePropertyChanged("imageDeviceUrlOld"); } }
-
-
 
         public dtDevice()
         {
@@ -99,7 +94,6 @@ namespace MapViewPallet.MiniForm
             }
             catch (Exception exc)
             {
-
             }
         }
 

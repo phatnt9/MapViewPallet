@@ -10,14 +10,12 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 {
     public class SimpleAuthor : NotifyUIBase
     {
-
         private int pUserAuthor;
         private string pUserAuthorName;
 
         public int userAuthor { get => pUserAuthor; set { pUserAuthor = value; RaisePropertyChanged("userAuthor"); } }
         public string userAuthorName { get => pUserAuthorName; set { pUserAuthorName = value; RaisePropertyChanged("userAuthorName"); } }
     }
-
 
     /// <summary>
     /// Interaction logic for AddUserForm.xaml
@@ -27,10 +25,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public bool flgEdit;
-        dtUser userEdit;
+        private dtUser userEdit;
 
-
-        UserManagement userManagement;
+        private UserManagement userManagement;
 
         public AddUserForm()
         {
@@ -57,7 +54,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -99,7 +98,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void AddUserForm_Loaded(object sender, RoutedEventArgs e)
@@ -129,7 +127,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void loadAuthor()
@@ -162,7 +159,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void loadDevice()
@@ -191,7 +187,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         public bool ContainDevice(dtDevice tempOpe, List<dtDevice> List)
@@ -270,8 +265,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 user.creUsrId = Global_Object.userLogin;
                 user.updUsrId = Global_Object.userLogin;
 
-
-
                 string jsonData = JsonConvert.SerializeObject(user);
                 string contentJson = Global_Object.RequestDataAPI(jsonData, "user/insertUpdateUserInfo", Global_Object.RequestMethod.POST);
                 dynamic response = JsonConvert.DeserializeObject(contentJson);
@@ -312,7 +305,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             }
         }
 
-
         private void CenterWindowOnScreen()
         {
             try
@@ -328,7 +320,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
     }
 }

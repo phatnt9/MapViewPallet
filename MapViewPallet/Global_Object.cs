@@ -1,5 +1,4 @@
-﻿using MapViewPallet.MiniForm.MicsWpfForm;
-using MapViewPallet.Shape;
+﻿using MapViewPallet.Shape;
 using System;
 using System.Data;
 using System.Data.OleDb;
@@ -12,7 +11,6 @@ using System.Windows.Forms;
 
 namespace MapViewPallet
 {
-
     public static class Global_Object
     {
         public enum RequestMethod
@@ -23,24 +21,24 @@ namespace MapViewPallet
         }
 
         public static readonly object syncLock = new object();
+
         //#######################################
         public static StationShape bufferToMove;
 
         //public static string url = @"http://"+ Properties.Settings.Default.serverIp + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
         //public static string url = @"http://"+ "192.168.1.32" + ":"+ Properties.Settings.Default.serverPort + @"/robot/rest/";
         public static string hostUrl = "localhost";
+
         public static string hostPort = "8081";
 
         public static int userLogin = -2;
         public static string userName = "";
         public static int userAuthor = -2;
 
-
         //public static double StaticPalletWidth = 13;
         //public static double StaticPalletHeight = 12;
         //public static double StaticPalletMargin = 0;
         //public static double StaticPalletPadding = 0;
-
 
         public static string messageDuplicated = "{0} is duplicated.";
         public static string messageSaveSucced = "Save operation succeeded.";
@@ -54,12 +52,9 @@ namespace MapViewPallet
         public static string messageValidateNumber = "{0} must be {1} than {2}.";
         public static string messageNoDataSave = "There is no updated data to save.";
 
-
         public static string messageTitileInformation = "Information";
         public static string messageTitileError = "Error";
         public static string messageTitileWarning = "Warning";
-
-
 
         //#######################################
         public static string RequestDataAPI(string jsonData, string apiUrl, RequestMethod method)
@@ -70,58 +65,57 @@ namespace MapViewPallet
                 switch (method)
                 {
                     case RequestMethod.GET:
+                    {
+                        HttpWebRequest request =
+                            (HttpWebRequest)WebRequest.Create(@"http://" +
+                            MapViewPallet.Properties.Settings.Default.serverIp + ":" +
+                            MapViewPallet.Properties.Settings.Default.serverPort +
+                            @"/robot/rest/" + apiUrl);
+                        request.Method = method.ToString();
+                        request.ContentType = @"application/json";
+                        HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                        using (Stream responseStream = response.GetResponseStream())
                         {
-                            HttpWebRequest request =
-                                (HttpWebRequest)WebRequest.Create(@"http://" +
-                                MapViewPallet.Properties.Settings.Default.serverIp + ":" +
-                                MapViewPallet.Properties.Settings.Default.serverPort +
-                                @"/robot/rest/" + apiUrl);
-                            request.Method = method.ToString();
-                            request.ContentType = @"application/json";
-                            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                            using (Stream responseStream = response.GetResponseStream())
-                            {
-                                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                                resultData = reader.ReadToEnd();
-                            }
-                            break;
+                            StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                            resultData = reader.ReadToEnd();
                         }
+                        break;
+                    }
                     case RequestMethod.POST:
-                        {
-                            goto default;
-                        }
+                    {
+                        goto default;
+                    }
                     case RequestMethod.DELETE:
-                        {
-                            goto default;
-                        }
+                    {
+                        goto default;
+                    }
                     default:
-                        {
-                            HttpWebRequest request =
-                                (HttpWebRequest)WebRequest.Create(@"http://" +
-                                MapViewPallet.Properties.Settings.Default.serverIp + ":" +
-                                MapViewPallet.Properties.Settings.Default.serverPort +
-                                @"/robot/rest/" + apiUrl);
-                            request.Method = method.ToString();
-                            request.ContentType = @"application/json";
+                    {
+                        HttpWebRequest request =
+                            (HttpWebRequest)WebRequest.Create(@"http://" +
+                            MapViewPallet.Properties.Settings.Default.serverIp + ":" +
+                            MapViewPallet.Properties.Settings.Default.serverPort +
+                            @"/robot/rest/" + apiUrl);
+                        request.Method = method.ToString();
+                        request.ContentType = @"application/json";
 
-                            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                            Byte[] byteArray = encoding.GetBytes(jsonData);
-                            request.ContentLength = byteArray.Length;
-                            using (Stream dataStream = request.GetRequestStream())
-                            {
-                                dataStream.Write(byteArray, 0, byteArray.Length);
-                                dataStream.Flush();
-                            }
-                            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                            using (Stream responseStream = response.GetResponseStream())
-                            {
-                                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                                resultData = reader.ReadToEnd();
-                            }
-                            break;
+                        System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                        Byte[] byteArray = encoding.GetBytes(jsonData);
+                        request.ContentLength = byteArray.Length;
+                        using (Stream dataStream = request.GetRequestStream())
+                        {
+                            dataStream.Write(byteArray, 0, byteArray.Length);
+                            dataStream.Flush();
                         }
+                        HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                        using (Stream responseStream = response.GetResponseStream())
+                        {
+                            StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                            resultData = reader.ReadToEnd();
+                        }
+                        break;
+                    }
                 }
-                
             }
             catch (Exception ex)
             {
@@ -129,9 +123,9 @@ namespace MapViewPallet
             return resultData;
         }
 
-
         //#######################################
         public static MusicPlayerOld musicPlayerOld = new MusicPlayerOld("ALARM.mp3");
+
         public static void PlayWarning(bool isLoop)
         {
             if (musicPlayerOld == null)
@@ -155,6 +149,7 @@ namespace MapViewPallet
                 }
             }
         }
+
         public static void StopWarning()
         {
             if (musicPlayerOld != null)
@@ -264,9 +259,8 @@ namespace MapViewPallet
             //=====================================================
         }
 
-
-        public static Point LaserOriginalCoor = new Point(648,378);
-        public static Point OriginPoint = new Point(0,0);
+        public static Point LaserOriginalCoor = new Point(648, 378);
+        public static Point OriginPoint = new Point(0, 0);
 
         public static Point CoorLaser(Point canvas)
         {
@@ -283,7 +277,6 @@ namespace MapViewPallet
             canvas.Y = (laser.Y / (resolution * Math.Cos(Math.PI))) + OriginPoint.Y;
             return canvas;
         }
-        
 
         public static DataTable LoadExcelFile()
         {
@@ -336,11 +329,15 @@ namespace MapViewPallet
             OleDbDataAdapter sda = new OleDbDataAdapter(oconn);
             sda.Fill(data);
             return data;
-        
         }
 
         public static double resolution = 0.1; // Square meters per pixel
-        public static string Foo<T>(T parameter) { return typeof(T).Name; }
+
+        public static string Foo<T>(T parameter)
+        {
+            return typeof(T).Name;
+        }
+
         public static double LengthBetweenPoints(Point pt1, Point pt2)
         {
             //Calculate the distance between the both points
@@ -358,6 +355,5 @@ namespace MapViewPallet
 
             return dblHypotenuseLength;
         }
-
     }
 }

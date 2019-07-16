@@ -2,13 +2,11 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Interop;
 
 namespace MapViewPallet.MiniForm
 {
@@ -160,9 +158,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
-
-
         }
     }
 }

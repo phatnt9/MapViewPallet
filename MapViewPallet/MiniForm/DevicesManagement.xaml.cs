@@ -30,8 +30,7 @@ namespace MapViewPallet.MiniForm
         private AddProductForm addProductForm;
         private AddProductDetailForm addProductDetailForm;
         public MainWindow mainWindow;
-        int loadTab = 0;
-
+        private int loadTab = 0;
 
         public DevicesManagement(MainWindow mainWindow, int loadtab, string cultureName = null)
         {
@@ -120,8 +119,6 @@ namespace MapViewPallet.MiniForm
             Dispatcher.BeginInvoke((Action)(() => DeviceManagementTabControl.SelectedIndex = x));
         }
 
-
-
         //********************************************************TAB 0******************************************************
 
         private void DevicesListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -159,7 +156,6 @@ namespace MapViewPallet.MiniForm
                 SaveData_tab1(true);
             }
             UpdateTab1(false);
-
         }
 
         private void Btn_Refresh_Device_Click(object sender, RoutedEventArgs e)
@@ -215,7 +211,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private dtDevice GetDataSave(bool uncheckAll = false)
@@ -241,7 +236,6 @@ namespace MapViewPallet.MiniForm
                     deviceProductTemp.productId = item.productId;
                     deviceProductTemp.checkStatus = uncheckAll ? false : item.checkStatus;
                     deviceProducts.Add(deviceProductTemp);
-
                 }
             }
             deviceData.deviceProducts = deviceProducts;
@@ -264,6 +258,7 @@ namespace MapViewPallet.MiniForm
             deviceData.deviceBuffers = deviceBuffers;
             return deviceData;
         }
+
         //********************************************************TAB 1******************************************************
 
         private void DevicesListDg2_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -367,7 +362,6 @@ namespace MapViewPallet.MiniForm
                         break;
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -447,7 +441,6 @@ namespace MapViewPallet.MiniForm
                         MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
                         )
                     {
-
                         List<dtDevice> listDelete = new List<dtDevice>();
                         dtDevice device = DevicesListDg2.SelectedItem as dtDevice;
                         listDelete.Add(device);
@@ -494,7 +487,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Btn_Save_Devices_Click(object sender, RoutedEventArgs e)
@@ -655,9 +647,15 @@ namespace MapViewPallet.MiniForm
                         }
                     }
                     if (deviceManagementModel.GroupedDevicePallets.IsEditingItem)
+                    {
                         deviceManagementModel.GroupedDevicePallets.CommitEdit();
+                    }
+
                     if (deviceManagementModel.GroupedDevicePallets.IsAddingNew)
+                    {
                         deviceManagementModel.GroupedDevicePallets.CommitNew();
+                    }
+
                     deviceManagementModel.GroupedDevicePallets.Refresh();
                 }
             }
@@ -803,7 +801,6 @@ namespace MapViewPallet.MiniForm
                     fileDialog.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
                     if (fileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-
                         (ProductsListDg.SelectedItem as dtProduct).pathFile = fileDialog.FileName;
                         (ProductsListDg.SelectedItem as dtProduct).imageProductUrl = Path.GetFileName(fileDialog.FileName);
                     }
@@ -1027,7 +1024,6 @@ namespace MapViewPallet.MiniForm
                 {
                     if (((dr.pathFile != null) ? dr.pathFile.ToString() : "").Trim() != "")
                     {
-
                         dtProduct product = new dtProduct();
                         product.productId = int.Parse(dr.productId.ToString());
                         product.productName = dr.productName.ToString().Trim();
@@ -1093,15 +1089,14 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
+
         //********************************************************TAB 3******************************************************
 
         private void BuffersListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             try
             {
-
                 if (BuffersListDg.SelectedItem != null)
                 {
                     dtBuffer temp = BuffersListDg.SelectedItem as dtBuffer;
@@ -1123,7 +1118,6 @@ namespace MapViewPallet.MiniForm
                 logFile.Error(ex.Message);
             }
         }
-
 
         private void BuffersListDg_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -1209,15 +1203,12 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
-
 
         private void DevicePalletsListDg_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             try
             {
-
                 if (DevicePalletsListDg.SelectedItem != null)
                 {
                     dtDevicePallet devicePallet = DevicePalletsListDg.SelectedItem as dtDevicePallet;
@@ -1264,8 +1255,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
-
         }
 
         private void AddBufferForm_Closed(object sender, EventArgs e)
@@ -1334,7 +1323,6 @@ namespace MapViewPallet.MiniForm
                                 String.Format(Global_Object.messageDeleteSucced),
                                 Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information
                                 );
-
                         }
                         else if (result == 2)
                         {
@@ -1355,7 +1343,6 @@ namespace MapViewPallet.MiniForm
                             return;
                         }
                     }
-
                 }
                 //mainWindow.canvasControlService.ReloadAllStation();
             }
@@ -1363,7 +1350,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void Btn_SetBufferData_Click(object sender, RoutedEventArgs e)
@@ -1441,7 +1427,6 @@ namespace MapViewPallet.MiniForm
             }
         }
 
-
         private void Btn_Save_Pallet_Click(object sender, RoutedEventArgs e)
         {
             if (!Global_Object.ServerAlive())
@@ -1513,6 +1498,7 @@ namespace MapViewPallet.MiniForm
         {
             UpdateTab4(false);
         }
+
         //****************************************************************************************
 
         public void UpdateTab1(bool isAddDevice)
@@ -1548,7 +1534,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         public void UpdateTab2(bool isAddDevice)
@@ -1583,7 +1568,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         public void UpdateTab3(bool isAddProduct)
@@ -1618,7 +1602,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         public void UpdateTab4(bool isAddBuffer)
@@ -1641,7 +1624,6 @@ namespace MapViewPallet.MiniForm
                         else
                         {
                             deviceManagementModel.ReloadListPallets((BuffersListDg.SelectedItem as dtBuffer).bufferId);
-
                         }
                     }
                     else
@@ -1654,7 +1636,6 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         //****************************************************************************************
@@ -1754,6 +1735,7 @@ namespace MapViewPallet.MiniForm
         {
             Close();
         }
+
         //*******************************************************************************************************************
 
         private static bool IsTextAllowed(string text)
@@ -1775,7 +1757,6 @@ namespace MapViewPallet.MiniForm
         {
             e.Handled = !IsTextAllowed(e.Text);
         }
-
 
         private void MaxBaytb_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
@@ -1845,7 +1826,6 @@ namespace MapViewPallet.MiniForm
                 var endBoundaryBytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" +
                                                                             boundary + "--");
 
-
                 string formdataTemplate = "\r\n--" + boundary +
                                             "\r\nContent-Disposition: form-data; name=\"{0}\";\r\n\r\n{1}";
 
@@ -1907,13 +1887,10 @@ namespace MapViewPallet.MiniForm
                 logFile.Error(ex.Message);
                 return -5;
             }
-
         }
 
         private void Btn_Save_Buffer_Click(object sender, RoutedEventArgs e)
         {
-
-
         }
 
         private void BufferReturnCbRow_Click(object sender, RoutedEventArgs e)
@@ -2055,7 +2032,6 @@ namespace MapViewPallet.MiniForm
                         devicePalletold.row = int.Parse(dr.row.ToString());
                         devicePalletold.bay = int.Parse(dr.bay.ToString());
 
-
                         dynamic palletDataOld = new JObject();
                         dynamic palletLineOld = new JObject();
                         dynamic palletPalletOld = new JObject();
@@ -2090,7 +2066,6 @@ namespace MapViewPallet.MiniForm
                         //",\"hasSubLine\":\"" + (palletHasSubLine.Text) +
                         //"\"}}";
 
-
                         devicePalletold.dataPallet = (dr.dataPallet != null) ? dr.dataPallet.ToString() : initiateDataPalletOld;
                         devicePalletold.creUsrId = Global_Object.userLogin;
                         devicePalletold.updUsrId = Global_Object.userLogin;
@@ -2099,7 +2074,6 @@ namespace MapViewPallet.MiniForm
                         {
                             devicePallets.Add(devicePalletold);
                         }
-
                     }
 
                     devicePallets.Add(devicePallet);
@@ -2149,9 +2123,7 @@ namespace MapViewPallet.MiniForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
-
 
         private void PalletLine_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {

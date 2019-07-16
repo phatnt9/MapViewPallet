@@ -96,7 +96,6 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
-
         </Grid>
         <Grid Grid.Row="2">
             <StackPanel
@@ -117,7 +116,6 @@
                             Padding="5,0"
                             Click="btn_save_Click"
                             Content="Save" />
-
                     </Grid>
                     <Grid Grid.Column="1">
                         <Button
@@ -131,7 +129,6 @@
                     </Grid>
                 </Grid>
             </StackPanel>
-
         </Grid>
     </Grid>
 </Window>

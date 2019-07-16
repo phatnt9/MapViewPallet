@@ -51,7 +51,6 @@
                             SelectionChanged="CmbAuthor_SelectionChanged">
 
                             <!--  SelectedValue="{Binding userAuthor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  -->
-
                         </ComboBox>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">

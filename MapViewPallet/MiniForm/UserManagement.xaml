@@ -6,9 +6,9 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
         mc:Ignorable="d"
-        Title="{DynamicResource UserManagement_Title}" 
-        Height="500" 
-        Width="600" 
+        Title="{DynamicResource UserManagement_Title}"
+        Height="500"
+        Width="600"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.RowDefinitions>
@@ -18,79 +18,79 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid Margin="0,5,0,5">
-                <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
+                <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png" />
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <GroupBox Header="{DynamicResource UserManagement_AccountList}" FontSize="20" FontWeight="DemiBold" >
+            <GroupBox Header="{DynamicResource UserManagement_AccountList}" FontSize="20" FontWeight="DemiBold">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition ></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" 
-                                        HorizontalAlignment="Right" 
+                        <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right"
                                         VerticalAlignment="Center">
 
                             <Button Name="btn_Refresh"
                                     Click="Btn_Refresh_Click"
                                     Margin="5 0 0 0"
                                                         Width="24" Height="24">
-                                <iconPacks:PackIconMaterial Kind="Refresh"/>
+                                <iconPacks:PackIconMaterial Kind="Refresh" />
                             </Button>
                             <Button Name="btn_Add"
                                     Click="Btn_Add_Click"
                                     Margin="5 0 0 0"
                                                         Width="24" Height="24">
-                                <iconPacks:PackIconMaterial Kind="Plus"/>
+                                <iconPacks:PackIconMaterial Kind="Plus" />
                             </Button>
                             <Button Name="btn_Edit"
                                     Click="Btn_Edit_Click"
                                     Margin="5 0 0 0"
                                                         Width="24" Height="24">
-                                <iconPacks:PackIconMaterial Kind="AccountEdit"/>
+                                <iconPacks:PackIconMaterial Kind="AccountEdit" />
                             </Button>
                             <Button Name="btn_Delete"
                                     Click="Btn_Delete_Click"
                                     Margin="5 0 0 0"
                                                         Width="24" Height="24">
-                                <iconPacks:PackIconMaterial Kind="Delete"/>
+                                <iconPacks:PackIconMaterial Kind="Delete" />
                             </Button>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <DataGrid Name="UsersListDg" 
+                        <DataGrid Name="UsersListDg"
                                       ItemsSource="{Binding GroupedUsers}"
-                                      CanUserReorderColumns="False" 
+                                      CanUserReorderColumns="False"
                                       CanUserAddRows="False"
                                       CanUserResizeRows="True"
-                                      CanUserDeleteRows="False" 
+                                      CanUserDeleteRows="False"
                                       AutoGenerateColumns="False"
                                   FontSize="12"
                                           FontWeight="Normal">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Width="Auto" 
+                                <DataGridTemplateColumn Width="Auto"
                                                         Visibility="Hidden"
                                                             Header="Id">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel>
-                                                <TextBlock HorizontalAlignment="Center" 
-                                                               Text="{Binding Path=userId}"/>
+                                                <TextBlock HorizontalAlignment="Center"
+                                                               Text="{Binding Path=userId}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn
-                                                        Width="Auto"  
+                                                        Width="Auto"
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=userName}">
                                     <DataGridTextColumn.HeaderTemplate>
                                         <DataTemplate>
                                             <StackPanel>
                                                 <TextBlock
-                                                               Text="{DynamicResource UserManagement_AccountList_Column_UserName}"/>
+                                                               Text="{DynamicResource UserManagement_AccountList_Column_UserName}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTextColumn.HeaderTemplate>
@@ -100,26 +100,25 @@
                     ItemsSource="{DynamicResource UserAuthorSource}"
                     SelectedValueBinding="{Binding userAuthor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     SelectedValuePath="Id"
-                    DisplayMemberPath="UserString"
-                    >
+                    DisplayMemberPath="UserString">
                                     <DataGridComboBoxColumn.HeaderTemplate>
                                         <DataTemplate>
                                             <StackPanel>
                                                 <TextBlock
-                                                               Text="{DynamicResource UserManagement_AccountList_Column_Author}"/>
+                                                               Text="{DynamicResource UserManagement_AccountList_Column_Author}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridComboBoxColumn.HeaderTemplate>
                                 </DataGridComboBoxColumn>
                                 <DataGridTextColumn
-                                                        Width="Auto"  
+                                                        Width="Auto"
                                                         IsReadOnly="True"
                                                         Binding="{Binding Path=deviceName}">
                                     <DataGridTextColumn.HeaderTemplate>
                                         <DataTemplate>
                                             <StackPanel>
                                                 <TextBlock
-                                                               Text="{DynamicResource UserManagement_AccountList_Column_Device}"/>
+                                                               Text="{DynamicResource UserManagement_AccountList_Column_Device}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTextColumn.HeaderTemplate>
@@ -131,7 +130,7 @@
             </GroupBox>
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel Width="Auto" 
+            <StackPanel Width="Auto"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 <Grid>
@@ -139,8 +138,8 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1">
-                        <Button Name="btn_exit" 
-                                Width="Auto" 
+                        <Button Name="btn_exit"
+                                Width="Auto"
                                     Height="25"
                                     Padding="5 0"
                                     Margin="10 0"
@@ -149,7 +148,6 @@
                     </Grid>
                 </Grid>
             </StackPanel>
-
         </Grid>
     </Grid>
 </Window>

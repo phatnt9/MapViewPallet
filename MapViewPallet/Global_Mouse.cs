@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MapViewPallet
 {
@@ -14,6 +10,7 @@ namespace MapViewPallet
             return shortTicks + "";
             //return Convert.ToBase64String(BitConverter.GetBytes(shortTicks)).Substring(0, 7);
         }
+
         public enum STATE_MOUSEDOWN
         {
             _NORMAL,
@@ -33,6 +30,7 @@ namespace MapViewPallet
             _HAND_DRAW_CURVEDOWN_FINISH,
             _HAND_DRAW_JOINPATHS_FINISH,
         }
+
         public enum STATE_MOUSEMOVE
         {
             _NORMAL,
@@ -44,8 +42,8 @@ namespace MapViewPallet
             _HAND_DRAW_STRAIGHT,
             _HAND_DRAW_CURVE,
             _HAND_DRAW_JOINPATHS,
-
         }
+
         public static STATE_MOUSEDOWN ctrl_MouseDown;
         public static STATE_MOUSEMOVE ctrl_MouseMove;
     }

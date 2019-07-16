@@ -4,7 +4,6 @@ namespace MapViewPallet.MiniForm
 {
     public class dtPlan : userModel
     {
-
         private int pPlanId;
         private int pTimeWorkId;
         private int pProductDetailId;
@@ -39,8 +38,5 @@ namespace MapViewPallet.MiniForm
         public string palletStatus { get => pPalletStatus; set => pPalletStatus = value; }
         public string imageDeviceUrl { get => pImageDeviceUrl; set => pImageDeviceUrl = value; }
         public string imageProductUrl { get => pImageProductUrl; set => pImageProductUrl = value; }
-
-
-
     }
 }

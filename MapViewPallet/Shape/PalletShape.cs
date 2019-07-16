@@ -23,11 +23,10 @@ namespace MapViewPallet.Shape
     {
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private double palletMargin = 0.1; //metters
+        private readonly double palletMargin = 0.1; //metters
 
         private dtPallet pPallet;
         public dtPallet pallet { get => pPallet; set => pPallet = value; }
-
 
         private dtBuffer pBuffer;
         public dtBuffer buffer { get => pBuffer; set => pBuffer = value; }
@@ -94,7 +93,6 @@ namespace MapViewPallet.Shape
             rectangle.Height = 2;
             rectangle.Fill = new SolidColorBrush(Colors.Red);
 
-
             StackPanel stackPanel = new StackPanel();
             stackPanel.Orientation = Orientation.Vertical;
             stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
@@ -103,7 +101,6 @@ namespace MapViewPallet.Shape
             stackPanel.Children.Add(lbPallet2);
 
             Child = stackPanel;
-
 
             ContextMenu = new ContextMenu();
 
@@ -127,12 +124,9 @@ namespace MapViewPallet.Shape
             returnPalletGate.Header = "Return Gate";
             returnPalletGate.Click += ReturnPalletGate_Click;
 
-
             MenuItem returnPallet401 = new MenuItem();
             returnPallet401.Header = "Return 401";
             returnPallet401.Click += ReturnPallet401_Click;
-
-
 
             ContextMenu.Items.Add(putPallet);
             ContextMenu.Items.Add(freePallet);
@@ -157,7 +151,6 @@ namespace MapViewPallet.Shape
             // Event handler
             //MouseDown += PalletMouseDown;
             //MouseRightButtonDown += PalletShape_MouseRightButtonDown;
-
         }
 
         public string RequestDataAPI(string jsonData, string apiUrl, RequestMethod method)
@@ -244,11 +237,11 @@ namespace MapViewPallet.Shape
                             postApiBody.palletAmount = 1;
 
                             jsonData = JsonConvert.SerializeObject(postApiBody);
-                            contentJson = RequestDataAPI(jsonData, "plan/createPlanPallet", RequestMethod.POST);
+                            //contentJson = RequestDataAPI(jsonData, "plan/createPlanPallet", RequestMethod.POST);
 
-                            response = JsonConvert.DeserializeObject(contentJson);
+                            //response = JsonConvert.DeserializeObject(contentJson);
                             //List<dtBuffer> listBuffer = response.ToObject<List<dtBuffer>>();
-                            if (response == 1)
+                            if (1 == 1)
                             {
                                 if ((deviceIdToReturn > 0) && (bufferIdToReturn == 0))
                                 {
@@ -268,19 +261,21 @@ namespace MapViewPallet.Shape
                                     postApiBody2.productDetailId = pallet.productDetailId;
                                     postApiBody2.productDetailName = pallet.productDetailName;
                                     postApiBody2.productId = pallet.productId;
-                                    //postApiBody2.planId = pallet.planId;
+                                    postApiBody2.planId = pallet.planId;
+                                    postApiBody2.activeDate = pallet.activeDate;
+                                    postApiBody2.palletId = pallet.palletId;
                                     postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
                                     string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
                                     Console.WriteLine("Data request Return: " + jsonData2);
                                     BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
                                     bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
 
-                                    string preStatus = pallet.palletStatus;
-                                    pallet.palletStatus = "H";
-                                    string jsonDataPallet = JsonConvert.SerializeObject(pallet);
-                                    pallet.palletStatus = preStatus;
+                                    //string preStatus = pallet.palletStatus;
+                                    //pallet.palletStatus = "H";
+                                    //string jsonDataPallet = JsonConvert.SerializeObject(pallet);
+                                    //pallet.palletStatus = preStatus;
 
-                                    RequestDataAPI(jsonDataPallet, "pallet/updatePalletStatus", RequestMethod.POST);
+                                    //RequestDataAPI(jsonDataPallet, "pallet/updatePalletStatus", RequestMethod.POST);
                                 }
                             }
                         }
@@ -340,11 +335,11 @@ namespace MapViewPallet.Shape
                         postApiBody.palletAmount = 1;
 
                         jsonData = JsonConvert.SerializeObject(postApiBody);
-                        contentJson = RequestDataAPI(jsonData, "plan/createPlanPallet", RequestMethod.POST);
+                        //contentJson = RequestDataAPI(jsonData, "plan/createPlanPallet", RequestMethod.POST);
 
-                        response = JsonConvert.DeserializeObject(contentJson);
+                        //response = JsonConvert.DeserializeObject(contentJson);
                         //List<dtBuffer> listBuffer = response.ToObject<List<dtBuffer>>();
-                        if (response == 1)
+                        if (1 == 1)
                         {
                             if ((deviceIdToReturn > 0) && (bufferIdToReturn == 0))
                             {
@@ -364,19 +359,20 @@ namespace MapViewPallet.Shape
                                 postApiBody2.productDetailId = pallet.productDetailId;
                                 postApiBody2.productDetailName = pallet.productDetailName;
                                 postApiBody2.productId = pallet.productId;
-                                //postApiBody2.planId = pallet.planId;
+                                postApiBody2.planId = pallet.planId;
+                                postApiBody2.activeDate = pallet.activeDate;
+                                postApiBody2.palletId = pallet.palletId;
                                 postApiBody2.typeReq = (int)ReturnType.ReturnArea401;
                                 string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
                                 Console.WriteLine("Data request Return: " + jsonData2);
                                 BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
                                 bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
 
-                                string preStatus = pallet.palletStatus;
-                                pallet.palletStatus = "H";
-                                string jsonDataPallet = JsonConvert.SerializeObject(pallet);
-                                pallet.palletStatus = preStatus;
-
-                                RequestDataAPI(jsonDataPallet, "pallet/updatePalletStatus", RequestMethod.POST);
+                                //string preStatus = pallet.palletStatus;
+                                //pallet.palletStatus = "H";
+                                //string jsonDataPallet = JsonConvert.SerializeObject(pallet);
+                                //pallet.palletStatus = preStatus;
+                                //RequestDataAPI(jsonDataPallet, "pallet/updatePalletStatus", RequestMethod.POST);
                             }
                         }
                     }
@@ -434,10 +430,8 @@ namespace MapViewPallet.Shape
                     int deviceIdToReturn = 0;
                     int bufferIdToReturn = 0;
 
-
                     List<dtPallet> palletsList = new List<dtPallet>();
                     palletsList = GetAllPallets(pallet.bufferId);
-
 
                     //Check if pallet is return able an then return it
                     if (CanPalletReturn(palletsList))
@@ -458,37 +452,19 @@ namespace MapViewPallet.Shape
                         postApiBody2.productDetailId = pallet.productDetailId;
                         postApiBody2.productDetailName = pallet.productDetailName;
                         postApiBody2.productId = pallet.productId;
-                        //postApiBody2.planId = pallet.planId;
+                        postApiBody2.planId = pallet.planId;
+                        postApiBody2.activeDate = pallet.activeDate;
+                        postApiBody2.palletId = pallet.palletId;
                         postApiBody2.typeReq = (int)ReturnType.ReturnAreaGate;
                         string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
                         BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
                         bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
 
-                        string preStatus = pallet.palletStatus;
-                        pallet.palletStatus = "H";
-                        string jsonDataPallet = JsonConvert.SerializeObject(pallet);
-                        pallet.palletStatus = preStatus;
-
-                        HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
-                        request2.Method = "POST";
-                        request2.ContentType = "application/json";
-
-                        System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
-                        Byte[] byteArray2 = encoding2.GetBytes(jsonDataPallet);
-                        request2.ContentLength = byteArray2.Length;
-                        using (Stream dataStream = request2.GetRequestStream())
-                        {
-                            dataStream.Write(byteArray2, 0, byteArray2.Length);
-                            dataStream.Flush();
-                        }
-
-                        HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse;
-                        using (Stream responseStream = response2.GetResponseStream())
-                        {
-                            StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                            int result = 0;
-                            int.TryParse(reader.ReadToEnd(), out result);
-                        }
+                        //string preStatus = pallet.palletStatus;
+                        //pallet.palletStatus = "H";
+                        //string jsonDataPallet = JsonConvert.SerializeObject(pallet);
+                        //pallet.palletStatus = preStatus;
+                        //RequestDataAPI(jsonDataPallet, "pallet/updatePalletStatus", RequestMethod.POST);
                     }
                 }
             }
@@ -568,7 +544,7 @@ namespace MapViewPallet.Shape
             bool sendToReturn = true;
             if ((buffer.bufferReturn == false) &&
                 (pallet.palletStatus == "W") &&
-                (buffer.bufferName.Contains(filter1) || (buffer.bufferName.Contains(filter2))))
+                (buffer.bufferName.Contains(filter1) || (buffer.bufferName.Contains(filter2)) || (buffer.bufferName.Contains("RETURN"))))
             {
                 //Any pallet before needed send pallet need to be "Free"
                 foreach (dtPallet palletItem in palletsList)
@@ -635,7 +611,6 @@ namespace MapViewPallet.Shape
                 {
                 }
             }
-
         }
 
         private void LockPallet(object sender, RoutedEventArgs e)
@@ -668,7 +643,6 @@ namespace MapViewPallet.Shape
                 {
                 }
             }
-
         }
 
         private void PutPallet(object sender, RoutedEventArgs e)
@@ -701,7 +675,6 @@ namespace MapViewPallet.Shape
                 {
                 }
             }
-
         }
 
         private void PalletShape_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -723,7 +696,6 @@ namespace MapViewPallet.Shape
                     Dispatcher.BeginInvoke(
                    new ThreadStart(() =>
                    {
-
                        switch (pPallet.palletStatus)
                        {
                            case "F":
@@ -740,7 +712,6 @@ namespace MapViewPallet.Shape
                                        {
                                            lbPallet2.Text = "";
                                        }
-
                                    }
                                }
                                if (replaceStatus)
@@ -764,7 +735,6 @@ namespace MapViewPallet.Shape
                                        {
                                            lbPallet2.Text = "";
                                        }
-
                                    }
                                }
                                if (replaceStatus)
@@ -787,7 +757,6 @@ namespace MapViewPallet.Shape
                                        {
                                            lbPallet2.Text = "";
                                        }
-
                                    }
                                }
                                if (replaceStatus)
@@ -810,7 +779,6 @@ namespace MapViewPallet.Shape
                                        {
                                            lbPallet2.Text = "";
                                        }
-
                                    }
                                }
                                if (replaceStatus)
@@ -833,7 +801,6 @@ namespace MapViewPallet.Shape
                                        {
                                            lbPallet2.Text = "";
                                        }
-
                                    }
                                }
                                if (replaceStatus)
@@ -856,7 +823,6 @@ namespace MapViewPallet.Shape
                                        {
                                            lbPallet2.Text = "";
                                        }
-
                                    }
                                }
                                if (replaceStatus)
@@ -879,7 +845,6 @@ namespace MapViewPallet.Shape
                                        {
                                            lbPallet2.Text = "";
                                        }
-
                                    }
                                }
                                if (replaceStatus)
@@ -888,7 +853,6 @@ namespace MapViewPallet.Shape
                                }
                                break;
                            }
-
                        }
                    }));
                 }
@@ -917,7 +881,6 @@ namespace MapViewPallet.Shape
                 " \n End: " +
                 " \n Rotate: ";
         }
-
 
         //List<dtPallet> palletsList = new List<dtPallet>();
         //palletsList = GetAllPallets(pallet.bufferId);

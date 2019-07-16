@@ -11,11 +11,11 @@ namespace DTO
         private string status;
         private DateTime dptUpd;
 
-        public string RobotNameID { get { return robotNameID; } set { robotNameID = value; } }
-        public string ProcessContent { get { return processContent; } set { processContent = value; } }
-        public string RobotAgentContent { get { return robotAgentContent; } set { robotAgentContent = value; } }
-        public DateTime DateTime { get { return dateTime; } set { dateTime = value; } }
-        public string Status { get { return status; } set { status = value; } }
-        public DateTime DptUpd { get { return dptUpd; } set { dptUpd = value; } }
+        public string RobotNameID { get => robotNameID; set => robotNameID = value; }
+        public string ProcessContent { get => processContent; set => processContent = value; }
+        public string RobotAgentContent { get => robotAgentContent; set => robotAgentContent = value; }
+        public DateTime DateTime { get => dateTime; set => dateTime = value; }
+        public string Status { get => status; set => status = value; }
+        public DateTime DptUpd { get => dptUpd; set => dptUpd = value; }
     }
 }

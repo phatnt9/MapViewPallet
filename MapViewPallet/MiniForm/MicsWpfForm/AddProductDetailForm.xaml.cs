@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
@@ -22,9 +19,10 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public class AddProductDetailModel : NotifyUIBase
         {
             private string pProductDetailNameDuplicate = "Ready";
+
             public string productDetailNameDuplicate
             {
-                get { return pProductDetailNameDuplicate; }
+                get => pProductDetailNameDuplicate;
                 set
                 {
                     if (pProductDetailNameDuplicate != value)
@@ -36,7 +34,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             }
         }
 
-        DevicesManagement devicesManagement;
+        private DevicesManagement devicesManagement;
 
         public AddProductDetailModel addProductDetailModel;
 
@@ -58,7 +56,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -110,14 +110,14 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     switch (result)
                     {
                         case "-1":
-                            {
-                                addProductDetailModel.productDetailNameDuplicate = "Mã sản phẩm đã tồn tại!";
-                                break;
-                            }
+                        {
+                            addProductDetailModel.productDetailNameDuplicate = "Mã sản phẩm đã tồn tại!";
+                            break;
+                        }
                         default:
-                            {
-                                break;
-                            }
+                        {
+                            break;
+                        }
                     }
                 }
                 devicesManagement.UpdateTab3(false);
@@ -127,7 +127,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void ProductDetailNametb_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)

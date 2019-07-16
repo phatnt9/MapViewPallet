@@ -2,15 +2,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace MapViewPallet.Shape
 {
     public class StraightShape : CanvasPath
     {
+        private LineSegment lineSegment;
 
-
-        LineSegment lineSegment;
         public StraightShape(Canvas canvas, Point Start, Point End) : base(canvas, Start, End)
         {
             lineSegment = new LineSegment();
@@ -28,7 +26,7 @@ namespace MapViewPallet.Shape
             props._end.Y = (Height / 2);
             Draw();
         }
-        
+
         public override void Draw()
         {
             Width = Global_Object.LengthBetweenPoints(props._oriMousePos, props._desMousePos);
@@ -50,7 +48,7 @@ namespace MapViewPallet.Shape
             props._arrow.Points = props.arrowPoints;
             //Position the Path
             lineSegment.Point = props._end;
-            if(props.pathSegments.Count>0)
+            if (props.pathSegments.Count > 0)
             {
                 props.pathSegments[0] = lineSegment;
             }
@@ -64,20 +62,20 @@ namespace MapViewPallet.Shape
             double angle = (Math.Atan2(props.yDiff, props.xDiff) * 180.0 / Math.PI);
             props.rotate = angle;
             props.myRotateTransform.Angle = props.rotate;
-            props.myTranslate = new TranslateTransform(props._oriMousePos.X, props._oriMousePos.Y - (Height/2));
+            props.myTranslate = new TranslateTransform(props._oriMousePos.X, props._oriMousePos.Y - (Height / 2));
             props.myTransformGroup.Children[1] = props.myTranslate;
             // SPECIAL POINTS
-            props.cornerPoints[0] = CoorPointAtBorder(new Point((0),(Height/2)));          //mid-left
-            props.cornerPoints[1] = CoorPointAtBorder(new Point((0),(0)));                 //top-left
-            props.cornerPoints[2] = CoorPointAtBorder(new Point((Width/2),(0)));           //top-mid
-            props.cornerPoints[3] = CoorPointAtBorder(new Point((Width),(0)));             //top-right
-            props.cornerPoints[4] = CoorPointAtBorder(new Point((Width),(Height/2)));      //mid-right
-            props.cornerPoints[5] = CoorPointAtBorder(new Point((Width),(Height)));        //bot-right
-            props.cornerPoints[6] = CoorPointAtBorder(new Point((Width/2),(Height)));      //bot-mid
-            props.cornerPoints[7] = CoorPointAtBorder(new Point((0),(Height)));            //bot-left
+            props.cornerPoints[0] = CoorPointAtBorder(new Point((0), (Height / 2)));          //mid-left
+            props.cornerPoints[1] = CoorPointAtBorder(new Point((0), (0)));                 //top-left
+            props.cornerPoints[2] = CoorPointAtBorder(new Point((Width / 2), (0)));           //top-mid
+            props.cornerPoints[3] = CoorPointAtBorder(new Point((Width), (0)));             //top-right
+            props.cornerPoints[4] = CoorPointAtBorder(new Point((Width), (Height / 2)));      //mid-right
+            props.cornerPoints[5] = CoorPointAtBorder(new Point((Width), (Height)));        //bot-right
+            props.cornerPoints[6] = CoorPointAtBorder(new Point((Width / 2), (Height)));      //bot-mid
+            props.cornerPoints[7] = CoorPointAtBorder(new Point((0), (Height)));            //bot-left
         }
 
-        public Point CoorPointAtBorder (Point pointOnBorder)
+        public Point CoorPointAtBorder(Point pointOnBorder)
         {
             double xDiff = (pointOnBorder.X) - (props._start.X);
             double yDiff = (pointOnBorder.Y) - (props._start.Y);
@@ -88,8 +86,5 @@ namespace MapViewPallet.Shape
             double y1 = props._oriMousePos.Y + ((L * Math.Sin(rad1 + rad2)));
             return new Point(x1, y1);
         }
-        
-        
-
     }
 }

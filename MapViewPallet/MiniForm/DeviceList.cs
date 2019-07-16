@@ -1,17 +1,14 @@
 ﻿using Newtonsoft.Json;
-using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace MapViewPallet.MiniForm
 {
@@ -19,7 +16,7 @@ namespace MapViewPallet.MiniForm
     {
         public List<dtDevice> listDevices;
         public BackgroundWorker workerLoadDevice;
-        PlanControl planControl;
+        private PlanControl planControl;
 
         public DeviceList()
         {
@@ -43,7 +40,6 @@ namespace MapViewPallet.MiniForm
                 workerLoadDevice.RunWorkerCompleted += WorkerLoadDevice_RunWorkerCompleted;
                 workerLoadDevice.RunWorkerAsync();
 
-                
                 return true;
             }
             catch (Exception exc)
@@ -104,7 +100,7 @@ namespace MapViewPallet.MiniForm
                 string result = reader.ReadToEnd();
 
                 DataTable devices = JsonConvert.DeserializeObject<DataTable>(result);
-                for (int i=0;i< devices.Rows.Count;i++)
+                for (int i = 0; i < devices.Rows.Count; i++)
                 {
                     dtDevice tempDevice = new dtDevice
                     {
@@ -139,7 +135,7 @@ namespace MapViewPallet.MiniForm
             listDevices.Add(checkDevice);
             return true;
         }
-        
+
         public int GetProductIdByDeviceProductId(int deviceProductId)
         {
             foreach (dtDevice device in listDevices)

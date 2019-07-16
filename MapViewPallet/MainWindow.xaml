@@ -33,8 +33,8 @@
                 <StackPanel VerticalAlignment="Center">
                     <DockPanel>
                         <Menu DockPanel.Dock="Top">
-                            <!--<MenuItem Header="_Bản đồ" >
-                                 <MenuItem Header="_Tải lại" Click="btn_LoadAll_Click"/>
+                            <!--<MenuItem Header="_Bản đồ">
+                                 <MenuItem Header="_Tải lại" Click="btn_LoadAll_Click" />
                                  </MenuItem>-->
                             <MenuItem Height="25" Header="_Management">
                                 <MenuItem
@@ -74,7 +74,6 @@
                                         <iconPacks:Material Kind="Information" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-
                             </MenuItem>
                             <MenuItem Height="25" Header="Account">
                                 <MenuItem Click="btn_ChangePassword_Click" Header="Change Password">
@@ -105,11 +104,9 @@
                                     IsCheckable="True"
                                     Tag="vi-VN" />
                             </MenuItem>
-
                         </Menu>
                     </DockPanel>
                 </StackPanel>
-
             </Grid>
             <Grid
                 Grid.Row="0"
@@ -142,7 +139,7 @@
                                         ToolTip="{DynamicResource MainWindow_Toolbar_MapReCenter}"
                                         Click="Btn_MapReCenter_Click">
                                     <iconPacks:PackIconMaterial
-                                        Kind="SetCenter"/>
+                                        Kind="SetCenter" />
                                 </Button>-->
                                 <Separator />
                                 <Button
@@ -226,7 +223,7 @@
                                     IsEnabled="False"
                                     Click="PlayMusic_Click">
                                     <iconPacks:PackIconMaterial
-                                        Kind="Music"/>
+                                        Kind="Music" />
                                 </Button>
                                 <Button
                                     Name="StopMusic"
@@ -234,14 +231,12 @@
                                     Margin="5 0"
                                     Click="StopMusic_Click">
                                     <iconPacks:PackIconMaterial
-                                        Kind="MusicOff"/>
+                                        Kind="MusicOff" />
                                 </Button>-->
                             </ToolBar>
                         </ToolBarTray>
                     </StackPanel>
-
                 </Grid>
-
             </Grid>
         </Grid>
         <Grid
@@ -336,7 +331,6 @@
                                          Kind="EmoticonHappy" />
                                          </ToggleButtonAssist.OnContent>
                                          </ToggleButton>-->
-
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Row="1">
@@ -348,7 +342,7 @@
                                      Minimum="1"
                                      Maximum="9"
                                      Height="Auto"
-                                     Value="{Binding Path=zoomScale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>-->
+                                     Value="{Binding Path=zoomScale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />-->
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
@@ -386,13 +380,13 @@
                                      <DataGrid Name="StationsDataGrid"
                                      ItemsSource="{Binding Stations_DGV}"
                                      AlternatingRowBackground="Gainsboro"
-                                     AlternationCount="2"/>
+                                     AlternationCount="2" />
                                      </TabItem>-->
                                 <!--<TabItem Header="Đơn Hàng">
-                                     <DataGrid Name="OrdersDataGrid"/>
+                                     <DataGrid Name="OrdersDataGrid" />
                                      </TabItem>
-                                     <TabItem Header="Tác Vụ" >
-                                     <DataGrid Name="TasksDataGrid"/>
+                                     <TabItem Header="Tác Vụ">
+                                     <DataGrid Name="TasksDataGrid" />
                                      </TabItem>-->
                                 <TabItem Header="LogConsole">
                                     <RichTextBox Name="ConsoleDataGrid" />
@@ -407,17 +401,16 @@
                                 <!--<Button Name="ClearButton" HorizontalAlignment="Left" Width="55" Height="18"
                                      Content="Xóa" FontSize="10" Background="OrangeRed"
                                      VerticalContentAlignment = "Top" Foreground="White"
-                                     Margin="0,1,0,0" Click="clearLog_Clicked"/>-->
+                                     Margin="0,1,0,0" Click="clearLog_Clicked" />-->
                                 <!--<CheckBox Name="CheckScroll" Margin="7,0,0,0" HorizontalAlignment="Left"
                                      VerticalAlignment="Center" Content="Cuộn"
-                                     Checked="autoScrollLog_Checked"/>-->
+                                     Checked="autoScrollLog_Checked" />-->
                             </StackPanel>
                         </Grid>
                     </Grid>
                     <!--<GridSplitter Background="#B9B9B9" Grid.Row="0"
                          Height="3" HorizontalAlignment="Stretch"
-                         VerticalAlignment="Bottom"/>-->
-
+                         VerticalAlignment="Bottom" />-->
                 </Grid>
             </Border>
         </Grid>
@@ -425,11 +418,11 @@
             <!--<StatusBar Background="#1987c2">
                  <StatusBarItem>
                  <TextBlock Name="lblCursorPosition" Text=""
-                 Foreground="White"/>
+                 Foreground="White" />
                  </StatusBarItem>
                  </StatusBar>-->
             <!--<Border BorderThickness="0,0,0,0" BorderBrush="#B9B9B9" Margin="0">
-                 <StatusBar Name="sbar" >
+                 <StatusBar Name="sbar">
                  <StatusBarItem Background="#1987c2">
                  <TextBlock Name="ProgramStatus" Foreground="White" FontSize="10">Ready</TextBlock>
                  </StatusBarItem>

@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
@@ -14,13 +12,11 @@ namespace MapViewPallet.MiniForm
 {
     public class UserModel : NotifyUIBase
     {
-
-        UserManagement userManagement;
+        private UserManagement userManagement;
 
         public ListCollectionView GroupedUsers { get; private set; }
 
         public List<dtUser> usersList;
-
 
         public UserModel(UserManagement userManagement)
         {
@@ -34,7 +30,6 @@ namespace MapViewPallet.MiniForm
             cc.Add(new SimpleUser { UserString = "Worker", Id = 3 });
             cc.Add(new SimpleUser { UserString = "Forklift", Id = 4 });
             Application.Current.Resources["UserAuthorSource"] = cc;
-
         }
 
         public void ReloadListUsers()
@@ -92,12 +87,17 @@ namespace MapViewPallet.MiniForm
                             usersList.Add(user);
                         }
                     }
-
                 }
                 if (GroupedUsers.IsEditingItem)
+                {
                     GroupedUsers.CommitEdit();
+                }
+
                 if (GroupedUsers.IsAddingNew)
+                {
                     GroupedUsers.CommitNew();
+                }
+
                 GroupedUsers.Refresh();
                 if (userManagement.UsersListDg.HasItems)
                 {
@@ -109,7 +109,6 @@ namespace MapViewPallet.MiniForm
                 Console.WriteLine(exc.Message);
             }
         }
-
 
         public bool ContainUser(dtUser tempOpe, List<dtUser> List)
         {
@@ -129,7 +128,5 @@ namespace MapViewPallet.MiniForm
             }
             return false;
         }
-
-
     }
 }

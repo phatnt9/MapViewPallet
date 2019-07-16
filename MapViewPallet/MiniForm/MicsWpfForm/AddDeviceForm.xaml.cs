@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net;
@@ -21,8 +20,10 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public class AddDeviceModel : NotifyUIBase
         {
             private string pDeviceNameDuplicate = "Ready";
-            public string deviceNameDuplicate {
-                get { return pDeviceNameDuplicate; }
+
+            public string deviceNameDuplicate
+            {
+                get => pDeviceNameDuplicate;
                 set
                 {
                     if (pDeviceNameDuplicate != value)
@@ -34,7 +35,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             }
         }
 
-        DevicesManagement devicesManagement;
+        private DevicesManagement devicesManagement;
 
         public AddDeviceModel addDeviceModel;
 
@@ -56,7 +57,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -130,7 +133,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 logFile.Error(ex.Message);
             }
-
         }
 
         private void DeviceNametb_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -142,4 +144,3 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         }
     }
 }
-

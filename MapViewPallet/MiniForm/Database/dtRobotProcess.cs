@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MapViewPallet.MiniForm
 {
@@ -45,10 +41,8 @@ namespace MapViewPallet.MiniForm
         public int timeWorkId { get => _timeWorkId; set => _timeWorkId = value; }
         public string activeDate { get => _activeDate; set => _activeDate = value; }
 
-
         private List<dtOperationType> pListOperationTypes;
         public List<dtOperationType> listOperationTypes { get => pListOperationTypes; set { pListOperationTypes = value; RaisePropertyChanged("listOperationTypes"); } }
-
 
         public dtRobotProcess()
         {

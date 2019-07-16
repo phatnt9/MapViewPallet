@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MapViewPallet.MiniForm
 {
     public class Plan : dtPlan
     {
-
         private List<dtProductDetail> pListProductDetails;
         public List<dtProductDetail> listProductDetails { get => pListProductDetails; set { pListProductDetails = value; RaisePropertyChanged("listProductDetails"); } }
 
@@ -28,7 +22,7 @@ namespace MapViewPallet.MiniForm
 
             planId = (int)jsonPlan.planId;
             deviceProductId = (int)jsonPlan.deviceProductId;
-                            timeWorkId = (int)jsonPlan.timeWorkId;
+            timeWorkId = (int)jsonPlan.timeWorkId;
             productDetailId = (int)jsonPlan.productDetailId;
 
             palletAmount = (int)jsonPlan.palletAmount;
@@ -48,8 +42,7 @@ namespace MapViewPallet.MiniForm
                 productDetailId = (int)jsonPlan.productDetailId,
                 productDetailName = (string)jsonPlan.productDetailName,
                 productId = (int)jsonPlan.productId
-        });
+            });
         }
-
     }
 }
