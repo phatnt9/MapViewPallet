@@ -88,6 +88,8 @@ namespace MapViewPallet.MiniForm
                     palletD_Out.Text = (palletData.pallet.dir_out != null) ? ((palletData.pallet.dir_out).ToString()) : "0";
                     palletL_Ord.Text = (palletData.pallet.line_ord != null) ? ((palletData.pallet.line_ord).ToString()) : "0";
                     palletHasSubLine.Text = (palletData.pallet.hasSubLine != null) ? ((palletData.pallet.hasSubLine).ToString()) : "no";
+                    palletX.Focus();
+                    palletX.SelectAll();
                 }
             }
             catch (Exception ex)
@@ -268,6 +270,7 @@ namespace MapViewPallet.MiniForm
                 palletPallet.line_ord = int.Parse((palletL_Ord.Text != "") ? palletL_Ord.Text : "0");
                 palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
 
+                palletData.bayId = int.Parse((palletBayId.Text != "") ? palletBayId.Text : "0"); ;
                 palletData.line = palletLine;
                 palletData.pallet = palletPallet;
 

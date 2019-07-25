@@ -346,30 +346,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Pallet2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet5.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet0.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PalletError.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PalletEmpty.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\mapbackground.png" />
   </ItemGroup>
   <ItemGroup>
@@ -382,46 +358,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Picture1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_straightpath_off.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_joinpath_off.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_joinpath_on.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_straightpath_on.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="bin\Debug\Resources\phat_mapShrink.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\Resources\phat_mapExtend.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_mapShrink.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_mapExtend.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_joinpath.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_straightpath.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-line-24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\line.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\pallet.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Map.jpg" />
@@ -430,70 +370,16 @@
     <None Include="bin\Debug\Resources\Map\Map.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Robotpixel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Robot2.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="bin\Debug\Resources\Robotnew.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bobo.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="bin\Debug\Resources\ssss.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Yellow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Green.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Top.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Unknow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Normal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Error.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Warning.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Group.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\unilever_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\seldat_logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\add_item.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\refresh_item.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\remove_item.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icon_refresh.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icon_clear.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icon_add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icon_edit.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mainIcon.jpg" />
@@ -515,12 +401,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\MAPMAIN.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\MAPMAIN.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MAPMAIN2.jpg" />

@@ -409,5 +409,10 @@ namespace MapViewPallet.MiniForm
             view.Filter = (o => (o as Plan).productDetailName.Contains((sender as System.Windows.Controls.TextBox).Text));
             //view.Filter = PlansFilter;
         }
+
+        private void Label_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            cbShowManualPlan.IsChecked = !cbShowManualPlan.IsChecked;
+        }
     }
 }

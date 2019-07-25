@@ -1,16 +1,15 @@
-﻿<Window
-    x:Class="MapViewPallet.MiniForm.DevicesManagement"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:local="clr-namespace:MapViewPallet.MiniForm"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="{DynamicResource DevicesManagement_Title}"
-    Width="800"
-    Height="600"
-    WindowStartupLocation="CenterOwner"
-    mc:Ignorable="d">
+﻿<Window x:Class="MapViewPallet.MiniForm.DevicesManagement"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:MapViewPallet.MiniForm"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="{DynamicResource DevicesManagement_Title}"
+        Width="800"
+        Height="600"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d">
     <Window.Resources />
     <Grid>
         <Grid.RowDefinitions>
@@ -44,43 +43,38 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <StackPanel
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                Orientation="Horizontal">
-                                                <Button
-                                                    Name="btn_Refresh_Device"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Click="Btn_Refresh_Device_Click">
+                                            <StackPanel HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
+                                                <Button Name="btn_Refresh_Device"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Click="Btn_Refresh_Device_Click">
                                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <DataGrid
-                                                Name="DevicesListDg"
-                                                AutoGenerateColumns="False"
-                                                CanUserAddRows="False"
-                                                CanUserDeleteRows="False"
-                                                CanUserReorderColumns="False"
-                                                CanUserResizeRows="False"
-                                                ItemsSource="{Binding GroupedDevices}"
-                                                SelectionMode="Single"
-                                                SelectionUnit="FullRow">
+                                            <DataGrid Name="DevicesListDg"
+                                                      AutoGenerateColumns="False"
+                                                      CanUserAddRows="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserReorderColumns="False"
+                                                      CanUserResizeRows="False"
+                                                      ItemsSource="{Binding GroupedDevices}"
+                                                      SelectionMode="Single"
+                                                      SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=deviceId}"
-                                                        Header="Id"
-                                                        IsReadOnly="True"
-                                                        Visibility="Visible" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=deviceId}"
+                                                                        Header="Id"
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible" />
 
-                                                    <DataGridTextColumn
-                                                        Width="*"
-                                                        Binding="{Binding Path=deviceName}"
-                                                        IsReadOnly="True">
+                                                    <DataGridTextColumn Width="*"
+                                                                        Binding="{Binding Path=deviceName}"
+                                                                        IsReadOnly="True">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -103,30 +97,27 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <StackPanel
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                Orientation="Horizontal">
-                                                <Button
-                                                    Name="btn_Refresh_DeviceProduct"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Click="Btn_Refresh_DeviceProduct_Click">
+                                            <StackPanel HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
+                                                <Button Name="btn_Refresh_DeviceProduct"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Click="Btn_Refresh_DeviceProduct_Click">
                                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <DataGrid
-                                                Name="DeviceProductsListDg"
-                                                AutoGenerateColumns="False"
-                                                CanUserAddRows="False"
-                                                CanUserDeleteRows="False"
-                                                CanUserReorderColumns="False"
-                                                CanUserResizeRows="False"
-                                                ItemsSource="{Binding GroupedDeviceProducts}"
-                                                SelectionMode="Single"
-                                                SelectionUnit="FullRow">
+                                            <DataGrid Name="DeviceProductsListDg"
+                                                      AutoGenerateColumns="False"
+                                                      CanUserAddRows="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserReorderColumns="False"
+                                                      CanUserResizeRows="False"
+                                                      ItemsSource="{Binding GroupedDeviceProducts}"
+                                                      SelectionMode="Single"
+                                                      SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
                                                     <DataGridTemplateColumn Width="Auto">
                                                         <!--<DataGridTemplateColumn.Header>
@@ -134,26 +125,23 @@
                                                         </DataGridTemplateColumn.Header>-->
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <CheckBox
-                                                                    Name="DeviceProductCbRow"
-                                                                    HorizontalAlignment="Center"
-                                                                    Click="DeviceProductCbRow_Click"
-                                                                    IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                                <CheckBox Name="DeviceProductCbRow"
+                                                                          HorizontalAlignment="Center"
+                                                                          Click="DeviceProductCbRow_Click"
+                                                                          IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=productId}"
-                                                        Header="Id"
-                                                        IsReadOnly="True"
-                                                        Visibility="Visible" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=productId}"
+                                                                        Header="Id"
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible" />
 
-                                                    <DataGridTextColumn
-                                                        Width="*"
-                                                        Binding="{Binding Path=productName}"
-                                                        IsReadOnly="True">
+                                                    <DataGridTextColumn Width="*"
+                                                                        Binding="{Binding Path=productName}"
+                                                                        IsReadOnly="True">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -176,56 +164,50 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <StackPanel
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                Orientation="Horizontal">
+                                            <StackPanel HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
 
-                                                <Button
-                                                    Name="btn_Refresh_DeviceBuffer"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Click="Btn_Refresh_DeviceBuffer_Click">
+                                                <Button Name="btn_Refresh_DeviceBuffer"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Click="Btn_Refresh_DeviceBuffer_Click">
                                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <DataGrid
-                                                Name="DeviceBuffersListDg"
-                                                AutoGenerateColumns="False"
-                                                CanUserAddRows="False"
-                                                CanUserDeleteRows="False"
-                                                CanUserReorderColumns="False"
-                                                CanUserResizeRows="False"
-                                                ItemsSource="{Binding GroupedDeviceBuffers}"
-                                                SelectionMode="Single"
-                                                SelectionUnit="FullRow">
+                                            <DataGrid Name="DeviceBuffersListDg"
+                                                      AutoGenerateColumns="False"
+                                                      CanUserAddRows="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserReorderColumns="False"
+                                                      CanUserResizeRows="False"
+                                                      ItemsSource="{Binding GroupedDeviceBuffers}"
+                                                      SelectionMode="Single"
+                                                      SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
 
                                                     <DataGridTemplateColumn Width="Auto">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <CheckBox
-                                                                    Name="DeviceBufferCbRow"
-                                                                    HorizontalAlignment="Center"
-                                                                    Click="DeviceBufferCbRow_Click"
-                                                                    IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                                <CheckBox Name="DeviceBufferCbRow"
+                                                                          HorizontalAlignment="Center"
+                                                                          Click="DeviceBufferCbRow_Click"
+                                                                          IsChecked="{Binding Path=checkStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=bufferId}"
-                                                        Header="Id"
-                                                        IsReadOnly="True"
-                                                        Visibility="Visible" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=bufferId}"
+                                                                        Header="Id"
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible" />
 
-                                                    <DataGridTextColumn
-                                                        Width="*"
-                                                        Binding="{Binding Path=bufferName}"
-                                                        IsReadOnly="True">
+                                                    <DataGridTextColumn Width="*"
+                                                                        Binding="{Binding Path=bufferName}"
+                                                                        IsReadOnly="True">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -235,10 +217,9 @@
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=bufferSort, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                        IsReadOnly="False">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=bufferSort, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                                        IsReadOnly="False">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -256,14 +237,13 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <Button
-                                    Name="Btn_Exit_tab1"
-                                    Width="Auto"
-                                    Height="25"
-                                    Margin="10,0"
-                                    Padding="5,0"
-                                    Click="Btn_Exit_Device_Click"
-                                    Content="Exit" />
+                                <Button Name="Btn_Exit_tab1"
+                                        Width="Auto"
+                                        Height="25"
+                                        Margin="10,0"
+                                        Padding="5,0"
+                                        Click="Btn_Exit_Device_Click"
+                                        Content="Exit" />
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -288,60 +268,53 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <StackPanel
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                Orientation="Horizontal">
-                                                <Button
-                                                    Name="btn_Add_Device"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Add_Device_Click">
+                                            <StackPanel HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
+                                                <Button Name="btn_Add_Device"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Add_Device_Click">
                                                     <iconPacks:PackIconMaterial Kind="Plus" />
                                                 </Button>
-                                                <Button
-                                                    Name="btn_Delete_Device"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Delete_Device_Click">
+                                                <Button Name="btn_Delete_Device"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Delete_Device_Click">
                                                     <iconPacks:PackIconMaterial Kind="Delete" />
                                                 </Button>
-                                                <Button
-                                                    Name="btn_Refresh_Device2"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Refresh_Device_Click">
+                                                <Button Name="btn_Refresh_Device2"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Refresh_Device_Click">
                                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <DataGrid
-                                                Name="DevicesListDg2"
-                                                AutoGenerateColumns="False"
-                                                CanUserAddRows="False"
-                                                CanUserDeleteRows="False"
-                                                CanUserReorderColumns="False"
-                                                CanUserResizeRows="False"
-                                                ItemsSource="{Binding GroupedDevices}"
-                                                SelectionMode="Single"
-                                                SelectionUnit="FullRow">
+                                            <DataGrid Name="DevicesListDg2"
+                                                      AutoGenerateColumns="False"
+                                                      CanUserAddRows="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserReorderColumns="False"
+                                                      CanUserResizeRows="False"
+                                                      ItemsSource="{Binding GroupedDevices}"
+                                                      SelectionMode="Single"
+                                                      SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=deviceId}"
-                                                        Header="Id"
-                                                        IsReadOnly="True"
-                                                        Visibility="Visible" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=deviceId}"
+                                                                        Header="Id"
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible" />
 
-                                                    <DataGridTextColumn
-                                                        Width="*"
-                                                        Binding="{Binding Path=deviceName}"
-                                                        IsReadOnly="False">
+                                                    <DataGridTextColumn Width="*"
+                                                                        Binding="{Binding Path=deviceName}"
+                                                                        IsReadOnly="False">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -351,10 +324,9 @@
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=imageDeviceUrl}"
-                                                        IsReadOnly="True">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=imageDeviceUrl}"
+                                                                        IsReadOnly="True">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -364,27 +336,24 @@
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=imageDeviceUrlOld}"
-                                                        Header="ImageUrlOld"
-                                                        Visibility="Hidden" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=imageDeviceUrlOld}"
+                                                                        Header="ImageUrlOld"
+                                                                        Visibility="Hidden" />
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                        Header="pathFile"
-                                                        Visibility="Hidden" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                                        Header="pathFile"
+                                                                        Visibility="Hidden" />
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
-                            <GridSplitter
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                Background="Ivory" />
+                            <GridSplitter Grid.Column="1"
+                                          HorizontalAlignment="Stretch"
+                                          Background="Ivory" />
                             <Grid Grid.Column="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -398,74 +367,65 @@
                                                 <RowDefinition />
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Row="0">
-                                                <StackPanel
-                                                    Margin="0,0,0,0"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    Orientation="Horizontal">
+                                                <StackPanel Margin="0,0,0,0"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Orientation="Horizontal">
                                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                                         <Label VerticalAlignment="Center" Content="Bay" />
-                                                        <TextBox
-                                                            Name="MaxBaytb"
-                                                            Width="Auto"
-                                                            Height="17"
-                                                            PreviewTextInput="MaxBaytb_PreviewTextInput" />
+                                                        <TextBox Name="MaxBaytb"
+                                                                 Width="Auto"
+                                                                 Height="17"
+                                                                 PreviewTextInput="MaxBaytb_PreviewTextInput" />
                                                     </StackPanel>
                                                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                                         <Label VerticalAlignment="Center" Content="Row" />
-                                                        <TextBox
-                                                            Name="MaxRowtb"
-                                                            Width="Auto"
-                                                            Height="17"
-                                                            PreviewTextInput="MaxRowtb_PreviewTextInput" />
+                                                        <TextBox Name="MaxRowtb"
+                                                                 Width="Auto"
+                                                                 Height="17"
+                                                                 PreviewTextInput="MaxRowtb_PreviewTextInput" />
                                                     </StackPanel>
-                                                    <Button
-                                                        Name="btn_Apply"
-                                                        Width="25"
-                                                        Height="20"
-                                                        Margin="20,0,0,0"
-                                                        Click="Btn_Apply_DeviceBufferData_Click">
+                                                    <Button Name="btn_Apply"
+                                                            Width="25"
+                                                            Height="20"
+                                                            Margin="20,0,0,0"
+                                                            Click="Btn_Apply_DeviceBufferData_Click">
                                                         <iconPacks:PackIconMaterial Kind="Check" />
                                                     </Button>
-                                                    <Button
-                                                        Name="btn_Save_DevicePallet"
-                                                        Width="25"
-                                                        Height="20"
-                                                        Margin="20,0,0,0"
-                                                        Click="Btn_Save_DevicePallet_Click">
+                                                    <Button Name="btn_Save_DevicePallet"
+                                                            Width="25"
+                                                            Height="20"
+                                                            Margin="20,0,0,0"
+                                                            Click="Btn_Save_DevicePallet_Click">
                                                         <iconPacks:PackIconMaterial Kind="ContentSave" />
                                                     </Button>
                                                 </StackPanel>
                                             </Grid>
                                             <Grid Grid.Row="1">
-                                                <DataGrid
-                                                    Name="DevicePalletsListDg"
-                                                    AutoGenerateColumns="False"
-                                                    CanUserAddRows="False"
-                                                    CanUserDeleteRows="False"
-                                                    CanUserReorderColumns="False"
-                                                    CanUserResizeRows="False"
-                                                    ItemsSource="{Binding GroupedDevicePallets}"
-                                                    SelectionMode="Single"
-                                                    SelectionUnit="FullRow">
+                                                <DataGrid Name="DevicePalletsListDg"
+                                                          AutoGenerateColumns="False"
+                                                          CanUserAddRows="False"
+                                                          CanUserDeleteRows="False"
+                                                          CanUserReorderColumns="False"
+                                                          CanUserResizeRows="False"
+                                                          ItemsSource="{Binding GroupedDevicePallets}"
+                                                          SelectionMode="Single"
+                                                          SelectionUnit="FullRow">
                                                     <DataGrid.Columns>
-                                                        <DataGridTextColumn
-                                                            Width="Auto"
-                                                            Binding="{Binding Path=deviceId}"
-                                                            Header="DeviceId"
-                                                            IsReadOnly="True"
-                                                            Visibility="Hidden" />
-                                                        <DataGridTextColumn
-                                                            Width="Auto"
-                                                            Binding="{Binding Path=devicePalletId}"
-                                                            Header="DevicePalletId"
-                                                            IsReadOnly="True"
-                                                            Visibility="Visible" />
+                                                        <DataGridTextColumn Width="Auto"
+                                                                            Binding="{Binding Path=deviceId}"
+                                                                            Header="DeviceId"
+                                                                            IsReadOnly="True"
+                                                                            Visibility="Hidden" />
+                                                        <DataGridTextColumn Width="Auto"
+                                                                            Binding="{Binding Path=devicePalletId}"
+                                                                            Header="DevicePalletId"
+                                                                            IsReadOnly="True"
+                                                                            Visibility="Visible" />
 
-                                                        <DataGridTextColumn
-                                                            Width="Auto"
-                                                            Binding="{Binding Path=row}"
-                                                            IsReadOnly="True">
+                                                        <DataGridTextColumn Width="Auto"
+                                                                            Binding="{Binding Path=row}"
+                                                                            IsReadOnly="True">
                                                             <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
@@ -475,10 +435,9 @@
                                                             </DataGridTextColumn.HeaderTemplate>
                                                         </DataGridTextColumn>
 
-                                                        <DataGridTextColumn
-                                                            Width="Auto"
-                                                            Binding="{Binding Path=bay}"
-                                                            IsReadOnly="True">
+                                                        <DataGridTextColumn Width="Auto"
+                                                                            Binding="{Binding Path=bay}"
+                                                                            IsReadOnly="True">
                                                             <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
@@ -488,10 +447,9 @@
                                                             </DataGridTextColumn.HeaderTemplate>
                                                         </DataGridTextColumn>
 
-                                                        <DataGridTextColumn
-                                                            Width="Auto"
-                                                            Binding="{Binding Path=devicePalletName}"
-                                                            IsReadOnly="True">
+                                                        <DataGridTextColumn Width="Auto"
+                                                                            Binding="{Binding Path=devicePalletName}"
+                                                                            IsReadOnly="True">
                                                             <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
@@ -501,11 +459,10 @@
                                                             </DataGridTextColumn.HeaderTemplate>
                                                         </DataGridTextColumn>
 
-                                                        <DataGridTextColumn
-                                                            Width="Auto"
-                                                            Binding="{Binding Path=dataPallet}"
-                                                            IsReadOnly="True"
-                                                            Visibility="Visible">
+                                                        <DataGridTextColumn Width="Auto"
+                                                                            Binding="{Binding Path=dataPallet}"
+                                                                            IsReadOnly="True"
+                                                                            Visibility="Visible">
                                                             <DataGridTextColumn.HeaderTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel>
@@ -533,7 +490,7 @@
                                 </Grid>
                                 <Grid Grid.Row="1">
                                     <ScrollViewer>
-                                        <Grid MinWidth="500">
+                                        <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition />
                                                 <ColumnDefinition />
@@ -541,59 +498,58 @@
                                                 <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0" Margin="0,4,0,0">
-                                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-                                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                                        <Label
-                                                            VerticalAlignment="Center"
-                                                            Content="Pos:"
-                                                            FontSize="12" />
-                                                    </StackPanel>
-                                                    <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            VerticalAlignment="Center"
-                                                            Content="X"
-                                                            FontSize="12" />
-                                                        <TextBox
-                                                            Name="palletLineX"
-                                                            Width="Auto"
-                                                            Height="17"
+                                                <StackPanel Margin="5"
                                                             HorizontalAlignment="Stretch"
-                                                            PreviewTextInput="PalletLine_PreviewTextInput" />
+                                                            Orientation="Vertical">
+                                                    <!--<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                                        <Label VerticalAlignment="Center"
+                                                               Content="Pos:"
+                                                               FontSize="12" />
+                                                    </StackPanel>-->
+                                                    <DockPanel HorizontalAlignment="Stretch">
+                                                        <Label Width="20"
+                                                               VerticalAlignment="Center"
+                                                               Content="X"
+                                                               FontSize="12" />
+                                                        <TextBox Name="palletLineX"
+                                                                 Width="Auto"
+                                                                 Height="17"
+                                                                 HorizontalAlignment="Stretch"
+                                                                 PreviewTextInput="PalletLine_PreviewTextInput" />
                                                     </DockPanel>
                                                     <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            VerticalAlignment="Center"
-                                                            Content="Y"
-                                                            FontSize="12" />
-                                                        <TextBox
-                                                            Name="palletLineY"
-                                                            Width="Auto"
-                                                            Height="17"
-                                                            HorizontalAlignment="Stretch"
-                                                            PreviewTextInput="PalletLine_PreviewTextInput" />
+                                                        <Label Width="20"
+                                                               VerticalAlignment="Center"
+                                                               Content="Y"
+                                                               FontSize="12" />
+                                                        <TextBox Name="palletLineY"
+                                                                 Width="Auto"
+                                                                 Height="17"
+                                                                 HorizontalAlignment="Stretch"
+                                                                 PreviewTextInput="PalletLine_PreviewTextInput" />
                                                     </DockPanel>
                                                     <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            VerticalAlignment="Center"
-                                                            Content="A"
-                                                            FontSize="12" />
-                                                        <TextBox
-                                                            Name="palletLineA"
-                                                            Width="Auto"
-                                                            Height="17"
-                                                            HorizontalAlignment="Stretch"
-                                                            PreviewTextInput="PalletLine_PreviewTextInput" />
+                                                        <Label Width="20"
+                                                               VerticalAlignment="Center"
+                                                               Content="A"
+                                                               FontSize="12" />
+                                                        <TextBox Name="palletLineA"
+                                                                 Width="Auto"
+                                                                 Height="17"
+                                                                 HorizontalAlignment="Stretch"
+                                                                 PreviewTextInput="PalletLine_PreviewTextInput" />
                                                     </DockPanel>
                                                 </StackPanel>
                                             </Grid>
                                             <Grid Grid.Column="1" Margin="0,4,0,0">
-                                                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-                                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                                        <Label
-                                                            VerticalAlignment="Center"
-                                                            Content="Pallet:"
-                                                            FontSize="12" />
-                                                    </StackPanel>
+                                                <StackPanel Margin="5"
+                                                            HorizontalAlignment="Stretch"
+                                                            Orientation="Vertical">
+                                                    <!--<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                                        <Label VerticalAlignment="Center"
+                                                               Content="Pallet:"
+                                                               FontSize="12" />
+                                                    </StackPanel>-->
                                                     <!--<StackPanel Orientation="Horizontal"
                                                              HorizontalAlignment="Center">
                                                              <Label VerticalAlignment="Center"
@@ -603,86 +559,78 @@
                                                              Height="17"
                                                              PreviewTextInput="PalletLine_PreviewTextInput"></TextBox>
                                                              </StackPanel>-->
-                                                    <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            Width="Auto"
-                                                            VerticalAlignment="Center"
-                                                            Content="PalletDirection_main"
-                                                            FontSize="12" />
-                                                        <ComboBox
-                                                            Name="palletD_Main"
-                                                            Width="Auto"
-                                                            Height="20"
-                                                            FontSize="12">
+                                                    <WrapPanel HorizontalAlignment="Stretch">
+                                                        <Label Width="60"
+                                                               VerticalAlignment="Center"
+                                                               Content="DirMain"
+                                                               FontSize="12" />
+                                                        <ComboBox Name="palletD_Main"
+                                                                  Width="100"
+                                                                  Height="20"
+                                                                  FontSize="12">
                                                             <ComboBoxItem>0</ComboBoxItem>
                                                             <ComboBoxItem>1</ComboBoxItem>
                                                             <ComboBoxItem>2</ComboBoxItem>
                                                         </ComboBox>
-                                                    </DockPanel>
-                                                    <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            Width="Auto"
-                                                            VerticalAlignment="Center"
-                                                            Content="PalletDirection_sub"
-                                                            FontSize="12" />
-                                                        <ComboBox
-                                                            Name="palletD_Sub"
-                                                            Width="Auto"
-                                                            Height="20"
-                                                            FontSize="12">
+                                                    </WrapPanel>
+                                                    <WrapPanel HorizontalAlignment="Stretch">
+                                                        <Label Width="60"
+                                                               VerticalAlignment="Center"
+                                                               Content="DirSub"
+                                                               FontSize="12" />
+                                                        <ComboBox Name="palletD_Sub"
+                                                                  Width="100"
+                                                                  Height="20"
+                                                                  FontSize="12">
                                                             <ComboBoxItem>0</ComboBoxItem>
                                                             <ComboBoxItem>1</ComboBoxItem>
                                                             <ComboBoxItem>2</ComboBoxItem>
                                                         </ComboBox>
-                                                    </DockPanel>
-                                                    <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            Width="Auto"
-                                                            VerticalAlignment="Center"
-                                                            Content="PalletDirection_out"
-                                                            FontSize="12" />
-                                                        <ComboBox
-                                                            Name="palletD_Out"
-                                                            Width="Auto"
-                                                            Height="20"
-                                                            FontSize="12">
+                                                    </WrapPanel>
+                                                    <WrapPanel HorizontalAlignment="Stretch">
+                                                        <Label Width="60"
+                                                               VerticalAlignment="Center"
+                                                               Content="DirOut"
+                                                               FontSize="12" />
+                                                        <ComboBox Name="palletD_Out"
+                                                                  Width="100"
+                                                                  Height="20"
+                                                                  FontSize="12">
                                                             <ComboBoxItem>0</ComboBoxItem>
                                                             <ComboBoxItem>1</ComboBoxItem>
                                                             <ComboBoxItem>2</ComboBoxItem>
                                                         </ComboBox>
-                                                    </DockPanel>
+                                                    </WrapPanel>
                                                 </StackPanel>
                                             </Grid>
                                             <Grid Grid.Column="2" Margin="10,4,0,0">
                                                 <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-                                                    <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            Width="Auto"
-                                                            VerticalAlignment="Center"
-                                                            Content="PalletLine_ord"
-                                                            FontSize="12" />
-                                                        <ComboBox
-                                                            Name="palletL_Ord"
-                                                            Width="Auto"
-                                                            Height="20"
-                                                            FontSize="12">
+                                                    <WrapPanel HorizontalAlignment="Stretch">
+                                                        <Label Width="60"
+                                                               VerticalAlignment="Center"
+                                                               Content="LineOrd"
+                                                               FontSize="12" />
+                                                        <ComboBox Name="palletL_Ord"
+                                                                  Width="100"
+                                                                  Height="20"
+                                                                  FontSize="12">
                                                             <ComboBoxItem>0</ComboBoxItem>
                                                             <ComboBoxItem>1</ComboBoxItem>
                                                             <ComboBoxItem>2</ComboBoxItem>
                                                             <ComboBoxItem>3</ComboBoxItem>
                                                             <ComboBoxItem>4</ComboBoxItem>
                                                         </ComboBox>
-                                                    </DockPanel>
-                                                    <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            VerticalAlignment="Center"
-                                                            Content="Subline"
-                                                            FontSize="12" />
-                                                        <ComboBox
-                                                            Name="palletHasSubLine"
-                                                            Height="20"
-                                                            HorizontalAlignment="Stretch"
-                                                            FontSize="12">
+                                                    </WrapPanel>
+                                                    <WrapPanel HorizontalAlignment="Stretch">
+                                                        <Label Width="60"
+                                                               VerticalAlignment="Center"
+                                                               Content="Subline"
+                                                               FontSize="12" />
+                                                        <ComboBox Name="palletHasSubLine"
+                                                                  Width="100"
+                                                                  Height="20"
+                                                                  HorizontalAlignment="Stretch"
+                                                                  FontSize="12">
                                                             <ComboBoxItem>yes</ComboBoxItem>
                                                             <ComboBoxItem>no</ComboBoxItem>
                                                         </ComboBox>
@@ -692,21 +640,21 @@
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
                                                                  PreviewTextInput="myPreviewTextInput"></TextBox>-->
-                                                    </DockPanel>
+                                                    </WrapPanel>
                                                 </StackPanel>
                                             </Grid>
                                             <Grid Grid.Column="3" Margin="10,4,7,0">
                                                 <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-                                                    <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            VerticalAlignment="Center"
-                                                            Content="Type"
-                                                            FontSize="12" />
-                                                        <ComboBox
-                                                            Name="palletType"
-                                                            Height="20"
-                                                            HorizontalAlignment="Stretch"
-                                                            FontSize="12">
+                                                    <WrapPanel HorizontalAlignment="Stretch">
+                                                        <Label Width="60"
+                                                               VerticalAlignment="Center"
+                                                               Content="Type"
+                                                               FontSize="12" />
+                                                        <ComboBox Name="palletType"
+                                                                  Width="100"
+                                                                  Height="20"
+                                                                  HorizontalAlignment="Stretch"
+                                                                  FontSize="12">
                                                             <ComboBoxItem>Working</ComboBoxItem>
                                                             <ComboBoxItem>Empty</ComboBoxItem>
                                                         </ComboBox>
@@ -716,17 +664,17 @@
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
                                                                  PreviewTextInput="myPreviewTextInput"></TextBox>-->
-                                                    </DockPanel>
-                                                    <DockPanel HorizontalAlignment="Stretch">
-                                                        <Label
-                                                            VerticalAlignment="Center"
-                                                            Content="Phase"
-                                                            FontSize="12" />
-                                                        <ComboBox
-                                                            Name="palletPhase"
-                                                            Height="20"
-                                                            HorizontalAlignment="Stretch"
-                                                            FontSize="12">
+                                                    </WrapPanel>
+                                                    <WrapPanel HorizontalAlignment="Stretch">
+                                                        <Label Width="60"
+                                                               VerticalAlignment="Center"
+                                                               Content="Phase"
+                                                               FontSize="12" />
+                                                        <ComboBox Name="palletPhase"
+                                                                  Width="100"
+                                                                  Height="20"
+                                                                  HorizontalAlignment="Stretch"
+                                                                  FontSize="12">
                                                             <ComboBoxItem>0</ComboBoxItem>
                                                             <ComboBoxItem>1</ComboBoxItem>
                                                             <ComboBoxItem>2</ComboBoxItem>
@@ -745,14 +693,13 @@
                                                                  FontSize="12"
                                                                  CharacterCasing="Upper"
                                                                  PreviewTextInput="myPreviewTextInput"></TextBox>-->
-                                                    </DockPanel>
+                                                    </WrapPanel>
                                                     <StackPanel VerticalAlignment="Center">
-                                                        <Button
-                                                            Name="btn_SetPalletDataPallet"
-                                                            Width="70"
-                                                            Height="20"
-                                                            Margin="0,5"
-                                                            Click="Btn_SetPalletDataPallet_Click">
+                                                        <Button Name="btn_SetPalletDataPallet"
+                                                                Width="70"
+                                                                Height="20"
+                                                                Margin="0,5"
+                                                                Click="Btn_SetPalletDataPallet_Click">
                                                             Save
                                                         </Button>
                                                     </StackPanel>
@@ -765,22 +712,20 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <Button
-                                    Name="Btn_Save_DevicePallet"
-                                    Width="Auto"
-                                    Height="25"
-                                    Margin="10,0"
-                                    Padding="5,0"
-                                    Click="Btn_Save_Devices_Click"
-                                    Content="Save" />
-                                <Button
-                                    Name="Btn_Exit_DevicePallet"
-                                    Width="Auto"
-                                    Height="25"
-                                    Margin="10,0"
-                                    Padding="5,0"
-                                    Click="Btn_Exit_DevicePallet_Click"
-                                    Content="Exit" />
+                                <Button Name="Btn_Save_DevicePallet"
+                                        Width="Auto"
+                                        Height="25"
+                                        Margin="10,0"
+                                        Padding="5,0"
+                                        Click="Btn_Save_Devices_Click"
+                                        Content="Save" />
+                                <Button Name="Btn_Exit_DevicePallet"
+                                        Width="Auto"
+                                        Height="25"
+                                        Margin="10,0"
+                                        Padding="5,0"
+                                        Click="Btn_Exit_DevicePallet_Click"
+                                        Content="Exit" />
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -805,58 +750,51 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <StackPanel
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                Orientation="Horizontal">
-                                                <Button
-                                                    Name="btn_Add_Product"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Add_Product_Click">
+                                            <StackPanel HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
+                                                <Button Name="btn_Add_Product"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Add_Product_Click">
                                                     <iconPacks:PackIconMaterial Kind="Plus" />
                                                 </Button>
-                                                <Button
-                                                    Name="btn_Delete_Product"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Delete_Product_Click">
+                                                <Button Name="btn_Delete_Product"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Delete_Product_Click">
                                                     <iconPacks:PackIconMaterial Kind="Delete" />
                                                 </Button>
-                                                <Button
-                                                    Name="btn_Refresh_Product"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Refresh_Product_Click">
+                                                <Button Name="btn_Refresh_Product"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Refresh_Product_Click">
                                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <DataGrid
-                                                Name="ProductsListDg"
-                                                AutoGenerateColumns="False"
-                                                CanUserAddRows="False"
-                                                CanUserDeleteRows="False"
-                                                CanUserReorderColumns="False"
-                                                CanUserResizeRows="False"
-                                                ItemsSource="{Binding GroupedProducts}"
-                                                SelectionMode="Extended"
-                                                SelectionUnit="FullRow">
+                                            <DataGrid Name="ProductsListDg"
+                                                      AutoGenerateColumns="False"
+                                                      CanUserAddRows="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserReorderColumns="False"
+                                                      CanUserResizeRows="False"
+                                                      ItemsSource="{Binding GroupedProducts}"
+                                                      SelectionMode="Extended"
+                                                      SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=productId}"
-                                                        Header="Id"
-                                                        Visibility="Visible" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=productId}"
+                                                                        Header="Id"
+                                                                        Visibility="Visible" />
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=productName}"
-                                                        IsReadOnly="False">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=productName}"
+                                                                        IsReadOnly="False">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -866,10 +804,9 @@
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=imageProductUrl, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                        IsReadOnly="True">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=imageProductUrl, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                                        IsReadOnly="True">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -879,27 +816,24 @@
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=imageProductUrlOld, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                        Header="ImageUrlOld"
-                                                        Visibility="Hidden" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=imageProductUrlOld, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                                        Header="ImageUrlOld"
+                                                                        Visibility="Hidden" />
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                        Header="pathFile"
-                                                        Visibility="Hidden" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=pathFile, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                                        Header="pathFile"
+                                                                        Visibility="Hidden" />
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </Grid>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
-                            <GridSplitter
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                Background="Ivory" />
+                            <GridSplitter Grid.Column="1"
+                                          HorizontalAlignment="Stretch"
+                                          Background="Ivory" />
                             <Grid Grid.Column="2">
                                 <GroupBox Header="ProductDetail">
                                     <Grid>
@@ -908,60 +842,53 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <StackPanel
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                Orientation="Horizontal">
+                                            <StackPanel HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
 
-                                                <Button
-                                                    Name="btn_Add_ProductDetail"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Add_ProductDetail_Click">
+                                                <Button Name="btn_Add_ProductDetail"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Add_ProductDetail_Click">
                                                     <iconPacks:PackIconMaterial Kind="Plus" />
                                                 </Button>
-                                                <Button
-                                                    Name="btn_Delete_ProductDetail"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Delete_ProductDetail_Click">
+                                                <Button Name="btn_Delete_ProductDetail"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Delete_ProductDetail_Click">
                                                     <iconPacks:PackIconMaterial Kind="Delete" />
                                                 </Button>
-                                                <Button
-                                                    Name="btn_Refresh_ProductDetail"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Refresh_ProductDetail_Click">
+                                                <Button Name="btn_Refresh_ProductDetail"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Refresh_ProductDetail_Click">
                                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <DataGrid
-                                                Name="ProductDetailsListDg"
-                                                AutoGenerateColumns="False"
-                                                CanUserAddRows="False"
-                                                CanUserDeleteRows="False"
-                                                CanUserReorderColumns="False"
-                                                CanUserResizeRows="False"
-                                                ItemsSource="{Binding GroupedProductDetails}"
-                                                SelectionMode="Single"
-                                                SelectionUnit="FullRow">
+                                            <DataGrid Name="ProductDetailsListDg"
+                                                      AutoGenerateColumns="False"
+                                                      CanUserAddRows="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserReorderColumns="False"
+                                                      CanUserResizeRows="False"
+                                                      ItemsSource="{Binding GroupedProductDetails}"
+                                                      SelectionMode="Single"
+                                                      SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=productDetailId}"
-                                                        Header="Id"
-                                                        IsReadOnly="True" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=productDetailId}"
+                                                                        Header="Id"
+                                                                        IsReadOnly="True" />
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=productDetailName}"
-                                                        IsReadOnly="False">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=productDetailName}"
+                                                                        IsReadOnly="False">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -979,22 +906,20 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <Button
-                                    Name="Btn_Save_Product"
-                                    Width="Auto"
-                                    Height="25"
-                                    Margin="10,0"
-                                    Padding="5,0"
-                                    Click="Btn_Save_Products_Click"
-                                    Content="Save" />
-                                <Button
-                                    Name="Btn_Exit_Product"
-                                    Width="Auto"
-                                    Height="25"
-                                    Margin="10,0"
-                                    Padding="5,0"
-                                    Click="Btn_Exit_Product_Click"
-                                    Content="Exit" />
+                                <Button Name="Btn_Save_Product"
+                                        Width="Auto"
+                                        Height="25"
+                                        Margin="10,0"
+                                        Padding="5,0"
+                                        Click="Btn_Save_Products_Click"
+                                        Content="Save" />
+                                <Button Name="Btn_Exit_Product"
+                                        Width="Auto"
+                                        Height="25"
+                                        Margin="10,0"
+                                        Padding="5,0"
+                                        Click="Btn_Exit_Product_Click"
+                                        Content="Exit" />
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -1020,60 +945,53 @@
                                             <RowDefinition Height="120" />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <StackPanel
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                Orientation="Horizontal">
+                                            <StackPanel HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
 
-                                                <Button
-                                                    Name="btn_Add_Buffer"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Add_Buffer_Click">
+                                                <Button Name="btn_Add_Buffer"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Add_Buffer_Click">
                                                     <iconPacks:PackIconMaterial Kind="Plus" />
                                                 </Button>
-                                                <Button
-                                                    Name="btn_Delete_Buffer"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Delete_Buffer_Click">
+                                                <Button Name="btn_Delete_Buffer"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Delete_Buffer_Click">
                                                     <iconPacks:PackIconMaterial Kind="Delete" />
                                                 </Button>
-                                                <Button
-                                                    Name="btn_Refresh_Buffer"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Refresh_Buffer_Click">
+                                                <Button Name="btn_Refresh_Buffer"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Refresh_Buffer_Click">
                                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <DataGrid
-                                                Name="BuffersListDg"
-                                                AutoGenerateColumns="False"
-                                                CanUserAddRows="False"
-                                                CanUserDeleteRows="False"
-                                                CanUserReorderColumns="False"
-                                                CanUserResizeRows="False"
-                                                ItemsSource="{Binding GroupedBuffers}"
-                                                SelectionMode="Single"
-                                                SelectionUnit="FullRow">
+                                            <DataGrid Name="BuffersListDg"
+                                                      AutoGenerateColumns="False"
+                                                      CanUserAddRows="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserReorderColumns="False"
+                                                      CanUserResizeRows="False"
+                                                      ItemsSource="{Binding GroupedBuffers}"
+                                                      SelectionMode="Single"
+                                                      SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=bufferId}"
-                                                        Header="Id"
-                                                        IsReadOnly="True"
-                                                        Visibility="Visible" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=bufferId}"
+                                                                        Header="Id"
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible" />
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=bufferName}"
-                                                        IsReadOnly="False">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=bufferName}"
+                                                                        IsReadOnly="False">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -1083,10 +1001,9 @@
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=maxBay}"
-                                                        IsReadOnly="False">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=maxBay}"
+                                                                        IsReadOnly="False">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -1096,10 +1013,9 @@
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=maxRow}"
-                                                        IsReadOnly="False">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=maxRow}"
+                                                                        IsReadOnly="False">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -1119,21 +1035,19 @@
                                                         </DataGridTemplateColumn.HeaderTemplate>
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
-                                                                <CheckBox
-                                                                    Name="BufferReturnCbRow"
-                                                                    HorizontalAlignment="Center"
-                                                                    Click="BufferReturnCbRow_Click"
-                                                                    IsChecked="{Binding Path=bufferReturn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                                <CheckBox Name="BufferReturnCbRow"
+                                                                          HorizontalAlignment="Center"
+                                                                          Click="BufferReturnCbRow_Click"
+                                                                          IsChecked="{Binding Path=bufferReturn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                                             </DataTemplate>
                                                         </DataGridTemplateColumn.CellTemplate>
                                                     </DataGridTemplateColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=bufferCheckIn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                        Header="Dữ liệu"
-                                                        IsReadOnly="True"
-                                                        Visibility="Visible">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=bufferCheckIn, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                                        Header="Dữ liệu"
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible">
                                                         <DataGridTextColumn.ElementStyle>
                                                             <Style TargetType="TextBlock">
                                                                 <Setter Property="TextWrapping" Value="Wrap" />
@@ -1147,12 +1061,11 @@
                                                         </DataGridTextColumn.EditingElementStyle>
                                                     </DataGridTextColumn>
 
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=bufferData, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                        Header="Data"
-                                                        IsReadOnly="True"
-                                                        Visibility="Visible">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=bufferData, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                                        Header="Data"
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible">
                                                         <DataGridTextColumn.ElementStyle>
                                                             <Style TargetType="TextBlock">
                                                                 <Setter Property="TextWrapping" Value="Wrap" />
@@ -1181,75 +1094,65 @@
                                                         <ColumnDefinition Width="60" />
                                                     </Grid.ColumnDefinitions>
                                                     <Grid Grid.Column="0">
-                                                        <StackPanel
-                                                            Margin="0,0,5,0"
-                                                            HorizontalAlignment="Stretch"
-                                                            VerticalAlignment="Center"
-                                                            Orientation="Vertical">
-                                                            <DockPanel HorizontalAlignment="Stretch">
-                                                                <Label
+                                                        <StackPanel Margin="0,0,5,0"
+                                                                    HorizontalAlignment="Stretch"
                                                                     VerticalAlignment="Center"
-                                                                    Content="X"
-                                                                    FontSize="12" />
-                                                                <TextBox
-                                                                    Name="bufferX"
-                                                                    Height="17"
-                                                                    FontSize="12"
-                                                                    PreviewTextInput="BufferX_PreviewTextInput" />
+                                                                    Orientation="Vertical">
+                                                            <DockPanel HorizontalAlignment="Stretch">
+                                                                <Label VerticalAlignment="Center"
+                                                                       Content="X"
+                                                                       FontSize="12" />
+                                                                <TextBox Name="bufferX"
+                                                                         Height="17"
+                                                                         FontSize="12"
+                                                                         PreviewTextInput="BufferX_PreviewTextInput" />
                                                             </DockPanel>
                                                             <DockPanel HorizontalAlignment="Stretch">
-                                                                <Label
-                                                                    VerticalAlignment="Center"
-                                                                    Content="Y"
-                                                                    FontSize="12" />
-                                                                <TextBox
-                                                                    Name="bufferY"
-                                                                    Height="17"
-                                                                    FontSize="12"
-                                                                    PreviewTextInput="BufferY_PreviewTextInput" />
+                                                                <Label VerticalAlignment="Center"
+                                                                       Content="Y"
+                                                                       FontSize="12" />
+                                                                <TextBox Name="bufferY"
+                                                                         Height="17"
+                                                                         FontSize="12"
+                                                                         PreviewTextInput="BufferY_PreviewTextInput" />
                                                             </DockPanel>
                                                             <DockPanel HorizontalAlignment="Stretch">
-                                                                <Label
-                                                                    VerticalAlignment="Center"
-                                                                    Content="A"
-                                                                    FontSize="12" />
-                                                                <TextBox
-                                                                    Name="bufferA"
-                                                                    Height="17"
-                                                                    FontSize="12"
-                                                                    PreviewTextInput="BufferA_PreviewTextInput" />
+                                                                <Label VerticalAlignment="Center"
+                                                                       Content="A"
+                                                                       FontSize="12" />
+                                                                <TextBox Name="bufferA"
+                                                                         Height="17"
+                                                                         FontSize="12"
+                                                                         PreviewTextInput="BufferA_PreviewTextInput" />
                                                             </DockPanel>
                                                         </StackPanel>
                                                     </Grid>
                                                     <Grid Grid.Column="1">
-                                                        <StackPanel
-                                                            Margin="0,0,5,0"
-                                                            HorizontalAlignment="Stretch"
-                                                            VerticalAlignment="Center"
-                                                            Orientation="Vertical">
+                                                        <StackPanel Margin="0,0,5,0"
+                                                                    HorizontalAlignment="Stretch"
+                                                                    VerticalAlignment="Center"
+                                                                    Orientation="Vertical">
 
                                                             <DockPanel HorizontalAlignment="Stretch">
-                                                                <Label
-                                                                    VerticalAlignment="Center"
-                                                                    Content="Arrange"
-                                                                    FontSize="12" />
-                                                                <ComboBox
-                                                                    Name="bufferArr"
-                                                                    Height="20"
-                                                                    FontSize="12">
+                                                                <Label VerticalAlignment="Center"
+                                                                       Content="Arrange"
+                                                                       FontSize="12" />
+                                                                <ComboBox Name="bufferArr"
+                                                                          Width="100"
+                                                                          Height="20"
+                                                                          FontSize="12">
                                                                     <ComboBoxItem>bigEndian</ComboBoxItem>
                                                                     <ComboBoxItem>littleEndian</ComboBoxItem>
                                                                 </ComboBox>
                                                             </DockPanel>
                                                             <DockPanel HorizontalAlignment="Stretch">
-                                                                <Label
-                                                                    VerticalAlignment="Center"
-                                                                    Content="Editable"
-                                                                    FontSize="12" />
-                                                                <ComboBox
-                                                                    Name="cbEditable"
-                                                                    Height="20"
-                                                                    FontSize="12">
+                                                                <Label VerticalAlignment="Center"
+                                                                       Content="Editable"
+                                                                       FontSize="12" />
+                                                                <ComboBox Name="cbEditable"
+                                                                          Width="100"
+                                                                          Height="20"
+                                                                          FontSize="12">
                                                                     <ComboBoxItem>True</ComboBoxItem>
                                                                     <ComboBoxItem>False</ComboBoxItem>
                                                                 </ComboBox>
@@ -1257,66 +1160,58 @@
                                                         </StackPanel>
                                                     </Grid>
                                                     <Grid Grid.Column="2">
-                                                        <StackPanel
-                                                            Margin="0,0,0,5"
-                                                            HorizontalAlignment="Stretch"
-                                                            VerticalAlignment="Center"
-                                                            Orientation="Vertical">
+                                                        <StackPanel Margin="0,0,0,5"
+                                                                    HorizontalAlignment="Stretch"
+                                                                    VerticalAlignment="Center"
+                                                                    Orientation="Vertical">
 
                                                             <DockPanel HorizontalAlignment="Stretch">
-                                                                <Label
-                                                                    Width="30"
-                                                                    VerticalAlignment="Center"
-                                                                    HorizontalContentAlignment="Right"
-                                                                    Content="RG"
-                                                                    FontSize="12" />
-                                                                <CheckBox
-                                                                    Name="cbReturnGate"
-                                                                    Height="20"
-                                                                    HorizontalAlignment="Center"
-                                                                    VerticalContentAlignment="Center"
-                                                                    FontSize="12" />
+                                                                <Label Width="30"
+                                                                       VerticalAlignment="Center"
+                                                                       HorizontalContentAlignment="Right"
+                                                                       Content="RG"
+                                                                       FontSize="12" />
+                                                                <CheckBox Name="cbReturnGate"
+                                                                          Height="20"
+                                                                          HorizontalAlignment="Center"
+                                                                          VerticalContentAlignment="Center"
+                                                                          FontSize="12" />
                                                             </DockPanel>
                                                             <DockPanel HorizontalAlignment="Stretch">
-                                                                <Label
-                                                                    Width="30"
-                                                                    VerticalAlignment="Center"
-                                                                    HorizontalContentAlignment="Right"
-                                                                    Content="RM"
-                                                                    FontSize="12" />
-                                                                <CheckBox
-                                                                    Name="cbReturnMain"
-                                                                    Height="20"
-                                                                    HorizontalAlignment="Center"
-                                                                    VerticalContentAlignment="Center"
-                                                                    FontSize="12" />
+                                                                <Label Width="30"
+                                                                       VerticalAlignment="Center"
+                                                                       HorizontalContentAlignment="Right"
+                                                                       Content="RM"
+                                                                       FontSize="12" />
+                                                                <CheckBox Name="cbReturnMain"
+                                                                          Height="20"
+                                                                          HorizontalAlignment="Center"
+                                                                          VerticalContentAlignment="Center"
+                                                                          FontSize="12" />
                                                             </DockPanel>
 
                                                             <DockPanel HorizontalAlignment="Stretch">
-                                                                <Label
-                                                                    Width="30"
-                                                                    VerticalAlignment="Center"
-                                                                    HorizontalContentAlignment="Right"
-                                                                    Content="R4"
-                                                                    FontSize="12" />
-                                                                <CheckBox
-                                                                    Name="cbReturn401"
-                                                                    Height="20"
-                                                                    HorizontalAlignment="Center"
-                                                                    VerticalContentAlignment="Center"
-                                                                    FontSize="12" />
+                                                                <Label Width="30"
+                                                                       VerticalAlignment="Center"
+                                                                       HorizontalContentAlignment="Right"
+                                                                       Content="R4"
+                                                                       FontSize="12" />
+                                                                <CheckBox Name="cbReturn401"
+                                                                          Height="20"
+                                                                          HorizontalAlignment="Center"
+                                                                          VerticalContentAlignment="Center"
+                                                                          FontSize="12" />
                                                             </DockPanel>
                                                         </StackPanel>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
                                             <Grid Grid.Row="1">
-                                                <Button
-                                                    Name="btn_SetBufferData"
-                                                    Width="70"
-                                                    Height="20"
-                                                    Margin="15,0,0,0"
-                                                    Click="Btn_SetBufferData_Click">
+                                                <Button Name="btn_SetBufferData"
+                                                        Width="70"
+                                                        Height="20"
+                                                        Margin="15,0,0,0"
+                                                        Click="Btn_SetBufferData_Click">
                                                     Save
                                                 </Button>
                                             </Grid>
@@ -1324,10 +1219,9 @@
                                     </Grid>
                                 </GroupBox>
                             </Grid>
-                            <GridSplitter
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                Background="Ivory" />
+                            <GridSplitter Grid.Column="1"
+                                          HorizontalAlignment="Stretch"
+                                          Background="Ivory" />
                             <Grid Grid.Column="2">
                                 <GroupBox Header="Pallet">
                                     <Grid>
@@ -1336,50 +1230,44 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
-                                            <StackPanel
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                Orientation="Horizontal">
-                                                <Button
-                                                    Name="btn_Save_Pallet"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Save_Pallet_Click">
+                                            <StackPanel HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
+                                                <Button Name="btn_Save_Pallet"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Save_Pallet_Click">
                                                     <iconPacks:PackIconMaterial Kind="ContentSave" />
                                                 </Button>
-                                                <Button
-                                                    Name="btn_Refresh_Pallet"
-                                                    Width="20"
-                                                    Height="20"
-                                                    Margin="5,0,0,0"
-                                                    Click="Btn_Refresh_Pallet_Click">
+                                                <Button Name="btn_Refresh_Pallet"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5,0,0,0"
+                                                        Click="Btn_Refresh_Pallet_Click">
                                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                                 </Button>
                                             </StackPanel>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <DataGrid
-                                                Name="PalletsListDg"
-                                                AutoGenerateColumns="False"
-                                                CanUserAddRows="False"
-                                                CanUserDeleteRows="False"
-                                                CanUserReorderColumns="False"
-                                                CanUserResizeRows="False"
-                                                ItemsSource="{Binding GroupedPallets}"
-                                                SelectionMode="Single"
-                                                SelectionUnit="FullRow">
+                                            <DataGrid Name="PalletsListDg"
+                                                      AutoGenerateColumns="False"
+                                                      CanUserAddRows="False"
+                                                      CanUserDeleteRows="False"
+                                                      CanUserReorderColumns="False"
+                                                      CanUserResizeRows="False"
+                                                      ItemsSource="{Binding GroupedPallets}"
+                                                      SelectionMode="Single"
+                                                      SelectionUnit="FullRow">
                                                 <DataGrid.Columns>
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=palletId}"
-                                                        Header="Id"
-                                                        IsReadOnly="True"
-                                                        Visibility="Visible" />
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=row}"
-                                                        IsReadOnly="True">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=palletId}"
+                                                                        Header="Id"
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible" />
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=row}"
+                                                                        IsReadOnly="True">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -1388,10 +1276,9 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=bay}"
-                                                        IsReadOnly="True">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=bay}"
+                                                                        IsReadOnly="True">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -1400,10 +1287,9 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=palletStatus}"
-                                                        IsReadOnly="True">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=palletStatus}"
+                                                                        IsReadOnly="True">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -1412,10 +1298,9 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=productDetailName}"
-                                                        IsReadOnly="True">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=productDetailName}"
+                                                                        IsReadOnly="True">
                                                         <DataGridTextColumn.HeaderTemplate>
                                                             <DataTemplate>
                                                                 <StackPanel>
@@ -1424,12 +1309,11 @@
                                                             </DataTemplate>
                                                         </DataGridTextColumn.HeaderTemplate>
                                                     </DataGridTextColumn>
-                                                    <DataGridTextColumn
-                                                        Width="Auto"
-                                                        Binding="{Binding Path=dataPallet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                        Header="Data"
-                                                        IsReadOnly="True"
-                                                        Visibility="Visible">
+                                                    <DataGridTextColumn Width="Auto"
+                                                                        Binding="{Binding Path=dataPallet, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                                        Header="Data"
+                                                                        IsReadOnly="True"
+                                                                        Visibility="Visible">
                                                         <DataGridTextColumn.ElementStyle>
                                                             <Style TargetType="TextBlock">
                                                                 <Setter Property="TextWrapping" Value="Wrap" />
@@ -1458,14 +1342,13 @@
                                      Margin="10 0"
                                      Content="{DynamicResource DevicesManagement_Button_Save}"
                                      Click="Btn_Save_Buffer_Click" />-->
-                                <Button
-                                    Name="Btn_Exit_Buffer"
-                                    Width="70"
-                                    Height="25"
-                                    Margin="10,0"
-                                    Padding="5,0"
-                                    Click="Btn_Exit_Buffer_Click"
-                                    Content="Exit" />
+                                <Button Name="Btn_Exit_Buffer"
+                                        Width="70"
+                                        Height="25"
+                                        Margin="10,0"
+                                        Padding="5,0"
+                                        Click="Btn_Exit_Buffer_Click"
+                                        Content="Exit" />
                             </StackPanel>
                         </Grid>
                     </Grid>

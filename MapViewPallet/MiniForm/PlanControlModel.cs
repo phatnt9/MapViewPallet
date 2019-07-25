@@ -233,14 +233,20 @@ namespace MapViewPallet.MiniForm
                                     }
                                     else if (product.checkStatus)
                                     {
-                                        //plansTemp.Add(tempOpe);
+                                        if (planControl.cbShowManualPlan.IsChecked == true)
+                                        {
+                                            plansTemp.Add(tempOpe);
+                                        }
                                     }
                                 }
                                 else
                                 {
                                     if (product.checkStatus)
                                     {
-                                        //plansTemp.Add(tempOpe);
+                                        if (planControl.cbShowManualPlan.IsChecked == true)
+                                        {
+                                            plansTemp.Add(tempOpe);
+                                        }
                                     }
                                 }
                             }

@@ -47,11 +47,6 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 double height = 0;
                 double interval = 2000;
 
-                string rmU = "rm";
-                string rmP = "rm";
-                string r4U = "r4";
-                string r4P = "r4";
-
                 if (double.TryParse(bufferWidth.Text.ToString().Trim().Replace(" ", ""), out width))
                 {
                     if (width.ToString().Trim() != "")

@@ -688,6 +688,7 @@
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Stretch"
                                                         Orientation="Vertical">
+
                                                         <DockPanel>
                                                             <Label
                                                                 Width="Auto"
@@ -695,6 +696,23 @@
                                                                 Content="{DynamicResource StationEditor_Groupbox_PalletInfo_PalletCoordinate}"
                                                                 FontSize="12" />
                                                         </DockPanel>
+
+                                                        <DockPanel>
+                                                            <Label
+                                                                Width="Auto"
+                                                                VerticalAlignment="Center"
+                                                                Content="ID"
+                                                                FontSize="12" />
+                                                            <TextBox
+                                                                x:Name="palletBayId"
+                                                                Height="20"
+                                                                Width="100"
+                                                                HorizontalContentAlignment="Center"
+                                                                CharacterCasing="Upper"
+                                                                FontSize="12"
+                                                                PreviewTextInput="myPreviewTextInput" />
+                                                        </DockPanel>
+
                                                         <DockPanel>
                                                             <Label
                                                                 Width="Auto"
@@ -704,25 +722,29 @@
                                                             <TextBox
                                                                 x:Name="palletX"
                                                                 Height="20"
+                                                                Width="100"
                                                                 HorizontalContentAlignment="Center"
                                                                 CharacterCasing="Upper"
                                                                 FontSize="12"
                                                                 PreviewTextInput="myPreviewTextInput" />
                                                         </DockPanel>
+
                                                         <DockPanel>
                                                             <Label
                                                                 Width="Auto"
-                                                                VerticalAlignment="Center"
                                                                 Content="Y"
+                                                                VerticalAlignment="Center"
                                                                 FontSize="12" />
                                                             <TextBox
                                                                 Name="palletY"
                                                                 Height="20"
+                                                                Width="100"
                                                                 HorizontalContentAlignment="Center"
                                                                 CharacterCasing="Upper"
                                                                 FontSize="12"
                                                                 PreviewTextInput="myPreviewTextInput" />
                                                         </DockPanel>
+
                                                         <DockPanel>
                                                             <Label
                                                                 Width="Auto"
@@ -732,6 +754,7 @@
                                                             <TextBox
                                                                 Name="palletA"
                                                                 Height="20"
+                                                                Width="100"
                                                                 HorizontalContentAlignment="Center"
                                                                 CharacterCasing="Upper"
                                                                 FontSize="12"
