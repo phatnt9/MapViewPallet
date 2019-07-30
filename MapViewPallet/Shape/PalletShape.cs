@@ -248,6 +248,8 @@ namespace MapViewPallet.Shape
                                     Console.WriteLine("Duoc phep Return!");
                                     dynamic postApiBody2 = new JObject();
                                     postApiBody2.userName = "WMS_Return";
+                                    postApiBody2.length = 1;
+
 
                                     postApiBody2.bufferId = pallet.bufferId;
                                     postApiBody2.deviceId = pallet.deviceId;
@@ -265,6 +267,7 @@ namespace MapViewPallet.Shape
                                     postApiBody2.activeDate = pallet.activeDate;
                                     postApiBody2.palletId = pallet.palletId;
                                     postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
+
                                     string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
                                     Console.WriteLine("Data request Return: " + jsonData2);
                                     BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
@@ -308,7 +311,7 @@ namespace MapViewPallet.Shape
                 palletsList = GetAllPallets(pallet.bufferId);
 
                 //Check if pallet is return able an then return it
-                if (CanPalletReturn(palletsList, "CAP", "BOTTLE"))
+                if (CanPalletReturn(palletsList))
                 {
                     dynamic postApiBody = new JObject();
                     postApiBody.userName = MapViewPallet.Properties.Settings.Default["return401User"].ToString();

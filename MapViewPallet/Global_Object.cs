@@ -124,42 +124,42 @@ namespace MapViewPallet
         }
 
         //#######################################
-        public static MusicPlayerOld musicPlayerOld = new MusicPlayerOld("ALARM.mp3");
+        //public static MusicPlayerOld musicPlayerOld = new MusicPlayerOld("ALARM.mp3");
 
-        public static void PlayWarning(bool isLoop)
-        {
-            if (musicPlayerOld == null)
-            {
-                musicPlayerOld = new MusicPlayerOld("ALARM.mp3");
-                musicPlayerOld.Play(true);
-            }
-            else
-            {
-                if (musicPlayerOld.IsBeingPlayed)
-                {
-                    return;
-                }
-                //if (Global_Object.musicPlayerOld.IsBeingPlayed)
-                //{
-                //    Global_Object.musicPlayerOld.StopPlaying();
-                //}
-                else
-                {
-                    musicPlayerOld.Play(true);
-                }
-            }
-        }
+        //public static void PlayWarning(bool isLoop)
+        //{
+        //    if (musicPlayerOld == null)
+        //    {
+        //        musicPlayerOld = new MusicPlayerOld("ALARM.mp3");
+        //        musicPlayerOld.Play(true);
+        //    }
+        //    else
+        //    {
+        //        if (musicPlayerOld.IsBeingPlayed)
+        //        {
+        //            return;
+        //        }
+        //        //if (Global_Object.musicPlayerOld.IsBeingPlayed)
+        //        //{
+        //        //    Global_Object.musicPlayerOld.StopPlaying();
+        //        //}
+        //        else
+        //        {
+        //            musicPlayerOld.Play(true);
+        //        }
+        //    }
+        //}
 
-        public static void StopWarning()
-        {
-            if (musicPlayerOld != null)
-            {
-                if (musicPlayerOld.IsBeingPlayed)
-                {
-                    musicPlayerOld.StopPlaying();
-                }
-            }
-        }
+        //public static void StopWarning()
+        //{
+        //    if (musicPlayerOld != null)
+        //    {
+        //        if (musicPlayerOld.IsBeingPlayed)
+        //        {
+        //            musicPlayerOld.StopPlaying();
+        //        }
+        //    }
+        //}
 
         //#######################################
         //public static bool ServerAlive()

@@ -1100,7 +1100,7 @@ namespace MapViewPallet.MiniForm
                 if (BuffersListDg.SelectedItem != null)
                 {
                     dtBuffer temp = BuffersListDg.SelectedItem as dtBuffer;
-                    Console.WriteLine(temp.bufferData);
+                    //Console.WriteLine(temp.bufferData);
                     dynamic bufferData = JsonConvert.DeserializeObject(temp.bufferData);
                     bufferX.Text = (bufferData != null) ? (((double)bufferData.x).ToString()) : "0";
                     bufferY.Text = (bufferData != null) ? (((double)bufferData.y).ToString()) : "0";

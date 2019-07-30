@@ -481,11 +481,17 @@ namespace MapViewPallet.Shape
 
                             dynamic postApiBody = new JObject();
                             Point updateBufferDataPoint = Global_Object.CoorLaser(mousePos);
+
                             postApiBody.x = Math.Round(updateBufferDataPoint.X, 1);
                             postApiBody.y = Math.Round(updateBufferDataPoint.Y, 1);
                             postApiBody.angle = Math.Round(Global_Object.bufferToMove.props._rotate, 1);
+
                             dynamic data = JsonConvert.DeserializeObject(Global_Object.bufferToMove.props.bufferDb.bufferData);
                             postApiBody.arrange = data.arrange;
+                            postApiBody.canOpEdit = (data.canOpEdit == null)?false: data.returnGate;
+                            postApiBody.returnGate = (data.returnGate == null)?false: data.returnGate;
+                            postApiBody.returnMain = (data.returnMain == null) ? false : data.returnMain;
+                            postApiBody.return401 = (data.return401 == null) ? false : data.return401;
                             string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                             buffer.bufferData = jsonBufferData;
 

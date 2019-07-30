@@ -72,6 +72,7 @@ namespace MapViewPallet.MiniForm
                 {
                     dtPallet pallet = PalletsListDg.SelectedItem as dtPallet;
                     dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                    palletBayId.Text = (palletData.bayId != null) ? (((double)palletData.bayId).ToString()) : "-1";
                     palletX.Text = (palletData.line.x != null) ? (((double)palletData.line.x).ToString()) : "0";
                     palletY.Text = (palletData.line.y != null) ? (((double)palletData.line.y).ToString()) : "0";
                     palletA.Text = (palletData.line.angle != null) ? (((double)palletData.line.angle).ToString()) : "0";
@@ -88,8 +89,8 @@ namespace MapViewPallet.MiniForm
                     palletD_Out.Text = (palletData.pallet.dir_out != null) ? ((palletData.pallet.dir_out).ToString()) : "0";
                     palletL_Ord.Text = (palletData.pallet.line_ord != null) ? ((palletData.pallet.line_ord).ToString()) : "0";
                     palletHasSubLine.Text = (palletData.pallet.hasSubLine != null) ? ((palletData.pallet.hasSubLine).ToString()) : "no";
-                    palletX.Focus();
-                    palletX.SelectAll();
+                    //palletX.Focus();
+                    //palletX.SelectAll();
                 }
             }
             catch (Exception ex)
@@ -239,45 +240,43 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
-                //dtPallet temp = (sender as System.Windows.Controls.DataGrid).SelectedItem as dtPallet;
-                //temp.updUsrId = Global_Object.userLogin;
-                //string palletCellEdit = ((e.EditingElement as System.Windows.Controls.TextBox).Text.Trim());
+                
                 List<dtPallet> pallets = new List<dtPallet>();
-                //switch (e.Column.DisplayIndex)
-                //{
-                //    case 4:
-                //        {
-                //            temp.dataPallet = palletCellEdit;
-                //            break;
-                //        }
-                //}
+                
+                foreach (dtPallet item in PalletsListDg.SelectedItems)
+                {
+                    dtPallet pallet = item;
 
-                dtPallet pallet = PalletsListDg.SelectedItem as dtPallet;
+                    dynamic palletData = new JObject();
+                    dynamic palletLine = new JObject();
+                    dynamic palletPallet = new JObject();
 
-                dynamic palletData = new JObject();
-                dynamic palletLine = new JObject();
-                dynamic palletPallet = new JObject();
+                    palletLine.x = double.Parse((palletX.Text != "") ? palletX.Text : "0");
+                    palletLine.y = double.Parse((palletY.Text != "") ? palletY.Text : "0");
+                    palletLine.angle = double.Parse((palletA.Text != "") ? palletA.Text : "0");
 
-                palletLine.x = double.Parse((palletX.Text != "") ? palletX.Text : "0");
-                palletLine.y = double.Parse((palletY.Text != "") ? palletY.Text : "0");
-                palletLine.angle = double.Parse((palletA.Text != "") ? palletA.Text : "0");
+                    //palletPallet.row = int.Parse((palletR.Text != "") ? palletR.Text : "0");
+                    palletPallet.row = pallet.row;
+                    //palletPallet.bay = int.Parse((palletB.Text != "") ? palletB.Text : "0");
+                    palletPallet.bay = pallet.bay;
 
-                palletPallet.row = int.Parse((palletR.Text != "") ? palletR.Text : "0");
-                palletPallet.bay = int.Parse((palletB.Text != "") ? palletB.Text : "0");
-                palletPallet.dir_main = int.Parse((palletD_Main.Text != "") ? palletD_Main.Text : "0");
-                palletPallet.dir_sub = int.Parse((palletD_Sub.Text != "") ? palletD_Sub.Text : "0");
-                palletPallet.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
-                palletPallet.line_ord = int.Parse((palletL_Ord.Text != "") ? palletL_Ord.Text : "0");
-                palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
+                    palletPallet.dir_main = int.Parse((palletD_Main.Text != "") ? palletD_Main.Text : "0");
+                    palletPallet.dir_sub = int.Parse((palletD_Sub.Text != "") ? palletD_Sub.Text : "0");
+                    palletPallet.dir_out = int.Parse((palletD_Out.Text != "") ? palletD_Out.Text : "0");
+                    palletPallet.line_ord = int.Parse((palletL_Ord.Text != "") ? palletL_Ord.Text : "0");
+                    palletPallet.hasSubLine = (palletHasSubLine.Text != "") ? palletHasSubLine.Text : "no";
 
-                palletData.bayId = int.Parse((palletBayId.Text != "") ? palletBayId.Text : "0"); ;
-                palletData.line = palletLine;
-                palletData.pallet = palletPallet;
+                    palletData.bayId = int.Parse((palletBayId.Text != "") ? palletBayId.Text : "0"); ;
+                    palletData.line = palletLine;
+                    palletData.pallet = palletPallet;
 
-                string jsonBufferData = JsonConvert.SerializeObject(palletData);
-                pallet.dataPallet = jsonBufferData;
+                    string jsonBufferData = JsonConvert.SerializeObject(palletData);
+                    pallet.dataPallet = jsonBufferData;
 
-                pallets.Add(pallet);
+                    pallets.Add(pallet);
+                }
+
+                
 
                 if (pallets.Count == 0)
                 {
@@ -809,6 +808,61 @@ namespace MapViewPallet.MiniForm
                         System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            if (!Global_Object.ServerAlive())
+            {
+                return;
+            }
+            try
+            {
+                dtPallet pallet = (sender as System.Windows.Controls.Button).DataContext as dtPallet;
+                pallet.palletStatus = "H";
+                string jsonData = JsonConvert.SerializeObject(pallet);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                Byte[] byteArray = encoding.GetBytes(jsonData);
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Flush();
+                }
+
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                using (Stream responseStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    int result = 0;
+                    int.TryParse(reader.ReadToEnd(), out result);
+                    if (result == 1)
+                    {
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (result == -2)
+                    {
+                        // System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Pallets Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    stationEditorModel.ReloadListPallets(this.stationShape.props.bufferDb.bufferId);
+                }));
             }
             catch (Exception ex)
             {
