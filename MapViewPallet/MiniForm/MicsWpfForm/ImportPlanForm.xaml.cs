@@ -35,8 +35,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 System.Windows.Forms.MessageBox.Show("File not Exist!", Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-            Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
+            
 
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(this.txtFile.Text);
@@ -52,54 +51,63 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 for (int i = 3; i <= rowCount; i++)
                 {
                     Console.WriteLine("row:" + i);
-                    if (xlRange.Cells[i, 3] != null && xlRange.Cells[i, 3].Value2 != null)
+                    //Add 3 lần cho plan returnMain va return401
+                    for (int r = 0; r < 3; r++)
                     {
-                        structExcel structExcel = new structExcel();
-                        if (xlRange.Cells[i, 1] != null && xlRange.Cells[i, 1].Value2 != null)
+                        var test = xlRange.Cells[i, 3].Value2;
+                        if (xlRange.Cells[i, 3] != null && xlRange.Cells[i, 3].Value2 != null)
                         {
-                            deviceName = xlRange.Cells[i, 1].Value2.ToString();
-                            Console.WriteLine("deviceName:" + deviceName);
+                            structExcel structExcel = new structExcel();
+                            var test2 = xlRange.Cells[i, 1].Value2;
+                            if (xlRange.Cells[i, 1] != null && xlRange.Cells[i, 1].Value2 != null)
+                            {
+                                deviceName = xlRange.Cells[i, 1].Value2.ToString();
+
+                                Console.WriteLine("deviceName:" + deviceName);
+                            }
+                            //Device Name
+                            int machinePart = 0;
+                            int.TryParse(xlRange.Cells[i, 5].Value2.ToString(), out machinePart);
+                            if (machinePart != 0)
+                            {
+                                string deviceNameRow = ((r == 1) ? "RETURN_401" : ((r == 2) ? "RETURN_MAIN" : deviceName)) + " " + (((r == 1) || (r == 2)) ? 0 : xlRange.Cells[i, 5].Value2.ToString());
+                                
+                                deviceNameRow = System.Text.RegularExpressions.Regex.Replace(deviceNameRow, @"\s{2,}", " ").ToUpper();
+                                Console.WriteLine("deviceNameRow:" + deviceNameRow);
+
+                                structExcel.deviceName = deviceNameRow;
+
+
+                                //product Name
+                                string formula = xlRange.Cells[i, 3].Formula.ToString();
+                                formula = formula.ToUpper();
+                                formula = formula.Split(',')[0].ToString();
+                                formula = formula.Replace("=", "").Replace("VLOOKUP(", "");
+                                structExcel.productName = xlRange.get_Range(formula, formula).Value2.ToString();
+                                Console.WriteLine("productName:" + structExcel.productName);
+                                //product Detail Name
+                                string productDetailNameRow = xlRange.Cells[i, 3].Value2.ToString() + " " + xlRange.Cells[i, 4].Value2.ToString();
+                                productDetailNameRow = System.Text.RegularExpressions.Regex.Replace(productDetailNameRow, @"\s{2,}", " ").ToUpper();
+                                structExcel.productDetailName = productDetailNameRow;
+                                Console.WriteLine("productDetailName:" + structExcel.productDetailName);
+                                //Amount Pallet
+                                int palletAmount = 0;
+                                //int.TryParse(xlRange.Cells[i, 13].Value2.ToString(), out palletAmount);
+                                //structExcel.palletAmount = palletAmount;
+                                structExcel.palletAmount = 1;
+
+                                structExcels.Add(structExcel);
+                            }
+                            else
+                            {
+                                break;
+                            }
+
                         }
-                        //Device Name
-                        string deviceNameRow = deviceName + " " + xlRange.Cells[i, 5].Value2.ToString();
-
-                        Console.WriteLine("deviceNameRow:" + deviceNameRow);
-                        deviceNameRow = System.Text.RegularExpressions.Regex.Replace(deviceNameRow, @"\s{2,}", " ").ToUpper();
-                        Console.WriteLine("deviceNameRow2:" + deviceNameRow);
-                        structExcel.deviceName = deviceNameRow;
-
-                        //foreach(KeyValuePair<int, string> kvp in Constant.productImage)
-                        //{
-                        //    if(kvp.Key == int.Parse(xlRange.Cells[i, 5].Value2.ToString()))
-                        //    {
-                        //        structExcel.imageProductUrl = kvp.Value;
-                        //        break;
-                        //    }
-                        //}
-
-                        //product Name
-                        string formula = xlRange.Cells[i, 3].Formula.ToString();
-                        formula = formula.ToUpper();
-                        formula = formula.Split(',')[0].ToString();
-                        formula = formula.Replace("=", "").Replace("VLOOKUP(", "");
-                        structExcel.productName = xlRange.get_Range(formula, formula).Value2.ToString();
-                        Console.WriteLine("productName:" + structExcel.productName);
-                        //product Detail Name
-                        string productDetailNameRow = xlRange.Cells[i, 3].Value2.ToString() + " " + xlRange.Cells[i, 4].Value2.ToString();
-                        productDetailNameRow = System.Text.RegularExpressions.Regex.Replace(productDetailNameRow, @"\s{2,}", " ").ToUpper();
-                        structExcel.productDetailName = productDetailNameRow;
-                        Console.WriteLine("productDetailName:" + structExcel.productDetailName);
-                        //Amount Pallet
-                        int palletAmount = 0;
-                        //int.TryParse(xlRange.Cells[i, 13].Value2.ToString(), out palletAmount);
-                        //structExcel.palletAmount = palletAmount;
-                        structExcel.palletAmount = 1;
-
-                        structExcels.Add(structExcel);
-                    }
-                    else
-                    {
-                        break;
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
 
