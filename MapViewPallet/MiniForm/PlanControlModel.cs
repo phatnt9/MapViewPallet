@@ -229,13 +229,33 @@ namespace MapViewPallet.MiniForm
                                     }
                                     if (isPlaned)
                                     {
-                                        plansTemp.Add(tempOpe);
+                                        if (tempOpe.deviceName.Contains("RETURN"))
+                                        {
+                                            if (planControl.cbShowReturnPlan.IsChecked == true)
+                                            {
+                                                plansTemp.Add(tempOpe);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            plansTemp.Add(tempOpe);
+                                        }
                                     }
                                     else if (product.checkStatus)
                                     {
                                         if (planControl.cbShowManualPlan.IsChecked == true)
                                         {
-                                            plansTemp.Add(tempOpe);
+                                            if (tempOpe.deviceName.Contains("RETURN"))
+                                            {
+                                                if (planControl.cbShowReturnPlan.IsChecked == true)
+                                                {
+                                                    plansTemp.Add(tempOpe);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                plansTemp.Add(tempOpe);
+                                            }
                                         }
                                     }
                                 }
@@ -245,7 +265,17 @@ namespace MapViewPallet.MiniForm
                                     {
                                         if (planControl.cbShowManualPlan.IsChecked == true)
                                         {
-                                            plansTemp.Add(tempOpe);
+                                            if (tempOpe.deviceName.Contains("RETURN"))
+                                            {
+                                                if (planControl.cbShowReturnPlan.IsChecked == true)
+                                                {
+                                                    plansTemp.Add(tempOpe);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                plansTemp.Add(tempOpe);
+                                            }
                                         }
                                     }
                                 }

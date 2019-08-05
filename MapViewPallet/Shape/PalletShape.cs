@@ -196,12 +196,10 @@ namespace MapViewPallet.Shape
             }
             try
             {
-                if (System.Windows.Forms.MessageBox.Show
-                        (
-                        string.Format("Do you want to return the selected {0}?", "Pallet"),
+                if ((System.Windows.Forms.MessageBox.Show
+                    (string.Format("Do you want to return the selected {0}?", "Pallet"),
                         Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
-                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
-                        )
+                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes))
                 {
                     int deviceIdToReturn = 0;
                     int bufferIdToReturn = 0;
@@ -587,10 +585,10 @@ namespace MapViewPallet.Shape
 
         private void FreePallet(object sender, RoutedEventArgs e)
         {
-            if (System.Windows.Forms.MessageBox.Show
+            if ((System.Windows.Forms.MessageBox.Show
                         (string.Format("Do you want to free the selected {0}?", "Pallet"),
                         Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
-                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes))
             {
                 string preStatus = pallet.palletStatus;
                 pallet.palletStatus = "F";
@@ -618,10 +616,10 @@ namespace MapViewPallet.Shape
 
         private void LockPallet(object sender, RoutedEventArgs e)
         {
-            if (System.Windows.Forms.MessageBox.Show
+            if ((System.Windows.Forms.MessageBox.Show
                         (string.Format("Do you want to lock the selected {0}?", "Pallet"),
                         Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
-                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes))
             {
                 string preStatus = pallet.palletStatus;
                 pallet.palletStatus = "L";
@@ -650,10 +648,10 @@ namespace MapViewPallet.Shape
 
         private void PutPallet(object sender, RoutedEventArgs e)
         {
-            if (System.Windows.Forms.MessageBox.Show
+            if ((System.Windows.Forms.MessageBox.Show
                         (string.Format("Do you want to put the selected {0}?", "Pallet"),
                         Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.YesNo,
-                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                        System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes))
             {
                 string preStatus = pallet.palletStatus;
                 pallet.palletStatus = "W";

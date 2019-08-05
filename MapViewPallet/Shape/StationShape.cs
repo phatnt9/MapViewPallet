@@ -313,8 +313,12 @@ namespace MapViewPallet.Shape
 
         public void EditMenu(object sender, RoutedEventArgs e)
         {
-            StationEditor stationEditor = new StationEditor(this, Thread.CurrentThread.CurrentCulture.ToString());
-            stationEditor.Show();
+            if (Global_Object.userAuthor == 0)
+            {
+                StationEditor stationEditor = new StationEditor(this, Thread.CurrentThread.CurrentCulture.ToString());
+                stationEditor.Show();
+            }
+            
         }
 
         public void PropertiesMenu(object sender, RoutedEventArgs e)
@@ -324,84 +328,84 @@ namespace MapViewPallet.Shape
 
         private void RotateMenu(object sender, RoutedEventArgs e)
         {
-            //double rotate = props.rotate * Math.PI / 180.0;
-            //rotate = (rotate + (Math.PI / 2));
-            //props.rotate = (rotate * 180.0 / Math.PI);
-            props._rotate += 90;
-            if (props._rotate > 360)
+            if (Global_Object.userAuthor == 0)
             {
-                props._rotate -= 360;
-            }
-            props._myRotateTransform.Angle = props._rotate;
-            props._myTransformGroup.Children[0] = props._myRotateTransform;
-            RenderTransform = props._myTransformGroup;
-
-            if (!Global_Object.ServerAlive())
-            {
-                return;
-            }
-            try
-            {
-                dtBuffer buffer = this.props.bufferDb;
-                List<dtBuffer> buffers = new List<dtBuffer>();
-
-                dynamic postApiBody = new JObject();
-                Point coorLader = Global_Object.CoorLaser(props._posision);
-                postApiBody.x = Math.Round(coorLader.X, 1);
-                postApiBody.y = Math.Round(coorLader.Y, 1);
-                postApiBody.angle = Math.Round(props._rotate, 1);
-                dynamic data = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
-                postApiBody.arrange = data.arrange;
-                string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
-                buffer.bufferData = jsonBufferData;
-
-                buffers.Add(buffer);
-
-                if (buffers.Count == 0)
+                props._rotate += 90;
+                if (props._rotate > 360)
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                    props._rotate -= 360;
+                }
+                props._myRotateTransform.Angle = props._rotate;
+                props._myTransformGroup.Children[0] = props._myRotateTransform;
+                RenderTransform = props._myTransformGroup;
+
+                if (!Global_Object.ServerAlive())
+                {
                     return;
                 }
-
-                string jsonData = JsonConvert.SerializeObject(buffers);
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/updateListBuffer");
-                request.Method = "POST";
-                request.ContentType = "application/json";
-
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonData);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
+                try
                 {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
-                }
+                    dtBuffer buffer = this.props.bufferDb;
+                    List<dtBuffer> buffers = new List<dtBuffer>();
 
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    int result = 0;
-                    int.TryParse(reader.ReadToEnd(), out result);
-                    if (result == 1)
+                    dynamic postApiBody = new JObject();
+                    Point coorLader = Global_Object.CoorLaser(props._posision);
+                    postApiBody.x = Math.Round(coorLader.X, 1);
+                    postApiBody.y = Math.Round(coorLader.Y, 1);
+                    postApiBody.angle = Math.Round(props._rotate, 1);
+                    dynamic data = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
+                    postApiBody.arrange = data.arrange;
+                    string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
+                    buffer.bufferData = jsonBufferData;
+
+                    buffers.Add(buffer);
+
+                    if (buffers.Count == 0)
                     {
-                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageNoDataSave), Global_Object.messageTitileWarning, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                        return;
                     }
-                    else if (result == -2)
+
+                    string jsonData = JsonConvert.SerializeObject(buffers);
+
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/updateListBuffer");
+                    request.Method = "POST";
+                    request.ContentType = "application/json";
+
+                    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+                    Byte[] byteArray = encoding.GetBytes(jsonData);
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Buffers Name"), Global_Object.messageTitileError, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        dataStream.Flush();
                     }
-                    else
+
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    using (Stream responseStream = response.GetResponseStream())
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                        int result = 0;
+                        int.TryParse(reader.ReadToEnd(), out result);
+                        if (result == 1)
+                        {
+                            //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else if (result == -2)
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "Buffers Name"), Global_Object.messageTitileError, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        }
                     }
+                    //UpdateTab4(true);
                 }
-                //UpdateTab4(true);
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc.Message);
+                catch (Exception exc)
+                {
+                    Console.WriteLine(exc.Message);
+                }
             }
         }
 

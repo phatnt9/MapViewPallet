@@ -278,7 +278,7 @@ namespace MapViewPallet
         {
             try
             {
-                if (planControl == null)
+                if ((planControl == null))
                 {
                     planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
                     planControl.Closed += PlanControl_Closed;
@@ -299,7 +299,7 @@ namespace MapViewPallet
         {
             try
             {
-                if (devicesManagement == null)
+                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
                 {
                     DevicesManagement devicesManagement = new DevicesManagement(this, 0, Thread.CurrentThread.CurrentCulture.ToString());
                     devicesManagement.Closed += DevicesManagement_Closed;
@@ -321,7 +321,7 @@ namespace MapViewPallet
         {
             try
             {
-                if (userManagement == null)
+                if ((userManagement == null)&& (Global_Object.userAuthor == 0))
                 {
                     userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
                     userManagement.Closed += UserManagement_Closed;
@@ -416,7 +416,7 @@ namespace MapViewPallet
         {
             try
             {
-                if (planControl == null)
+                if ((planControl == null) && (Global_Object.userAuthor == 0))
                 {
                     planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
                     planControl.Closed += PlanControl_Closed;
@@ -437,7 +437,7 @@ namespace MapViewPallet
         {
             try
             {
-                if (devicesManagement == null)
+                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
                 {
                     devicesManagement = new DevicesManagement(this, 0, Thread.CurrentThread.CurrentCulture.ToString());
                     devicesManagement.Closed += DevicesManagement_Closed;
@@ -459,7 +459,7 @@ namespace MapViewPallet
         {
             try
             {
-                if (devicesManagement == null)
+                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
                 {
                     devicesManagement = new DevicesManagement(this, 1, Thread.CurrentThread.CurrentCulture.ToString());
                     devicesManagement.Closed += DevicesManagement_Closed;
@@ -481,7 +481,7 @@ namespace MapViewPallet
         {
             try
             {
-                if (devicesManagement == null)
+                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
                 {
                     devicesManagement = new DevicesManagement(this, 2, Thread.CurrentThread.CurrentCulture.ToString());
                     devicesManagement.Closed += DevicesManagement_Closed;
@@ -503,7 +503,7 @@ namespace MapViewPallet
         {
             try
             {
-                if (devicesManagement == null)
+                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
                 {
                     devicesManagement = new DevicesManagement(this, 3, Thread.CurrentThread.CurrentCulture.ToString());
                     devicesManagement.Closed += DevicesManagement_Closed;
@@ -525,7 +525,7 @@ namespace MapViewPallet
         {
             try
             {
-                if (userManagement == null)
+                if ((userManagement == null) && (Global_Object.userAuthor == 0))
                 {
                     userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
                     userManagement.Closed += UserManagement_Closed;
@@ -567,9 +567,12 @@ namespace MapViewPallet
         {
             try
             {
-                drag = false;
-                Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION;
-                Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION;
+                if (Global_Object.userAuthor == 0)
+                {
+                    drag = false;
+                    Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION;
+                    Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION;
+                }
             }
             catch (Exception ex)
             {

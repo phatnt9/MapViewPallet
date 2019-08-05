@@ -414,5 +414,10 @@ namespace MapViewPallet.MiniForm
         {
             cbShowManualPlan.IsChecked = !cbShowManualPlan.IsChecked;
         }
+
+        private void Label_MouseDown2(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            cbShowReturnPlan.IsChecked = !cbShowReturnPlan.IsChecked;
+        }
     }
 }
