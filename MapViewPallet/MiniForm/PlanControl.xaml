@@ -1,15 +1,16 @@
-﻿<Window x:Class="MapViewPallet.MiniForm.PlanControl"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:local="clr-namespace:MapViewPallet.MiniForm"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="Plan"
-        Width="800"
-        Height="500"
-        WindowStartupLocation="CenterOwner"
-        mc:Ignorable="d">
+﻿<Window
+    x:Class="MapViewPallet.MiniForm.PlanControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:MapViewPallet.MiniForm"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Plan"
+    Width="800"
+    Height="500"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -31,45 +32,53 @@
                         <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png" />
                     </Grid>
                 </Grid>
-                <Border Name="pCalendarCalendarBorder"
-                        Grid.Row="1"
-                        Background="White"
-                        BorderBrush="Black"
-                        BorderThickness="0">
+                <Border
+                    Name="pCalendarCalendarBorder"
+                    Grid.Row="1"
+                    Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="0">
                     <StackPanel Orientation="Vertical">
-                        <StackPanel Margin="0,30,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Top">
+                        <StackPanel
+                            Margin="0,30,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top">
                             <Viewbox Width="220">
-                                <Calendar Name="pCalendar"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          SelectedDatesChanged="PCalendar_SelectedDatesChanged"
-                                          SelectionMode="SingleDate" />
+                                <Calendar
+                                    Name="pCalendar"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    SelectedDatesChanged="PCalendar_SelectedDatesChanged"
+                                    SelectionMode="SingleDate" />
                             </Viewbox>
                         </StackPanel>
-                        <DockPanel Height="30"
-                                   Margin="20,0"
-                                   HorizontalAlignment="Center">
+                        <DockPanel
+                            Height="30"
+                            Margin="20,0"
+                            HorizontalAlignment="Center">
                             <CheckBox Name="cbShowManualPlan" VerticalContentAlignment="Center" />
-                            <Label VerticalContentAlignment="Center"
-                                   Content="Manual Plan"
-                                   MouseDown="Label_MouseDown" />
+                            <Label
+                                VerticalContentAlignment="Center"
+                                Content="Manual Plan"
+                                MouseDown="Label_MouseDown" />
                         </DockPanel>
-                        <DockPanel Height="30"
-                                   Margin="20,0"
-                                   HorizontalAlignment="Center">
+                        <DockPanel
+                            Height="30"
+                            Margin="20,0"
+                            HorizontalAlignment="Center">
                             <CheckBox Name="cbShowReturnPlan" VerticalContentAlignment="Center" />
-                            <Label VerticalContentAlignment="Center"
-                                   Content="Return Plan"
-                                   MouseDown="Label_MouseDown2" />
+                            <Label
+                                VerticalContentAlignment="Center"
+                                Content="Return Plan"
+                                MouseDown="Label_MouseDown2" />
                         </DockPanel>
                     </StackPanel>
                 </Border>
             </Grid>
-            <Border Grid.Column="1"
-                    BorderBrush="Gray"
-                    BorderThickness="1,0,0,0">
+            <Border
+                Grid.Column="1"
+                BorderBrush="Gray"
+                BorderThickness="1,0,0,0">
                 <Grid Name="ProcedureTabs" Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="80" />
@@ -81,61 +90,63 @@
                             <RowDefinition Height="45" />
                             <RowDefinition Height="45" />
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0"
-                                Width="300"
-                                Margin="0,10,0,0"
-                                HorizontalAlignment="Center"
-                                Background="Transparent"
-                                CornerRadius="7">
+                        <Border
+                            Grid.Row="0"
+                            Width="300"
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Center"
+                            Background="Transparent"
+                            CornerRadius="7">
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock Margin="5,0"
-                                           VerticalAlignment="Center"
-                                           FontSize="25"
-                                           FontWeight="Bold"
-                                           Foreground="Black"
-                                           Text="{DynamicResource PlanControl_MainLabel}"
-                                           TextAlignment="Center" />
+                                <TextBlock
+                                    Margin="5,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="25"
+                                    FontWeight="Bold"
+                                    Foreground="Black"
+                                    Text="{DynamicResource PlanControl_MainLabel}"
+                                    TextAlignment="Center" />
                             </StackPanel>
                         </Border>
-                        <Border Name="DateTimeBorder"
-                                Grid.Row="1"
-                                Width="300"
-                                Margin="0,0,0,15"
-                                HorizontalAlignment="Center">
+                        <!--<Border
+                            Name="DateTimeBorder"
+                            Grid.Row="1"
+                            Width="300"
+                            Margin="0,0,0,15"
+                            HorizontalAlignment="Center">
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <!--<TextBlock Name="lb_Date" TextAlignment="Center"
-                                     VerticalAlignment="Center" FontSize="20"
-                                     Text="Thứ X, xx/ x/ xxxx" FontWeight="Heavy"
-                                     Foreground="Black" Margin="5,0" />-->
+                                <TextBlock
+                                    Name="lb_Date"
+                                    Margin="5,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    FontWeight="Heavy"
+                                    Foreground="Black"
+                                    Text="Thứ X, xx/ x/ xxxx"
+                                    TextAlignment="Center" />
                             </StackPanel>
-                        </Border>
+                        </Border>-->
                     </Grid>
                     <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="320" />
-                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="27" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0"
-                              Grid.RowSpan="2"
-                              Grid.Column="0"
-                              Grid.ColumnSpan="2">
+                        <Grid Grid.Row="1">
                             <TabControl Name="TabControlShift">
                                 <TabItem Name="Plan_Shift1" Header="{DynamicResource PlanControl_Shift1_Label}">
-                                    <DataGrid Name="Shift1Dgv"
-                                              AutoGenerateColumns="False"
-                                              CanUserAddRows="False"
-                                              CanUserDeleteRows="False"
-                                              CanUserReorderColumns="False"
-                                              CanUserResizeColumns="True"
-                                              CanUserResizeRows="False"
-                                              CanUserSortColumns="True"
-                                              ItemsSource="{Binding GroupedDevices_S1}"
-                                              SelectionMode="Single"
-                                              SelectionUnit="FullRow">
+                                    <DataGrid
+                                        Name="Shift1Dgv"
+                                        AutoGenerateColumns="False"
+                                        CanUserAddRows="False"
+                                        CanUserDeleteRows="False"
+                                        CanUserReorderColumns="False"
+                                        CanUserResizeColumns="True"
+                                        CanUserResizeRows="False"
+                                        CanUserSortColumns="True"
+                                        ItemsSource="{Binding GroupedDevices_S1}"
+                                        SelectionMode="Extended"
+                                        SelectionUnit="FullRow">
                                         <DataGrid.ItemContainerStyle>
                                             <Style TargetType="DataGridRow">
                                                 <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -150,9 +161,10 @@
                                                 <GroupStyle.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
-                                                            <TextBlock Padding="3"
-                                                                       FontWeight="Bold"
-                                                                       Text="{Binding Path=Name}" />
+                                                            <TextBlock
+                                                                Padding="3"
+                                                                FontWeight="Bold"
+                                                                Text="{Binding Path=Name}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </GroupStyle.HeaderTemplate>
@@ -179,14 +191,16 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding Path=planId}"
-                                                                Header="Id"
-                                                                IsReadOnly="True"
-                                                                Visibility="Visible" />
-                                            <DataGridTextColumn Binding="{Binding Path=deviceId}"
-                                                                Header="deviceId"
-                                                                IsReadOnly="True"
-                                                                Visibility="Visible" />
+                                            <DataGridTextColumn
+                                                Binding="{Binding Path=planId}"
+                                                Header="Id"
+                                                IsReadOnly="True"
+                                                Visibility="Visible" />
+                                            <DataGridTextColumn
+                                                Binding="{Binding Path=deviceId}"
+                                                Header="deviceId"
+                                                IsReadOnly="True"
+                                                Visibility="Visible" />
                                             <DataGridTemplateColumn Header="Plan">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
@@ -222,11 +236,12 @@
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <ComboBox DisplayMemberPath="productDetailName"
-                                                                  IsEnabled="{Binding ElementName=Shift1Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
-                                                                  ItemsSource="{Binding Path=listProductDetails}"
-                                                                  SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                                  SelectedValuePath="productDetailId" />
+                                                        <ComboBox
+                                                            DisplayMemberPath="productDetailName"
+                                                            IsEnabled="{Binding ElementName=Shift1Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
+                                                            ItemsSource="{Binding Path=listProductDetails}"
+                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                            SelectedValuePath="productDetailId" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -258,9 +273,10 @@
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <Button Name="DeletePlan"
-                                                                Background="Transparent"
-                                                                Click="DeletePlan_Click">
+                                                        <Button
+                                                            Name="DeletePlan"
+                                                            Background="Transparent"
+                                                            Click="DeletePlan_Click">
                                                             <iconPacks:PackIconMaterial Kind="DeleteForever" />
                                                         </Button>
                                                     </DataTemplate>
@@ -269,20 +285,22 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
-                                <TabItem Name="Plan_Shift2"
-                                         Header="{DynamicResource PlanControl_Shift2_Label}"
-                                         Visibility="Hidden">
-                                    <DataGrid Name="Shift2Dgv"
-                                              AutoGenerateColumns="False"
-                                              CanUserAddRows="False"
-                                              CanUserDeleteRows="False"
-                                              CanUserReorderColumns="False"
-                                              CanUserResizeColumns="True"
-                                              CanUserResizeRows="False"
-                                              CanUserSortColumns="False"
-                                              ItemsSource="{Binding GroupedDevices_S2}"
-                                              SelectionMode="Single"
-                                              SelectionUnit="FullRow">
+                                <!--<TabItem
+                                    Name="Plan_Shift2"
+                                    Header="{DynamicResource PlanControl_Shift2_Label}"
+                                    Visibility="Hidden">
+                                    <DataGrid
+                                        Name="Shift2Dgv"
+                                        AutoGenerateColumns="False"
+                                        CanUserAddRows="False"
+                                        CanUserDeleteRows="False"
+                                        CanUserReorderColumns="False"
+                                        CanUserResizeColumns="True"
+                                        CanUserResizeRows="False"
+                                        CanUserSortColumns="False"
+                                        ItemsSource="{Binding GroupedDevices_S2}"
+                                        SelectionMode="Single"
+                                        SelectionUnit="FullRow">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>
@@ -291,9 +309,10 @@
                                                 <GroupStyle.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
-                                                            <TextBlock Padding="3"
-                                                                       FontWeight="Bold"
-                                                                       Text="{Binding Path=Name}" />
+                                                            <TextBlock
+                                                                Padding="3"
+                                                                FontWeight="Bold"
+                                                                Text="{Binding Path=Name}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </GroupStyle.HeaderTemplate>
@@ -320,14 +339,16 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding Path=planId}"
-                                                                Header="Id"
-                                                                IsReadOnly="True"
-                                                                Visibility="Visible" />
-                                            <DataGridTextColumn Binding="{Binding Path=deviceId}"
-                                                                Header="deviceId"
-                                                                IsReadOnly="True"
-                                                                Visibility="Visible" />
+                                            <DataGridTextColumn
+                                                Binding="{Binding Path=planId}"
+                                                Header="Id"
+                                                IsReadOnly="True"
+                                                Visibility="Visible" />
+                                            <DataGridTextColumn
+                                                Binding="{Binding Path=deviceId}"
+                                                Header="deviceId"
+                                                IsReadOnly="True"
+                                                Visibility="Visible" />
                                             <DataGridTextColumn Binding="{Binding Path=deviceName}" IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
@@ -356,11 +377,12 @@
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <ComboBox DisplayMemberPath="productDetailName"
-                                                                  IsEnabled="{Binding ElementName=Shift2Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
-                                                                  ItemsSource="{Binding Path=listProductDetails}"
-                                                                  SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                                  SelectedValuePath="productDetailId" />
+                                                        <ComboBox
+                                                            DisplayMemberPath="productDetailName"
+                                                            IsEnabled="{Binding ElementName=Shift2Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
+                                                            ItemsSource="{Binding Path=listProductDetails}"
+                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                            SelectedValuePath="productDetailId" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -393,9 +415,10 @@
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <Button Name="DeletePlan"
-                                                                Background="Transparent"
-                                                                Click="DeletePlan_Click">
+                                                        <Button
+                                                            Name="DeletePlan"
+                                                            Background="Transparent"
+                                                            Click="DeletePlan_Click">
                                                             <iconPacks:PackIconMaterial Kind="DeleteForever" />
                                                         </Button>
                                                     </DataTemplate>
@@ -404,20 +427,22 @@
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </TabItem>
-                                <TabItem Name="Plan_Shift3"
-                                         Header="{DynamicResource PlanControl_Shift3_Label}"
-                                         Visibility="Hidden">
-                                    <DataGrid Name="Shift3Dgv"
-                                              AutoGenerateColumns="False"
-                                              CanUserAddRows="False"
-                                              CanUserDeleteRows="False"
-                                              CanUserReorderColumns="False"
-                                              CanUserResizeColumns="True"
-                                              CanUserResizeRows="False"
-                                              CanUserSortColumns="False"
-                                              ItemsSource="{Binding GroupedDevices_S3}"
-                                              SelectionMode="Single"
-                                              SelectionUnit="FullRow">
+                                <TabItem
+                                    Name="Plan_Shift3"
+                                    Header="{DynamicResource PlanControl_Shift3_Label}"
+                                    Visibility="Hidden">
+                                    <DataGrid
+                                        Name="Shift3Dgv"
+                                        AutoGenerateColumns="False"
+                                        CanUserAddRows="False"
+                                        CanUserDeleteRows="False"
+                                        CanUserReorderColumns="False"
+                                        CanUserResizeColumns="True"
+                                        CanUserResizeRows="False"
+                                        CanUserSortColumns="False"
+                                        ItemsSource="{Binding GroupedDevices_S3}"
+                                        SelectionMode="Single"
+                                        SelectionUnit="FullRow">
                                         <DataGrid.Resources>
                                             <local:ReverseValueConverter x:Key="conv" />
                                         </DataGrid.Resources>
@@ -426,9 +451,10 @@
                                                 <GroupStyle.HeaderTemplate>
                                                     <DataTemplate>
                                                         <StackPanel>
-                                                            <TextBlock Padding="3"
-                                                                       FontWeight="Bold"
-                                                                       Text="{Binding Path=Name}" />
+                                                            <TextBlock
+                                                                Padding="3"
+                                                                FontWeight="Bold"
+                                                                Text="{Binding Path=Name}" />
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </GroupStyle.HeaderTemplate>
@@ -455,14 +481,16 @@
                                             </GroupStyle>
                                         </DataGrid.GroupStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding Path=planId}"
-                                                                Header="Id"
-                                                                IsReadOnly="True"
-                                                                Visibility="Visible" />
-                                            <DataGridTextColumn Binding="{Binding Path=deviceId}"
-                                                                Header="deviceId"
-                                                                IsReadOnly="True"
-                                                                Visibility="Visible" />
+                                            <DataGridTextColumn
+                                                Binding="{Binding Path=planId}"
+                                                Header="Id"
+                                                IsReadOnly="True"
+                                                Visibility="Visible" />
+                                            <DataGridTextColumn
+                                                Binding="{Binding Path=deviceId}"
+                                                Header="deviceId"
+                                                IsReadOnly="True"
+                                                Visibility="Visible" />
                                             <DataGridTextColumn Binding="{Binding Path=deviceName}" IsReadOnly="True">
                                                 <DataGridTextColumn.HeaderTemplate>
                                                     <DataTemplate>
@@ -491,11 +519,12 @@
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <ComboBox DisplayMemberPath="productDetailName"
-                                                                  IsEnabled="{Binding ElementName=Shift3Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
-                                                                  ItemsSource="{Binding Path=listProductDetails}"
-                                                                  SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                                  SelectedValuePath="productDetailId" />
+                                                        <ComboBox
+                                                            DisplayMemberPath="productDetailName"
+                                                            IsEnabled="{Binding ElementName=Shift3Dgv, Path=IsReadOnly, Converter={StaticResource conv}}"
+                                                            ItemsSource="{Binding Path=listProductDetails}"
+                                                            SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                            SelectedValuePath="productDetailId" />
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -528,9 +557,10 @@
                                                 </DataGridTemplateColumn.HeaderTemplate>
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <Button Name="DeletePlan"
-                                                                Background="Transparent"
-                                                                Click="DeletePlan_Click">
+                                                        <Button
+                                                            Name="DeletePlan"
+                                                            Background="Transparent"
+                                                            Click="DeletePlan_Click">
                                                             <iconPacks:PackIconMaterial Kind="DeleteForever" />
                                                         </Button>
                                                     </DataTemplate>
@@ -538,24 +568,27 @@
                                             </DataGridTemplateColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
-                                </TabItem>
+                                </TabItem>-->
                             </TabControl>
                         </Grid>
-                        <Grid Grid.Row="0" Grid.Column="1">
-                            <StackPanel Margin="0,-40,0,0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        Orientation="Horizontal">
+                        <Grid Grid.Row="0">
+                            <StackPanel
+                                Margin="10,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
                                 <Label>Search</Label>
-                                <TextBox Name="tb_searchPlan"
-                                         Width="170"
-                                         Margin="5,0,5,0"
-                                         TextChanged="TextBox_TextChanged" />
-                                <Button Name="RefreshBtn"
-                                        Width="20"
-                                        Height="20"
-                                        Margin="5,0,5,0"
-                                        Click="Btn_Refresh_Click">
+                                <TextBox
+                                    Name="tb_searchPlan"
+                                    Width="170"
+                                    Margin="5,0,5,0"
+                                    TextChanged="TextBox_TextChanged" />
+                                <Button
+                                    Name="RefreshBtn"
+                                    Width="20"
+                                    Height="20"
+                                    Margin="5,0,5,0"
+                                    Click="Btn_Refresh_Click">
                                     <iconPacks:PackIconMaterial Kind="Refresh" />
                                 </Button>
                                 <!--<Button Name="ClearBtn"
@@ -576,13 +609,14 @@
                                     Content="Apply"
                                     Click="Btn_CreatePlanPallet_Click" />-->
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Button Name="btn_importPlan"
-                                        Width="auto"
-                                        Height="25"
-                                        Margin="10,0"
-                                        Padding="5,0"
-                                        Click="Btn_importPlan_Click"
-                                        Content="{DynamicResource PlanControl_Import}" />
+                                <Button
+                                    Name="btn_importPlan"
+                                    Width="auto"
+                                    Height="25"
+                                    Margin="10,0"
+                                    Padding="5,0"
+                                    Click="Btn_importPlan_Click"
+                                    Content="{DynamicResource PlanControl_Import}" />
                             </StackPanel>
                             <!--<StackPanel
                             HorizontalAlignment="Center"
@@ -597,20 +631,30 @@
                                 Click="Btn_Test_Click">
                                 </Button>
                             </StackPanel>-->
-                            <Button Name="Btn_Accept"
-                                    Width="Auto"
-                                    Height="25"
-                                    Margin="10,0"
-                                    Padding="5,0"
-                                    Click="Btn_Accept_Click"
-                                    Content="{DynamicResource PlanControl_Save}" />
-                            <Button Name="Btn_Cancel"
-                                    Width="Auto"
-                                    Height="25"
-                                    Margin="10,0"
-                                    Padding="5,0"
-                                    Click="Btn_Cancel_Click"
-                                    Content="{DynamicResource PlanControl_Exit}" />
+                            <Button
+                                Name="Btn_Accept"
+                                Width="Auto"
+                                Height="25"
+                                Margin="10,0"
+                                Padding="5,0"
+                                Click="Btn_Accept_Click"
+                                Content="{DynamicResource PlanControl_Save}" />
+                            <Button
+                                Name="Btn_Delete"
+                                Width="Auto"
+                                Height="25"
+                                Margin="10,0"
+                                Padding="5,0"
+                                Click="Btn_Delete_Click"
+                                Content="{DynamicResource PlanControl_Delete}" />
+                            <Button
+                                Name="Btn_Cancel"
+                                Width="Auto"
+                                Height="25"
+                                Margin="10,0"
+                                Padding="5,0"
+                                Click="Btn_Cancel_Click"
+                                Content="{DynamicResource PlanControl_Exit}" />
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -631,16 +675,18 @@
                     </StatusBarItem>
                     <StatusBarItem>
                         <Grid>
-                            <ProgressBar Name="pbStatus"
-                                         Width="200"
-                                         Height="20"
-                                         Margin="5,0"
-                                         Maximum="100"
-                                         Minimum="0" />
-                            <TextBlock HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" />
+                            <ProgressBar
+                                Name="pbStatus"
+                                Width="200"
+                                Height="20"
+                                Margin="5,0"
+                                Maximum="100"
+                                Minimum="0" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" />
                         </Grid>
                     </StatusBarItem>
                 </StatusBar>

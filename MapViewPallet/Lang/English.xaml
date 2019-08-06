@@ -1,12 +1,13 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                    xmlns:local="clr-namespace:MapViewPallet.Lang">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:MapViewPallet.Lang"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="Language">Language</sys:String>
     <sys:String x:Key="English">English</sys:String>
     <sys:String x:Key="Vietnamese">Tiếng Việt</sys:String>
 
-    <!--MainWindow-->
+    <!--  MainWindow  -->
     <sys:String x:Key="MainWindow_Title">Warehouse Management Software</sys:String>
     <sys:String x:Key="MainWindow_Menu_Management">_Management</sys:String>
     <sys:String x:Key="MainWindow_Menu_Management_Process">_Process</sys:String>
@@ -16,13 +17,13 @@
     <sys:String x:Key="MainWindow_Menu_Account_ChangePass">_Change Password</sys:String>
     <sys:String x:Key="MainWindow_Menu_Account_Logout">_Logout</sys:String>
 
-    <!--MenuItem-->
+    <!--  MenuItem  -->
     <sys:String x:Key="Station_Menu_Item_Properties">Info</sys:String>
     <sys:String x:Key="Station_Menu_Item_Edit">Edit</sys:String>
     <sys:String x:Key="Station_Menu_Item_Rotate">Rotate</sys:String>
     <sys:String x:Key="Station_Menu_Item_Remove">Remove</sys:String>
 
-    <!--Toolbar-->
+    <!--  Toolbar  -->
     <sys:String x:Key="MainWindow_Toolbar_MapReCenter">Recenter map</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_MapOnOff">Hide/Show map</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_PlanManagement">Plan Management</sys:String>
@@ -35,10 +36,10 @@
     <sys:String x:Key="MainWindow_Toolbar_ZoomInOut">Zoom</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_MoveStaion">Move Buffer</sys:String>
 
-    <!--TabItem-->
+    <!--  TabItem  -->
     <sys:String x:Key="MainWindow_TabItem_LogConsole">Log</sys:String>
 
-    <!--AddBufferForm-->
+    <!--  AddBufferForm  -->
     <sys:String x:Key="AddBufferForm_Title1">Add Buffer</sys:String>
     <sys:String x:Key="AddBufferForm_Title2">Edit Buffer</sys:String>
     <sys:String x:Key="AddBufferForm_BufferName">Buffer Name</sys:String>
@@ -47,22 +48,22 @@
     <sys:String x:Key="AddBufferForm_BufferReturn">Buffer Return</sys:String>
     <sys:String x:Key="AddBufferForm_ButtonAccept">Accept</sys:String>
 
-    <!--AddDevicesForm-->
+    <!--  AddDevicesForm  -->
     <sys:String x:Key="AddDevicesForm_Title">Add Device</sys:String>
     <sys:String x:Key="AddDevicesForm_DeviceName">Device Name</sys:String>
     <sys:String x:Key="AddDevicesForm_Add">Add</sys:String>
 
-    <!--AddProductDetailForm-->
+    <!--  AddProductDetailForm  -->
     <sys:String x:Key="AddProductDetailForm_Title">Add Product Detail</sys:String>
     <sys:String x:Key="AddProductDetailForm_ProductDetailName">Product Detail Name</sys:String>
     <sys:String x:Key="AddProductDetailForm_Add">Add</sys:String>
 
-    <!--AddProductForm-->
+    <!--  AddProductForm  -->
     <sys:String x:Key="AddProductForm_Title">Add Product</sys:String>
     <sys:String x:Key="AddProductForm_ProductName">Product Name</sys:String>
     <sys:String x:Key="AddProductForm_Add">Add</sys:String>
 
-    <!--AddUserForm-->
+    <!--  AddUserForm  -->
     <sys:String x:Key="AddUserForm_Title1">User</sys:String>
     <sys:String x:Key="AddUserForm_Title2">Edit User</sys:String>
     <sys:String x:Key="AddUserForm_UserName">Username</sys:String>
@@ -72,7 +73,7 @@
     <sys:String x:Key="AddUserForm_Save">Save</sys:String>
     <sys:String x:Key="AddUserForm_Exit">Close</sys:String>
 
-    <!--ChangePassForm-->
+    <!--  ChangePassForm  -->
     <sys:String x:Key="ChangePassForm_Title">Change Password</sys:String>
     <sys:String x:Key="ChangePassForm_UserName">Username</sys:String>
     <sys:String x:Key="ChangePassForm_Password">Password</sys:String>
@@ -81,7 +82,7 @@
     <sys:String x:Key="ChangePassForm_Save">Save</sys:String>
     <sys:String x:Key="ChangePassForm_Exit">Close</sys:String>
 
-    <!--LoginForm-->
+    <!--  LoginForm  -->
     <sys:String x:Key="LoginForm_Title">Login</sys:String>
     <sys:String x:Key="LoginForm_UserName">Username</sys:String>
     <sys:String x:Key="LoginForm_Password">Password</sys:String>
@@ -90,7 +91,7 @@
     <sys:String x:Key="LoginForm_LoginError">Please check Server</sys:String>
     <sys:String x:Key="LoginForm_WaitLogin">Please wait</sys:String>
 
-    <!--PlanControl-->
+    <!--  PlanControl  -->
     <sys:String x:Key="PlanControl_Title">Plan Management</sys:String>
     <sys:String x:Key="PlanControl_MainLabel">Create Plan</sys:String>
     <sys:String x:Key="PlanControl_Shift1_Label">Plan</sys:String>
@@ -103,10 +104,11 @@
     <sys:String x:Key="PlanControl_Shift_Column_PalletUse">Buffered</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_Delete">Delete</sys:String>
     <sys:String x:Key="PlanControl_Save">Save</sys:String>
+    <sys:String x:Key="PlanControl_Delete">Delete</sys:String>
     <sys:String x:Key="PlanControl_Import">Import</sys:String>
     <sys:String x:Key="PlanControl_Exit">Close</sys:String>
 
-    <!--DevicesManagement-->
+    <!--  DevicesManagement  -->
     <sys:String x:Key="DevicesManagement_Title">Manage</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Operation">Operation</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Device">Device</sys:String>
@@ -148,7 +150,7 @@
     <sys:String x:Key="DevicesManagement_Button_Save">Save</sys:String>
     <sys:String x:Key="DevicesManagement_Button_Exit">Close</sys:String>
 
-    <!--StationEditor-->
+    <!--  StationEditor  -->
     <sys:String x:Key="StationEditor_Title">Buffer Management</sys:String>
 
     <sys:String x:Key="StationEditor_Groupbox_BufferInfo">Buffer Info</sys:String>
@@ -181,7 +183,7 @@
     <sys:String x:Key="StationEditor_BufferType_Return">Return</sys:String>
     <sys:String x:Key="StationEditor_BufferType_Buffer">Buffer</sys:String>
 
-    <!--UserManagement-->
+    <!--  UserManagement  -->
     <sys:String x:Key="UserManagement_Title">User Management</sys:String>
     <sys:String x:Key="UserManagement_AccountList">Account List</sys:String>
     <sys:String x:Key="UserManagement_AccountList_Column_UserName">Username</sys:String>
@@ -190,7 +192,7 @@
 
     <sys:String x:Key="UserManagement_Button_Exit">Close</sys:String>
 
-    <!--Statistics-->
+    <!--  Statistics  -->
     <sys:String x:Key="Statistics_Title">Statistics</sys:String>
     <sys:String x:Key="Statistics_TabItem_RobotProcess">Robot Process</sys:String>
     <sys:String x:Key="Statistics_TabItem_Devices">Devices</sys:String>

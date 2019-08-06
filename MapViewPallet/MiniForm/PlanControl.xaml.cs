@@ -15,6 +15,14 @@ using System.Windows.Media;
 
 namespace MapViewPallet.MiniForm
 {
+    class dtTempPlan
+    {
+        public int planId;
+        public dtTempPlan(dtPlan plan)
+        {
+            planId = plan.planId;
+        }
+    }
     /// <summary>
     /// Interaction logic for OperationControl.xaml
     /// </summary>
@@ -116,9 +124,9 @@ namespace MapViewPallet.MiniForm
                     switch (UpdateDateStatus((DateTime)pCalendar.SelectedDate))
                     {
                         case -1:
-                        { Shift1Dgv.IsReadOnly = Shift2Dgv.IsReadOnly = Shift3Dgv.IsReadOnly = false; break; }
+                        { Shift1Dgv.IsReadOnly  = false; break; }
                         default:
-                        { Shift1Dgv.IsReadOnly = Shift2Dgv.IsReadOnly = Shift3Dgv.IsReadOnly = false; break; }
+                        { Shift1Dgv.IsReadOnly =  false; break; }
                     }
                     if (TabControlShift.IsLoaded)
                     {
@@ -418,6 +426,53 @@ namespace MapViewPallet.MiniForm
         private void Label_MouseDown2(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             cbShowReturnPlan.IsChecked = !cbShowReturnPlan.IsChecked;
+        }
+
+        private void Btn_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (System.Windows.Forms.MessageBox.Show
+                        (
+                        String.Format(Global_Object.messageDeleteConfirm, "Plans"),
+                        Global_Object.messageTitileWarning, MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes
+                        )
+            {
+                try
+                {
+                    List<dtTempPlan> listToDetele = new List<dtTempPlan>();
+                    if (Shift1Dgv.SelectedItems.Count > 0)
+                    {
+                        foreach (dtPlan plan in Shift1Dgv.SelectedItems)
+                        {
+                            listToDetele.Add(new dtTempPlan(plan));
+                        }
+                        string jsonData = JsonConvert.SerializeObject(listToDetele);
+                        string contentJson = Global_Object.RequestDataAPI(jsonData, "plan/deleteListPlan", Global_Object.RequestMethod.DELETE);
+                        dynamic response = JsonConvert.DeserializeObject(contentJson);
+                        
+                        if(response != null)
+                        {
+                            if (response == 1)
+                            {
+                                System.Windows.MessageBox.Show("Plans deleted successfully!");
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("Cannot Delete!");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("Nothing to delete!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logFile.Error(ex.Message);
+                }
+            }
+                
         }
     }
 }

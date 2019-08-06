@@ -72,6 +72,7 @@ namespace MapViewPallet.MiniForm
             this.planControl.pbStatus.Value = 0;
             planControl.btn_importPlan.IsEnabled = true;
             planControl.Btn_Accept.IsEnabled = true;
+            planControl.Btn_Delete.IsEnabled = true;
             planControl.RefreshBtn.IsEnabled = true;
         }
 
@@ -86,6 +87,7 @@ namespace MapViewPallet.MiniForm
             {
                 planControl.btn_importPlan.IsEnabled = false;
                 planControl.Btn_Accept.IsEnabled = false;
+                planControl.Btn_Delete.IsEnabled = false;
                 planControl.RefreshBtn.IsEnabled = false;
             }));
             Stopwatch stopwatch = Stopwatch.StartNew();

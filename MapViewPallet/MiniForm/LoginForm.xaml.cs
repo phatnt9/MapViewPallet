@@ -96,11 +96,11 @@ namespace MapViewPallet.MiniForm
 
         private void btn_login_Click(object sender, RoutedEventArgs e)
         {
-            //if (!CheckAlive())
-            //{
-            //    PingTestlb.Content = FindResource("LoginForm_LoginError");
-            //    return;
-            //}
+            if (!CheckAlive())
+            {
+                PingTestlb.Content = FindResource("LoginForm_LoginError");
+                return;
+            }
             PingTestlb.Content = "";
             try
             {
