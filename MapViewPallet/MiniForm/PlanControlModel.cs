@@ -14,26 +14,9 @@ namespace MapViewPallet.MiniForm
     public class PlanControlModel : NotifyUIBase
     {
         private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private string _filterString;
-
-        public string FilterString
-        {
-            get => _filterString;
-            set
-            {
-                _filterString = value;
-                RaisePropertyChanged("FilterString");
-                GroupedDevices_S1.Refresh();
-            }
-        }
-
         public ListCollectionView GroupedDevices_S1 { get; private set; }
-        public ListCollectionView GroupedDevices_S2 { get; private set; }
-        public ListCollectionView GroupedDevices_S3 { get; private set; }
 
         public List<Plan> BasePlans1 { get; set; }
-        public List<Plan> BasePlans2 { get; set; }
-        public List<Plan> BasePlans3 { get; set; }
 
         public PlanControl planControl;
         public DeviceList deviceList;
@@ -45,24 +28,9 @@ namespace MapViewPallet.MiniForm
             deviceList = new DeviceList();
 
             BasePlans1 = new List<Plan>();
-            BasePlans2 = new List<Plan>();
-            BasePlans3 = new List<Plan>();
             GroupedDevices_S1 = (ListCollectionView)CollectionViewSource.GetDefaultView(BasePlans1);
-            //GroupedDevices_S1.Filter = PlansFilter;
-            GroupedDevices_S2 = (ListCollectionView)CollectionViewSource.GetDefaultView(BasePlans2);
-            GroupedDevices_S3 = (ListCollectionView)CollectionViewSource.GetDefaultView(BasePlans3);
         }
 
-        private bool PlansFilter(object item)
-        {
-            Plan plan = item as Plan;
-            if (plan.productDetailName != null)
-            {
-                return plan.productDetailName.Contains(_filterString);
-            }
-
-            return false;
-        }
 
         public bool ContainPlan(Plan tempOpe, List<Plan> List)
         {
@@ -323,36 +291,10 @@ namespace MapViewPallet.MiniForm
                     }
                     case 2:
                     {
-                        BasePlans2.Clear();
-                        AddPlans(plansTemp, BasePlans2);
-                        if (GroupedDevices_S2.IsEditingItem)
-                        {
-                            GroupedDevices_S2.CommitEdit();
-                        }
-
-                        if (GroupedDevices_S2.IsAddingNew)
-                        {
-                            GroupedDevices_S2.CommitNew();
-                        }
-
-                        GroupedDevices_S2.Refresh();
                         break;
                     }
                     case 3:
                     {
-                        BasePlans3.Clear();
-                        AddPlans(plansTemp, BasePlans3);
-                        if (GroupedDevices_S3.IsEditingItem)
-                        {
-                            GroupedDevices_S3.CommitEdit();
-                        }
-
-                        if (GroupedDevices_S3.IsAddingNew)
-                        {
-                            GroupedDevices_S3.CommitNew();
-                        }
-
-                        GroupedDevices_S3.Refresh();
                         break;
                     }
                     default:
@@ -378,14 +320,7 @@ namespace MapViewPallet.MiniForm
             }
             return false;
         }
-
-        public void RefreshData()
-        {
-            GroupedDevices_S1.Refresh();
-            //GroupedDevices_S2.Refresh();
-            //GroupedDevices_S3.Refresh();
-        }
-
+        
         public List<Plan> CheckPlans(int timeWorkId, DateTime selectedDate)
         {
             if (!Global_Object.ServerAlive())
@@ -420,35 +355,6 @@ namespace MapViewPallet.MiniForm
                     dynamic listplan = JsonConvert.DeserializeObject(result);
                     foreach (dynamic item in listplan)
                     {
-                        //Plan tempPlan = new Plan()
-                        //{
-                        //    creUsrId = (int)item.creUsrId,
-                        //    creDt = (string)item.creDt,
-                        //    updUsrId = (int)item.updUsrId,
-                        //    updDt = (string)item.updDt,
-
-                        //    planId = (int)item.planId,
-                        //    deviceProductId = (int)item.deviceProductId,
-                        //    timeWorkId = (int)item.timeWorkId,
-                        //    productDetailId = (int)item.productDetailId,
-
-                        //    palletAmount = (int)item.palletAmount,
-                        //    palletUse = (int)item.palletUse,
-                        //    palletMiss = (int)item.palletMiss,
-                        //    activeDate = (string)item.activeDate,
-
-                        //    deviceId = (int)item.deviceId,
-                        //    productId = (int)item.productId,
-                        //    deviceName = (string)item.deviceName,
-                        //    imageDeviceUrl = (string)item.imageDeviceUrl,
-                        //    productName = (string)item.productName,
-                        //    imageProductUrl = (string)item.imageProductUrl,
-                        //    productDetailName = (string)item.productDetailName,
-                        //    //palletStatus = (string)item.palletStatus,
-                        //    //buffers = (string)item.buffers,
-                        //    //deviceId = deviceList.GetDeviceIdByDeviceProductId((int)item.deviceProductId),
-                        //    //productId = deviceList.GetProductIdByDeviceProductId((int)item.deviceProductId)
-                        //};
                         Plan tempPlan = new Plan(item);
                         AddPlan(tempPlan, returnList);
                     }
@@ -532,53 +438,5 @@ namespace MapViewPallet.MiniForm
             }
         }
 
-        public void SendPlanToDb(Plan plan)
-        {
-            if (!Global_Object.ServerAlive())
-            {
-                return;
-            }
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "plan/insertUpdatePlan");
-                request.Method = "POST";
-                request.ContentType = @"application/json";
-
-                //********************************
-                dynamic postApiBody = new JObject();
-                postApiBody.planId = plan.planId;
-                postApiBody.deviceProductId = plan.deviceProductId;
-                postApiBody.timeWorkId = plan.timeWorkId;
-                postApiBody.productDetailId = plan.productDetailId;
-                postApiBody.palletAmount = plan.palletAmount;
-                postApiBody.activeDate = plan.activeDate;
-                postApiBody.deviceId = plan.deviceId;
-                postApiBody.productId = plan.productId;
-                postApiBody.creUsrId = Global_Object.userLogin;
-                postApiBody.updUsrId = Global_Object.userLogin;
-
-                //********************************
-                string jsonData = "[" + JsonConvert.SerializeObject(postApiBody) + "]";
-                int result = 0;
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonData);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
-                }
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    int.TryParse(reader.ReadToEnd(), out result);
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.Error(ex.Message);
-            }
-        }
     }
 }

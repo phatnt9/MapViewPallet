@@ -318,7 +318,6 @@ namespace MapViewPallet.Shape
                 StationEditor stationEditor = new StationEditor(this, Thread.CurrentThread.CurrentCulture.ToString());
                 stationEditor.Show();
             }
-            
         }
 
         public void PropertiesMenu(object sender, RoutedEventArgs e)

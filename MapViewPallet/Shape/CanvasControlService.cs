@@ -19,6 +19,20 @@ namespace MapViewPallet.Shape
     {
         //=================VARIABLE==================
         private readonly int stationCount = 0;
+        private PalletShape _mouseHoverPallet;
+
+        public PalletShape MouseHoverPallet
+        {
+            get => _mouseHoverPallet;
+            set
+            {
+                if (_mouseHoverPallet != value)
+                {
+                    _mouseHoverPallet = value;
+                    RaisePropertyChanged("MouseHoverPallet");
+                }
+            }
+        }
 
         //---------------MAP-------------------
         private MainWindow mainWindow;
@@ -79,11 +93,7 @@ namespace MapViewPallet.Shape
         public SortedDictionary<string, StationShape> list_Station;
         public SortedDictionary<string, RobotShape> list_Robot;
 
-        //double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
-        //---------------MICS-------------------
-        //private Ellipse cursorPoint = new Ellipse();
-        //======================MAP======================
-        //public CanvasControlService(MainWindow mainWinDowIn, TreeView mainTreeViewIn)
+        
         public CanvasControlService(MainWindow mainWinDowIn)
         {
             mainWindow = mainWinDowIn;
@@ -259,111 +269,56 @@ namespace MapViewPallet.Shape
         private void Map_MouseMove(object sender, MouseEventArgs e)
         {
             //Get mouse props
-            Point mousePos = e.GetPosition(map);
+            //Point mousePos = e.GetPosition(map);
+            //mainWindow.DP_PALLETINFO.RenderTransform = new TranslateTransform(mousePos.X+20, mousePos.Y+20);
             var mouseWasDownOn = (e.Source as FrameworkElement);
-            hoveringItemName = mouseWasDownOn.Name;
-            //mainWindow.MouseCoor.Content = (mousePos.X- Global_Object.OriginPoint.X).ToString("0.0") + " " + (Global_Object.OriginPoint.Y - mousePos.Y ).ToString("0.0");
-            //mainWindow.MouseCoor.Content = (Global_Object.CoorLaser(mousePos).X).ToString("0.00") + " " + (Global_Object.CoorLaser(mousePos).Y).ToString("0.00");
-            //mainWindow.MouseCoor2.Content = ((mousePos).X).ToString("0.00") + " " + ((mousePos).Y).ToString("0.00");
-            //mainWindow.MouseCoor.Content = ((mousePos).X.ToString("0.0") + " " + (mousePos).Y.ToString("0.0"));
-
-            //Console.WriteLine("============================================");
-            //Console.WriteLine("MousePos:  (" + mousePos.X + "," + mousePos.Y + ")");
-            //Console.WriteLine("CoorLaser:  (" + Global_Object.CoorLaser(mousePos).X.ToString("0.0") + "," + Global_Object.CoorLaser(mousePos).Y.ToString("0.0")+")");
-            //Console.WriteLine("CoorCanvas:  ("+ Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).X.ToString("0.0") + "," + Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).Y.ToString("0.0") + ")");
-            ////
-            // POINT OF VIEW
-            //
-            if ((mainWindow.drag))
+            //Console.WriteLine(mouseWasDownOn.GetType().ToString());
+            try
             {
-                if (!map.IsMouseCaptured)
+                Type mouseHoverItemType = mouseWasDownOn.GetType();
+
+                switch (mouseHoverItemType.ToString())
                 {
-                    return;
+                    case "System.Windows.Controls.TextBlock":
+                    {
+                        System.Windows.Controls.TextBlock texblock = mouseWasDownOn as System.Windows.Controls.TextBlock;
+                        if (texblock.Text.Length > 10)
+                        {
+                            string[] dateAndCode = mainWindow.palletInfoShow.Text.Split('/');
+                            mainWindow.palletInfoShow.Text = "";
+                            mainWindow.palletInfoShow.Text =
+                                   // " Bay/Row: " + MouseHoverPallet.pallet.bay + "/" + MouseHoverPallet.pallet.row +
+                                   // " Item FGS: " + MouseHoverPallet.pallet.productId + "-" + MouseHoverPallet.pallet.productName +
+                                   "" + texblock.Text +
+                                   "";
+                        }
+                        break;
+                    }
+                    case "MapViewPallet.Shape.PalletShape":
+                    {
+                        MouseHoverPallet = mouseWasDownOn as PalletShape;
+                        mainWindow.palletInfoShow.Text = "";
+                        mainWindow.palletInfoShow.Text =
+                            // " Bay/Row: " + MouseHoverPallet.pallet.bay + "/" + MouseHoverPallet.pallet.row +
+                            // " Item FGS: " + MouseHoverPallet.pallet.productId + "-" + MouseHoverPallet.pallet.productName +
+                            "" + MouseHoverPallet.pallet.productDetailName +
+                            "";
+                        break;
+                    }
+                    default:
+                    {
+                        mainWindow.palletInfoShow.Text = "";
+                        break;
+                    }
                 }
-
-                Vector moveVector = startPoint - e.GetPosition(mainWindow.clipBorder);
-                double xCoor = originalPoint.X - moveVector.X;
-                double yCoor = originalPoint.Y - moveVector.Y;
-
-                double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
-                double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
-                double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
-                double ClipBorderHeight = (mainWindow.clipBorder.ActualHeight);
-
-                //translateTransform.X = xCoor;
-                //translateTransform.Y = yCoor;
-
-                //Console.WriteLine(xCoor+"    "+ yCoor);
-
-                //double xlim;
-                //double ylim;
-                //if (ClipBorderWidth < map.Width)
-                //{
-                //    xlim = (map.Width * (pScaleTransform.ScaleX - 1)) / 2;
-                //}
-                //else
-                //{
-                //    xlim = Math.Abs((MapWidthScaled - ClipBorderWidth) / 2);
-                //}
-
-                //if (ClipBorderHeight < map.Height)
-                //{
-                //    ylim = (map.Height * (pScaleTransform.ScaleY - 1)) / 2;
-                //}
-                //else
-                //{
-                //    ylim = Math.Abs((MapHeightScaled - ClipBorderHeight) / 2);
-                //}
-
-                //if (ClipBorderWidth > map.Width)
-                //{
-                //    if ((xCoor >= (-xlim)) && (xCoor <= (xlim)))
-                //    {
-                //        translateTransform.X = xCoor;
-                //    }
-                //}
-                //else
-                //{
-                //    if (ClipBorderWidth < MapWidthScaled)
-                //    {
-                //        if ((xCoor <= (xlim)) && (xCoor >= -(MapWidthScaled - ClipBorderWidth - xlim)))
-                //        {
-                //            translateTransform.X = xCoor;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        if ((xCoor >= (xlim)) && (xCoor <= -(MapWidthScaled - ClipBorderWidth - xlim)))
-                //        {
-                //            translateTransform.X = xCoor;
-                //        }
-                //    }
-                //}
-                //if (ClipBorderHeight > map.Height)
-                //{
-                //    if ((yCoor >= (-ylim)) && (yCoor <= (ylim)))
-                //    {
-                //        translateTransform.Y = yCoor;
-                //    }
-                //}
-                //else
-                //{
-                //    if (ClipBorderHeight < MapHeightScaled)
-                //    {
-                //        if ((yCoor <= (ylim)) && (yCoor >= -(MapHeightScaled - ClipBorderHeight - ylim)))
-                //        {
-                //            translateTransform.Y = yCoor;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        if ((yCoor >= (ylim)) && (yCoor <= -(MapHeightScaled - ClipBorderHeight - ylim)))
-                //        {
-                //            translateTransform.Y = yCoor;
-                //        }
-                //    }
-                //}
+                
             }
+            catch
+            {
+                mainWindow.palletInfoShow.Text = "";
+            }
+            //hoveringItemName = mouseWasDownOn.Name;
+            //Console.WriteLine(hoveringItemName);
             if (!mainWindow.drag)
             {
                 Statectrl_MouseMove(e);
@@ -488,8 +443,8 @@ namespace MapViewPallet.Shape
 
                             dynamic data = JsonConvert.DeserializeObject(Global_Object.bufferToMove.props.bufferDb.bufferData);
                             postApiBody.arrange = data.arrange;
-                            postApiBody.canOpEdit = (data.canOpEdit == null)?false: data.returnGate;
-                            postApiBody.returnGate = (data.returnGate == null)?false: data.returnGate;
+                            postApiBody.canOpEdit = (data.canOpEdit == null) ? false : data.returnGate;
+                            postApiBody.returnGate = (data.returnGate == null) ? false : data.returnGate;
                             postApiBody.returnMain = (data.returnMain == null) ? false : data.returnMain;
                             postApiBody.return401 = (data.return401 == null) ? false : data.return401;
                             string jsonBufferData = JsonConvert.SerializeObject(postApiBody);

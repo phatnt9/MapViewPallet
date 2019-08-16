@@ -70,7 +70,7 @@ namespace MapViewPallet.MiniForm
             // process the response using e.Result
             //MessageBox.Show("Processing is complete.");
             this.planControl.pbStatus.Value = 0;
-            planControl.btn_importPlan.IsEnabled = true;
+            //planControl.btn_importPlan.IsEnabled = true;
             planControl.Btn_Accept.IsEnabled = true;
             planControl.Btn_Delete.IsEnabled = true;
             planControl.RefreshBtn.IsEnabled = true;
@@ -85,7 +85,7 @@ namespace MapViewPallet.MiniForm
         {
             Application.Current.Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
-                planControl.btn_importPlan.IsEnabled = false;
+                //planControl.btn_importPlan.IsEnabled = false;
                 planControl.Btn_Accept.IsEnabled = false;
                 planControl.Btn_Delete.IsEnabled = false;
                 planControl.RefreshBtn.IsEnabled = false;

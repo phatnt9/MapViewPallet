@@ -86,7 +86,7 @@ namespace MapViewPallet.Shape
             lbPallet2.TextWrapping = TextWrapping.Wrap;
             lbPallet2.Width = this.Width;
             lbPallet2.FontSize = 1.5;
-            lbPallet2.Text = pallet.productDetailName;
+            lbPallet2.Text = pallet.productDetailName == null ? "" : pallet.productDetailName.Substring(0, 8);
 
             System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
             rectangle.Width = 2;
@@ -247,7 +247,6 @@ namespace MapViewPallet.Shape
                                     dynamic postApiBody2 = new JObject();
                                     postApiBody2.userName = "WMS_Return";
                                     postApiBody2.length = 1;
-
 
                                     postApiBody2.bufferId = pallet.bufferId;
                                     postApiBody2.deviceId = pallet.deviceId;
@@ -707,7 +706,7 @@ namespace MapViewPallet.Shape
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           lbPallet2.Text = pallet.productDetailName;
+                                           lbPallet2.Text = pallet.productDetailName==null?"": pallet.productDetailName.Substring(0,8);
                                        }
                                        else
                                        {
@@ -730,7 +729,7 @@ namespace MapViewPallet.Shape
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           lbPallet2.Text = pallet.productDetailName;
+                                           lbPallet2.Text = pallet.productDetailName == null ? "" : pallet.productDetailName.Substring(0, 8);
                                        }
                                        else
                                        {
@@ -752,7 +751,7 @@ namespace MapViewPallet.Shape
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           lbPallet2.Text = pallet.productDetailName;
+                                           lbPallet2.Text = pallet.productDetailName == null ? "" : pallet.productDetailName.Substring(0, 8);
                                        }
                                        else
                                        {
@@ -774,7 +773,7 @@ namespace MapViewPallet.Shape
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           lbPallet2.Text = pallet.productDetailName;
+                                           lbPallet2.Text = pallet.productDetailName == null ? "" : pallet.productDetailName.Substring(0, 8);
                                        }
                                        else
                                        {
@@ -796,7 +795,7 @@ namespace MapViewPallet.Shape
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           lbPallet2.Text = pallet.productDetailName;
+                                           lbPallet2.Text = pallet.productDetailName == null ? "" : pallet.productDetailName.Substring(0, 8);
                                        }
                                        else
                                        {
@@ -818,7 +817,7 @@ namespace MapViewPallet.Shape
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           lbPallet2.Text = pallet.productDetailName;
+                                           lbPallet2.Text = pallet.productDetailName == null ? "" : pallet.productDetailName.Substring(0, 8);
                                        }
                                        else
                                        {
@@ -840,7 +839,7 @@ namespace MapViewPallet.Shape
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
                                        {
-                                           lbPallet2.Text = pallet.productDetailName;
+                                           lbPallet2.Text = pallet.productDetailName == null ? "" : pallet.productDetailName.Substring(0, 8);
                                        }
                                        else
                                        {

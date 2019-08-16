@@ -240,9 +240,8 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
-                
                 List<dtPallet> pallets = new List<dtPallet>();
-                
+
                 foreach (dtPallet item in PalletsListDg.SelectedItems)
                 {
                     dtPallet pallet = item;
@@ -275,8 +274,6 @@ namespace MapViewPallet.MiniForm
 
                     pallets.Add(pallet);
                 }
-
-                
 
                 if (pallets.Count == 0)
                 {

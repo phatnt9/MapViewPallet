@@ -15,14 +15,16 @@ using System.Windows.Media;
 
 namespace MapViewPallet.MiniForm
 {
-    class dtTempPlan
+    internal class dtTempPlan
     {
         public int planId;
+
         public dtTempPlan(dtPlan plan)
         {
             planId = plan.planId;
         }
     }
+
     /// <summary>
     /// Interaction logic for OperationControl.xaml
     /// </summary>
@@ -34,8 +36,6 @@ namespace MapViewPallet.MiniForm
 
         //=================VARIABLE==================
         public PlanControlModel operation_model;
-
-        public BackgroundWorker workerLoadPlan;
 
         public PlanControl(string cultureName = null)
         {
@@ -124,9 +124,9 @@ namespace MapViewPallet.MiniForm
                     switch (UpdateDateStatus((DateTime)pCalendar.SelectedDate))
                     {
                         case -1:
-                        { Shift1Dgv.IsReadOnly  = false; break; }
+                        { Shift1Dgv.IsReadOnly = false; break; }
                         default:
-                        { Shift1Dgv.IsReadOnly =  false; break; }
+                        { Shift1Dgv.IsReadOnly = false; break; }
                     }
                     if (TabControlShift.IsLoaded)
                     {
@@ -174,25 +174,19 @@ namespace MapViewPallet.MiniForm
                 }
                 if (DateTime.Now.ToShortDateString() == pDate.ToShortDateString())
                 {
-                    //DateTimeBorder.Background = new SolidColorBrush(Colors.LightGreen);
                     pCalendar.Background = new SolidColorBrush(Colors.LightGreen);
-                    //lb_Date.Foreground = new SolidColorBrush(Colors.Black);
                     return 0;
                 }
                 else
                 {
                     if (DateTime.Now.CompareTo(pDate) == 1)
                     {
-                        //DateTimeBorder.Background = new SolidColorBrush(Colors.IndianRed);
                         pCalendar.Background = new SolidColorBrush(Colors.IndianRed);
-                        //lb_Date.Foreground = new SolidColorBrush(Colors.Black);
                         return -1;
                     }
                     else
                     {
-                        //DateTimeBorder.Background = new SolidColorBrush(Colors.LightGray);
                         pCalendar.Background = new SolidColorBrush(Colors.LightGray);
-                        //lb_Date.Foreground = new SolidColorBrush(Colors.Black);
                         return 1;
                     }
                 }
@@ -298,7 +292,6 @@ namespace MapViewPallet.MiniForm
                     int.TryParse(reader.ReadToEnd(), out result);
                     if (result == 1)
                     {
-                        //System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDeleteSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         if ((pCalendar.SelectedDate != null) && (TabControlShift.SelectedIndex >= 0) && (TabControlShift.IsLoaded))
                         {
                             //Dispatcher.BeginInvoke(new ThreadStart(() =>
@@ -449,8 +442,8 @@ namespace MapViewPallet.MiniForm
                         string jsonData = JsonConvert.SerializeObject(listToDetele);
                         string contentJson = Global_Object.RequestDataAPI(jsonData, "plan/deleteListPlan", Global_Object.RequestMethod.DELETE);
                         dynamic response = JsonConvert.DeserializeObject(contentJson);
-                        
-                        if(response != null)
+
+                        if (response != null)
                         {
                             if (response == 1)
                             {
@@ -472,7 +465,6 @@ namespace MapViewPallet.MiniForm
                     logFile.Error(ex.Message);
                 }
             }
-                
         }
     }
 }

@@ -220,7 +220,6 @@ namespace MapViewPallet
 
         private void OnTimedRedrawStationEvent(object sender, ElapsedEventArgs e)
         {
-            Console.WriteLine("GET IN ON TIME REDRAW STATION TIMER!!!");
             try
             {
                 if (Global_Object.ServerAlive())
@@ -321,7 +320,7 @@ namespace MapViewPallet
         {
             try
             {
-                if ((userManagement == null)&& (Global_Object.userAuthor == 0))
+                if ((userManagement == null) && (Global_Object.userAuthor == 0))
                 {
                     userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
                     userManagement.Closed += UserManagement_Closed;

@@ -2138,5 +2138,31 @@ namespace MapViewPallet.MiniForm
             }
             UpdateTab1(false);
         }
+
+        private void Btn_Delete_DeviceBufferData_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                foreach (dtDevicePallet item in DevicePalletsListDg.SelectedItems)
+                {
+                    deviceManagementModel.devicePalletsList.Remove(item);
+                }
+                if (deviceManagementModel.GroupedDevicePallets.IsEditingItem)
+                {
+                    deviceManagementModel.GroupedDevicePallets.CommitEdit();
+                }
+
+                if (deviceManagementModel.GroupedDevicePallets.IsAddingNew)
+                {
+                    deviceManagementModel.GroupedDevicePallets.CommitNew();
+                }
+
+                deviceManagementModel.GroupedDevicePallets.Refresh();
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+        }
     }
 }
