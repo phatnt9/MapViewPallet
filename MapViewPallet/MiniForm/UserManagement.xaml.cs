@@ -2,32 +2,22 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MapViewPallet.MiniForm
 {
-    
     /// <summary>
     /// Interaction logic for UserManagement.xaml
     /// </summary>
     public partial class UserManagement : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public UserModel userModel;
 
@@ -41,14 +31,14 @@ namespace MapViewPallet.MiniForm
 
             UsersListDg.SelectionMode = DataGridSelectionMode.Single;
             UsersListDg.SelectionUnit = DataGridSelectionUnit.FullRow;
-
-
         }
 
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -120,7 +110,7 @@ namespace MapViewPallet.MiniForm
 
                     string jsonData = JsonConvert.SerializeObject(listDelete);
 
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/deleteListUser");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "user/deleteListUser");
                     request.Method = "DELETE";
                     request.ContentType = "application/json";
 
@@ -157,11 +147,10 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
         }
     }
 }

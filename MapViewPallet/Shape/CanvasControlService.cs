@@ -8,31 +8,42 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace MapViewPallet.Shape
 {
     public class CanvasControlService : NotifyUIBase
     {
         //=================VARIABLE==================
-        private int stationCount = 0;
+        private readonly int stationCount = 0;
+        private PalletShape _mouseHoverPallet;
+
+        public PalletShape MouseHoverPallet
+        {
+            get => _mouseHoverPallet;
+            set
+            {
+                if (_mouseHoverPallet != value)
+                {
+                    _mouseHoverPallet = value;
+                    RaisePropertyChanged("MouseHoverPallet");
+                }
+            }
+        }
+
         //---------------MAP-------------------
         private MainWindow mainWindow;
+
         private Canvas map;
 
-
-
         private double pZoomScale;
+
         public double zoomScale
         {
-            get { return pZoomScale; }
+            get => pZoomScale;
             set
             {
                 if (pZoomScale != value)
@@ -45,9 +56,10 @@ namespace MapViewPallet.Shape
         }
 
         private ScaleTransform pScaleTransform;
+
         public ScaleTransform scaleTransform
         {
-            get { return pScaleTransform; }
+            get => pScaleTransform;
             set
             {
                 if (pScaleTransform != value)
@@ -59,27 +71,29 @@ namespace MapViewPallet.Shape
         }
 
         private TranslateTransform translateTransform;
+
         //private TreeView mainTreeView;
         //---------------DRAW-------------------
         //private Point roundedMousePos = new Point();
         private Point startPoint;
+
         private Point draw_StartPoint;
         private Point originalPoint;
-        CanvasPath pathTemp;
+        private CanvasPath pathTemp;
+
         //---------------POINT OF VIEW-------------------
         private string selectedItemName = "";
+
         private string hoveringItemName = "";
         private double slidingScale;
 
         //---------------OBJECT-------------------
         public SortedDictionary<string, CanvasPath> list_Path;
+
         public SortedDictionary<string, StationShape> list_Station;
         public SortedDictionary<string, RobotShape> list_Robot;
-        //double yDistanceBottom, xDistanceLeft, yDistanceTop, xDistanceRight;
-        //---------------MICS-------------------
-        //private Ellipse cursorPoint = new Ellipse();
-        //======================MAP======================
-        //public CanvasControlService(MainWindow mainWinDowIn, TreeView mainTreeViewIn)
+
+        
         public CanvasControlService(MainWindow mainWinDowIn)
         {
             mainWindow = mainWinDowIn;
@@ -100,7 +114,6 @@ namespace MapViewPallet.Shape
             map.MouseLeftButtonUp += Map_MouseLeftButtonUp;
             mainWindow.PreviewKeyDown += new KeyEventHandler(HandleEsc);
             //mainWindow.clipBorder.SizeChanged += ClipBorder_SizeChanged;
-
         }
 
         //########################################################
@@ -113,9 +126,9 @@ namespace MapViewPallet.Shape
             {
                 list_Path[currentPath].props.isSelected = false;
                 list_Path[currentPath].ToggleStyle();
-
             }
         }
+
         public void ReCenterMapCanvas()
         {
             double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
@@ -162,21 +175,21 @@ namespace MapViewPallet.Shape
             }
         }
 
-
         //EVENT========EVENT========EVENT========EVENT========
-
 
         private void ClipBorder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             //Console.WriteLine("ClipBorder_SizeChanged");
             ReCenterMapCanvas();
         }
+
         private void Map_MouseDown(object sender, MouseButtonEventArgs e)
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             Point mousePos = e.GetPosition(map);
             //Console.WriteLine(mousePos.X+"  "+mousePos.Y);
         }
+
         private void Map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
@@ -191,7 +204,6 @@ namespace MapViewPallet.Shape
                     startPoint = e.GetPosition(mainWindow.clipBorder);
                     originalPoint = new Point(translateTransform.X, translateTransform.Y);
 
-
                     Point p1 = e.GetPosition(mainWindow.clipBorder);
                     Point p2 = e.GetPosition(mainWindow.map);
                     //Console.WriteLine(p1.X.ToString("0.00") + "-" + p1.Y.ToString("0.00"));
@@ -203,11 +215,13 @@ namespace MapViewPallet.Shape
                 Statectrl_MouseDown(e);
             }
         }
+
         private void Map_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             //selectedItemName = elementName;
         }
+
         private void Map_Zoom(object sender, MouseWheelEventArgs e)
         {
             Point mousePos = e.GetPosition(map);
@@ -238,6 +252,7 @@ namespace MapViewPallet.Shape
             ////transform.Matrix = matrix;
             //mainWindow.canvasMatrixTransform.Matrix = matrix;
         }
+
         private void Map_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Global_Object.OriginPoint.X = map.Width * 0.5;
@@ -250,122 +265,70 @@ namespace MapViewPallet.Shape
             map.Background.Transform = new TranslateTransform(X, Y);
             ReCenterMapCanvas();
         }
+
         private void Map_MouseMove(object sender, MouseEventArgs e)
         {
             //Get mouse props
-            Point mousePos = e.GetPosition(map);
+            //Point mousePos = e.GetPosition(map);
+            //mainWindow.DP_PALLETINFO.RenderTransform = new TranslateTransform(mousePos.X+20, mousePos.Y+20);
             var mouseWasDownOn = (e.Source as FrameworkElement);
-            hoveringItemName = mouseWasDownOn.Name;
-            //mainWindow.MouseCoor.Content = (mousePos.X- Global_Object.OriginPoint.X).ToString("0.0") + " " + (Global_Object.OriginPoint.Y - mousePos.Y ).ToString("0.0");
-            mainWindow.MouseCoor.Content = (Global_Object.CoorLaser(mousePos).X).ToString("0.00") + " " + (Global_Object.CoorLaser(mousePos).Y).ToString("0.00");
-            mainWindow.MouseCoor2.Content = ((mousePos).X).ToString("0.00") + " " + ((mousePos).Y).ToString("0.00");
-            //mainWindow.MouseCoor.Content = ((mousePos).X.ToString("0.0") + " " + (mousePos).Y.ToString("0.0"));
-
-            //Console.WriteLine("============================================");
-            //Console.WriteLine("MousePos:  (" + mousePos.X + "," + mousePos.Y + ")");
-            //Console.WriteLine("CoorLaser:  (" + Global_Object.CoorLaser(mousePos).X.ToString("0.0") + "," + Global_Object.CoorLaser(mousePos).Y.ToString("0.0")+")");
-            //Console.WriteLine("CoorCanvas:  ("+ Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).X.ToString("0.0") + "," + Global_Object.CoorCanvas(Global_Object.CoorLaser(mousePos)).Y.ToString("0.0") + ")");
-            ////
-            // POINT OF VIEW
-            //
-            if ((mainWindow.drag))
+            //Console.WriteLine(mouseWasDownOn.GetType().ToString());
+            try
             {
-                if (!map.IsMouseCaptured) return;
-                Vector moveVector = startPoint - e.GetPosition(mainWindow.clipBorder);
-                double xCoor = originalPoint.X - moveVector.X;
-                double yCoor = originalPoint.Y - moveVector.Y;
+                Type mouseHoverItemType = mouseWasDownOn.GetType();
 
-                double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
-                double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
-                double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
-                double ClipBorderHeight = (mainWindow.clipBorder.ActualHeight);
-
-                //translateTransform.X = xCoor;
-                //translateTransform.Y = yCoor;
-
-                //Console.WriteLine(xCoor+"    "+ yCoor);
-
-                //double xlim;
-                //double ylim;
-                //if (ClipBorderWidth < map.Width)
-                //{
-                //    xlim = (map.Width * (pScaleTransform.ScaleX - 1)) / 2;
-                //}
-                //else
-                //{
-                //    xlim = Math.Abs((MapWidthScaled - ClipBorderWidth) / 2);
-                //}
-
-                //if (ClipBorderHeight < map.Height)
-                //{
-                //    ylim = (map.Height * (pScaleTransform.ScaleY - 1)) / 2;
-                //}
-                //else
-                //{
-                //    ylim = Math.Abs((MapHeightScaled - ClipBorderHeight) / 2);
-                //}
-
-                //if (ClipBorderWidth > map.Width)
-                //{
-                //    if ((xCoor >= (-xlim)) && (xCoor <= (xlim)))
-                //    {
-                //        translateTransform.X = xCoor;
-                //    }
-                //}
-                //else
-                //{
-                //    if (ClipBorderWidth < MapWidthScaled)
-                //    {
-                //        if ((xCoor <= (xlim)) && (xCoor >= -(MapWidthScaled - ClipBorderWidth - xlim)))
-                //        {
-                //            translateTransform.X = xCoor;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        if ((xCoor >= (xlim)) && (xCoor <= -(MapWidthScaled - ClipBorderWidth - xlim)))
-                //        {
-                //            translateTransform.X = xCoor;
-                //        }
-                //    }
-                //}
-                //if (ClipBorderHeight > map.Height)
-                //{
-                //    if ((yCoor >= (-ylim)) && (yCoor <= (ylim)))
-                //    {
-                //        translateTransform.Y = yCoor;
-                //    }
-                //}
-                //else
-                //{
-                //    if (ClipBorderHeight < MapHeightScaled)
-                //    {
-                //        if ((yCoor <= (ylim)) && (yCoor >= -(MapHeightScaled - ClipBorderHeight - ylim)))
-                //        {
-                //            translateTransform.Y = yCoor;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        if ((yCoor >= (ylim)) && (yCoor <= -(MapHeightScaled - ClipBorderHeight - ylim)))
-                //        {
-                //            translateTransform.Y = yCoor;
-                //        }
-                //    }
-                //}
+                switch (mouseHoverItemType.ToString())
+                {
+                    case "System.Windows.Controls.TextBlock":
+                    {
+                        System.Windows.Controls.TextBlock texblock = mouseWasDownOn as System.Windows.Controls.TextBlock;
+                        if (texblock.Text.Length > 10)
+                        {
+                            string[] dateAndCode = mainWindow.palletInfoShow.Text.Split('/');
+                            mainWindow.palletInfoShow.Text = "";
+                            mainWindow.palletInfoShow.Text =
+                                   // " Bay/Row: " + MouseHoverPallet.pallet.bay + "/" + MouseHoverPallet.pallet.row +
+                                   // " Item FGS: " + MouseHoverPallet.pallet.productId + "-" + MouseHoverPallet.pallet.productName +
+                                   "" + texblock.Text +
+                                   "";
+                        }
+                        break;
+                    }
+                    case "MapViewPallet.Shape.PalletShape":
+                    {
+                        MouseHoverPallet = mouseWasDownOn as PalletShape;
+                        mainWindow.palletInfoShow.Text = "";
+                        mainWindow.palletInfoShow.Text =
+                            // " Bay/Row: " + MouseHoverPallet.pallet.bay + "/" + MouseHoverPallet.pallet.row +
+                            // " Item FGS: " + MouseHoverPallet.pallet.productId + "-" + MouseHoverPallet.pallet.productName +
+                            "" + MouseHoverPallet.pallet.productDetailName +
+                            "";
+                        break;
+                    }
+                    default:
+                    {
+                        mainWindow.palletInfoShow.Text = "";
+                        break;
+                    }
+                }
+                
             }
+            catch
+            {
+                mainWindow.palletInfoShow.Text = "";
+            }
+            //hoveringItemName = mouseWasDownOn.Name;
+            //Console.WriteLine(hoveringItemName);
             if (!mainWindow.drag)
             {
                 Statectrl_MouseMove(e);
             }
-
         }
+
         private void Map_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             map.ReleaseMouseCapture();
         }
-
-
 
         //PROCESS=====PROCESS=====PROCESS=====PROCESS=========
 
@@ -374,45 +337,48 @@ namespace MapViewPallet.Shape
             switch (e.Key)
             {
                 case Key.Escape:
-                    {
-                        Normal_mode();
-                        break;
-                    }
+                {
+                    Normal_mode();
+                    break;
+                }
                 case Key.Delete:
+                {
+                    try
                     {
-                        try
+                        if (list_Path.ContainsKey(selectedItemName))
                         {
-                            if (list_Path.ContainsKey(selectedItemName))
-                            {
-                                list_Path[selectedItemName].Remove();
-                                //list_Path.Remove(selectedItemName);
-                                Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
-                            }
+                            list_Path[selectedItemName].Remove();
+                            //list_Path.Remove(selectedItemName);
+                            Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
                         }
-                        catch
-                        {
-                            Console.WriteLine("Nothing to remove");
-                        }
-                        break;
                     }
+                    catch
+                    {
+                        Console.WriteLine("Nothing to remove");
+                    }
+                    break;
+                }
                 default:
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
             }
         }
+
         public void Normal_mode()
         {
             mainWindow.drag = true;
             Global_Mouse.ctrl_MouseMove = Global_Mouse.STATE_MOUSEMOVE._NORMAL;
             Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._NORMAL;
         }
+
         public void Select_mode()
         {
             //valstatectrl_mm = STATECTRL_MOUSEMOVE.STATECTRL_SLIDE_OBJECT;
             //valstatectrl_md = STATECTRL_MOUSEDOWN.STATECTRL_KEEP_IN_OBJECT;
         }
-        void Statectrl_MouseDown(MouseButtonEventArgs e)
+
+        private void Statectrl_MouseDown(MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
@@ -423,21 +389,20 @@ namespace MapViewPallet.Shape
             switch (Global_Mouse.ctrl_MouseDown)
             {
                 case Global_Mouse.STATE_MOUSEDOWN._ADD_STATION:
+                {
+                    if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
                     {
-                        if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._ADD_STATION)
-                        {
-                            //StationShape stationTemp = null;
-                            ////stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0);
-                            //stationCount++;
-                            //stationTemp.Move(mousePos);
-                            ////map.Children.Add(stationTemp);
-                        }
-                        break;
+                        //StationShape stationTemp = null;
+                        ////stationTemp = new StationShape(map, "MIX" + stationCount, 2, 7, 0);
+                        //stationCount++;
+                        //stationTemp.Move(mousePos);
+                        ////map.Children.Add(stationTemp);
                     }
+                    break;
+                }
                 case Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT:
                     if (mouseWasDownOn != null)
                     {
-
                         string elementName = mouseWasDownOn.Name;
                         string type = Global_Object.Foo(mouseWasDownOn);
                         if (elementName != "")
@@ -448,8 +413,6 @@ namespace MapViewPallet.Shape
                     }
                     break;
 
-
-
                 case Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION:
                     if (Global_Object.bufferToMove != null)
                     {
@@ -457,6 +420,7 @@ namespace MapViewPallet.Shape
                         Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._GET_OUT_OBJECT_MOVE_STATION;
                     }
                     break;
+
                 case Global_Mouse.STATE_MOUSEDOWN._GET_OUT_OBJECT_MOVE_STATION:
                     if (Global_Object.bufferToMove != null)
                     {
@@ -472,11 +436,17 @@ namespace MapViewPallet.Shape
 
                             dynamic postApiBody = new JObject();
                             Point updateBufferDataPoint = Global_Object.CoorLaser(mousePos);
+
                             postApiBody.x = Math.Round(updateBufferDataPoint.X, 1);
                             postApiBody.y = Math.Round(updateBufferDataPoint.Y, 1);
                             postApiBody.angle = Math.Round(Global_Object.bufferToMove.props._rotate, 1);
+
                             dynamic data = JsonConvert.DeserializeObject(Global_Object.bufferToMove.props.bufferDb.bufferData);
                             postApiBody.arrange = data.arrange;
+                            postApiBody.canOpEdit = (data.canOpEdit == null) ? false : data.returnGate;
+                            postApiBody.returnGate = (data.returnGate == null) ? false : data.returnGate;
+                            postApiBody.returnMain = (data.returnMain == null) ? false : data.returnMain;
+                            postApiBody.return401 = (data.return401 == null) ? false : data.return401;
                             string jsonBufferData = JsonConvert.SerializeObject(postApiBody);
                             buffer.bufferData = jsonBufferData;
 
@@ -490,7 +460,7 @@ namespace MapViewPallet.Shape
 
                             string jsonData = JsonConvert.SerializeObject(buffers);
 
-                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/updateListBuffer");
+                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/updateListBuffer");
                             request.Method = "POST";
                             request.ContentType = "application/json";
 
@@ -534,8 +504,6 @@ namespace MapViewPallet.Shape
                     }
                     break;
 
-
-
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_P1:
                     pathTemp = new StraightShape(map, new Point(0, 0), new Point(0, 0));
                     pathTemp.RemoveHandle += PathRemove;
@@ -550,6 +518,7 @@ namespace MapViewPallet.Shape
                         }
                     }
                     break;
+
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_P1:
                     pathTemp = new CurveShape(map, new Point(0, 0), new Point(0, 0), true);
                     if (mouseWasDownOn != null)
@@ -563,6 +532,7 @@ namespace MapViewPallet.Shape
                         }
                     }
                     break;
+
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_P1:
                     pathTemp = new CurveShape(map, new Point(0, 0), new Point(0, 0), false);
                     if (mouseWasDownOn != null)
@@ -576,6 +546,7 @@ namespace MapViewPallet.Shape
                         }
                     }
                     break;
+
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_P1:
                     pathTemp = new CurveShape(map, new Point(0, 0), new Point(0, 0), false);
                     if (mouseWasDownOn != null)
@@ -590,6 +561,7 @@ namespace MapViewPallet.Shape
                         }
                     }
                     break;
+
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH:
                     if (mouseWasDownOn != null)
                     {
@@ -601,6 +573,7 @@ namespace MapViewPallet.Shape
                         list_Path.Add(pathTemp.Name, pathTemp);
                     }
                     break;
+
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_FINISH:
                     if (mouseWasDownOn != null)
                     {
@@ -612,6 +585,7 @@ namespace MapViewPallet.Shape
                         list_Path.Add(pathTemp.Name, pathTemp);
                     }
                     break;
+
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_FINISH:
                     if (mouseWasDownOn != null)
                     {
@@ -623,6 +597,7 @@ namespace MapViewPallet.Shape
                         list_Path.Add(pathTemp.Name, pathTemp);
                     }
                     break;
+
                 case Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_FINISH:
                     if (mouseWasDownOn != null)
                     {
@@ -642,12 +617,14 @@ namespace MapViewPallet.Shape
                         }
                     }
                     break;
+
                 default:
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
             }
         }
+
         public void PathRemove(string name)
         {
             if (list_Path.ContainsKey(name))
@@ -656,6 +633,7 @@ namespace MapViewPallet.Shape
                 //Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Path.Count);
             }
         }
+
         public void StationRemove(string name)
         {
             if (list_Station.ContainsKey(name))
@@ -664,6 +642,7 @@ namespace MapViewPallet.Shape
                 //Console.WriteLine("Remove: " + selectedItemName + "-Count: " + list_Station.Count);
             }
         }
+
         public void ReloadAllStation()
         {
             if (!Global_Object.ServerAlive())
@@ -679,7 +658,7 @@ namespace MapViewPallet.Shape
                 }
                 list_Station.Clear();
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListBuffer");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -731,67 +710,65 @@ namespace MapViewPallet.Shape
             {
                 Console.WriteLine(exc.Message);
             }
-            
         }
 
-        void Statectrl_MouseMove(MouseEventArgs e)
+        private void Statectrl_MouseMove(MouseEventArgs e)
         {
             Point mousePos = e.GetPosition(map);
             var mouseWasDownOn = e.Source as FrameworkElement;
 
-
             switch (Global_Mouse.ctrl_MouseMove)
             {
                 case Global_Mouse.STATE_MOUSEMOVE._NORMAL:
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
                 case Global_Mouse.STATE_MOUSEMOVE._MOVE_STATION_START:
+                {
+                    if (Global_Object.bufferToMove != null)
                     {
-                        if (Global_Object.bufferToMove != null)
-                        {
-                            Global_Object.bufferToMove.Move(mousePos);
-                        }
-                        break;
+                        Global_Object.bufferToMove.Move(mousePos);
                     }
+                    break;
+                }
                 case Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_STRAIGHT:
+                {
+                    if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH)
                     {
-                        if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_STRAIGHT_FINISH)
-                        {
-                            pathTemp.ReDraw(draw_StartPoint, mousePos);
-                        }
-                        break;
+                        pathTemp.ReDraw(draw_StartPoint, mousePos);
                     }
+                    break;
+                }
                 case Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_CURVE:
+                {
+                    if ((Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_FINISH) ||
+                        (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_FINISH))
                     {
-                        if ((Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEUP_FINISH) ||
-                            (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_CURVEDOWN_FINISH))
-                        {
-                            pathTemp.ReDraw(draw_StartPoint, mousePos);
-                        }
-                        break;
+                        pathTemp.ReDraw(draw_StartPoint, mousePos);
                     }
+                    break;
+                }
                 case Global_Mouse.STATE_MOUSEMOVE._HAND_DRAW_JOINPATHS:
+                {
+                    if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_FINISH)
                     {
-                        if (Global_Mouse.ctrl_MouseDown == Global_Mouse.STATE_MOUSEDOWN._HAND_DRAW_JOINPATHS_FINISH)
+                        string elementName = mouseWasDownOn.Name;
+                        string type = (e.Source.GetType().Name);
+                        if ((elementName != "") && ((type == "StraightPath") || (elementName.Split('x')[0] == "StraightPath")))
                         {
-                            string elementName = mouseWasDownOn.Name;
-                            string type = (e.Source.GetType().Name);
-                            if ((elementName != "") && ((type == "StraightPath") || (elementName.Split('x')[0] == "StraightPath")))
-                            {
-                                pathTemp.ReDraw(draw_StartPoint, list_Path[elementName].props.cornerPoints[0]);
-                            }
-                            else if (elementName != pathTemp.Name)
-                            {
-                                pathTemp.ReDraw(draw_StartPoint, draw_StartPoint);
-                            }
+                            pathTemp.ReDraw(draw_StartPoint, list_Path[elementName].props.cornerPoints[0]);
                         }
-                        break;
+                        else if (elementName != pathTemp.Name)
+                        {
+                            pathTemp.ReDraw(draw_StartPoint, draw_StartPoint);
+                        }
                     }
+                    break;
+                }
                 default:
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
             }
         }
 
@@ -812,11 +789,12 @@ namespace MapViewPallet.Shape
                 {
                     if (buffer.bufferId == list_Station.ElementAt(i).Value.props.bufferDb.bufferId)
                     {
-                            list_Station.ElementAt(i).Value.ReDraw(buffer);
+                        list_Station.ElementAt(i).Value.ReDraw(buffer);
                     }
                 }
             }
         }
+
         public List<dtBuffer> GetDataAllStation()
         {
             if (!Global_Object.ServerAlive())
@@ -826,7 +804,7 @@ namespace MapViewPallet.Shape
             try
             {
                 List<dtBuffer> listBuffer = new List<dtBuffer>();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListBuffer");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -862,6 +840,7 @@ namespace MapViewPallet.Shape
                         listBuffer.Add(tempBuffer);
                     }
                 }
+                response.Close();
                 return listBuffer;
             }
             catch (Exception exc)
@@ -870,6 +849,7 @@ namespace MapViewPallet.Shape
                 return new List<dtBuffer>();
             }
         }
+
         public void GetListPallet(dtBuffer tempBuffer)
         {
             if (!Global_Object.ServerAlive())
@@ -878,15 +858,13 @@ namespace MapViewPallet.Shape
             }
             try
             {
-                HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/getListPalletBufferId");
                 request2.Method = "POST";
                 request2.ContentType = @"application/json";
-
 
                 dynamic postApiBody2 = new JObject();
                 postApiBody2.bufferId = tempBuffer.bufferId;
                 string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
-
 
                 System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
                 Byte[] byteArray2 = encoding2.GetBytes(jsonData2);
@@ -915,6 +893,7 @@ namespace MapViewPallet.Shape
                             deviceBufferId = int.Parse(dr2["deviceBufferId"].ToString()),
                             bufferId = int.Parse(dr2["bufferId"].ToString()),
                             planId = int.Parse(dr2["planId"].ToString()),
+                            activeDate = dr2["activeDate"].ToString(),
                             row = int.Parse(dr2["row"].ToString()),
                             bay = int.Parse(dr2["bay"].ToString()),
                             dataPallet = dr2["dataPallet"].ToString(),
@@ -934,8 +913,8 @@ namespace MapViewPallet.Shape
             {
                 Console.WriteLine(exc.Message);
             }
-            
         }
+
         public void RedrawAllRobot()
         {
             for (int i = 0; i < list_Robot.Count; i++)
@@ -944,10 +923,8 @@ namespace MapViewPallet.Shape
                 //Thread.Sleep(500);
             }
         }
-
     }
 }
-
 
 //Console.WriteLine("clipBorderWidth: " + ClipBorderWidth);
 //Console.WriteLine("map.Width: " + map.Width);
@@ -963,13 +940,10 @@ namespace MapViewPallet.Shape
 //Console.WriteLine("Middle Y: "+((ylim) - (MapHeightScaled - ClipBorderHeight - ylim)) / 2);
 //Console.WriteLine((ClipBorderHeight > map.Height)? "ClipBorderHeight > map.Height" : "ClipBorderHeight < map.Height");
 
-
 //yDistanceBottom = (((mainWindow.clipBorder.ActualHeight / 2) - (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
 //xDistanceRight = ((mainWindow.clipBorder.ActualWidth / 2 - (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
 //yDistanceTop = (((mainWindow.clipBorder.ActualHeight / 2) + (translateTransform.Y)) - ((map.Height * scaleTransform.ScaleY) / 2));
 //xDistanceLeft = ((mainWindow.clipBorder.ActualWidth / 2 + (translateTransform.X)) - ((map.Width * scaleTransform.ScaleX) / 2));
-
-
 
 //map.ContextMenu = new ContextMenu();
 ////===================================

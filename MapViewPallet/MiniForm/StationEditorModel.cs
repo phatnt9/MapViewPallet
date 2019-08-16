@@ -4,25 +4,23 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace MapViewPallet.MiniForm
 {
-    class StationEditorModel : NotifyUIBase
+    internal class StationEditorModel : NotifyUIBase
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        StationEditor stationEditor;
+        private StationEditor stationEditor;
 
         public ListCollectionView GroupedPallets { get; private set; }
 
         public List<dtPallet> palletsList;
 
-
-        public StationEditorModel (StationEditor stationEditor)
+        public StationEditorModel(StationEditor stationEditor)
         {
             this.stationEditor = stationEditor;
             palletsList = new List<dtPallet>();
@@ -38,7 +36,11 @@ namespace MapViewPallet.MiniForm
             try
             {
                 palletsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                HttpWebRequest request =
+                    (HttpWebRequest)WebRequest.Create(@"http://" +
+                    Properties.Settings.Default.serverIp + ":" +
+                    Properties.Settings.Default.serverPort +
+                    @"/robot/rest/" + "pallet/getListPalletBufferId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -71,6 +73,7 @@ namespace MapViewPallet.MiniForm
                             deviceBufferId = int.Parse(dr["deviceBufferId"].ToString()),
                             bufferId = int.Parse(dr["bufferId"].ToString()),
                             planId = int.Parse(dr["planId"].ToString()),
+                            activeDate = dr["activeDate"].ToString(),
                             row = int.Parse(dr["row"].ToString()),
                             bay = int.Parse(dr["bay"].ToString()),
                             dataPallet = dr["dataPallet"].ToString(),
@@ -89,9 +92,15 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedPallets.IsEditingItem)
+                {
                     GroupedPallets.CommitEdit();
+                }
+
                 if (GroupedPallets.IsAddingNew)
+                {
                     GroupedPallets.CommitNew();
+                }
+
                 GroupedPallets.Refresh();
                 if (stationEditor.PalletsListDg.HasItems)
                 {
@@ -99,9 +108,9 @@ namespace MapViewPallet.MiniForm
                     //devicesManagement.PalletsListDg.ScrollIntoView(devicesManagement.PalletsListDg.SelectedItem);
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 

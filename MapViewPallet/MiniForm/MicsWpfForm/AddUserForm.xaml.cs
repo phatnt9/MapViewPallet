@@ -1,28 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
 {
     public class SimpleAuthor : NotifyUIBase
     {
-
         private int pUserAuthor;
         private string pUserAuthorName;
 
@@ -30,17 +17,17 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public string userAuthorName { get => pUserAuthorName; set { pUserAuthorName = value; RaisePropertyChanged("userAuthorName"); } }
     }
 
-
     /// <summary>
     /// Interaction logic for AddUserForm.xaml
     /// </summary>
     public partial class AddUserForm : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public bool flgEdit;
-        dtUser userEdit;
+        private dtUser userEdit;
 
-
-        UserManagement userManagement;
+        private UserManagement userManagement;
 
         public AddUserForm()
         {
@@ -67,7 +54,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -85,75 +74,91 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void CmbAuthor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Console.WriteLine((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString());
-            if (cmbAuthor.SelectedItem == null)
+            try
             {
-                return;
-            }
-            cmbDevice.IsEnabled = false;
-            //if ((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString() == "3")
-
-            //if (((cmbAuthor.SelectedValue==null)? (cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString(): cmbAuthor.SelectedValue.ToString()) == "3")
-            if ((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString() == "3")
-            {
-                cmbDevice.IsEnabled = true;
-            }
-            else
-            {
-                if (cmbDevice.SelectedIndex > 0)
+                Console.WriteLine((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString());
+                if (cmbAuthor.SelectedItem == null)
                 {
-                    cmbDevice.SelectedIndex = 0;
+                    return;
                 }
+                cmbDevice.IsEnabled = false;
+                if ((cmbAuthor.SelectedItem as SimpleAuthor).userAuthor.ToString() == "3")
+                {
+                    cmbDevice.IsEnabled = true;
+                }
+                else
+                {
+                    if (cmbDevice.SelectedIndex > 0)
+                    {
+                        cmbDevice.SelectedIndex = 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
             }
         }
 
         private void AddUserForm_Loaded(object sender, RoutedEventArgs e)
         {
-            CenterWindowOnScreen();
-            loadAuthor();
-            loadDevice();
+            try
+            {
+                CenterWindowOnScreen();
+                loadAuthor();
+                loadDevice();
 
-            if (flgEdit)
-            {
-                //this.Title = "Tùy chỉnh";
-                //functionTextBlock.Text = "Tùy chỉnh";
-                this.userNametb.Text = (userManagement.UsersListDg.SelectedItem as dtUser).userName.ToString();
-                this.userNametb.IsReadOnly = true;
-                cmbAuthor.SelectedValue = int.Parse((userManagement.UsersListDg.SelectedItem as dtUser).userAuthor.ToString());
-                cmbDevice.SelectedValue = (userManagement.UsersListDg.SelectedItem as dtUser).deviceId.ToString();
+                if (flgEdit)
+                {
+                    dtUser user = userManagement.UsersListDg.SelectedItem as dtUser;
+
+                    this.userNametb.Text = user.userName.ToString();
+                    this.userNametb.IsReadOnly = true;
+                    cmbAuthor.SelectedValue = int.Parse(user.userAuthor.ToString());
+                    cmbDevice.SelectedValue = user.deviceId.ToString();
+                }
+                else
+                {
+                    this.userNametb.IsReadOnly = false;
+                }
+                userNametb.Focus();
             }
-            else
+            catch (Exception ex)
             {
-                this.userNametb.IsReadOnly = false;
-                //this.Title = "Thêm mới";
-                //functionTextBlock.Text = "Thêm mới";
+                logFile.Error(ex.Message);
             }
-            userNametb.Focus();
         }
 
         private void loadAuthor()
         {
-            List<SimpleAuthor> dt = new List<SimpleAuthor>();
+            try
+            {
+                List<SimpleAuthor> dt = new List<SimpleAuthor>();
 
-            if (Global_Object.userAuthor == 0)
-            {
-                dt.Add(new SimpleAuthor(){userAuthor = 1,userAuthorName = "Admin",});
-                dt.Add(new SimpleAuthor(){userAuthor = 2,userAuthorName = "Head of department", });
-                dt.Add(new SimpleAuthor(){userAuthor = 3,userAuthorName = "Worker", });
-                dt.Add(new SimpleAuthor(){userAuthor = 4,userAuthorName = "Forklift", });
+                if (Global_Object.userAuthor == 0)
+                {
+                    dt.Add(new SimpleAuthor() { userAuthor = 1, userAuthorName = "Admin", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 2, userAuthorName = "Head of department", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
+                }
+                else if (Global_Object.userAuthor == 1)
+                {
+                    dt.Add(new SimpleAuthor() { userAuthor = 2, userAuthorName = "Head of department", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
+                }
+                else if (Global_Object.userAuthor == 2)
+                {
+                    dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
+                    dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
+                }
+                cmbAuthor.ItemsSource = dt;
             }
-            else if (Global_Object.userAuthor == 1)
+            catch (Exception ex)
             {
-                dt.Add(new SimpleAuthor() { userAuthor = 2, userAuthorName = "Head of department", });
-                dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
-                dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
+                logFile.Error(ex.Message);
             }
-            else if (Global_Object.userAuthor == 2)
-            {
-                dt.Add(new SimpleAuthor() { userAuthor = 3, userAuthorName = "Worker", });
-                dt.Add(new SimpleAuthor() { userAuthor = 4, userAuthorName = "Forklift", });
-            }
-            cmbAuthor.ItemsSource = dt;
         }
 
         private void loadDevice()
@@ -165,41 +170,23 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             try
             {
                 List<dtDevice> dt = new List<dtDevice>();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
-                request.Method = "GET";
-                request.ContentType = @"application/json";
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
+                string contentJson = Global_Object.RequestDataAPI("", "device/getListDevice", Global_Object.RequestMethod.GET);
+                dynamic response = JsonConvert.DeserializeObject(contentJson);
+                List<dtDevice> listDevice = response.ToObject<List<dtDevice>>();
+
+                foreach (dtDevice device in listDevice)
                 {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    string result = reader.ReadToEnd();
-
-                    DataTable devices = JsonConvert.DeserializeObject<DataTable>(result);
-                    foreach (DataRow dr in devices.Rows)
+                    if (!ContainDevice(device, dt))
                     {
-                        dtDevice tempDevice = new dtDevice
-                        {
-                            creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                            creDt = dr["creDt"].ToString(),
-                            updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                            updDt = dr["updDt"].ToString(),
-                            deviceId = int.Parse(dr["deviceId"].ToString()),
-                            deviceName = dr["deviceName"].ToString()
-                        };
-                        if (!ContainDevice(tempDevice, dt))
-                        {
-                            dt.Add(tempDevice);
-                        }
-
+                        dt.Add(device);
                     }
                 }
                 cmbDevice.ItemsSource = dt;
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
         }
 
         public bool ContainDevice(dtDevice tempOpe, List<dtDevice> List)
@@ -231,7 +218,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             {
                 if (string.IsNullOrEmpty(this.userNametb.Text) || this.userNametb.Text.Trim() == "")
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "User Name", "User Name"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Windows.Forms.MessageBox.Show(
+                            String.Format(Global_Object.messageValidate, "User Name", "User Name"),
+                            Global_Object.messageTitileWarning,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
                     this.userNametb.Focus();
                     return;
                 }
@@ -240,7 +231,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 {
                     if (string.IsNullOrEmpty(this.userPasswordtb.Text) || this.userPasswordtb.Text.Trim() == "")
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "Password", "Password"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        System.Windows.Forms.MessageBox.Show(
+                                       String.Format(Global_Object.messageValidate, "Password", "Password"),
+                                       Global_Object.messageTitileWarning,
+                                       MessageBoxButtons.OK,
+                                       MessageBoxIcon.Warning);
                         this.userPasswordtb.Focus();
                         return;
                     }
@@ -248,7 +243,11 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
                 if (cmbAuthor.SelectedValue.ToString() == "3" && cmbDevice.SelectedValue.ToString() == "")
                 {
-                    System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "Device", "Device"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    System.Windows.Forms.MessageBox.Show(String.Format(
+                            Global_Object.messageValidate, "Device", "Device"),
+                            Global_Object.messageTitileWarning,
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
                     this.cmbDevice.Focus();
                     return;
                 }
@@ -266,62 +265,61 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                 user.creUsrId = Global_Object.userLogin;
                 user.updUsrId = Global_Object.userLogin;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/insertUpdateUserInfo");
-                request.Method = "POST";
-                request.ContentType = @"application/json";
                 string jsonData = JsonConvert.SerializeObject(user);
-                System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                Byte[] byteArray = encoding.GetBytes(jsonData);
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
+                string contentJson = Global_Object.RequestDataAPI(jsonData, "user/insertUpdateUserInfo", Global_Object.RequestMethod.POST);
+                dynamic response = JsonConvert.DeserializeObject(contentJson);
+                dtUser userInfo = response.ToObject<dtUser>();
+                if (userInfo.flagModify == -2)
                 {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                    dataStream.Flush();
+                    System.Windows.Forms.MessageBox.Show(
+                        String.Format(Global_Object.messageDuplicated, "User Name"),
+                        Global_Object.messageTitileError,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    this.userNametb.Focus();
+                    return;
                 }
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                using (Stream responseStream = response.GetResponseStream())
+                else if (userInfo.flagModify > 0)
                 {
-                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-                    string result = reader.ReadToEnd();
-                    dtUser dtUser = JsonConvert.DeserializeObject<dtUser>(result);
-                    if (dtUser.flagModify == -2)
-                    {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageDuplicated, "User Name"), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        this.userNametb.Focus();
-                        return;
-                    }
-                    else if (dtUser.flagModify > 0)
-                    {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveSucced), Global_Object.messageTitileInformation, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        //frm.userIdSelect = dtUser.userId;
-                        userManagement.userModel.ReloadListUsers();
-                    }
-                    else if (dtUser.flagModify == -1)
-                    {
-                        System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageSaveFail), Global_Object.messageTitileError, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    System.Windows.Forms.MessageBox.Show(
+                                           String.Format(Global_Object.messageSaveSucced),
+                                           Global_Object.messageTitileInformation,
+                                           MessageBoxButtons.OK,
+                                           MessageBoxIcon.Information);
+                    //frm.userIdSelect = dtUser.userId;
+                    userManagement.userModel.ReloadListUsers();
+                }
+                else if (userInfo.flagModify == -1)
+                {
+                    System.Windows.Forms.MessageBox.Show(
+                        String.Format(Global_Object.messageSaveFail),
+                        Global_Object.messageTitileError,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-        }
-
-        private void Btn_exit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
 
         private void CenterWindowOnScreen()
         {
-            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
-            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-            double windowWidth = this.Width;
-            double windowHeight = this.Height;
-            this.Left = (screenWidth / 2) - (windowWidth / 2);
-            this.Top = (screenHeight / 2) - (windowHeight / 2);
+            try
+            {
+                double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+                double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+                double windowWidth = this.Width;
+                double windowHeight = this.Height;
+                this.Left = (screenWidth / 2) - (windowWidth / 2);
+                this.Top = (screenHeight / 2) - (windowHeight / 2);
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
         }
     }
 }

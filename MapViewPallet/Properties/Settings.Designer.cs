@@ -25,7 +25,7 @@ namespace MapViewPallet.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("13")]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
         public double palletWidth {
             get {
                 return ((double)(this["palletWidth"]));
@@ -92,6 +92,78 @@ namespace MapViewPallet.Properties {
             }
             set {
                 this["serverPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.32")]
+        public string serverReturnIp {
+            get {
+                return ((string)(this["serverReturnIp"]));
+            }
+            set {
+                this["serverReturnIp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
+        public double bufferRefreshInterval {
+            get {
+                return ((double)(this["bufferRefreshInterval"]));
+            }
+            set {
+                this["bufferRefreshInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("rm")]
+        public string returnMainUser {
+            get {
+                return ((string)(this["returnMainUser"]));
+            }
+            set {
+                this["returnMainUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("rm")]
+        public string returnMainPassword {
+            get {
+                return ((string)(this["returnMainPassword"]));
+            }
+            set {
+                this["returnMainPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("r4")]
+        public string return401User {
+            get {
+                return ((string)(this["return401User"]));
+            }
+            set {
+                this["return401User"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("r4")]
+        public string return401Password {
+            get {
+                return ((string)(this["return401Password"]));
+            }
+            set {
+                this["return401Password"] = value;
             }
         }
     }

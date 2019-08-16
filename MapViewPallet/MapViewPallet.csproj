@@ -62,8 +62,8 @@
     <Reference Include="Han.Wpf.ViewportControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Han.Wpf.ViewportControl.1.0.1\lib\net461\Han.Wpf.ViewportControl.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\thanhhau89\seldatui\SeldatRobot\bin\Debug\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net46\MahApps.Metro.dll</HintPath>
@@ -124,8 +124,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Communication\HttpBridge\BridgeClientRequest.cs" />
-    <Compile Include="DataGridView\DgvStation.cs" />
-    <Compile Include="DataGridView\MainWindowModel.cs" />
     <Compile Include="Global_Mouse.cs" />
     <Compile Include="Global_Object.cs" />
     <Compile Include="MiniForm\ChangePassForm.xaml.cs">
@@ -210,16 +208,12 @@
       <DependentUpon>UserManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="MiniForm\UserModel.cs" />
-    <Compile Include="MusicPlayerOld.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Shape\CurveShape.cs" />
-    <Compile Include="Shape\Edit.xaml.cs">
-      <DependentUpon>Edit.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Shape\PalletShape.cs" />
     <Compile Include="Shape\CanvasControlService.cs" />
     <Compile Include="Shape\Properties.cs">
@@ -232,9 +226,6 @@
     <Compile Include="Shape\RobotShape.cs" />
     <Compile Include="Shape\StationShape.cs" />
     <Compile Include="Shape\StraightShape.cs" />
-    <Compile Include="TEST.xaml.cs">
-      <DependentUpon>TEST.xaml</DependentUpon>
-    </Compile>
     <Page Include="Lang\English.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -323,14 +314,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Shape\Edit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TEST.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -349,8 +332,9 @@
     <EmbeddedResource Include="Shape\Properties.resx">
       <DependentUpon>Properties.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Excels\Path.xls" />
-    <None Include="Excels\StationMain.xls" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -359,30 +343,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet5.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet0.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Pallet4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PalletError.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PalletEmpty.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mapbackground.png" />
@@ -397,46 +357,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Picture1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_straightpath_off.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_joinpath_off.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_joinpath_on.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_straightpath_on.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="bin\Debug\Resources\phat_mapShrink.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\Resources\phat_mapExtend.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_mapShrink.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_mapExtend.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_joinpath.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\phat_straightpath.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-line-24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\line.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\pallet.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Map.jpg" />
@@ -445,70 +369,16 @@
     <None Include="bin\Debug\Resources\Map\Map.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Robotpixel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Robot2.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="bin\Debug\Resources\Robotnew.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bobo.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="bin\Debug\Resources\ssss.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Yellow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Green.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Top.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Unknow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Normal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Error.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Station_Warning.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Group.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\unilever_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\seldat_logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\add_item.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\refresh_item.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\remove_item.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icon_refresh.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icon_clear.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icon_add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icon_edit.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mainIcon.jpg" />
@@ -530,15 +400,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\MAPMAIN.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\MAPMAIN.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\MAPMAIN - Copy.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MAPMAIN2.jpg" />
@@ -604,6 +465,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Map_aTan - Copy3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Map_aTan - Copy4 - Copy.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

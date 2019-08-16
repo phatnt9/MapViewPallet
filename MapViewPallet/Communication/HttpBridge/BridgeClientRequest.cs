@@ -1,20 +1,24 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SelDatUnilever_Ver1._00.Communication.HttpBridge
 {
-   public class BridgeClientRequest
+    public class BridgeClientRequest
     {
-        public virtual void ReceiveResponseHandler(string msg) { }
-        public virtual void ErrorBridgeHandler(int code) { }
-       // public event Action<string> ReceiveResponseHandler;
+        public virtual void ReceiveResponseHandler(string msg)
+        {
+        }
+
+        public virtual void ErrorBridgeHandler(int code)
+        {
+        }
+
+        // public event Action<string> ReceiveResponseHandler;
         //public event Action<int> ErrorBridgeHandler;
         public BridgeClientRequest() { }
+
         public async Task<string> PostCallAPI(string url, object jsonObject)
         {
             try
@@ -35,10 +39,10 @@ namespace SelDatUnilever_Ver1._00.Communication.HttpBridge
             }
             catch
             {
-               
             }
             return null;
         }
+
         public async Task<object> PostCallAPI(string url, string jsonObject)
         {
             try
@@ -53,16 +57,17 @@ namespace SelDatUnilever_Ver1._00.Communication.HttpBridge
                         ReceiveResponseHandler(jsonString);
                         //Console.WriteLine("PostCallAPI:  " + jsonString);
                         return jsonString;
-                       // return JsonConvert.DeserializeObject<object>(jsonString);
+                        // return JsonConvert.DeserializeObject<object>(jsonString);
                     }
                 }
             }
-            catch 
+            catch
             {
-                Console.WriteLine(url+"  "+ jsonObject);
+                Console.WriteLine(url + "  " + jsonObject);
             }
             return null;
         }
+
         public async Task<String> GetCallAPI(string url)
         {
             try
@@ -81,7 +86,6 @@ namespace SelDatUnilever_Ver1._00.Communication.HttpBridge
             }
             catch
             {
-
             }
             return null;
         }

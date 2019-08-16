@@ -1,17 +1,14 @@
 ﻿using Newtonsoft.Json;
-using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace MapViewPallet.MiniForm
 {
@@ -19,7 +16,7 @@ namespace MapViewPallet.MiniForm
     {
         public List<dtDevice> listDevices;
         public BackgroundWorker workerLoadDevice;
-        PlanControl planControl;
+        private PlanControl planControl;
 
         public DeviceList()
         {
@@ -43,7 +40,6 @@ namespace MapViewPallet.MiniForm
                 workerLoadDevice.RunWorkerCompleted += WorkerLoadDevice_RunWorkerCompleted;
                 workerLoadDevice.RunWorkerAsync();
 
-                
                 return true;
             }
             catch (Exception exc)
@@ -74,11 +70,10 @@ namespace MapViewPallet.MiniForm
             // process the response using e.Result
             //MessageBox.Show("Processing is complete.");
             this.planControl.pbStatus.Value = 0;
-            //Application.Current.Dispatcher.BeginInvoke(new ThreadStart(() =>
-            //{
-                planControl.btn_importPlan.IsEnabled = true;
-                planControl.Btn_Accept.IsEnabled = true;
-            //}));
+            //planControl.btn_importPlan.IsEnabled = true;
+            planControl.Btn_Accept.IsEnabled = true;
+            planControl.Btn_Delete.IsEnabled = true;
+            planControl.RefreshBtn.IsEnabled = true;
         }
 
         private void WorkerLoadDevice_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -90,12 +85,14 @@ namespace MapViewPallet.MiniForm
         {
             Application.Current.Dispatcher.BeginInvoke(new ThreadStart(() =>
             {
-                planControl.btn_importPlan.IsEnabled = false;
+                //planControl.btn_importPlan.IsEnabled = false;
                 planControl.Btn_Accept.IsEnabled = false;
+                planControl.Btn_Delete.IsEnabled = false;
+                planControl.RefreshBtn.IsEnabled = false;
             }));
             Stopwatch stopwatch = Stopwatch.StartNew();
             listDevices.Clear();
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevice");
             request.Method = "GET";
             request.ContentType = @"application/json";
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -105,7 +102,7 @@ namespace MapViewPallet.MiniForm
                 string result = reader.ReadToEnd();
 
                 DataTable devices = JsonConvert.DeserializeObject<DataTable>(result);
-                for (int i=0;i< devices.Rows.Count;i++)
+                for (int i = 0; i < devices.Rows.Count; i++)
                 {
                     dtDevice tempDevice = new dtDevice
                     {
@@ -123,23 +120,6 @@ namespace MapViewPallet.MiniForm
                     }
                     (sender as BackgroundWorker).ReportProgress((i * 100) / devices.Rows.Count);
                 }
-                //foreach (DataRow dr in devices.Rows)
-                //{
-                //    dtDevice tempDevice = new dtDevice
-                //    {
-                //        creUsrId = int.Parse(dr["creUsrId"].ToString()),
-                //        creDt = dr["creDt"].ToString(),
-                //        updUsrId = int.Parse(dr["updUsrId"].ToString()),
-                //        updDt = dr["updDt"].ToString(),
-
-                //        deviceId = int.Parse(dr["deviceId"].ToString()),
-                //        deviceName = dr["deviceName"].ToString()
-                //    };
-                //    if (AddDevice(tempDevice))
-                //    {
-                //        tempDevice.GetDeviceProductsList();
-                //    }
-                //}
             }
             stopwatch.Stop();
             Console.WriteLine(stopwatch.ElapsedMilliseconds);
@@ -157,7 +137,7 @@ namespace MapViewPallet.MiniForm
             listDevices.Add(checkDevice);
             return true;
         }
-        
+
         public int GetProductIdByDeviceProductId(int deviceProductId)
         {
             foreach (dtDevice device in listDevices)

@@ -1,17 +1,18 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.ComponentModel;
-using System;
-using System.Windows.Input;
-using System.Collections.Generic;
 
 namespace MapViewPallet.Shape
 {
-    public class CanvasPath: Border
+    public class CanvasPath : Border
     {
         public event Action<string> RemoveHandle;
+
         public struct Properties
         {
             public string name;
@@ -45,36 +46,21 @@ namespace MapViewPallet.Shape
             [CategoryAttribute("ID Settings"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             public string NameID
             {
-                get
-                {
-                    return name;
-                }
-                set
-                {
-                    name = value;
-                }
+                get => name;
+                set => name = value;
             }
 
             [CategoryAttribute("Arrow Settings"), DescriptionAttribute(""), ReadOnlyAttribute(false)]
             public Visibility Visible
             {
-                get
-                {
-                    return _arrow.Visibility;
-                }
-                set
-                {
-                    _arrow.Visibility = value;
-                }
+                get => _arrow.Visibility;
+                set => _arrow.Visibility = value;
             }
 
             [CategoryAttribute("Shape Settings"), DescriptionAttribute(""), ReadOnlyAttribute(false)]
             public double Thickness
             {
-                get
-                {
-                    return _shape.StrokeThickness;
-                }
+                get => _shape.StrokeThickness;
                 set
                 {
                     _shape.StrokeThickness = value;
@@ -83,30 +69,14 @@ namespace MapViewPallet.Shape
             }
 
             [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point OriginalPos
-            {
-                get
-                {
-                    return Global_Object.CoorLaser(_oriMousePos);
-                }
-            }
+            public Point OriginalPos => Global_Object.CoorLaser(_oriMousePos);
 
             [CategoryAttribute("Point View"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
-            public Point DestinationPos
-            {
-                get
-                {
-                    return Global_Object.CoorLaser(_desMousePos);
-                }
-            }
-            
-
-
-
+            public Point DestinationPos => Global_Object.CoorLaser(_desMousePos);
         }
+
         public Shape.Properties pathProperties;
         public Properties props;
-
 
         //******************METHOD******************
         public CanvasPath(Canvas pCanvas, Point Start, Point End)
@@ -117,7 +87,6 @@ namespace MapViewPallet.Shape
             props.coorStep = 10;
             props.isSelected = false;
             props.isHovering = false;
-
 
             //*********CONTEX_MENU*********
             ContextMenu = new ContextMenu();
@@ -130,21 +99,19 @@ namespace MapViewPallet.Shape
             ContextMenu.Items.Add(editItem);
             ContextMenu.Items.Add(removeItem);
 
-
             //*********MOUSE_EVENT*********
             MouseLeave += MouseLeavePath;
             MouseMove += MouseHoverPath;
             MouseLeftButtonDown += MouseLeftButtonDownPath;
             MouseRightButtonDown += MouseRightButtonDownPath;
 
-
             //*********CREATE_NEW*********
             props.arrowPoints = new PointCollection(3);
-            for (int i=0;i<3;i++)
+            for (int i = 0; i < 3; i++)
             {
                 props.arrowPoints.Add(new Point());
             }
-            props._oriMousePos = new Point(Start.X,Start.Y);
+            props._oriMousePos = new Point(Start.X, Start.Y);
             props._desMousePos = new Point(End.X, End.Y);
             props._shape = new Path();
             props._pointHead = new Ellipse();
@@ -198,9 +165,9 @@ namespace MapViewPallet.Shape
 
         private void ChangeToolTipContent(object sender, ToolTipEventArgs e)
         {
-            ToolTip = "Name: " + props.name + 
-                "\n Start: " + props._oriMousePos.X.ToString("0.0") + "," + props._oriMousePos.Y.ToString("0.0") + 
-                " \n End: " + props._desMousePos.X.ToString("0.0") + "," + props._desMousePos.Y.ToString("0.0") + 
+            ToolTip = "Name: " + props.name +
+                "\n Start: " + props._oriMousePos.X.ToString("0.0") + "," + props._oriMousePos.Y.ToString("0.0") +
+                " \n End: " + props._desMousePos.X.ToString("0.0") + "," + props._desMousePos.Y.ToString("0.0") +
                 " \n Rotate: " + props.rotate;
         }
 
@@ -235,9 +202,7 @@ namespace MapViewPallet.Shape
             ToggleStyle();
         }
 
-
-
-        public void ToggleStyle ()
+        public void ToggleStyle()
         {
             //if (props.isSelected || props.isHovering)
             //{
@@ -259,7 +224,6 @@ namespace MapViewPallet.Shape
 
             //}
         }
-        
 
         private void MouseHoverPath(object sender, MouseEventArgs e)
         {
@@ -273,7 +237,6 @@ namespace MapViewPallet.Shape
             props.isHovering = false;
             ToggleStyle();
         }
-        
 
         public void ReDraw(Point Start, Point End)
         {
@@ -292,9 +255,8 @@ namespace MapViewPallet.Shape
             RemoveHandle(props.name);
         }
 
-        public void ShowPropertiesGrid ()
+        public void ShowPropertiesGrid()
         {
-
         }
     }
 }

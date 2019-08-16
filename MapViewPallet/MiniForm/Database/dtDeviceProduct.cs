@@ -1,14 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SelDatUnilever_Ver1._00.Communication.HttpBridge;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MapViewPallet.MiniForm
 {
@@ -30,7 +27,6 @@ namespace MapViewPallet.MiniForm
         public string imageDeviceUrl { get => pImageDeviceUrl; set => pImageDeviceUrl = value; }
         public string imageProductUrl { get => pImageProductUrl; set => pImageProductUrl = value; }
 
-
         private List<dtProductDetail> pProductDetails;
         public List<dtProductDetail> productDetails { get => pProductDetails; set => pProductDetails = value; }
 
@@ -47,7 +43,7 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProductDetailByProductId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListProductDetailByProductId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -89,10 +85,8 @@ namespace MapViewPallet.MiniForm
             }
             catch (Exception exc)
             {
-
             }
         }
-
 
         public bool AddProductDetail(dtProductDetail productDetail)
         {
@@ -106,7 +100,5 @@ namespace MapViewPallet.MiniForm
             productDetails.Add(productDetail);
             return true;
         }
-
-
     }
 }

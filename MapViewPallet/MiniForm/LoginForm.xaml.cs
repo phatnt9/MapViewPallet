@@ -1,10 +1,8 @@
-﻿
-using MapViewPallet.MiniForm.MicsWpfForm;
+﻿using MapViewPallet.MiniForm.MicsWpfForm;
 using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -25,11 +23,12 @@ namespace MapViewPallet.MiniForm
 
         private const int GWL_STYLE = -16;
         private const int WS_SYSMENU = 0x80000;
+
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-        
 
         public LoginForm(string cultureName = null)
         {
@@ -41,7 +40,9 @@ namespace MapViewPallet.MiniForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -84,15 +85,14 @@ namespace MapViewPallet.MiniForm
             if (!success)
             {
                 Console.WriteLine("F");
-                return false; 
+                return false;
             }
             else
             {
                 Console.WriteLine("T");
-                return true; 
+                return true;
             }
         }
-
 
         private void btn_login_Click(object sender, RoutedEventArgs e)
         {
@@ -122,7 +122,7 @@ namespace MapViewPallet.MiniForm
                 user.userName = this.userNametb.Text;
                 user.userPassword = this.passwordtb.Password;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/getUserInfo");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "user/getUserInfo");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 string jsonData = JsonConvert.SerializeObject(user);
@@ -153,20 +153,18 @@ namespace MapViewPallet.MiniForm
                         System.Windows.Forms.MessageBox.Show("Login Fail!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
-
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-
         }
 
         private void btn_exit_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
         }
-        
+
         private void UserNametb_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

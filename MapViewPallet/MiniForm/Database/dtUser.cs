@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MapViewPallet.MiniForm
 {
@@ -26,6 +25,5 @@ namespace MapViewPallet.MiniForm
         public int deviceId { get => pDeviceId; set => pDeviceId = value; }
         public string deviceName { get => pDeviceName; set => pDeviceName = value; }
         public string userPasswordOld { get => pUserPasswordOld; set => pUserPasswordOld = value; }
-        
     }
 }

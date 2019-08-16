@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -31,15 +30,13 @@ namespace MapViewPallet.MiniForm
         public string statusName { get => _StatusName; set { _StatusName = value; RaisePropertyChanged("statusName"); } }
     }
 
-
-
     public class StatisticsModel
     {
-        Statistics statistics;
+        private Statistics statistics;
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public ListCollectionView GroupedRobotProcess { get; private set; }
         public ListCollectionView GroupedRobotCharge { get; private set; }
-
 
         private ObservableCollection<dtRobot> _robots;
         private ObservableCollection<dtRobot> _allRobots;
@@ -55,7 +52,6 @@ namespace MapViewPallet.MiniForm
         private ObservableCollection<dtOperationType> _allOperationTypes;
         private ObservableCollection<dtTimeWork> _timeWorks;
         private ObservableCollection<dtTimeWork> _allTimeWorks;
-        
 
         public List<dtRobotProcess> listRobotProcess;
         public List<dtRobotCharge> listRobotCharge;
@@ -63,88 +59,86 @@ namespace MapViewPallet.MiniForm
 
         public ObservableCollection<dtRobot> Robots
         {
-            get { return _robots; }
-            set { _robots = value; }
+            get => _robots;
+            set => _robots = value;
         }
 
         public ObservableCollection<dtRobot> AllRobots
         {
-            get { return _allRobots; }
-            set { _allRobots = value; }
+            get => _allRobots;
+            set => _allRobots = value;
         }
 
         public ObservableCollection<dtOperationType> OperationTypes
         {
-            get { return _operationTypes; }
-            set { _operationTypes = value; }
+            get => _operationTypes;
+            set => _operationTypes = value;
         }
 
         public ObservableCollection<dtOperationType> AllOperationTypes
         {
-            get { return _allOperationTypes; }
-            set { _allOperationTypes = value; }
+            get => _allOperationTypes;
+            set => _allOperationTypes = value;
         }
-
 
         public ObservableCollection<dtDevice> Devices
         {
-            get { return _devices; }
-            set { _devices = value; }
+            get => _devices;
+            set => _devices = value;
         }
-
 
         public ObservableCollection<dtDevice> AllDevices
         {
-            get { return _allDevices; }
-            set { _allDevices = value; }
+            get => _allDevices;
+            set => _allDevices = value;
         }
 
         public ObservableCollection<dtProduct> Products
         {
-            get { return _products; }
-            set { _products = value; }
+            get => _products;
+            set => _products = value;
         }
 
         public ObservableCollection<dtProduct> AllProducts
         {
-            get { return _allProducts; }
-            set { _allProducts = value; }
+            get => _allProducts;
+            set => _allProducts = value;
         }
 
         public ObservableCollection<dtBuffer> Buffers
         {
-            get { return _buffers; }
-            set { _buffers = value; }
+            get => _buffers;
+            set => _buffers = value;
         }
 
         public ObservableCollection<dtBuffer> AllBuffers
         {
-            get { return _allBuffers; }
-            set { _allBuffers = value; }
+            get => _allBuffers;
+            set => _allBuffers = value;
         }
 
         public ObservableCollection<dtProductDetail> ProductDetails
         {
-            get { return _productDetails; }
-            set { _productDetails = value; }
+            get => _productDetails;
+            set => _productDetails = value;
         }
 
         public ObservableCollection<dtProductDetail> AllProductDetails
         {
-            get { return _allProductDetails; }
-            set { _allProductDetails = value; }
+            get => _allProductDetails;
+            set => _allProductDetails = value;
         }
 
         public ObservableCollection<dtTimeWork> TimeWorks
         {
-            get { return _timeWorks; }
-            set { _timeWorks = value; }
+            get => _timeWorks;
+            set => _timeWorks = value;
         }
 
         public ObservableCollection<dtTimeWork> AllTimeWorks
         {
-            get { return _allTimeWorks; }
-            set { _allTimeWorks = value; }
+            get => _allTimeWorks;
+            set => _allTimeWorks = value;
         }
 
         public StatisticsModel(Statistics statistics)
@@ -173,62 +167,70 @@ namespace MapViewPallet.MiniForm
             //listOperationType = new List<dtOperationType>();
         }
 
-
         public void ReloadListRobot(int tabIndex)
         {
-            Robots.Add(new dtRobot() { id = "", robotName = "No data" });
-            Robots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
-            Robots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
-            Robots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
-
-            AllRobots.Add(new dtRobot() { id = "", robotName = "No data" });
-            AllRobots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
-            AllRobots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
-            AllRobots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
-
-            switch (tabIndex)
+            try
             {
-                case 0:
+                Robots.Add(new dtRobot() { id = "", robotName = "No data" });
+                Robots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
+                Robots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
+                Robots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
+
+                AllRobots.Add(new dtRobot() { id = "", robotName = "No data" });
+                AllRobots.Add(new dtRobot() { id = "1", robotName = "Robot1" });
+                AllRobots.Add(new dtRobot() { id = "2", robotName = "Robot2" });
+                AllRobots.Add(new dtRobot() { id = "3", robotName = "Robot3" });
+
+                switch (tabIndex)
+                {
+                    case 0:
                     {
-                        
                         break;
                     }
-                case 1:
+                    case 1:
                     {
-                        
                         break;
                     }
-                default:
+                    default:
                     {
-                        
                         break;
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
             }
         }
 
         public void ReloadListOperationType()
         {
-            OperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 3, nameOperationType = "Machine To Return" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
-            OperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
+            try
+            {
+                OperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 3, nameOperationType = "Machine To Return" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
+                OperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
 
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 3, nameOperationType = "Machine To Return" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
+                AllOperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
 
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = -1, nameOperationType = "No data" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 0, nameOperationType = "Buffer To Machine" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 1, nameOperationType = "Forklift To Buffer" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 2, nameOperationType = "Buffer To Return" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 3, nameOperationType = "Machine To Return" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 4, nameOperationType = "Return To Gate" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 5, nameOperationType = "Robot To Ready" });
-            AllOperationTypes.Add(new dtOperationType() { idOperationType = 6, nameOperationType = "Robot To Charge" });
-            
-
-            listOperationType = OperationTypes.ToList();
+                listOperationType = OperationTypes.ToList();
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
         }
 
         public void ReloadListDevice()
@@ -240,7 +242,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 Devices.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevice");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -293,11 +295,10 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
         }
 
         public void ReloadListProduct()
@@ -313,7 +314,7 @@ namespace MapViewPallet.MiniForm
                 int.Parse(statistics.cmbDevice.SelectedValue.ToString()) <= 0)
                 {
                     Products.Clear();
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProduct");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListProduct");
                     request.Method = "GET";
                     request.ContentType = @"application/json";
                     HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -369,7 +370,7 @@ namespace MapViewPallet.MiniForm
                     dtDeviceProduct dtDeviceProduct = new dtDeviceProduct();
                     dtDeviceProduct.deviceId = int.Parse(statistics.cmbDevice.SelectedValue.ToString());
                     string jsonData = JsonConvert.SerializeObject(dtDeviceProduct);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListDeviceProductByDeviceId");
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListDeviceProductByDeviceId");
                     request.Method = "POST";
                     request.ContentType = "application/json";
 
@@ -426,11 +427,10 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
         }
 
         public void ReloadListProductDetail()
@@ -445,7 +445,7 @@ namespace MapViewPallet.MiniForm
                 dtProductDetail productDetail = new dtProductDetail();
                 productDetail.productId = statistics.cmbProduct.SelectedValue == null ? 0 : int.Parse(statistics.cmbProduct.SelectedValue.ToString());
                 string jsonData = JsonConvert.SerializeObject(productDetail);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProductDetailByProductId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListProductDetailByProductId");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -503,11 +503,10 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
         }
 
         public void ReloadListBuffer()
@@ -519,7 +518,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 Buffers.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListBuffer");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -577,9 +576,9 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -592,7 +591,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 TimeWorks.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "timeWork/getListTimeWork");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "timeWork/getListTimeWork");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -639,14 +638,12 @@ namespace MapViewPallet.MiniForm
                             AllTimeWorks.Add(tempTimeWork);
                         }
                     }
-
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
         }
 
         public void ReloadDataGridCharge()
@@ -670,7 +667,7 @@ namespace MapViewPallet.MiniForm
 
                 string jsonSend = JsonConvert.SerializeObject(robotCharge);
                 this.listRobotCharge.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "reportRobot/getReportRobotCharge");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "reportRobot/getReportRobotCharge");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -702,7 +699,6 @@ namespace MapViewPallet.MiniForm
                                 updUsrId = int.Parse(dr["updUsrId"].ToString()),
                                 updDt = dr["updDt"].ToString(),
 
-
                                 robotChargeId = int.Parse(dr["robotChargeId"].ToString()),
                                 robotTaskId = dr["robotTaskId"].ToString(),
                                 chargeId = int.Parse(dr["chargeId"].ToString()),
@@ -713,7 +709,6 @@ namespace MapViewPallet.MiniForm
                                 robotChargeStatus = dr["robotChargeStatus"].ToString(),
                                 robotId = dr["robotId"].ToString(),
                                 procedureContent = dr["procedureContent"].ToString(),
-
                             };
 
                             if ((tempRobotCharage.rcBeginDatetime != "") && (tempRobotCharage.rcEndDatetime != ""))
@@ -729,7 +724,6 @@ namespace MapViewPallet.MiniForm
                             }
                             else
                             {
-
                             }
                             if (!ContainRobotCharge(tempRobotCharage, listRobotCharge))
                             {
@@ -759,17 +753,24 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedRobotCharge.IsEditingItem)
+                {
                     GroupedRobotCharge.CommitEdit();
+                }
+
                 if (GroupedRobotCharge.IsAddingNew)
+                {
                     GroupedRobotCharge.CommitNew();
+                }
+
                 GroupedRobotCharge.Refresh();
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
-            public void ReloadDataGridTask()
+
+        public void ReloadDataGridTask()
         {
             if (!Global_Object.ServerAlive())
             {
@@ -822,7 +823,7 @@ namespace MapViewPallet.MiniForm
 
                 string jsonSend = JsonConvert.SerializeObject(robotProcess);
                 this.listRobotProcess.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "reportRobot/getReportRobotProcess");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "reportRobot/getReportRobotProcess");
                 request.Method = "POST";
                 request.ContentType = "application/json";
 
@@ -852,7 +853,6 @@ namespace MapViewPallet.MiniForm
                                 creDt = dr["creDt"].ToString(),
                                 updUsrId = int.Parse(dr["updUsrId"].ToString()),
                                 updDt = dr["updDt"].ToString(),
-
 
                                 robotProcessId = int.Parse(dr["robotProcessId"].ToString()),
                                 robotTaskId = dr["robotTaskId"].ToString(),
@@ -888,42 +888,53 @@ namespace MapViewPallet.MiniForm
                         this.listRobotProcess.Clear();
                         statistics.txtDetail.Text = "";
                     }
-
                 }
                 if (GroupedRobotProcess.IsEditingItem)
+                {
                     GroupedRobotProcess.CommitEdit();
+                }
+
                 if (GroupedRobotProcess.IsAddingNew)
+                {
                     GroupedRobotProcess.CommitNew();
+                }
+
                 GroupedRobotProcess.Refresh();
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-            
         }
 
         public void loadDetail()
         {
-            if (statistics.grvReportRobotProcess.SelectedItem!=null)
+            try
             {
-                dtRobotProcess row = statistics.grvReportRobotProcess.SelectedItem as dtRobotProcess;
-                //robotProcessIdSelect = int.Parse(row.Cells["robotProcessId"].Value.ToString());
-                string detail = row.orderContent.ToString();
-                Dictionary<string, string> strDetail = JsonConvert.DeserializeObject<Dictionary<string, string>>(detail);
-                statistics.txtDetail.Text = "";
-                foreach (var item in strDetail)
+                if (statistics.grvReportRobotProcess.SelectedItem != null)
                 {
-                    if (statistics.txtDetail.Text != "")
+                    dtRobotProcess row = statistics.grvReportRobotProcess.SelectedItem as dtRobotProcess;
+                    //robotProcessIdSelect = int.Parse(row.Cells["robotProcessId"].Value.ToString());
+                    string detail = row.orderContent.ToString();
+                    Dictionary<string, string> strDetail = JsonConvert.DeserializeObject<Dictionary<string, string>>(detail);
+                    statistics.txtDetail.Text = "";
+                    foreach (var item in strDetail)
                     {
-                        statistics.txtDetail.AppendText(Environment.NewLine);
+                        if (statistics.txtDetail.Text != "")
+                        {
+                            statistics.txtDetail.AppendText(Environment.NewLine);
+                        }
+                        statistics.txtDetail.AppendText(" - " + item.Key + ": " + item.Value);
                     }
-                    statistics.txtDetail.AppendText(" - " + item.Key + ": " + item.Value);
+                    statistics.txtDetail.Foreground = new SolidColorBrush(Colors.Blue);
                 }
-                statistics.txtDetail.Foreground = new SolidColorBrush(Colors.Blue);
             }
-            
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
         }
+
         public bool ContainRobotProcess(dtRobotProcess tempOpe, List<dtRobotProcess> List)
         {
             foreach (dtRobotProcess temp in List)
@@ -961,7 +972,6 @@ namespace MapViewPallet.MiniForm
             }
             return false;
         }
-
 
         public bool ContainDevice(dtDevice tempOpe, ObservableCollection<dtDevice> List)
         {
@@ -1076,8 +1086,5 @@ namespace MapViewPallet.MiniForm
             }
             return false;
         }
-        
     }
-
-    
 }

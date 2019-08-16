@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
-        Title="{DynamicResource AddDevicesForm_Title}" 
-        Height="120" 
-        Width="320" 
+        Title="{DynamicResource AddDevicesForm_Title}"
+        Height="120"
+        Width="320"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
     <Grid>
@@ -21,31 +21,30 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center"
-                            >
-                    <TextBlock Text="{DynamicResource AddDevicesForm_DeviceName}" 
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                    <TextBlock Text="{DynamicResource AddDevicesForm_DeviceName}"
                                FontSize="16"
-                               FontWeight="DemiBold"/>
+                               FontWeight="DemiBold" />
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                <StackPanel Orientation="Horizontal" 
+                <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             Margin="0,6,0,0">
-                    <TextBox Name="deviceNametb" 
-                             Width="180" 
-                             Height="20" 
+                    <TextBox Name="deviceNametb"
+                             Width="180"
+                             Height="20"
                              Margin="11,0"
                              PreviewKeyDown="DeviceNametb_PreviewKeyDown"></TextBox>
                     <Button Width="Auto"
                             Height="20"
                             Margin="15 0"
                             Padding="5 0"
-                            Content="{DynamicResource AddDevicesForm_Add}" 
-                            Click="Button_Click"/>
+                            Content="{DynamicResource AddDevicesForm_Add}"
+                            Click="Button_Click" />
                 </StackPanel>
             </Grid>
         </Grid>
@@ -53,7 +52,7 @@
             <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                <TextBlock Foreground="Red" Text="{Binding deviceNameDuplicate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBlock Foreground="Red" Text="{Binding deviceNameDuplicate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
     </Grid>

@@ -13,10 +13,12 @@ namespace MapViewPallet.MiniForm
 {
     public class DevicesManagementModel : NotifyUIBase
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private string pStatusData;
         public string statusData { get => pStatusData; set { pStatusData = value; RaisePropertyChanged("statusData"); } }
 
-        DevicesManagement devicesManagement;
+        private DevicesManagement devicesManagement;
 
         public ListCollectionView GroupedDevices { get; private set; }
         public ListCollectionView GroupedDeviceProducts { get; private set; }
@@ -26,7 +28,6 @@ namespace MapViewPallet.MiniForm
         public ListCollectionView GroupedBuffers { get; private set; }
         public ListCollectionView GroupedPallets { get; private set; }
         public ListCollectionView GroupedDevicePallets { get; private set; }
-        
 
         public List<dtDevice> devicesList;
         public List<dtDeviceBuffer> deviceBuffersList;
@@ -36,8 +37,6 @@ namespace MapViewPallet.MiniForm
         public List<dtBuffer> buffersList;
         public List<dtPallet> palletsList;
         public List<dtDevicePallet> devicePalletsList;
-
-        
 
         public DevicesManagementModel(DevicesManagement devicesManagement)
         {
@@ -51,7 +50,7 @@ namespace MapViewPallet.MiniForm
             buffersList = new List<dtBuffer>();
             palletsList = new List<dtPallet>();
             devicePalletsList = new List<dtDevicePallet>();
-            
+
             GroupedDevices = (ListCollectionView)CollectionViewSource.GetDefaultView(devicesList);
             GroupedDeviceProducts = (ListCollectionView)CollectionViewSource.GetDefaultView(deviceProductsList);
             GroupedDeviceBuffers = (ListCollectionView)CollectionViewSource.GetDefaultView(deviceBuffersList);
@@ -60,9 +59,7 @@ namespace MapViewPallet.MiniForm
             GroupedBuffers = (ListCollectionView)CollectionViewSource.GetDefaultView(buffersList);
             GroupedPallets = (ListCollectionView)CollectionViewSource.GetDefaultView(palletsList);
             GroupedDevicePallets = (ListCollectionView)CollectionViewSource.GetDefaultView(devicePalletsList);
-
         }
-
 
         //*********************************************************************************************
 
@@ -76,7 +73,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 devicesList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevice");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevice");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -111,45 +108,51 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedDevices.IsEditingItem)
+                {
                     GroupedDevices.CommitEdit();
+                }
+
                 if (GroupedDevices.IsAddingNew)
+                {
                     GroupedDevices.CommitNew();
+                }
+
                 GroupedDevices.Refresh();
                 switch (tabIndex)
                 {
                     case 0:
+                    {
+                        if (devicesManagement.DevicesListDg.HasItems)
                         {
-                            if (devicesManagement.DevicesListDg.HasItems)
-                            {
-                                devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
-                            }
-                            break;
+                            devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
                         }
+                        break;
+                    }
                     case 1:
+                    {
+                        if (devicesManagement.DevicesListDg2.HasItems)
                         {
-                            if (devicesManagement.DevicesListDg2.HasItems)
-                            {
-                                devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
-                            }
-                            break;
+                            devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
                         }
+                        break;
+                    }
                     default:
+                    {
+                        if (devicesManagement.DevicesListDg.HasItems)
                         {
-                            if (devicesManagement.DevicesListDg.HasItems)
-                            {
-                                devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
-                            }
-                            if (devicesManagement.DevicesListDg2.HasItems)
-                            {
-                                devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
-                            }
-                            break;
+                            devicesManagement.DevicesListDg.SelectedItem = devicesManagement.DevicesListDg.Items[0];
                         }
+                        if (devicesManagement.DevicesListDg2.HasItems)
+                        {
+                            devicesManagement.DevicesListDg2.SelectedItem = devicesManagement.DevicesListDg2.Items[0];
+                        }
+                        break;
+                    }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -163,7 +166,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 productsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProduct");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListProduct");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -195,18 +198,24 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedProducts.IsEditingItem)
+                {
                     GroupedProducts.CommitEdit();
+                }
+
                 if (GroupedProducts.IsAddingNew)
+                {
                     GroupedProducts.CommitNew();
+                }
+
                 GroupedProducts.Refresh();
                 if (devicesManagement.ProductsListDg.HasItems)
                 {
                     devicesManagement.ProductsListDg.SelectedItem = devicesManagement.ProductsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -220,7 +229,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 buffersList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListBuffer");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListBuffer");
                 request.Method = "GET";
                 request.ContentType = @"application/json";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
@@ -258,18 +267,24 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedBuffers.IsEditingItem)
+                {
                     GroupedBuffers.CommitEdit();
+                }
+
                 if (GroupedBuffers.IsAddingNew)
+                {
                     GroupedBuffers.CommitNew();
+                }
+
                 GroupedBuffers.Refresh();
                 if (devicesManagement.BuffersListDg.HasItems)
                 {
                     devicesManagement.BuffersListDg.SelectedItem = devicesManagement.BuffersListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -283,7 +298,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 deviceProductsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListDeviceProductAllByDeviceId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListDeviceProductAllByDeviceId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -324,25 +339,31 @@ namespace MapViewPallet.MiniForm
                         {
                             deviceProductsList.Add(tempDeviceProduct);
                             if (tempDeviceProduct.checkStatus == true)
-                            { 
+                            {
                                 //devicesManagement.chkSelectAll.IsChecked = true;
                             }
                         }
                     }
                 }
                 if (GroupedDeviceProducts.IsEditingItem)
+                {
                     GroupedDeviceProducts.CommitEdit();
+                }
+
                 if (GroupedDeviceProducts.IsAddingNew)
+                {
                     GroupedDeviceProducts.CommitNew();
+                }
+
                 GroupedDeviceProducts.Refresh();
                 if (devicesManagement.DeviceProductsListDg.HasItems)
                 {
                     devicesManagement.DeviceProductsListDg.SelectedItem = devicesManagement.DeviceProductsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -355,8 +376,8 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
-                deviceBuffersList.Clear(); 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "buffer/getListDeviceBufferAllByDeviceId");
+                deviceBuffersList.Clear();
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "buffer/getListDeviceBufferAllByDeviceId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -391,7 +412,7 @@ namespace MapViewPallet.MiniForm
                             bufferName = dr["bufferName"].ToString(),
                             bufferSort = int.Parse(dr["bufferSort"].ToString()),
                             maxRow = int.Parse(dr["maxRow"].ToString()),
-                            maxBay  = int.Parse(dr["maxBay"].ToString()),
+                            maxBay = int.Parse(dr["maxBay"].ToString()),
                             checkStatus = bool.Parse(dr["checkStatus"].ToString())
                         };
                         if (!ContainDeviceBuffer(tempDeviceBuffer, deviceBuffersList))
@@ -401,18 +422,24 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedDeviceBuffers.IsEditingItem)
+                {
                     GroupedDeviceBuffers.CommitEdit();
+                }
+
                 if (GroupedDeviceBuffers.IsAddingNew)
+                {
                     GroupedDeviceBuffers.CommitNew();
+                }
+
                 GroupedDeviceBuffers.Refresh();
                 if (devicesManagement.DeviceBuffersListDg.HasItems)
                 {
                     devicesManagement.DeviceBuffersListDg.SelectedItem = devicesManagement.DeviceBuffersListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -426,7 +453,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 productDetailsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/getListProductDetailByProductId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/getListProductDetailByProductId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -465,18 +492,24 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedProductDetails.IsEditingItem)
+                {
                     GroupedProductDetails.CommitEdit();
+                }
+
                 if (GroupedProductDetails.IsAddingNew)
+                {
                     GroupedProductDetails.CommitNew();
+                }
+
                 GroupedProductDetails.Refresh();
                 if (devicesManagement.ProductDetailsListDg.HasItems)
                 {
                     devicesManagement.ProductDetailsListDg.SelectedItem = devicesManagement.ProductDetailsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
 
@@ -490,7 +523,7 @@ namespace MapViewPallet.MiniForm
             try
             {
                 palletsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "pallet/getListPalletBufferId");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/getListPalletBufferId");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dynamic postApiBody = new JObject();
@@ -540,22 +573,28 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedPallets.IsEditingItem)
+                {
                     GroupedPallets.CommitEdit();
+                }
+
                 if (GroupedPallets.IsAddingNew)
+                {
                     GroupedPallets.CommitNew();
+                }
+
                 GroupedPallets.Refresh();
                 if (devicesManagement.PalletsListDg.HasItems)
                 {
                     devicesManagement.PalletsListDg.SelectedItem = devicesManagement.PalletsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-
+                logFile.Error(ex.Message);
             }
         }
 
-        public void ReloadListDevicePallets (int deviceId)
+        public void ReloadListDevicePallets(int deviceId)
         {
             if (!Global_Object.ServerAlive())
             {
@@ -564,9 +603,8 @@ namespace MapViewPallet.MiniForm
             }
             try
             {
-
                 devicePalletsList.Clear();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "device/getListDevicePallet");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "device/getListDevicePallet");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dtDevice device = new dtDevice();
@@ -609,26 +647,28 @@ namespace MapViewPallet.MiniForm
                     }
                 }
                 if (GroupedDevicePallets.IsEditingItem)
+                {
                     GroupedDevicePallets.CommitEdit();
+                }
+
                 if (GroupedDevicePallets.IsAddingNew)
+                {
                     GroupedDevicePallets.CommitNew();
+                }
+
                 GroupedDevicePallets.Refresh();
                 if (devicesManagement.DevicePalletsListDg.HasItems)
                 {
                     devicesManagement.DevicePalletsListDg.SelectedItem = devicesManagement.DevicePalletsListDg.Items[0];
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
         }
-        
-
-
 
         //*********************************************************************************************
-
 
         public bool ContainDevice(dtDevice tempOpe, List<dtDevice> List)
         {
@@ -781,8 +821,5 @@ namespace MapViewPallet.MiniForm
             }
             return false;
         }
-        
-        
-
     }
 }

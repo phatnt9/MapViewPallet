@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm"
-        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"  
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         mc:Ignorable="d"
         Title="{DynamicResource Statistics_Title}"
         WindowStartupLocation="CenterOwner" Height="650" Width="1000">
@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid Margin="0,5,0,5">
-                <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png"/>
+                <Image Source="pack://siteoforigin:,,,/Resources/seldat_logo.png" />
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
@@ -45,8 +45,8 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
                                             <Label Content="{DynamicResource Statistics_TabItem_Robot}"></Label>
-                                            <ComboBox 
-                                                Name="cmbRobot" 
+                                            <ComboBox
+                                                Name="cmbRobot"
                                                 Width="100"
                                                 ItemsSource="{Binding Robots}"
                                                 SelectedItem="{Binding dtRobot}"
@@ -58,7 +58,7 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
                                             <Label Content="{DynamicResource Statistics_TabItem_Devices}"></Label>
-                                            <ComboBox 
+                                            <ComboBox
                                                 Name="cmbDevice"
                                                 Width="100"
                                                 ItemsSource="{Binding Devices}"
@@ -72,7 +72,7 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
                                             <Label Content="{DynamicResource Statistics_TabItem_Products}"></Label>
-                                            <ComboBox 
+                                            <ComboBox
                                                 Name="cmbProduct"
                                                 Width="100"
                                                 ItemsSource="{Binding Products}"
@@ -90,7 +90,7 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
                                             <Label Content="{DynamicResource Statistics_TabItem_OperationType}"></Label>
-                                            <ComboBox 
+                                            <ComboBox
                                                 Name="cmbOperationType"
                                                 Width="100"
                                                 ItemsSource="{Binding OperationTypes}"
@@ -103,7 +103,7 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
                                             <Label Content="{DynamicResource Statistics_TabItem_Buffer}"></Label>
-                                            <ComboBox 
+                                            <ComboBox
                                                 Name="cmbBuffer"
                                                 Width="100"
                                                 ItemsSource="{Binding Buffers}"
@@ -116,7 +116,7 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
                                             <Label Content="{DynamicResource Statistics_TabItem_ProductDetail}"></Label>
-                                            <ComboBox 
+                                            <ComboBox
                                                 Name="cmbProductDetail"
                                                 Width="100"
                                                 ItemsSource="{Binding ProductDetails}"
@@ -133,7 +133,7 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
                                             <Label Content="{DynamicResource Statistics_TabItem_Shift}"></Label>
-                                            <ComboBox 
+                                            <ComboBox
                                                 Name="cmbShift"
                                                 Width="100"
                                                 ItemsSource="{Binding TimeWorks}"
@@ -145,29 +145,29 @@
                                         <StackPanel Margin="0 0 30 0" VerticalAlignment="Center">
                                             <DatePicker
                                                 Name="dtpActiveDate"
-                                                Width="100"/>
+                                                Width="100" />
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Column="1">
-                                <StackPanel 
+                                <StackPanel
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
-                                    <Button 
+                                    <Button
                                         Name="Search"
                                         Margin="0 10 0 0"
                                         Width="Auto"
                                         Content="{DynamicResource Statistics_Button_Search}"
                                         Click="Search_Click"
                                         ></Button>
-                                    <!--<Button 
+                                    <!--<Button
                                         Name="Test"
                                         Margin="0 10 0 0"
                                         Width="80"
                                         Click="Test_Click"
                                         >Test</Button>-->
-                                    <Button 
+                                    <Button
                                         Name="btnExport"
                                         Margin="0 10 0 0"
                                         Width="Auto"
@@ -175,7 +175,6 @@
                                         Click="BtnExport_Click"
                                         ></Button>
                                 </StackPanel>
-                                
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -184,11 +183,11 @@
                                 <ColumnDefinition Width="300"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <DataGrid 
+                                <DataGrid
                                     ItemsSource="{Binding GroupedRobotProcess}"
                                     Name="grvReportRobotProcess"
                                     Margin="0 10 0 0"
-                                    CanUserReorderColumns="False" 
+                                    CanUserReorderColumns="False"
                                     CanUserAddRows="False"
                                     CanUserResizeRows="False"
                                     CanUserDeleteRows="False"
@@ -196,21 +195,21 @@
                                     AutoGenerateColumns="False"
                                     SelectedCellsChanged="GrvReportRobotProcess_SelectedCellsChanged">
                                     <DataGrid.Columns>
-                                        <!--<DataGridTemplateColumn 
-                                            Width="Auto" 
+                                        <!--<DataGridTemplateColumn
+                                            Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Robot"/>
+                                                               Text="Robot" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=robotId}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -223,13 +222,13 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Robot"/>
+                                                               Text="Robot" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox 
+                                                    <ComboBox
                                                         IsHitTestVisible="False"
                                                         ItemsSource="{Binding DataContext.AllRobots, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="robotName"
@@ -240,21 +239,21 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <DataGridTemplateColumn 
-                                            Width="Auto" 
+                                        <DataGridTemplateColumn
+                                            Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Robot Task Id"/>
+                                                               Text="Robot Task Id" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=robotTaskId}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -262,21 +261,21 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <DataGridTemplateColumn 
-                                            Width="Auto" 
+                                        <DataGridTemplateColumn
+                                            Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Gate Key"/>
+                                                               Text="Gate Key" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=gateKey}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -284,21 +283,21 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <DataGridTemplateColumn 
-                                            Width="50" 
+                                        <DataGridTemplateColumn
+                                            Width="50"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="orderContent"/>
+                                                               Text="orderContent" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=orderContent}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -306,21 +305,21 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <!--<DataGridTemplateColumn 
-                                            Width="Auto" 
+                                        <!--<DataGridTemplateColumn
+                                            Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Device"/>
+                                                               Text="Device" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=deviceId}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -333,39 +332,38 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Devices"/>
+                                                               Text="Devices" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox 
+                                                    <ComboBox
                                                         IsHitTestVisible="False"
                                                         ItemsSource="{Binding DataContext.AllDevices, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="deviceName"
                                                         SelectedValuePath="deviceId"
-                                                        SelectedValue="{Binding deviceId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            >
+                                                        SelectedValue="{Binding deviceId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     </ComboBox>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <!--<DataGridTemplateColumn 
-                                            Width="Auto" 
+                                        <!--<DataGridTemplateColumn
+                                            Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Product"/>
+                                                               Text="Product" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=productId}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -378,39 +376,38 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Products"/>
+                                                               Text="Products" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox 
+                                                    <ComboBox
                                                         IsHitTestVisible="False"
                                                         ItemsSource="{Binding DataContext.AllProducts, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="productName"
                                                         SelectedValuePath="productId"
-                                                        SelectedValue="{Binding productId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            >
+                                                        SelectedValue="{Binding productId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     </ComboBox>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <!--<DataGridTemplateColumn 
-                                            Width="Auto" 
+                                        <!--<DataGridTemplateColumn
+                                            Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Product Detail"/>
+                                                               Text="Product Detail" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=productDetailId}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -423,39 +420,38 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="ProductDetails"/>
+                                                               Text="ProductDetails" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox 
+                                                    <ComboBox
                                                         IsHitTestVisible="False"
                                                         ItemsSource="{Binding DataContext.AllProductDetails, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="productDetailName"
                                                         SelectedValuePath="productDetailId"
-                                                        SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            >
+                                                        SelectedValue="{Binding productDetailId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     </ComboBox>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <!--<DataGridTemplateColumn 
-                                            Width="Auto" 
+                                        <!--<DataGridTemplateColumn
+                                            Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Buffer"/>
+                                                               Text="Buffer" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=bufferId}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -468,39 +464,38 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Buffers"/>
+                                                               Text="Buffers" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox 
+                                                    <ComboBox
                                                         IsHitTestVisible="False"
                                                         ItemsSource="{Binding DataContext.AllBuffers, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="bufferName"
                                                         SelectedValuePath="bufferId"
-                                                        SelectedValue="{Binding bufferId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            >
+                                                        SelectedValue="{Binding bufferId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     </ComboBox>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <DataGridTemplateColumn 
-                                            Width="Auto" 
+                                        <DataGridTemplateColumn
+                                            Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Status"/>
+                                                               Text="Status" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=robotProcessStastus}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -508,15 +503,15 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <!--<DataGridTemplateColumn 
-                                            Width="Auto" 
+                                        <!--<DataGridTemplateColumn
+                                            Width="Auto"
                                             Visibility="Visible"
                                             IsReadOnly="True">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Operation Type"/>
+                                                               Text="Operation Type" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
@@ -536,39 +531,38 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Operation Type"/>
+                                                               Text="Operation Type" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox 
+                                                    <ComboBox
                                                         IsHitTestVisible="False"
                                                         ItemsSource="{Binding DataContext.AllOperationTypes, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="nameOperationType"
                                                         SelectedValuePath="idOperationType"
-                                                        SelectedValue="{Binding operationType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            >
+                                                        SelectedValue="{Binding operationType, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     </ComboBox>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <!--<DataGridTemplateColumn 
+                                        <!--<DataGridTemplateColumn
                                             Width="Auto"
                                             Visibility="Visible">
                                             <DataGridTemplateColumn.HeaderTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Shift"/>
+                                                               Text="Shift" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
-                                                        <TextBlock HorizontalAlignment="Center" 
+                                                        <TextBlock HorizontalAlignment="Center"
                                                                Text="{Binding Path=timeWorkId}">
                                                         </TextBlock>
                                                     </StackPanel>
@@ -581,19 +575,18 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Shift"/>
+                                                               Text="Shift" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox 
+                                                    <ComboBox
                                                         IsHitTestVisible="False"
                                                         ItemsSource="{Binding DataContext.AllTimeWorks, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="timeWorkName"
                                                         SelectedValuePath="timeWorkId"
-                                                        SelectedValue="{Binding timeWorkId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                            >
+                                                        SelectedValue="{Binding timeWorkId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                                                     </ComboBox>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
@@ -606,7 +599,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Active Date"/>
+                                                               Text="Active Date" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
@@ -628,7 +621,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="planId"/>
+                                                               Text="planId" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
@@ -650,7 +643,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="palletId"/>
+                                                               Text="palletId" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
@@ -672,7 +665,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="rpBeginDatetime"/>
+                                                               Text="rpBeginDatetime" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
@@ -694,7 +687,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="rpEndDatetime"/>
+                                                               Text="rpEndDatetime" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
@@ -716,7 +709,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="locationBuffer"/>
+                                                               Text="locationBuffer" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
@@ -738,7 +731,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="locationPallet"/>
+                                                               Text="locationPallet" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
@@ -758,7 +751,7 @@
                             <Grid Grid.Column="1">
                                 <GroupBox Header="{DynamicResource Statistics_Statistic_Detail}">
                                     <Grid>
-                                        <TextBox 
+                                        <TextBox
                                             Name="txtDetail"
                                             IsReadOnly="True">
                                         </TextBox>
@@ -786,8 +779,8 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
                                         <Label Content="Robot"></Label>
-                                        <ComboBox 
-                                                Name="cmbRobotRobotCharge" 
+                                        <ComboBox
+                                                Name="cmbRobotRobotCharge"
                                                 Width="100"
                                                 ItemsSource="{Binding Robots}"
                                                 SelectedItem="{Binding dtRobot}"
@@ -799,7 +792,7 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
                                         <Label Content="Shift"></Label>
-                                        <ComboBox 
+                                        <ComboBox
                                                 Name="cmbShiftRobotCharge"
                                                 Width="100"
                                                 ItemsSource="{Binding TimeWorks}"
@@ -811,23 +804,22 @@
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Column="1">
-                                <StackPanel 
+                                <StackPanel
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
-                                    <Button 
+                                    <Button
                                         Name="btnSearchRobotCharge"
                                         Margin="0 10 0 0"
                                         Width="80"
                                         Click="BtnSearchRobotCharge_Click"
                                         >Search</Button>
-                                    <Button 
+                                    <Button
                                         Name="btxExportRobotCharge"
                                         Margin="0 10 0 0"
                                         Width="80"
                                         Click="BtxExportRobotCharge_Click"
                                         >Export</Button>
                                 </StackPanel>
-
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1">
@@ -840,7 +832,7 @@
                                     ItemsSource="{Binding GroupedRobotCharge}"
                                     Name="grvReportRobotCharge"
                                     Margin="0 10 0 0"
-                                    CanUserReorderColumns="False" 
+                                    CanUserReorderColumns="False"
                                     CanUserAddRows="False"
                                     CanUserResizeRows="False"
                                     CanUserDeleteRows="False"
@@ -852,13 +844,13 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                               Text="Robot"/>
+                                                               Text="Robot" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.HeaderTemplate>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <ComboBox 
+                                                    <ComboBox
                                                         IsHitTestVisible="False"
                                                         ItemsSource="{Binding DataContext.AllRobots, RelativeSource={RelativeSource AncestorType=local:Statistics}}"
                                                         DisplayMemberPath="robotName"
@@ -877,7 +869,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="robotChargeId"/>
+                                                            Text="robotChargeId" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
@@ -891,7 +883,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="robotTaskId"/>
+                                                            Text="robotTaskId" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
@@ -905,7 +897,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="chargeId"/>
+                                                            Text="chargeId" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
@@ -919,7 +911,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="timeWorkId"/>
+                                                            Text="timeWorkId" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
@@ -933,7 +925,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="rcBeginDatetime"/>
+                                                            Text="rcBeginDatetime" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
@@ -947,7 +939,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="rcEndDatetime"/>
+                                                            Text="rcEndDatetime" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
@@ -961,7 +953,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="currentBattery"/>
+                                                            Text="currentBattery" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
@@ -975,7 +967,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="robotChargeStatus"/>
+                                                            Text="robotChargeStatus" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
@@ -989,7 +981,7 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="timeCharge"/>
+                                                            Text="timeCharge" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
@@ -1003,13 +995,11 @@
                                                 <DataTemplate>
                                                     <StackPanel>
                                                         <TextBlock
-                                                            Text="procedureContent"/>
+                                                            Text="procedureContent" />
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </DataGridTextColumn.HeaderTemplate>
                                         </DataGridTextColumn>
-                                        
-                                        
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>

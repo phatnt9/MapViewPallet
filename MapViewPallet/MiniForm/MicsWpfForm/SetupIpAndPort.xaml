@@ -5,22 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
         mc:Ignorable="d"
-        Title="Setup" Height="160" Width="210"
+        Title="Setup" Height="220" Width="210"
         ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <StackPanel 
+            <StackPanel
                 Orientation="Vertical">
-                <StackPanel 
+                <StackPanel
                     HorizontalAlignment="Center">
-                    <Label 
+                    <Label
                         Margin="0 -3"
-                        Content="Internet Protocol:"></Label>
+                        Content="Database IP:"></Label>
                 </StackPanel>
                 <StackPanel>
                     <TextBox
@@ -31,11 +32,11 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
-            <StackPanel 
+            <StackPanel
                 Orientation="Vertical">
                 <StackPanel
                     HorizontalAlignment="Center">
-                    <Label 
+                    <Label
                         Margin="0 -3"
                         Content="Port:"></Label>
                 </StackPanel>
@@ -48,8 +49,25 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-            <StackPanel 
-                Orientation="Horizontal" 
+            <StackPanel
+                Orientation="Vertical">
+                <StackPanel
+                    HorizontalAlignment="Center">
+                    <Label
+                        Margin="0 -3"
+                        Content="Robot Server IP:"></Label>
+                </StackPanel>
+                <StackPanel>
+                    <TextBox
+                        Name="tb_serverRobotip"
+                        Width="160"
+                        PreviewTextInput="TextBox_PreviewTextInput"></TextBox>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+            <StackPanel
+                Orientation="Horizontal"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 <Grid Margin="5 0">

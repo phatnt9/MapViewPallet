@@ -2,13 +2,11 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Interop;
 
 namespace MapViewPallet.MiniForm
 {
@@ -17,6 +15,8 @@ namespace MapViewPallet.MiniForm
     /// </summary>
     public partial class ChangePassForm : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public ChangePassForm(string cultureName = null)
         {
             Loaded += ChangePassForm_Loaded;
@@ -117,7 +117,7 @@ namespace MapViewPallet.MiniForm
                 user.userPasswordOld = this.passwordCurrenttb.Password;
                 user.userPassword = this.passwordNewtb.Password;
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "user/changPasswordUser");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "user/changPasswordUser");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 string jsonData = JsonConvert.SerializeObject(user);
@@ -154,13 +154,10 @@ namespace MapViewPallet.MiniForm
                     }
                 }
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-
+                logFile.Error(ex.Message);
             }
-            
-
-
         }
     }
 }

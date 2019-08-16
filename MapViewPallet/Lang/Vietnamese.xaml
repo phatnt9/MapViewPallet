@@ -1,15 +1,14 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                    xmlns:local="clr-namespace:MapViewPallet.Lang">
-    
-    
-    
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:MapViewPallet.Lang"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
     <sys:String x:Key="Language">Ngôn ngữ</sys:String>
     <sys:String x:Key="English">English</sys:String>
     <sys:String x:Key="Vietnamese">Tiếng Việt</sys:String>
 
-    <!--MainWindow-->
+    <!--  MainWindow  -->
     <sys:String x:Key="MainWindow_Title">Phần mềm quản lý</sys:String>
     <sys:String x:Key="MainWindow_Menu_Management">_Quản lý</sys:String>
     <sys:String x:Key="MainWindow_Menu_Management_Process">_Quy trình</sys:String>
@@ -18,14 +17,14 @@
     <sys:String x:Key="MainWindow_Menu_Account">_Tài khoản</sys:String>
     <sys:String x:Key="MainWindow_Menu_Account_ChangePass">_Thay đổi mật khẩu</sys:String>
     <sys:String x:Key="MainWindow_Menu_Account_Logout">_Đăng xuất</sys:String>
-    
-    <!--MenuItem-->
+
+    <!--  MenuItem  -->
     <sys:String x:Key="Station_Menu_Item_Properties">Thông tin</sys:String>
     <sys:String x:Key="Station_Menu_Item_Edit">Tùy chỉnh</sys:String>
     <sys:String x:Key="Station_Menu_Item_Rotate">Xoay</sys:String>
     <sys:String x:Key="Station_Menu_Item_Remove">Xóa</sys:String>
 
-    <!--Toolbar-->
+    <!--  Toolbar  -->
     <sys:String x:Key="MainWindow_Toolbar_MapReCenter">Đặt lại bản đồ</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_MapOnOff">Hiện/Ẩn bản đồ</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_PlanManagement">Thiết lập kế hoạch</sys:String>
@@ -38,10 +37,10 @@
     <sys:String x:Key="MainWindow_Toolbar_ZoomInOut">Thu/Phóng</sys:String>
     <sys:String x:Key="MainWindow_Toolbar_MoveStaion">Di chuyển Buffer</sys:String>
 
-    <!--TabItem-->
+    <!--  TabItem  -->
     <sys:String x:Key="MainWindow_TabItem_LogConsole">Thông Báo</sys:String>
 
-    <!--AddBufferForm-->
+    <!--  AddBufferForm  -->
     <sys:String x:Key="AddBufferForm_Title1">Thêm Buffer</sys:String>
     <sys:String x:Key="AddBufferForm_Title2">Tùy chỉnh Buffer</sys:String>
     <sys:String x:Key="AddBufferForm_BufferName">Tên Buffer</sys:String>
@@ -50,22 +49,22 @@
     <sys:String x:Key="AddBufferForm_BufferReturn">Buffer trả hàng</sys:String>
     <sys:String x:Key="AddBufferForm_ButtonAccept">Hoàn tất</sys:String>
 
-    <!--AddDevicesForm-->
+    <!--  AddDevicesForm  -->
     <sys:String x:Key="AddDevicesForm_Title">Thêm thiết bị</sys:String>
     <sys:String x:Key="AddDevicesForm_DeviceName">Tên thiết bị</sys:String>
     <sys:String x:Key="AddDevicesForm_Add">Thêm</sys:String>
 
-    <!--AddProductDetailForm-->
+    <!--  AddProductDetailForm  -->
     <sys:String x:Key="AddProductDetailForm_Title">Thêm mã sản phẩm</sys:String>
     <sys:String x:Key="AddProductDetailForm_ProductDetailName">Tên mã sản phẩm</sys:String>
     <sys:String x:Key="AddProductDetailForm_Add">Thêm</sys:String>
 
-    <!--AddProductForm-->
+    <!--  AddProductForm  -->
     <sys:String x:Key="AddProductForm_Title">Thêm sản phẩm</sys:String>
     <sys:String x:Key="AddProductForm_ProductName">Tên sản phẩm</sys:String>
     <sys:String x:Key="AddProductForm_Add">Thêm</sys:String>
 
-    <!--AddUserForm-->
+    <!--  AddUserForm  -->
     <sys:String x:Key="AddUserForm_Title1">Tài khoản</sys:String>
     <sys:String x:Key="AddUserForm_Title2">Chỉnh sửa người dùng</sys:String>
     <sys:String x:Key="AddUserForm_UserName">Tên người dùng</sys:String>
@@ -75,7 +74,7 @@
     <sys:String x:Key="AddUserForm_Save">Lưu</sys:String>
     <sys:String x:Key="AddUserForm_Exit">Thoát</sys:String>
 
-    <!--ChangePassForm-->
+    <!--  ChangePassForm  -->
     <sys:String x:Key="ChangePassForm_Title">Thay đổi mật khẩu</sys:String>
     <sys:String x:Key="ChangePassForm_UserName">Tên người dùng</sys:String>
     <sys:String x:Key="ChangePassForm_Password">Mật khẩu</sys:String>
@@ -84,7 +83,7 @@
     <sys:String x:Key="ChangePassForm_Save">Lưu</sys:String>
     <sys:String x:Key="ChangePassForm_Exit">Thoát</sys:String>
 
-    <!--LoginForm-->
+    <!--  LoginForm  -->
     <sys:String x:Key="LoginForm_Title">Đăng nhập</sys:String>
     <sys:String x:Key="LoginForm_UserName">Tên người dùng</sys:String>
     <sys:String x:Key="LoginForm_Password">Mật khẩu</sys:String>
@@ -93,7 +92,7 @@
     <sys:String x:Key="LoginForm_LoginError">Vui lòng kiểm tra máy chủ</sys:String>
     <sys:String x:Key="LoginForm_WaitLogin">Vui lòng chờ</sys:String>
 
-    <!--PlanControl-->
+    <!--  PlanControl  -->
     <sys:String x:Key="PlanControl_Title">Thiết Lập Quy Trình</sys:String>
     <sys:String x:Key="PlanControl_MainLabel">Thiết Lập Quy Trình</sys:String>
     <sys:String x:Key="PlanControl_Shift1_Label">Kế hoạch</sys:String>
@@ -106,23 +105,21 @@
     <sys:String x:Key="PlanControl_Shift_Column_PalletUse">Đã cấp</sys:String>
     <sys:String x:Key="PlanControl_Shift_Column_Delete">Xóa</sys:String>
     <sys:String x:Key="PlanControl_Save">Lưu</sys:String>
+    <sys:String x:Key="PlanControl_Delete">Xóa</sys:String>
     <sys:String x:Key="PlanControl_Import">Nhập file</sys:String>
     <sys:String x:Key="PlanControl_Exit">Thoát</sys:String>
 
-
-    <!--DevicesManagement-->
+    <!--  DevicesManagement  -->
     <sys:String x:Key="DevicesManagement_Title">Quản Lý</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Operation">Quy trình</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Device">Thiết bị</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Product">Sản phẩm</sys:String>
     <sys:String x:Key="DevicesManagement_TabItem_Buffer">Buffer</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_Device">Thiết bị</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Device_Column_DeviceName">Tên thiết bị</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Device_Column_ImageDeviceUrl">Hình ảnh</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePalletData">Dữ liệu Pallet Cấp</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Bay">Cột</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Row">Hàng</sys:String>
@@ -131,56 +128,49 @@
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Column_Row">Hàng</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Column_Bay">Cột</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_DevicePallet_Column_DataPallet">Dữ liệu</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_Product">Sản phẩm</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Product_Column_ProductName">Tên sản phẩm</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Product_Column_ImageProductUrl">Hình ảnh</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_ProductDetail">Mã sản phẩm</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_ProductDetail_Column_ProductDetailName">Mã</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer">Vùng Buffer</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferName">Tên Buffer</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferBay">Cột</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferRow">Hàng</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferReturn">Trả hàng</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Buffer_Column_BufferSort">Ưu tiên</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet">Danh sách Pallet</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Row">Hàng</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Bay">Cột</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_Status">Trạng thái</sys:String>
     <sys:String x:Key="DevicesManagement_Groupbox_Pallet_Column_ProductDetailName">Mã hàng</sys:String>
-    
-    
+
     <sys:String x:Key="DevicesManagement_Button_Save">Lưu</sys:String>
     <sys:String x:Key="DevicesManagement_Button_Exit">Thoát</sys:String>
 
-
-    <!--StationEditor-->
+    <!--  StationEditor  -->
     <sys:String x:Key="StationEditor_Title">Quản lý Buffer</sys:String>
-    
-    
+
     <sys:String x:Key="StationEditor_Groupbox_BufferInfo">Thông tin Buffer</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferName">Tên: </sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferType">Loại: </sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferNumberOfRow">Số hàng: </sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferNumberOfBay">Số cột: </sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferCoordinate">Tọa độ: </sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferName">Tên:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferType">Loại:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferNumberOfRow">Số hàng:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferNumberOfBay">Số cột:</sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_BufferInfo_BufferCoordinate">Tọa độ:</sys:String>
 
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo">Thông tin Pallet</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletRow">Hàng: </sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletRow">Hàng:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletBay">Cột:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletPosition">Tọa độ:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletCoordinate">Cột:</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_main">dirM: </sys:String>
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_main">dirM:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_sub">dirS:</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletLine_ord">lineOrd:</sys:String>
-    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_out">dirO: </sys:String>
-    
-    
+    <sys:String x:Key="StationEditor_Groupbox_PalletInfo_PalletDirection_out">dirO:</sys:String>
+
     <sys:String x:Key="StationEditor_Groupbox_BufferDetail">Chi tiết Buffer</sys:String>
 
     <sys:String x:Key="StationEditor_Groupbox_PalletList">Danh sách Pallet</sys:String>
@@ -188,16 +178,13 @@
     <sys:String x:Key="StationEditor_Groupbox_PalletList_Column_Bay">Cột</sys:String>
     <sys:String x:Key="StationEditor_Groupbox_PalletList_Column_Status">Trạng thái</sys:String>
 
-
     <sys:String x:Key="StationEditor_Button_Save">Lưu</sys:String>
     <sys:String x:Key="StationEditor_Button_Exit">Thoát</sys:String>
-    
-    
+
     <sys:String x:Key="StationEditor_BufferType_Return">Trả hàng</sys:String>
     <sys:String x:Key="StationEditor_BufferType_Buffer">Lưu hàng</sys:String>
 
-
-    <!--UserManagement-->
+    <!--  UserManagement  -->
     <sys:String x:Key="UserManagement_Title">Quản lý người dùng</sys:String>
     <sys:String x:Key="UserManagement_AccountList">Danh sách tài khoản</sys:String>
     <sys:String x:Key="UserManagement_AccountList_Column_UserName">Tên tài khoản</sys:String>
@@ -206,8 +193,7 @@
 
     <sys:String x:Key="UserManagement_Button_Exit">Thoát</sys:String>
 
-
-    <!--Statistics-->
+    <!--  Statistics  -->
     <sys:String x:Key="Statistics_Title">Thống kê quy trình</sys:String>
     <sys:String x:Key="Statistics_TabItem_RobotProcess">Thống kê tác vụ</sys:String>
     <sys:String x:Key="Statistics_TabItem_Devices">Thiết bị</sys:String>
@@ -221,7 +207,4 @@
     <sys:String x:Key="Statistics_Statistic_Detail">Chi tiết</sys:String>
     <sys:String x:Key="Statistics_Button_Search">Tìm kiếm</sys:String>
     <sys:String x:Key="Statistics_Button_Export">Xuất file</sys:String>
-
-
-
 </ResourceDictionary>

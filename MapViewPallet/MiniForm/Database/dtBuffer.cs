@@ -26,10 +26,9 @@ namespace MapViewPallet.MiniForm
         public int maxBayOld { get => pMaxBayOld; set => pMaxBayOld = value; }
         public string bufferNameOld { get => pBufferNameOld; set => pBufferNameOld = value; }
         public List<dtPallet> pallets { get => pPallets; set => pPallets = value; }
-        public bool bufferReturn { get => pBufferReturn; set { pBufferReturn = value; RaisePropertyChanged("bufferReturn");  } }
+        public bool bufferReturn { get => pBufferReturn; set { pBufferReturn = value; RaisePropertyChanged("bufferReturn"); } }
         public bool bufferReturnOld { get => pBufferReturnOld; set => pBufferReturnOld = value; }
         public string bufferData { get => pBufferData; set => pBufferData = value; }
-
 
         public dtBuffer()
         {
@@ -38,8 +37,6 @@ namespace MapViewPallet.MiniForm
 
         public void GetPalletsList()
         {
-
         }
-
     }
 }

@@ -1,29 +1,27 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.ComponentModel;
-using System;
-using System.Windows.Input;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace MapViewPallet.Shape
 {
     public class RobotShape : Border
     {
-        Thread th;
+        private readonly Thread th;
 
-        double angle = 0.0f;
+        private double angle = 0.0f;
         public Point org = new Point(600, 350);
         public double rad = 0;
         public double anglestep = 0;
-        Rect area = new Rect(30, 30, 500, 500);
+        private Rect area = new Rect(30, 30, 500, 500);
 
-        Point loc = new Point(0, 0);
+        private Point loc = new Point(0, 0);
 
         public event Action<string> RemoveHandle;
+
         public struct Props
         {
             public string name;
@@ -113,7 +111,7 @@ namespace MapViewPallet.Shape
             RenderTransformOrigin = new Point(0.5, 0.5);
             //mainGrid
             props.mainGrid.Background = new SolidColorBrush(Colors.Transparent);
-            for (int i=0; i<3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 ColumnDefinition colTemp = new ColumnDefinition();
                 colTemp.Name = Name + "xL" + i;
@@ -134,7 +132,7 @@ namespace MapViewPallet.Shape
             //statusBorder
             props.statusBorder.Width = 10;
             props.statusBorder.Height = 13;
-            props.statusBorder.RenderTransformOrigin = new Point(0.5,0.5);
+            props.statusBorder.RenderTransformOrigin = new Point(0.5, 0.5);
             Grid.SetColumn(props.statusBorder, 1);
             //statusGrid
             for (int i = 0; i < 2; i++)
@@ -185,16 +183,12 @@ namespace MapViewPallet.Shape
             props.canvas.Children.Add(this);
 
             //====================FINAL=====================
-
-
         }
 
-        public void ChangeTask (string taskID)
+        public void ChangeTask(string taskID)
         {
             //props.rbTask.Content = taskID;
         }
-
-
 
         public void ReDraw(Point Position, double Rotate)
         {
@@ -205,14 +199,13 @@ namespace MapViewPallet.Shape
 
         public void DrawCircle()
         {
-
             //while (true)
             {
                 loc = CirclePoint(rad, angle, org);
                 props.position.X = loc.X + area.X;
                 props.position.Y = loc.Y + area.Y;
 
-                ReDraw(props.position, angle-90);
+                ReDraw(props.position, angle - 90);
 
                 if (angle < 360)
                 {
@@ -225,14 +218,13 @@ namespace MapViewPallet.Shape
             }
         }
 
-        public Point CirclePoint (double radius, double angleInDegrees, Point origin)
+        public Point CirclePoint(double radius, double angleInDegrees, Point origin)
         {
             double x = (double)(radius * Math.Cos(angleInDegrees * Math.PI / 180)) + origin.X;
             double y = (double)(radius * Math.Sin(angleInDegrees * Math.PI / 180)) + origin.Y;
 
-            return new Point(x,y);
+            return new Point(x, y);
         }
-
 
         public void ReDraw() //random
         {
@@ -285,30 +277,8 @@ namespace MapViewPallet.Shape
             //double x1 = props._oriMousePos.X + ((L * Math.Cos(rad1 + rad2)));
             //double y1 = props._oriMousePos.Y + ((L * Math.Sin(rad1 + rad2)));
             //return new Point(x1, y1);
-            return new Point(0,0);
+            return new Point(0, 0);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         private void ChangeToolTipContent(object sender, ToolTipEventArgs e)
         {
@@ -330,6 +300,5 @@ namespace MapViewPallet.Shape
             props.canvas.Children.Remove(this);
             RemoveHandle(props.name);
         }
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MapViewPallet.MiniForm
 {
-    public class userModel: NotifyUIBase//INotifyPropertyChanged
+    public class userModel : NotifyUIBase//INotifyPropertyChanged
     {
         private int pCreUsrId;
         private string pCreDt;

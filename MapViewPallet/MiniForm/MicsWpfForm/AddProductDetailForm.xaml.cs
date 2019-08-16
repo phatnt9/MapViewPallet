@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
@@ -17,12 +14,15 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     /// </summary>
     public partial class AddProductDetailForm : Window
     {
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public class AddProductDetailModel : NotifyUIBase
         {
             private string pProductDetailNameDuplicate = "Ready";
+
             public string productDetailNameDuplicate
             {
-                get { return pProductDetailNameDuplicate; }
+                get => pProductDetailNameDuplicate;
                 set
                 {
                     if (pProductDetailNameDuplicate != value)
@@ -34,7 +34,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             }
         }
 
-        DevicesManagement devicesManagement;
+        private DevicesManagement devicesManagement;
 
         public AddProductDetailModel addProductDetailModel;
 
@@ -56,7 +56,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
         public void ApplyLanguage(string cultureName = null)
         {
             if (cultureName != null)
+            {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            }
 
             ResourceDictionary dict = new ResourceDictionary();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -80,7 +82,7 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             }
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Global_Object.url + "product/insertUpdateProductDetail");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://" + Properties.Settings.Default.serverIp + ":" + Properties.Settings.Default.serverPort + @"/robot/rest/" + "product/insertUpdateProductDetail");
                 request.Method = "POST";
                 request.ContentType = @"application/json";
                 dtProductDetail productDetail = new dtProductDetail();
@@ -108,24 +110,23 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
                     switch (result)
                     {
                         case "-1":
-                            {
-                                addProductDetailModel.productDetailNameDuplicate = "Mã sản phẩm đã tồn tại!";
-                                break;
-                            }
+                        {
+                            addProductDetailModel.productDetailNameDuplicate = "Mã sản phẩm đã tồn tại!";
+                            break;
+                        }
                         default:
-                            {
-                                break;
-                            }
+                        {
+                            break;
+                        }
                     }
                 }
                 devicesManagement.UpdateTab3(false);
                 productDetailNametb.Focus();
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                logFile.Error(ex.Message);
             }
-
         }
 
         private void ProductDetailNametb_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace MapViewPallet.MiniForm.MicsWpfForm
@@ -9,11 +10,14 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
     public partial class BufferSettingForm : Window
     {
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
+        private static readonly log4net.ILog logFile = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private MainWindow mainW;
 
-        public BufferSettingForm()
+        public BufferSettingForm(MainWindow mainW)
         {
             InitializeComponent();
             Loaded += BufferSettingForm_Loaded;
+            this.mainW = mainW;
         }
 
         private void BufferSettingForm_Loaded(object sender, RoutedEventArgs e)
@@ -22,6 +26,12 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             bufferHeight.Text = Properties.Settings.Default["palletHeight"].ToString();
             bufferPadding.Text = Properties.Settings.Default["palletPadding"].ToString();
             bufferMargin.Text = Properties.Settings.Default["palletMargin"].ToString();
+            refreshRate.Text = Properties.Settings.Default["bufferRefreshInterval"].ToString();
+
+            returnMainUser.Text = Properties.Settings.Default["returnMainUser"].ToString();
+            returnMainPassword.Text = Properties.Settings.Default["returnMainPassword"].ToString();
+            return401User.Text = Properties.Settings.Default["return401User"].ToString();
+            return401Password.Text = Properties.Settings.Default["return401Password"].ToString();
         }
 
         private static bool IsTextAllowed(string text)
@@ -31,27 +41,50 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            double width = 0;
-            double height = 0;
-            if(double.TryParse(bufferWidth.Text.ToString().Trim().Replace(" ", ""),out width))
+            try
             {
-                if (width.ToString().Trim() != "")
-                {
-                    Properties.Settings.Default.palletWidth = width;
-                    Properties.Settings.Default.Save();
-                }
-            }
-            if(double.TryParse(bufferHeight.Text.ToString().Trim().Replace(" ", ""),out height))
-            {
-                if (height.ToString().Trim() != "")
-                {
-                    Properties.Settings.Default.palletHeight = height;
-                    Properties.Settings.Default.Save();
-                }
-            }
+                double width = 0;
+                double height = 0;
+                double interval = 2000;
 
+                if (double.TryParse(bufferWidth.Text.ToString().Trim().Replace(" ", ""), out width))
+                {
+                    if (width.ToString().Trim() != "")
+                    {
+                        Properties.Settings.Default.palletWidth = width;
+                        //Properties.Settings.Default.Save();
+                    }
+                }
+                if (double.TryParse(bufferHeight.Text.ToString().Trim().Replace(" ", ""), out height))
+                {
+                    if (height.ToString().Trim() != "")
+                    {
+                        Properties.Settings.Default.palletHeight = height;
+                        //Properties.Settings.Default.Save();
+                    }
+                }
+                if (double.TryParse(refreshRate.Text.ToString().Trim().Replace(" ", ""), out interval))
+                {
+                    if (interval.ToString().Trim() != "")
+                    {
+                        Properties.Settings.Default.bufferRefreshInterval = interval;
+                        //Properties.Settings.Default.Save();
+                    }
+                }
+
+                Properties.Settings.Default.returnMainUser = returnMainUser.Text;
+                Properties.Settings.Default.returnMainPassword = returnMainPassword.Text;
+                Properties.Settings.Default.return401User = return401User.Text;
+                Properties.Settings.Default.return401Password = return401Password.Text;
+
+                Properties.Settings.Default.Save();
+                mainW.SetTimerInterval(mainW.stationTimer);
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
         }
-        
 
         private void Buffer_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {

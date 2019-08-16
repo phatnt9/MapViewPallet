@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="palletWidth" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">13</Value>
+      <Value Profile="(Default)">15</Value>
     </Setting>
     <Setting Name="palletHeight" Type="System.Double" Scope="User">
       <Value Profile="(Default)">12</Value>
@@ -19,6 +19,24 @@
     </Setting>
     <Setting Name="serverPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">8081</Value>
+    </Setting>
+    <Setting Name="serverReturnIp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.32</Value>
+    </Setting>
+    <Setting Name="bufferRefreshInterval" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">10000</Value>
+    </Setting>
+    <Setting Name="returnMainUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">rm</Value>
+    </Setting>
+    <Setting Name="returnMainPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">rm</Value>
+    </Setting>
+    <Setting Name="return401User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">r4</Value>
+    </Setting>
+    <Setting Name="return401Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">r4</Value>
     </Setting>
   </Settings>
 </SettingsFile>
