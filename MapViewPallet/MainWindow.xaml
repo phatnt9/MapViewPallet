@@ -12,6 +12,7 @@
     MinWidth="600"
     MinHeight="400"
     Background="#f1f1f1"
+    PreviewKeyDown="Window_PreviewKeyDown"
     mc:Ignorable="d">
     <Window.Resources />
     <Grid x:Name="myManagementWindow">
@@ -21,158 +22,132 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="170" />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0">
-                <StackPanel VerticalAlignment="Center">
-                    <DockPanel>
-                        <Menu DockPanel.Dock="Top">
-                            <MenuItem Height="25" Header="_Management">
-                                <MenuItem
-                                    Height="25"
-                                    Click="btn_PlanControl_Click"
-                                    Header="Process">
-                                    <MenuItem.Icon>
-                                        <iconPacks:Material Kind="ClipboardOutline" />
-                                    </MenuItem.Icon>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackPanel VerticalAlignment="Center">
+                        <DockPanel>
+                            <Menu DockPanel.Dock="Top">
+                                <!--<MenuItem Height="25" Header="_Management">
+                                    <MenuItem
+                                        Height="25"
+                                        Click="btn_PlanControl_Click"
+                                        Header="Process">
+                                        <MenuItem.Icon>
+                                            <iconPacks:Material Kind="ClipboardOutline" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Height="25"
+                                        Click="btn_DevicesManagement_Click"
+                                        Header="Device">
+                                        <MenuItem.Icon>
+                                            <iconPacks:Material Kind="TabletCellphone" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        Height="25"
+                                        Click="btn_UsersManagement_Click"
+                                        Header="Users">
+                                        <MenuItem.Icon>
+                                            <iconPacks:Material Kind="AccountMultiple" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                </MenuItem>-->
+                                <MenuItem Height="25" Header="Account">
+                                    <MenuItem Click="btn_ChangePassword_Click" Header="Change Password">
+                                        <MenuItem.Icon>
+                                            <iconPacks:Material Kind="LockReset" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Click="Logout_Click" Header="Logout">
+                                        <MenuItem.Icon>
+                                            <iconPacks:Material Kind="Logout" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </MenuItem>
                                 <MenuItem
+                                    Name="languageMenuItem"
                                     Height="25"
-                                    Click="btn_DevicesManagement_Click"
-                                    Header="Device">
-                                    <MenuItem.Icon>
-                                        <iconPacks:Material Kind="TabletCellphone" />
-                                    </MenuItem.Icon>
+                                    Header="Language">
+                                    <MenuItem
+                                        Click="MenuItem_Click"
+                                        Header="English"
+                                        IsCheckable="True"
+                                        IsChecked="True"
+                                        Tag="en-US" />
+                                    <MenuItem
+                                        Click="MenuItem_Click"
+                                        Header="Vietnamese"
+                                        IsCheckable="True"
+                                        Tag="vi-VN" />
                                 </MenuItem>
-                                <MenuItem
-                                    Height="25"
-                                    Click="btn_UsersManagement_Click"
-                                    Header="Users">
-                                    <MenuItem.Icon>
-                                        <iconPacks:Material Kind="AccountMultiple" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Click="MenuItem_Click_1" Header="Buffer Properties">
-                                    <MenuItem.Icon>
-                                        <iconPacks:Material Kind="Settings" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                                <!--<MenuItem Click="MenuItem_Click_1" Header="Buffer Properties" />-->
                                 <MenuItem
                                     Height="25"
                                     Click="btn_AboutUs_Click"
-                                    Header="About">
-                                    <MenuItem.Icon>
-                                        <iconPacks:Material Kind="Information" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </MenuItem>
-                            <MenuItem Height="25" Header="Account">
-                                <MenuItem Click="btn_ChangePassword_Click" Header="Change Password">
-                                    <MenuItem.Icon>
-                                        <iconPacks:Material Kind="LockReset" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Click="Logout_Click" Header="Logout">
-                                    <MenuItem.Icon>
-                                        <iconPacks:Material Kind="Logout" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </MenuItem>
-                            <MenuItem
-                                Name="languageMenuItem"
-                                Height="25"
-                                Header="Language">
-                                <MenuItem
-                                    Click="MenuItem_Click"
-                                    Header="English"
-                                    IsCheckable="True"
-                                    IsChecked="True"
-                                    Tag="en-US" />
-                                <MenuItem
-                                    Click="MenuItem_Click"
-                                    Header="Vietnamese"
-                                    IsCheckable="True"
-                                    Tag="vi-VN" />
-                            </MenuItem>
-                        </Menu>
-                    </DockPanel>
-                </StackPanel>
-            </Grid>
-            <Grid
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="1">
-                <Grid
-                    Margin="0"
-                    HorizontalAlignment="Right"
-                    Background="#f1f1f1">
-                    <Image Margin="0,0" Source="pack://siteoforigin:,,,/Resources/seldat_logo.png" />
+                                    Header="About" />
+                            </Menu>
+                        </DockPanel>
+                    </StackPanel>
                 </Grid>
-            </Grid>
-            <Grid Grid.Row="1" Grid.Column="0">
-                <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                    <ToolBarTray Background="#f1f1f1" ToolBarTray.IsLocked="True">
-                        <ToolBar Background="#f1f1f1" ClipToBounds="False">
-
-                            <Button
-                                Name="btn_MapOnOff"
-                                Margin="5,0"
-                                Click="Btn_MapOnOff_Click"
-                                ToolBar.OverflowMode="Never"
-                                ToolTip="Map On/Off">
-                                <iconPacks:PackIconMaterial Kind="Map" />
-                            </Button>
-                            <Separator />
-                            <Button
-                                Name="btn_PlanManagement"
-                                Margin="5,0"
-                                Click="Btn_PlanManagement_Click"
-                                ToolBar.OverflowMode="Never"
-                                ToolTip="PlanManagement">
-                                <iconPacks:PackIconMaterial Kind="CalendarEdit" />
-                            </Button>
-                            <Separator />
-                            <Button
-                                Name="btn_OperationManagement"
-                                Margin="5,0"
-                                Click="Btn_OperationManagement_Click"
-                                ToolBar.OverflowMode="Never"
-                                ToolTip="OperationManagement">
-                                <iconPacks:PackIconMaterial Kind="ClipboardText" />
-                            </Button>
-                            <Separator />
-                            <Button
-                                Name="btn_DeviceManagement"
-                                Margin="5,0"
-                                Click="Btn_DeviceManagement_Click"
-                                ToolBar.OverflowMode="Never"
-                                ToolTip="DeviceManagement">
-                                <iconPacks:PackIconMaterial Kind="TabletCellphone" />
-                            </Button>
-                            <Button
-                                Name="btn_ProductManagement"
-                                Margin="5,0"
-                                Click="Btn_ProductManagement_Click"
-                                ToolBar.OverflowMode="Never"
-                                ToolTip="DeviceManagement">
-                                <iconPacks:PackIconMaterial Kind="PackageVariantClosed" />
-                            </Button>
-                            <Button
-                                Name="btn_BufferManagement"
-                                Margin="5,0"
-                                Click="Btn_BufferManagement_Click"
-                                ToolBar.OverflowMode="Never"
-                                ToolTip="BufferManagement">
-                                <iconPacks:PackIconMaterial Kind="Buffer" />
-                            </Button>
-                            <!--<Button ToolTip="{DynamicResource MainWindow_Toolbar_UserManagement}"
+                <Grid Grid.Row="1">
+                    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <ToolBarTray Background="#f1f1f1" ToolBarTray.IsLocked="True">
+                            <ToolBar Background="#f1f1f1" ClipToBounds="False">
+                                <ToolBarOverflowPanel>
+                                    <Button
+                                        Name="btn_MapOnOff"
+                                        Margin="5,0"
+                                        Click="Btn_MapOnOff_Click"
+                                        ToolTip="Map On/Off">
+                                        <iconPacks:PackIconMaterial Kind="Map" />
+                                    </Button>
+                                    <Button
+                                        Name="btn_PlanManagement"
+                                        Margin="5,0"
+                                        Click="Btn_PlanManagement_Click"
+                                        ToolTip="Plan Management">
+                                        <iconPacks:PackIconMaterial Kind="CalendarEdit" />
+                                    </Button>
+                                    <Button
+                                        Name="btn_OperationManagement"
+                                        Margin="5,0"
+                                        Click="Btn_OperationManagement_Click"
+                                        ToolTip="Operation Management">
+                                        <iconPacks:PackIconMaterial Kind="ClipboardText" />
+                                    </Button>
+                                    <!--<Button
+                                        Name="btn_DeviceManagement"
+                                        Margin="5,0"
+                                        Click="Btn_DeviceManagement_Click"
+                                        ToolTip="Device Management">
+                                        <iconPacks:PackIconMaterial Kind="TabletCellphone" />
+                                    </Button>
+                                    <Button
+                                        Name="btn_ProductManagement"
+                                        Margin="5,0"
+                                        Click="Btn_ProductManagement_Click"
+                                        ToolTip="Device Management">
+                                        <iconPacks:PackIconMaterial Kind="PackageVariantClosed" />
+                                    </Button>
+                                    <Button
+                                        Name="btn_BufferManagement"
+                                        Margin="5,0"
+                                        Click="Btn_BufferManagement_Click"
+                                        ToolTip="Buffer Management">
+                                        <iconPacks:PackIconMaterial Kind="Buffer" />
+                                    </Button>-->
+                                    <!--<Button ToolTip="{DynamicResource MainWindow_Toolbar_UserManagement}"
                                         Name="btn_Statistics"
                                         ToolBar.OverflowMode="Never"
                                         Margin="5 0"
@@ -180,46 +155,44 @@
                                     <iconPacks:PackIconMaterial
                                         Kind="ChartBar" />
                                 </Button>-->
-                            <Button
-                                Name="btn_UserManagement"
-                                Margin="5,0"
-                                Click="Btn_UserManagement_Click"
-                                ToolBar.OverflowMode="Never"
-                                ToolTip="UserManagement">
-                                <iconPacks:PackIconMaterial Kind="AccountMultiple" />
-                            </Button>
-                            <Button
-                                Name="Reloadallstation"
-                                Margin="5,0"
-                                Click="Reloadallstation_Click"
-                                ToolBar.OverflowMode="Never"
-                                ToolTip="Reloadallstation">
-                                <iconPacks:PackIconMaterial Kind="Autorenew" />
-                            </Button>
-                            <Button
-                                Name="MoveBuffer"
-                                Margin="5,0"
-                                Click="MoveBuffer_Click"
-                                ToolBar.OverflowMode="Never"
-                                ToolTip="MoveStaion">
-                                <iconPacks:PackIconMaterial Kind="MoveResize" />
-                            </Button>
-                        </ToolBar>
-                    </ToolBarTray>
-                </DockPanel>
+                                    <Button
+                                        Name="btn_UserManagement"
+                                        Margin="5,0"
+                                        Click="Btn_UserManagement_Click"
+                                        ToolTip="Accounts Management">
+                                        <iconPacks:PackIconMaterial Kind="AccountMultiple" />
+                                    </Button>
+                                    <Button
+                                        Name="Reloadallstation"
+                                        Margin="5,0"
+                                        Click="Reloadallstation_Click"
+                                        ToolTip="Reload All Buffer">
+                                        <iconPacks:PackIconMaterial Kind="Autorenew" />
+                                    </Button>
+                                    <Button
+                                        Name="MoveBuffer"
+                                        Margin="5,0"
+                                        Click="MoveBuffer_Click"
+                                        ToolTip="Move Staion">
+                                        <iconPacks:PackIconMaterial Kind="MoveResize" />
+                                    </Button>
+                                </ToolBarOverflowPanel>
+
+                            </ToolBar>
+                        </ToolBarTray>
+                    </DockPanel>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid
+                    Margin="0"
+                    HorizontalAlignment="Right"
+                    Background="#f1f1f1">
+                    <Image Margin="0,0" Source="pack://siteoforigin:,,,/Resources/seldat_logo.png" />
+                </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Row="1" Background="#f1f1f1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="10" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="25" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0" />
             <Border
                 Grid.Row="0"
                 Grid.RowSpan="2"
@@ -279,22 +252,44 @@
                     </DockPanel>
                 </Grid>
             </Border>
-            <Grid Grid.Row="0" Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <StackPanel Orientation="Vertical" />
-                </Grid>
-                <Grid Grid.Row="1" />
-            </Grid>
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid Margin="0,0,0,5">
-                    <StackPanel Orientation="Horizontal" />
-                </Grid>
-            </Grid>
         </Grid>
-        <Grid Grid.Row="2" />
+        <Grid Grid.Row="2">
+            <StackPanel
+                Height="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Label Name="lb_timerStatus" Padding="0" />
+                <TextBox
+                    Name="tb_refreshBufferInterval"
+                    Width="100"
+                    Margin="5,0"
+                    VerticalContentAlignment="Center" />
+                <Button
+                    Name="btn_applyRefreshInterval"
+                    Width="70"
+                    Margin="5,0"
+                    Click="Btn_applyRefreshInterval_Click"
+                    Content="Apply" />
+                <Button
+                    Name="btn_stopRefreshInterval"
+                    Width="70"
+                    Margin="5,0"
+                    Click="Btn_stopRefreshInterval_Click"
+                    Content="Stop Refresh" />
+                <Button
+                    Name="btn_startRefreshInterval"
+                    Width="70"
+                    Margin="5,0"
+                    Click="Btn_startRefreshInterval_Click"
+                    Content="Start Refresh" />
+                <Button
+                    Name="btn_manualRefresh"
+                    Width="70"
+                    Margin="5,0"
+                    Click="Btn_manualRefresh_Click"
+                    Content="Manual Refresh" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

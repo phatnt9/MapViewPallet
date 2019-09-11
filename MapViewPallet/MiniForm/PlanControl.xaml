@@ -9,7 +9,7 @@
     Title="Plan"
     Width="800"
     Height="500"
-    WindowStartupLocation="CenterOwner"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
     <Grid>

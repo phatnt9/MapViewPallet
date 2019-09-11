@@ -20,7 +20,7 @@
 
     <!--  MenuItem  -->
     <sys:String x:Key="Station_Menu_Item_Properties">Thông tin</sys:String>
-    <sys:String x:Key="Station_Menu_Item_Edit">Tùy chỉnh</sys:String>
+    <sys:String x:Key="Station_Menu_Item_Edit">Tùy chỉnh buffer</sys:String>
     <sys:String x:Key="Station_Menu_Item_Rotate">Xoay</sys:String>
     <sys:String x:Key="Station_Menu_Item_Remove">Xóa</sys:String>
 

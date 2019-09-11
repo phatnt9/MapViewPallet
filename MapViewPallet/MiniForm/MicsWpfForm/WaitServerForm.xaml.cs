@@ -48,9 +48,9 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
             mainWindow.stationTimer.Enabled = false;
 
-            if (mainWindow.planControl != null)
+            if (mainWindow.planControl_MVVM != null)
             {
-                mainWindow.planControl.Close();
+                mainWindow.planControl_MVVM.Close();
             }
             if (mainWindow.devicesManagement != null)
             {

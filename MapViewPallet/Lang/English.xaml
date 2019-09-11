@@ -19,7 +19,7 @@
 
     <!--  MenuItem  -->
     <sys:String x:Key="Station_Menu_Item_Properties">Info</sys:String>
-    <sys:String x:Key="Station_Menu_Item_Edit">Edit</sys:String>
+    <sys:String x:Key="Station_Menu_Item_Edit">Edit buffer</sys:String>
     <sys:String x:Key="Station_Menu_Item_Rotate">Rotate</sys:String>
     <sys:String x:Key="Station_Menu_Item_Remove">Remove</sys:String>
 

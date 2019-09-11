@@ -1,0 +1,253 @@
+﻿<Window
+    x:Class="MapViewPallet.View.MVVM_PlanManagement"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MapViewPallet.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MVVM_PlanManagement"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style
+            x:Key="placeHolder"
+            BasedOn="{StaticResource {x:Type TextBox}}"
+            TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox
+                                x:Name="textSource"
+                                VerticalContentAlignment="Center"
+                                Panel.ZIndex="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                VerticalContentAlignment="Center"
+                                Panel.ZIndex="1"
+                                Background="{TemplateBinding Background}"
+                                Text="{TemplateBinding Tag}">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="LightGray" />
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#f1f1f1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Image Margin="0,2" Source="pack://siteoforigin:,,,/Resources/seldat_logo.png" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="400" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <DatePicker x:Name="dp_planManagement" SelectedDateChanged="Dp_planManagement_SelectedDateChanged" />
+                </Grid>
+                <Grid Grid.Column="1" Margin="5,0">
+                    <DockPanel VerticalAlignment="Center">
+                        <TextBox
+                            Name="tb_search"
+                            Height="25"
+                            PreviewKeyUp="Tb_LocalSearch_PreviewKeyDown"
+                            Style="{StaticResource placeHolder}"
+                            Tag="Enter to search" />
+                    </DockPanel>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" Margin="5,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <DataGrid
+                        x:Name="DataGridPlan"
+                        AutoGenerateColumns="False"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        CanUserResizeRows="False"
+                        ItemsSource="{Binding Plans, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding Path=planId}"
+                                Header="ID"
+                                IsReadOnly="True"
+                                Visibility="Visible" />
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding Path=activeDate}"
+                                Header="Active Date"
+                                IsReadOnly="True"
+                                Visibility="Visible" />
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding Path=deviceName}"
+                                Header="Device Name"
+                                IsReadOnly="True"
+                                Visibility="Visible" />
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding Path=productName}"
+                                Header="Product Name"
+                                IsReadOnly="True"
+                                Visibility="Visible" />
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding Path=productDetailName}"
+                                Header="Product Detail Name"
+                                IsReadOnly="True"
+                                Visibility="Visible" />
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding Path=palletAmount}"
+                                Header="Pallet Amount"
+                                IsReadOnly="True"
+                                Visibility="Visible" />
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding Path=palletUse}"
+                                Header="Pallet Use"
+                                IsReadOnly="True"
+                                Visibility="Visible" />
+                            <DataGridTextColumn
+                                Width="Auto"
+                                Binding="{Binding Path=palletMiss}"
+                                Header="Pallet Miss"
+                                IsReadOnly="True"
+                                Visibility="Visible" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <StackPanel Orientation="Vertical">
+                        <DockPanel Margin="5,5" HorizontalAlignment="Stretch">
+                            <Button
+                                Name="btn_importPlan"
+                                Height="{Binding ElementName=btn_createPlanPallet, Path=ActualHeight}"
+                                Click="Btn_importPlan_Click">
+                                <Button.Content>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow">
+                                        Import plan
+                                    </TextBlock>
+                                </Button.Content>
+                            </Button>
+                        </DockPanel>
+                        <DockPanel Margin="5,5" HorizontalAlignment="Stretch">
+                            <Button Name="btn_createPlanPallet" Click="Btn_createPlanPallet_Click">
+                                <Button.Content>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow">
+                                        Create plan pallet
+                                    </TextBlock>
+                                </Button.Content>
+                            </Button>
+                        </DockPanel>
+                        <DockPanel Margin="5,5" HorizontalAlignment="Stretch">
+                            <Button Name="btn_deletePlanPallet" Click="Btn_deletePlanPallet_Click">
+                                <Button.Content>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow">
+                                        Delete plan pallet
+                                    </TextBlock>
+                                </Button.Content>
+                            </Button>
+                        </DockPanel>
+                        <DockPanel Height="100">
+                            <RichTextBox
+                                Name="rtb_log"
+                                Margin="5,5"
+                                IsReadOnly="True" />
+                        </DockPanel>
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <DockPanel>
+                <StatusBar DockPanel.Dock="Bottom">
+                    <!--<StatusBarItem>
+                            <Grid>
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                                    <Label Content="Server Status" FontFamily="Corsiva" />
+                                    <Grid>
+                                        <Canvas
+                                            Width="17"
+                                            Margin="0,4"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top">
+                                            <Ellipse
+                                                Width="15"
+                                                Height="15"
+                                                Fill="Green" />
+                                        </Canvas>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </StatusBarItem>
+                        <Separator />-->
+                    <StatusBarItem>
+
+                        <Grid>
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                                <Label
+                                    Name="processStatusText"
+                                    Margin="0,-1"
+                                    Content="{Binding PgbStatus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                            </StackPanel>
+                        </Grid>
+
+                    </StatusBarItem>
+                    <StatusBarItem>
+                        <Grid>
+                            <ProgressBar
+                                Name="pbStatus"
+                                Width="200"
+                                Height="20"
+                                Margin="5,0"
+                                Maximum="100"
+                                Minimum="0" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontWeight="Normal"
+                                Text="{Binding ElementName=pbStatus, Path=Value, StringFormat={}{0:0}%}" />
+                        </Grid>
+                    </StatusBarItem>
+                </StatusBar>
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>

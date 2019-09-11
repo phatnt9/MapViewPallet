@@ -1,0 +1,100 @@
+﻿<Window
+    x:Class="MapViewPallet.MiniForm.MicsWpfForm.CheckAuthorityForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MapViewPallet.MiniForm.MicsWpfForm"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="CheckAuthorityForm"
+    Width="300"
+    Height="170"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style
+            x:Key="placeHolder"
+            BasedOn="{StaticResource {x:Type TextBox}}"
+            TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox
+                                x:Name="textSource"
+                                VerticalContentAlignment="Center"
+                                Panel.ZIndex="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                VerticalContentAlignment="Center"
+                                Panel.ZIndex="1"
+                                Background="{TemplateBinding Background}"
+                                Text="{TemplateBinding Tag}">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="LightGray" />
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label
+                Name="lb_warning"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Foreground="Red">
+                Please use Root or Admin account to continue
+            </Label>
+        </Grid>
+        <Grid Grid.Row="1">
+            <DockPanel VerticalAlignment="Center">
+                <TextBox
+                    Name="tb_userName"
+                    Height="25"
+                    Margin="10,0"
+                    PreviewKeyDown="Tb_userName_PreviewKeyDown"
+                    Style="{StaticResource placeHolder}"
+                    Tag="User Name" />
+            </DockPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <DockPanel VerticalAlignment="Center">
+                <PasswordBox
+                    Name="tb_password"
+                    Height="25"
+                    Margin="10,0"
+                    PreviewKeyDown="Tb_password_PreviewKeyDown" />
+            </DockPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+            <DockPanel>
+                <Button
+                    Name="btn_login"
+                    Width="70"
+                    Height="22"
+                    Click="Btn_login_Click"
+                    Content="Login" />
+            </DockPanel>
+        </Grid>
+    </Grid>
+</Window>

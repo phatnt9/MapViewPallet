@@ -10,7 +10,7 @@
     Width="300"
     Height="230"
     ResizeMode="NoResize"
-    WindowStartupLocation="CenterOwner">
+    WindowStartupLocation="CenterScreen">
 
     <Window.Resources />
     <Grid>

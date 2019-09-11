@@ -1,6 +1,7 @@
 ﻿using MapViewPallet.MiniForm;
 using MapViewPallet.MiniForm.MicsWpfForm;
 using MapViewPallet.Shape;
+using MapViewPallet.View;
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -30,7 +31,8 @@ namespace MapViewPallet
         //public WaitServerForm waitServerForm;
         public LoginForm loginForm;
 
-        public PlanControl planControl;
+        //public PlanControl planControl;
+        public MVVM_PlanManagement planControl_MVVM;
         public DevicesManagement devicesManagement;
         public UserManagement userManagement;
         public Statistics statistics;
@@ -104,21 +106,17 @@ namespace MapViewPallet
         {
             devicesManagement = null;
         }
-
-        private void PlanControl_Closed(object sender, EventArgs e)
+        
+        private void PlanControl_MVVM_Closed(object sender, EventArgs e)
         {
-            planControl = null;
+            planControl_MVVM = null;
         }
 
         private void UserManagement_Closed(object sender, EventArgs e)
         {
             userManagement = null;
         }
-
-        private void Statistics_Closed(object sender, EventArgs e)
-        {
-            statistics = null;
-        }
+        
 
         private void LoginForm_Closed(object sender, EventArgs e)
         {
@@ -210,6 +208,7 @@ namespace MapViewPallet
                     {
                         canvasControlService.ReloadAllStation();
                     }));
+                    tb_refreshBufferInterval.Text = Properties.Settings.Default["bufferRefreshInterval"].ToString();
                 }
             }
             catch (Exception ex)
@@ -232,6 +231,13 @@ namespace MapViewPallet
             catch (Exception ex)
             {
                 logFile.Error(ex.Message);
+            }
+            finally
+            {
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    lb_timerStatus.Content = "Timer is running";
+                }));
             }
         }
 
@@ -272,70 +278,7 @@ namespace MapViewPallet
             }
             finally { }
         }
-
-        private void btn_PlanControl_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if ((planControl == null))
-                {
-                    planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
-                    planControl.Closed += PlanControl_Closed;
-                    planControl.Show();
-                }
-                else
-                {
-                    planControl.Focus();
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.Error(ex.Message);
-            }
-        }
-
-        private void btn_DevicesManagement_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
-                {
-                    DevicesManagement devicesManagement = new DevicesManagement(this, 0, Thread.CurrentThread.CurrentCulture.ToString());
-                    devicesManagement.Closed += DevicesManagement_Closed;
-                    devicesManagement.Show();
-                }
-                else
-                {
-                    devicesManagement.ChangeTabIndex(0);
-                    devicesManagement.Focus();
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.Error(ex.Message);
-            }
-        }
-
-        private void btn_UsersManagement_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if ((userManagement == null) && (Global_Object.userAuthor == 0))
-                {
-                    userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
-                    userManagement.Closed += UserManagement_Closed;
-                    userManagement.Show();
-                }
-                else
-                {
-                    userManagement.Focus();
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.Error(ex.Message);
-            }
-        }
+        
 
         private void btn_ChangePassword_Click(object sender, RoutedEventArgs e)
         {
@@ -415,15 +358,15 @@ namespace MapViewPallet
         {
             try
             {
-                if ((planControl == null) && (Global_Object.userAuthor == 0))
+                if ((planControl_MVVM == null))
                 {
-                    planControl = new PlanControl(Thread.CurrentThread.CurrentCulture.ToString());
-                    planControl.Closed += PlanControl_Closed;
-                    planControl.Show();
+                    planControl_MVVM = new MVVM_PlanManagement();
+                    planControl_MVVM.Closed += PlanControl_MVVM_Closed; ;
+                    planControl_MVVM.Show();
                 }
                 else
                 {
-                    planControl.Focus();
+                    planControl_MVVM.Focus();
                 }
             }
             catch (Exception ex)
@@ -436,17 +379,21 @@ namespace MapViewPallet
         {
             try
             {
-                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
+                if(new CheckAuthorityForm().ShowDialog() == true)
                 {
-                    devicesManagement = new DevicesManagement(this, 0, Thread.CurrentThread.CurrentCulture.ToString());
-                    devicesManagement.Closed += DevicesManagement_Closed;
-                    devicesManagement.Show();
+                    if ((devicesManagement == null))
+                    {
+                        devicesManagement = new DevicesManagement(this, 0, Thread.CurrentThread.CurrentCulture.ToString());
+                        devicesManagement.Closed += DevicesManagement_Closed;
+                        devicesManagement.Show();
+                    }
+                    else
+                    {
+                        devicesManagement.ChangeTabIndex(0);
+                        devicesManagement.Focus();
+                    }
                 }
-                else
-                {
-                    devicesManagement.ChangeTabIndex(0);
-                    devicesManagement.Focus();
-                }
+                
             }
             catch (Exception ex)
             {
@@ -454,86 +401,26 @@ namespace MapViewPallet
             }
         }
 
-        private void Btn_DeviceManagement_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
-                {
-                    devicesManagement = new DevicesManagement(this, 1, Thread.CurrentThread.CurrentCulture.ToString());
-                    devicesManagement.Closed += DevicesManagement_Closed;
-                    devicesManagement.Show();
-                }
-                else
-                {
-                    devicesManagement.ChangeTabIndex(1);
-                    devicesManagement.Focus();
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.Error(ex.Message);
-            }
-        }
-
-        private void Btn_ProductManagement_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
-                {
-                    devicesManagement = new DevicesManagement(this, 2, Thread.CurrentThread.CurrentCulture.ToString());
-                    devicesManagement.Closed += DevicesManagement_Closed;
-                    devicesManagement.Show();
-                }
-                else
-                {
-                    devicesManagement.ChangeTabIndex(2);
-                    devicesManagement.Focus();
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.Error(ex.Message);
-            }
-        }
-
-        private void Btn_BufferManagement_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if ((devicesManagement == null) && (Global_Object.userAuthor == 0))
-                {
-                    devicesManagement = new DevicesManagement(this, 3, Thread.CurrentThread.CurrentCulture.ToString());
-                    devicesManagement.Closed += DevicesManagement_Closed;
-                    devicesManagement.Show();
-                }
-                else
-                {
-                    devicesManagement.ChangeTabIndex(3);
-                    devicesManagement.Focus();
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.Error(ex.Message);
-            }
-        }
+        
 
         private void Btn_UserManagement_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if ((userManagement == null) && (Global_Object.userAuthor == 0))
+                if (new CheckAuthorityForm().ShowDialog() == true)
                 {
-                    userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
-                    userManagement.Closed += UserManagement_Closed;
-                    userManagement.Show();
+                    if ((userManagement == null))
+                    {
+                        userManagement = new UserManagement(Thread.CurrentThread.CurrentCulture.ToString());
+                        userManagement.Closed += UserManagement_Closed;
+                        userManagement.Show();
+                    }
+                    else
+                    {
+                        userManagement.Focus();
+                    }
                 }
-                else
-                {
-                    userManagement.Focus();
-                }
+                   
             }
             catch (Exception ex)
             {
@@ -541,32 +428,13 @@ namespace MapViewPallet
             }
         }
 
-        private void Btn_Statistics_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (statistics == null)
-                {
-                    statistics = new Statistics(Thread.CurrentThread.CurrentCulture.ToString());
-                    statistics.Closed += Statistics_Closed;
-                    statistics.Show();
-                }
-                else
-                {
-                    statistics.Focus();
-                }
-            }
-            catch (Exception ex)
-            {
-                logFile.Error(ex.Message);
-            }
-        }
+        
 
         private void MoveBuffer_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (Global_Object.userAuthor == 0)
+                if (new CheckAuthorityForm().ShowDialog() == true)
                 {
                     drag = false;
                     Global_Mouse.ctrl_MouseDown = Global_Mouse.STATE_MOUSEDOWN._KEEP_IN_OBJECT_MOVE_STATION;
@@ -602,6 +470,100 @@ namespace MapViewPallet
             catch (Exception ex)
             {
                 logFile.Error(ex.Message);
+            }
+        }
+
+        private void Btn_applyRefreshInterval_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                double interval = 2000;
+                if (double.TryParse(tb_refreshBufferInterval.Text.ToString().Trim().Replace(" ", ""), out interval))
+                {
+                    if (interval.ToString().Trim() != "")
+                    {
+                        Properties.Settings.Default.bufferRefreshInterval = interval;
+                    }
+                }
+                Properties.Settings.Default.Save();
+                SetTimerInterval(stationTimer);
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            finally
+            {
+                tb_refreshBufferInterval.Text = Properties.Settings.Default["bufferRefreshInterval"].ToString();
+            }
+        }
+
+        private void Btn_stopRefreshInterval_Click(object sender, RoutedEventArgs e)
+        {
+            stationTimer.Stop();
+            if (!stationTimer.Enabled)
+            {
+                lb_timerStatus.Content = "Timer is stopped";
+            }
+        }
+
+        private void Btn_startRefreshInterval_Click(object sender, RoutedEventArgs e)
+        {
+            stationTimer.Start();
+            if (stationTimer.Enabled)
+            {
+                lb_timerStatus.Content = "Timer is started";
+            }
+        }
+
+        private void Btn_manualRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Global_Object.ServerAlive())
+                {
+                    BackgroundWorker workerRedrawStation = new BackgroundWorker();
+                    workerRedrawStation.DoWork += WorkerRedrawStation_DoWork;
+                    workerRedrawStation.RunWorkerAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                logFile.Error(ex.Message);
+            }
+            finally
+            {
+                Dispatcher.BeginInvoke(new ThreadStart(() =>
+                {
+                    lb_timerStatus.Content = "Manual Refresh";
+                }));
+            }
+        }
+
+        private void Window_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.F5)
+            {
+                try
+                {
+                    if (Global_Object.ServerAlive())
+                    {
+                        BackgroundWorker workerRedrawStation = new BackgroundWorker();
+                        workerRedrawStation.DoWork += WorkerRedrawStation_DoWork;
+                        workerRedrawStation.RunWorkerAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logFile.Error(ex.Message);
+                }
+                finally
+                {
+                    Dispatcher.BeginInvoke(new ThreadStart(() =>
+                    {
+                        lb_timerStatus.Content = "Manual Refresh";
+                    }));
+                }
             }
         }
     }

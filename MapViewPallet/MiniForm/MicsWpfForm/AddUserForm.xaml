@@ -9,7 +9,7 @@
     Width="280"
     Height="220"
     ResizeMode="NoResize"
-    WindowStartupLocation="CenterOwner"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>

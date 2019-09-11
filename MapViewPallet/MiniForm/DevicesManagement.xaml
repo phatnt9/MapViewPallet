@@ -9,7 +9,7 @@
     Title="{DynamicResource DevicesManagement_Title}"
     Width="800"
     Height="600"
-    WindowStartupLocation="CenterOwner"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.Resources />
     <Grid>

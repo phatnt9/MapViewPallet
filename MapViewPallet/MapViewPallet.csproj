@@ -175,6 +175,9 @@
     <Compile Include="MiniForm\MicsWpfForm\BufferSettingForm.xaml.cs">
       <DependentUpon>BufferSettingForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiniForm\MicsWpfForm\CheckAuthorityForm.xaml.cs">
+      <DependentUpon>CheckAuthorityForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MiniForm\MicsWpfForm\ImportPlanForm.xaml.cs">
       <DependentUpon>ImportPlanForm.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,8 @@
       <DependentUpon>UserManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="MiniForm\UserModel.cs" />
+    <Compile Include="Model\MVVM_PlanManagementModel.cs" />
+    <Compile Include="Model\ViewModelBase.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -226,6 +231,10 @@
     <Compile Include="Shape\RobotShape.cs" />
     <Compile Include="Shape\StationShape.cs" />
     <Compile Include="Shape\StraightShape.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\MVVM_PlanManagement.xaml.cs">
+      <DependentUpon>MVVM_PlanManagement.xaml</DependentUpon>
+    </Compile>
     <Page Include="Lang\English.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -286,6 +295,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MiniForm\MicsWpfForm\CheckAuthorityForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MiniForm\MicsWpfForm\ImportPlanForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -311,6 +324,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MiniForm\UserManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MVVM_PlanManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -469,5 +486,6 @@
   <ItemGroup>
     <None Include="Resources\Map_aTan - Copy4 - Copy.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

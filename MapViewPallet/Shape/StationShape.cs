@@ -1,4 +1,5 @@
 ﻿using MapViewPallet.MiniForm;
+using MapViewPallet.MiniForm.MicsWpfForm;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -58,7 +59,6 @@ namespace MapViewPallet.Shape
             //[CategoryAttribute("Infomation"), DescriptionAttribute(""), ReadOnlyAttribute(true)]
             //public int Rows { get; set; }
         }
-
         public Properties stationProperties;
         public Props props;
 
@@ -96,17 +96,17 @@ namespace MapViewPallet.Shape
             editItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Edit");
             editItem.Click += EditMenu;
 
-            MenuItem removeItem = new MenuItem();
-            removeItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Remove");
-            removeItem.Click += RemoveMenu;
+            //MenuItem removeItem = new MenuItem();
+            //removeItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Remove");
+            //removeItem.Click += RemoveMenu;
 
-            MenuItem rotateItem = new MenuItem();
-            rotateItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Rotate");
-            rotateItem.Click += RotateMenu;
+            //MenuItem rotateItem = new MenuItem();
+            //rotateItem.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Rotate");
+            //rotateItem.Click += RotateMenu;
 
             //ContextMenu.Items.Add(propertiesItem);
             ContextMenu.Items.Add(editItem);
-            ContextMenu.Items.Add(rotateItem);
+            //ContextMenu.Items.Add(rotateItem);
             //ContextMenu.Items.Add(removeItem);
             //====================EVENT=====================
             MouseDown += StationShape_MouseDown;
@@ -162,7 +162,10 @@ namespace MapViewPallet.Shape
                             + "x" +
                             ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
                             + "x" + rowIndex);
-
+                        MenuItem editItemPallet = new MenuItem();
+                        editItemPallet.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Edit");
+                        editItemPallet.Click += EditMenu;
+                        palletTemp.ContextMenu.Items.Add(editItemPallet);
                         Grid.SetRow(palletTemp, rowIndex);
                         gridLine.Children.Add(palletTemp);
                         props._palletList.Add(palletTemp.name, palletTemp);
@@ -273,7 +276,10 @@ namespace MapViewPallet.Shape
                                     + "x" +
                                     ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
                                     + "x" + rowIndex);
-
+                                MenuItem editItemPallet = new MenuItem();
+                                editItemPallet.SetResourceReference(MenuItem.HeaderProperty, "Station_Menu_Item_Edit");
+                                editItemPallet.Click += EditMenu;
+                                palletTemp.ContextMenu.Items.Add(editItemPallet);
                                 Grid.SetRow(palletTemp, rowIndex);
                                 gridLine.Children.Add(palletTemp);
                                 props._palletList.Add(palletTemp.name, palletTemp);
@@ -313,7 +319,7 @@ namespace MapViewPallet.Shape
 
         public void EditMenu(object sender, RoutedEventArgs e)
         {
-            if (Global_Object.userAuthor == 0)
+            if (new CheckAuthorityForm().ShowDialog() == true)
             {
                 StationEditor stationEditor = new StationEditor(this, Thread.CurrentThread.CurrentCulture.ToString());
                 stationEditor.Show();
@@ -327,7 +333,7 @@ namespace MapViewPallet.Shape
 
         private void RotateMenu(object sender, RoutedEventArgs e)
         {
-            if (Global_Object.userAuthor == 0)
+            if (new CheckAuthorityForm().ShowDialog() == true)
             {
                 props._rotate += 90;
                 if (props._rotate > 360)

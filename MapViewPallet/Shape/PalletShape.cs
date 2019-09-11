@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using FontStyle = System.Windows.FontStyle;
 
 namespace MapViewPallet.Shape
 {
@@ -32,8 +33,12 @@ namespace MapViewPallet.Shape
         public dtBuffer buffer { get => pBuffer; set => pBuffer = value; }
 
         public string name = "";
+        public Grid myGrid;
         public TextBlock lbPallet;
         public TextBlock lbPallet2;
+        public TextBlock lbPallet3;
+        public TextBlock lbPallet4;
+        public TextBlock lbPallet5;
 
         public enum ReturnType
         {
@@ -63,47 +68,164 @@ namespace MapViewPallet.Shape
                 (palletMargin / Global_Object.resolution) + 0,
                 (palletMargin / Global_Object.resolution) + 0
                 );
-            //Padding = new Thickness(5,0,5,0);
             // Style Pallet Border
             BorderBrush = new SolidColorBrush(Colors.Black);
             BorderThickness = new Thickness(0.3);
-            CornerRadius = new CornerRadius(1.3);
-            // Background for Pallet
-            //Bitmap bmp = (Bitmap)MapViewPallet.Properties.Resources.ResourceManager.GetObject(typePallet);
-            //ImageBrush img = new ImageBrush();
-            //img.ImageSource = ImageSourceForBitmap(bmp);
-            //Background = img;
+            CornerRadius = new CornerRadius(0);
+
+            //Set Grid 3 row 2 col
+            myGrid = new Grid();
+            ColumnDefinition col0 = new ColumnDefinition();
+            ColumnDefinition col1 = new ColumnDefinition();
+            RowDefinition row0 = new RowDefinition();
+            RowDefinition row1 = new RowDefinition();
+            RowDefinition row2 = new RowDefinition();
+            myGrid.ColumnDefinitions.Add(col0);
+            myGrid.ColumnDefinitions.Add(col1);
+            myGrid.RowDefinitions.Add(row0);
+            myGrid.RowDefinitions.Add(row1);
+            myGrid.RowDefinitions.Add(row2);
+
+            
+            Border grid0 = new Border();
+            grid0.BorderThickness = new Thickness(0,0,0.2,0.2);
+            grid0.BorderBrush = new SolidColorBrush(Colors.Black);
+            grid0.Padding = new Thickness(0);
+            Grid.SetRow(grid0, 0);
+            Grid.SetColumn(grid0, 0);
+
+            Border grid1 = new Border();
+            grid1.BorderThickness = new Thickness(0, 0, 0, 0.2);
+            grid1.BorderBrush = new SolidColorBrush(Colors.Black);
+            //grid1.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#F8FFE5"));
+            grid1.Padding = new Thickness(0);
+            Grid.SetRow(grid1, 0);
+            Grid.SetColumn(grid1, 1);
+
+            Border grid2 = new Border();
+            Grid.SetRow(grid2, 1);
+            Grid.SetColumnSpan(grid2, 2);
+            Grid.SetColumn(grid2, 0);
+
+            Border grid3 = new Border();
+            Grid.SetRow(grid3, 1);
+            Grid.SetColumn(grid3, 1);
+
+            Border grid4 = new Border();
+            grid4.BorderThickness = new Thickness(0, 0.2, 0.2, 0);
+            grid4.BorderBrush = new SolidColorBrush(Colors.Black);
+            grid4.Padding = new Thickness(0);
+            Grid.SetRow(grid4, 2);
+            Grid.SetColumn(grid4, 0);
+
+            Border grid5 = new Border();
+            grid5.BorderThickness = new Thickness(0, 0.2, 0, 0);
+            grid5.BorderBrush = new SolidColorBrush(Colors.Black);
+            grid5.Padding = new Thickness(0);
+            Grid.SetRow(grid5, 2);
+            Grid.SetColumn(grid5, 1);
+
+            myGrid.Children.Add(grid0);
+            myGrid.Children.Add(grid1);
+            myGrid.Children.Add(grid2);
+            myGrid.Children.Add(grid3);
+            myGrid.Children.Add(grid4);
+            myGrid.Children.Add(grid5);
             //=============================
             StatusChanged(new dtPallet());
 
             lbPallet = new TextBlock();
+            lbPallet.FontWeight = FontWeights.Bold;
             lbPallet.TextWrapping = TextWrapping.Wrap;
-            lbPallet.Width = this.Width;
+            lbPallet.TextAlignment = TextAlignment.Center;
+            lbPallet.Width = grid0.Width;
             lbPallet.FontSize = 2;
             lbPallet.Text = this.name.Split('x')[1] + "-" + this.name.Split('x')[2];
+            grid0.Child = lbPallet;
 
             lbPallet2 = new TextBlock();
+            lbPallet2.FontWeight = FontWeights.Medium;
+            lbPallet2.FontStyle = FontStyles.Italic;
             lbPallet2.TextWrapping = TextWrapping.Wrap;
-            lbPallet2.Width = this.Width;
+            lbPallet2.TextAlignment = TextAlignment.Center;
+            lbPallet2.Width = grid2.Width;
             lbPallet2.FontSize = 1.5;
             lbPallet2.Text = pallet.productDetailName == null ? "" : pallet.productDetailName.Substring(0, 8);
+            grid2.Child = lbPallet2;
 
-            System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
-            rectangle.Width = 2;
-            rectangle.Height = 2;
-            rectangle.Fill = new SolidColorBrush(Colors.Red);
+            lbPallet3 = new TextBlock();
+            lbPallet3.FontWeight = FontWeights.Bold;
+            lbPallet3.TextWrapping = TextWrapping.Wrap;
+            lbPallet3.TextAlignment = TextAlignment.Center;
+            lbPallet3.Width = this.Width;
+            lbPallet3.FontSize = 2;
+            if (pallet.dataPallet != null)
+            {
+                dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                string bayId = palletData.bayId;
+                lbPallet3.Text = bayId;
+            }
+            else
+            {
+                lbPallet3.Text = "";
+            }
+            grid1.Child = lbPallet3;
 
-            StackPanel stackPanel = new StackPanel();
-            stackPanel.Orientation = Orientation.Vertical;
-            stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
-            stackPanel.VerticalAlignment = VerticalAlignment.Top;
-            stackPanel.Children.Add(lbPallet);
-            stackPanel.Children.Add(lbPallet2);
+            lbPallet4 = new TextBlock();
+            lbPallet4.FontWeight = FontWeights.Bold;
+            lbPallet4.TextWrapping = TextWrapping.Wrap;
+            lbPallet4.TextAlignment = TextAlignment.Center;
+            lbPallet4.Width = this.Width;
+            lbPallet4.FontSize = 1.7;
+            if (pallet.dataPallet != null)
+            {
+                dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                string x = palletData.line.x;
+                lbPallet4.Text = x;
+            }
+            else
+            {
+                lbPallet4.Text = "";
+            }
+            grid4.Child = lbPallet4;
 
-            Child = stackPanel;
+
+            lbPallet5 = new TextBlock();
+            lbPallet5.FontWeight = FontWeights.Bold;
+            lbPallet5.TextWrapping = TextWrapping.Wrap;
+            lbPallet5.TextAlignment = TextAlignment.Center;
+            lbPallet5.Width = this.Width;
+            lbPallet5.FontSize = 1.7;
+            if (pallet.dataPallet != null)
+            {
+                dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                string y = palletData.line.y;
+                lbPallet5.Text = y;
+            }
+            else
+            {
+                lbPallet5.Text = "";
+            }
+            grid5.Child = lbPallet5;
+
+
+            //System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle();
+            //rectangle.Width = 2;
+            //rectangle.Height = 2;
+            //rectangle.Fill = new SolidColorBrush(Colors.Red);
+
+            //StackPanel stackPanel = new StackPanel();
+            //stackPanel.Orientation = Orientation.Vertical;
+            //stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            //stackPanel.VerticalAlignment = VerticalAlignment.Top;
+            //stackPanel.Children.Add(lbPallet3);
+            //stackPanel.Children.Add(lbPallet);
+            //stackPanel.Children.Add(lbPallet2);
+
+            Child = myGrid;
+
 
             ContextMenu = new ContextMenu();
-
             MenuItem putPallet = new MenuItem();
             putPallet.Header = "Put";
             putPallet.Click += PutPallet;
@@ -117,7 +239,7 @@ namespace MapViewPallet.Shape
             lockPallet.Click += LockPallet;
 
             MenuItem returnPallet = new MenuItem();
-            returnPallet.Header = "Return";
+            returnPallet.Header = "Return Main";
             returnPallet.Click += ReturnPallet;
 
             MenuItem returnPalletGate = new MenuItem();
@@ -379,39 +501,7 @@ namespace MapViewPallet.Shape
                 }
             }
         }
-
-        //public string GetActiveDate(int productId, int productDetailId, int deviceId)
-        //{
-        //    string returnActiveData = DateTime.Now.Year + "-" + DateTime.Now.Month.ToString("00.") + "-" + DateTime.Now.Day.ToString("00.");
-        //    try
-        //    {
-        //        dynamic postApiBody = new JObject();
-        //        postApiBody.timeWorkId = 0;
-        //        postApiBody.activeDate = null;
-        //        postApiBody.productId = productId;
-        //        postApiBody.productDetailId = productDetailId;
-        //        postApiBody.deviceId = deviceId;
-
-        //        string jsonData = JsonConvert.SerializeObject(postApiBody);
-        //        string contentJson = RequestDataAPI(jsonData, "plan/getPlanByShift", RequestMethod.POST);
-        //        dynamic response = JsonConvert.DeserializeObject(contentJson);
-        //        List<dtPlan> listPlanInfo = response.ToObject<List<dtPlan>>();
-        //        foreach (dtPlan plan in listPlanInfo)
-        //        {
-        //            if (plan.deviceId == deviceId)
-        //            {
-        //                returnActiveData = plan.activeDate;
-        //                break;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logFile.Error(ex.Message);
-        //    }
-        //    return returnActiveData;
-        //}
-
+        
         private void ReturnPalletGate_Click(object sender, RoutedEventArgs e)
         {
             if (!Global_Object.ServerAlive())
@@ -676,19 +766,12 @@ namespace MapViewPallet.Shape
                 }
             }
         }
-
-        private void PalletShape_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Console.WriteLine(pallet);
-            MessageBox.Show("" + name);
-        }
-
+        
         public void StatusChanged(dtPallet pPallet)
         {
             if (this.pallet != null)
             {
                 bool replaceStatus = (this.pallet.palletStatus != pPallet.palletStatus) ? true : false;
-                //bool replaceStatus = true;
                 bool replaceProductDetailName = (this.pallet.productDetailName != pPallet.productDetailName) ? true : false;
                 this.pallet = pPallet;
                 if (replaceProductDetailName || replaceStatus)
@@ -702,6 +785,36 @@ namespace MapViewPallet.Shape
                            {
                                if (replaceProductDetailName)
                                {
+                                   if (lbPallet3 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string bayId = palletData.bayId;
+                                       lbPallet3.Text = bayId;
+                                   }
+                                   else
+                                   {
+                                       lbPallet3.Text = "";
+                                   }
+                                   if (lbPallet4 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string x = palletData.line.x;
+                                       lbPallet4.Text = x;
+                                   }
+                                   else
+                                   {
+                                       lbPallet4.Text = "";
+                                   }
+                                   if (lbPallet5 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string y = palletData.line.y;
+                                       lbPallet5.Text = y;
+                                   }
+                                   else
+                                   {
+                                       lbPallet5.Text = "";
+                                   }
                                    if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
@@ -725,6 +838,36 @@ namespace MapViewPallet.Shape
                            {
                                if (replaceProductDetailName)
                                {
+                                   if (lbPallet3 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string bayId = palletData.bayId;
+                                       lbPallet3.Text = bayId;
+                                   }
+                                   else
+                                   {
+                                       lbPallet3.Text = "";
+                                   }
+                                   if (lbPallet4 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string x = palletData.line.x;
+                                       lbPallet4.Text = x;
+                                   }
+                                   else
+                                   {
+                                       lbPallet4.Text = "";
+                                   }
+                                   if (lbPallet5 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string y = palletData.line.y;
+                                       lbPallet5.Text = y;
+                                   }
+                                   else
+                                   {
+                                       lbPallet5.Text = "";
+                                   }
                                    if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
@@ -747,6 +890,36 @@ namespace MapViewPallet.Shape
                            {
                                if (replaceProductDetailName)
                                {
+                                   if (lbPallet3 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string bayId = palletData.bayId;
+                                       lbPallet3.Text = bayId;
+                                   }
+                                   else
+                                   {
+                                       lbPallet3.Text = "";
+                                   }
+                                   if (lbPallet4 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string x = palletData.line.x;
+                                       lbPallet4.Text = x;
+                                   }
+                                   else
+                                   {
+                                       lbPallet4.Text = "";
+                                   }
+                                   if (lbPallet5 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string y = palletData.line.y;
+                                       lbPallet5.Text = y;
+                                   }
+                                   else
+                                   {
+                                       lbPallet5.Text = "";
+                                   }
                                    if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
@@ -769,6 +942,36 @@ namespace MapViewPallet.Shape
                            {
                                if (replaceProductDetailName)
                                {
+                                   if (lbPallet3 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string bayId = palletData.bayId;
+                                       lbPallet3.Text = bayId;
+                                   }
+                                   else
+                                   {
+                                       lbPallet3.Text = "";
+                                   }
+                                   if (lbPallet4 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string x = palletData.line.x;
+                                       lbPallet4.Text = x;
+                                   }
+                                   else
+                                   {
+                                       lbPallet4.Text = "";
+                                   }
+                                   if (lbPallet5 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string y = palletData.line.y;
+                                       lbPallet5.Text = y;
+                                   }
+                                   else
+                                   {
+                                       lbPallet5.Text = "";
+                                   }
                                    if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
@@ -791,6 +994,36 @@ namespace MapViewPallet.Shape
                            {
                                if (replaceProductDetailName)
                                {
+                                   if (lbPallet3 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string bayId = palletData.bayId;
+                                       lbPallet3.Text = bayId;
+                                   }
+                                   else
+                                   {
+                                       lbPallet3.Text = "";
+                                   }
+                                   if (lbPallet4 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string x = palletData.line.x;
+                                       lbPallet4.Text = x;
+                                   }
+                                   else
+                                   {
+                                       lbPallet4.Text = "";
+                                   }
+                                   if (lbPallet5 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string y = palletData.line.y;
+                                       lbPallet5.Text = y;
+                                   }
+                                   else
+                                   {
+                                       lbPallet5.Text = "";
+                                   }
                                    if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
@@ -813,6 +1046,36 @@ namespace MapViewPallet.Shape
                            {
                                if (replaceProductDetailName)
                                {
+                                   if (lbPallet3 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string bayId = palletData.bayId;
+                                       lbPallet3.Text = bayId;
+                                   }
+                                   else
+                                   {
+                                       lbPallet3.Text = "";
+                                   }
+                                   if (lbPallet4 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string x = palletData.line.x;
+                                       lbPallet4.Text = x;
+                                   }
+                                   else
+                                   {
+                                       lbPallet4.Text = "";
+                                   }
+                                   if (lbPallet5 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string y = palletData.line.y;
+                                       lbPallet5.Text = y;
+                                   }
+                                   else
+                                   {
+                                       lbPallet5.Text = "";
+                                   }
                                    if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
@@ -835,6 +1098,36 @@ namespace MapViewPallet.Shape
                            {
                                if (replaceProductDetailName)
                                {
+                                   if (lbPallet3 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string bayId = palletData.bayId;
+                                       lbPallet3.Text = bayId;
+                                   }
+                                   else
+                                   {
+                                       lbPallet3.Text = "";
+                                   }
+                                   if (lbPallet4 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string x = palletData.line.x;
+                                       lbPallet4.Text = x;
+                                   }
+                                   else
+                                   {
+                                       lbPallet4.Text = "";
+                                   }
+                                   if (lbPallet5 != null && pallet.dataPallet != null)
+                                   {
+                                       dynamic palletData = JsonConvert.DeserializeObject(pallet.dataPallet);
+                                       string y = palletData.line.y;
+                                       lbPallet5.Text = y;
+                                   }
+                                   else
+                                   {
+                                       lbPallet5.Text = "";
+                                   }
                                    if (lbPallet2 != null && pallet.productDetailName != null)
                                    {
                                        if ((pallet.productDetailName.ToString().Trim() != "") && (pallet.palletStatus != "F"))
@@ -858,74 +1151,6 @@ namespace MapViewPallet.Shape
                 }
             }
         }
-
-        private void PalletMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("" + name);
-        }
-
-        private ImageSource ImageSourceForBitmap(Bitmap bmp)
-        {
-            var handle = bmp.GetHbitmap();
-            try
-            {
-                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            }
-            finally { }
-        }
-
-        private void ChangeToolTipContent(object sender, ToolTipEventArgs e)
-        {
-            ToolTip = "Name: " +
-                "\n Start: " +
-                " \n End: " +
-                " \n Rotate: ";
-        }
-
-        //List<dtPallet> palletsList = new List<dtPallet>();
-        //palletsList = GetAllPallets(pallet.bufferId);
-        ////Check if pallet is return able an then return it
-        //if (CanPalletReturn(palletsList))
-        //{
-        //    Console.WriteLine("Duoc phep Return!");
-        //    dynamic postApiBody2 = new JObject();
-        //    postApiBody2.userName = "WMS_Return";
-        //    postApiBody2.bufferId = pallet.bufferId;
-        //    postApiBody2.productDetailId = pallet.productDetailId;
-        //    postApiBody2.productDetailName = pallet.productDetailName;
-        //    postApiBody2.productId = pallet.productId;
-        //    //postApiBody2.planId = pallet.planId;
-        //    postApiBody2.deviceId = pallet.deviceId;
-        //    postApiBody2.typeReq = (int)ReturnType.ReturnAreaMain;
-        //    string jsonData2 = JsonConvert.SerializeObject(postApiBody2);
-        //    BridgeClientRequest bridgeClientRequest = new BridgeClientRequest();
-        //    bridgeClientRequest.PostCallAPI("http://" + MapViewPallet.Properties.Settings.Default.serverReturnIp + ":12000", jsonData2);
-
-        //    string preStatus = pallet.palletStatus;
-        //    pallet.palletStatus = "R";
-        //    string jsonDataPallet = JsonConvert.SerializeObject(pallet);
-        //    pallet.palletStatus = preStatus;
-
-        //    HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(@"http://" + MapViewPallet.Properties.Settings.Default.serverIp + ":" + MapViewPallet.Properties.Settings.Default.serverPort + @"/robot/rest/" + "pallet/updatePalletStatus");
-        //    request2.Method = "POST";
-        //    request2.ContentType = "application/json";
-
-        //    System.Text.UTF8Encoding encoding2 = new System.Text.UTF8Encoding();
-        //    Byte[] byteArray2 = encoding2.GetBytes(jsonDataPallet);
-        //    request2.ContentLength = byteArray2.Length;
-        //    using (Stream dataStream = request2.GetRequestStream())
-        //    {
-        //        dataStream.Write(byteArray2, 0, byteArray2.Length);
-        //        dataStream.Flush();
-        //    }
-
-        //    HttpWebResponse response2 = request2.GetResponse() as HttpWebResponse;
-        //    using (Stream responseStream = response2.GetResponseStream())
-        //    {
-        //        StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
-        //        int result = 0;
-        //        int.TryParse(reader.ReadToEnd(), out result);
-        //    }
-        //}
+        
     }
 }
