@@ -99,6 +99,10 @@ namespace MapViewPallet.Shape
             mainWindow = mainWinDowIn;
             //mainTreeView = mainTreeViewIn;
             map = mainWindow.map;
+
+            //mainWindow.canvasRotateTransform.CenterX = map.Width / 2;
+            //mainWindow.canvasRotateTransform.CenterY = map.Height / 2;
+            //mainWindow.canvasRotateTransform.Angle = 20;
             pScaleTransform = mainWindow.canvasScaleTransform;
             translateTransform = mainWindow.canvasTranslateTransform;
             list_Path = new SortedDictionary<string, CanvasPath>();
@@ -257,7 +261,7 @@ namespace MapViewPallet.Shape
         {
             Global_Object.OriginPoint.X = map.Width * 0.5;
             Global_Object.OriginPoint.Y = map.Height * 0.5;
-            mainWindow.rect.RenderTransform = new TranslateTransform(Global_Object.OriginPoint.X, Global_Object.OriginPoint.Y);
+            //mainWindow.rect.RenderTransform = new TranslateTransform(Global_Object.OriginPoint.X, Global_Object.OriginPoint.Y);
             //mainWindow.robot.RenderTransform = new TranslateTransform(Global_Object.OriginPoint.X, Global_Object.OriginPoint.Y);
             Point backGroundTransform = Global_Object.LaserOriginalCoor;
             double X = Global_Object.OriginPoint.X - backGroundTransform.X;
@@ -276,24 +280,37 @@ namespace MapViewPallet.Shape
             try
             {
                 Type mouseHoverItemType = mouseWasDownOn.GetType();
-
+                //Console.WriteLine(mouseHoverItemType.ToString());
                 switch (mouseHoverItemType.ToString())
                 {
-                    case "System.Windows.Controls.TextBlock":
+                    case "System.Windows.Controls.Label":
                     {
-                        System.Windows.Controls.TextBlock texblock = mouseWasDownOn as System.Windows.Controls.TextBlock;
-                        if (texblock.Text.Length > 10)
+                        System.Windows.Controls.Label label = mouseWasDownOn as System.Windows.Controls.Label;
+                        if (label.Content.ToString().Length > 0)
                         {
-                            string[] dateAndCode = mainWindow.palletInfoShow.Text.Split('/');
                             mainWindow.palletInfoShow.Text = "";
                             mainWindow.palletInfoShow.Text =
                                    // " Bay/Row: " + MouseHoverPallet.pallet.bay + "/" + MouseHoverPallet.pallet.row +
                                    // " Item FGS: " + MouseHoverPallet.pallet.productId + "-" + MouseHoverPallet.pallet.productName +
-                                   "" + texblock.Text +
+                                   "" + label.Content +
                                    "";
                         }
                         break;
                     }
+                    //case "System.Windows.Controls.TextBlock":
+                    //{
+                    //    System.Windows.Controls.TextBlock texblock = mouseWasDownOn as System.Windows.Controls.TextBlock;
+                    //    if (texblock.Text.Length > 0)
+                    //    {
+                    //        mainWindow.palletInfoShow.Text = "";
+                    //        mainWindow.palletInfoShow.Text =
+                    //               // " Bay/Row: " + MouseHoverPallet.pallet.bay + "/" + MouseHoverPallet.pallet.row +
+                    //               // " Item FGS: " + MouseHoverPallet.pallet.productId + "-" + MouseHoverPallet.pallet.productName +
+                    //               "" + texblock.Text +
+                    //               "";
+                    //    }
+                    //    break;
+                    //}
                     case "MapViewPallet.Shape.PalletShape":
                     {
                         MouseHoverPallet = mouseWasDownOn as PalletShape;

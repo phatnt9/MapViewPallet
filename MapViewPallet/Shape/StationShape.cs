@@ -27,9 +27,10 @@ namespace MapViewPallet.Shape
 
             public dtBuffer bufferDb;
             public Canvas _canvas;
-
-            public Border _stationInfoBorder;
+            
             public Grid _stationGrid; // Grid to hold all Pallet in Station
+            public Grid _stationDataGrid; // Grid to hold all Pallet in Station
+            public Grid _stationNameGrid; // Grid to hold all Pallet in Station
             public Point _posision; // Where station will be render,only accept Cavnas Coordinate
             public double _rotate; // Station rotate
 
@@ -69,8 +70,8 @@ namespace MapViewPallet.Shape
             ToolTip = "";
             ToolTipOpening += ChangeToolTipContent;
             //BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF1F1F"));
-            BorderBrush = new SolidColorBrush(Colors.Lime);
-            BorderThickness = new Thickness(1, 0, 1, 1);
+            BorderBrush = new SolidColorBrush(Colors.Black);
+            BorderThickness = new Thickness(0.3, 0, 0.3, 0.3);
             CornerRadius = new CornerRadius(0);
             RenderTransformOrigin = new Point(0, 0);
             Background = new SolidColorBrush(Colors.Transparent);
@@ -78,12 +79,21 @@ namespace MapViewPallet.Shape
             //PROPERTIES
             props = new Props();
             props.bufferDb = buffer;
+
+
             props._stationGrid = new Grid();
-            props._stationInfoBorder = new Border();
-            props._stationInfoBorder.Background = new SolidColorBrush(Colors.Red);
-            props._stationInfoBorder.CornerRadius = new CornerRadius(1.3);
-            props._stationInfoBorder.Height = 5;
-            Grid.SetColumn(props._stationInfoBorder, 0);
+            RowDefinition row0 = new RowDefinition();
+            row0.Height = new GridLength(0);
+            RowDefinition row1 = new RowDefinition();
+            props._stationGrid.RowDefinitions.Add(row0);
+            props._stationGrid.RowDefinitions.Add(row1);
+
+
+            props._stationNameGrid = new Grid();
+            props._stationNameGrid.Background = new SolidColorBrush(Colors.Black);
+            Grid.SetRow(props._stationNameGrid, 0);
+            props._stationDataGrid = new Grid();
+            Grid.SetRow(props._stationDataGrid, 1);
             //Name = props.bufferDb.bufferName.Trim().Replace(" ", ""); //Object name
 
             ContextMenu = new ContextMenu();
@@ -116,7 +126,7 @@ namespace MapViewPallet.Shape
             //MouseRightButtonDown += MouseRightButtonDownStation;
             //===================CREATE=====================
             Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
-            Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
+            Height = (MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow);
             props.NameID = props.bufferDb.bufferName; //label
             props._palletList = new SortedDictionary<string, PalletShape>();
             props._myTransformGroup = new TransformGroup();
@@ -129,7 +139,7 @@ namespace MapViewPallet.Shape
                 //Create a Col
                 ColumnDefinition colTemp = new ColumnDefinition();
                 //colTemp.Name = Name + "xL" + bayIndex;
-                props._stationGrid.ColumnDefinitions.Add(colTemp);
+                props._stationDataGrid.ColumnDefinitions.Add(colTemp);
 
                 // Create BorderLine
                 Border borderLine = new Border();
@@ -138,11 +148,11 @@ namespace MapViewPallet.Shape
                 Grid gridLine = new Grid();
                 borderLine.Child = gridLine;
                 //
-                props._stationGrid.Children.Add(borderLine);
+                props._stationDataGrid.Children.Add(borderLine);
                 if (bayIndex > 0)
                 {
                     borderLine.BorderBrush = new SolidColorBrush(Colors.Black);
-                    borderLine.BorderThickness = new Thickness(0.3, 0, 0, 0);
+                    borderLine.BorderThickness = new Thickness(0.2, 0, 0, 0);
                 }
                 //Add Pallet to GridPallet ==> add GridPallet to BorderLine
                 for (int rowIndex = 0; rowIndex < props.bufferDb.maxRow; rowIndex++) //Row Index, start from 1, Row 0 use for Infomation
@@ -181,7 +191,8 @@ namespace MapViewPallet.Shape
             //}
 
             //==================CHILDREN===================
-            //props._stationGrid.Children.Add(props._stationInfoBorder);
+            props._stationGrid.Children.Add(props._stationNameGrid);
+            props._stationGrid.Children.Add(props._stationDataGrid);
             Child = props._stationGrid;
             props._myTransformGroup.Children.Add(props._myRotateTransform);
             props._myTransformGroup.Children.Add(props._myTranslateTransform);
@@ -235,9 +246,9 @@ namespace MapViewPallet.Shape
                     props._palletList.Clear();
                     Dispatcher.BeginInvoke(new ThreadStart(() =>
                     {
-                        props._stationGrid.Children.Clear();
-                        props._stationGrid.RowDefinitions.Clear();
-                        props._stationGrid.ColumnDefinitions.Clear();
+                        props._stationDataGrid.Children.Clear();
+                        props._stationDataGrid.RowDefinitions.Clear();
+                        props._stationDataGrid.ColumnDefinitions.Clear();
                         Width = MapViewPallet.Properties.Settings.Default.palletWidth * props.bufferDb.maxBay;
                         Height = MapViewPallet.Properties.Settings.Default.palletHeight * props.bufferDb.maxRow;
 
@@ -246,7 +257,7 @@ namespace MapViewPallet.Shape
                             //Create a Col
                             ColumnDefinition colTemp = new ColumnDefinition();
                             //colTemp.Name = Name + "xL" + bayIndex;
-                            props._stationGrid.ColumnDefinitions.Add(colTemp);
+                            props._stationDataGrid.ColumnDefinitions.Add(colTemp);
                             //Create GridLine
                             Grid gridLine = new Grid();
                             // Create BorderLine
@@ -254,7 +265,7 @@ namespace MapViewPallet.Shape
                             Grid.SetColumn(borderLine, bayIndex);
                             borderLine.Child = gridLine;
                             //
-                            props._stationGrid.Children.Add(borderLine);
+                            props._stationDataGrid.Children.Add(borderLine);
                             if (bayIndex > 0)
                             {
                                 borderLine.BorderBrush = new SolidColorBrush(Colors.Black);

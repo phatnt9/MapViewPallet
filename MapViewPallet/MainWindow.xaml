@@ -91,7 +91,7 @@
                                         IsCheckable="True"
                                         Tag="vi-VN" />
                                 </MenuItem>
-                                <!--<MenuItem Click="MenuItem_Click_1" Header="Buffer Properties" />-->
+                                <MenuItem Click="MenuItem_Click_1" Header="Buffer Properties" />
                                 <MenuItem
                                     Height="25"
                                     Click="btn_AboutUs_Click"
@@ -211,16 +211,46 @@
                                 Name="map"
                                 Width="Auto"
                                 Height="Auto"
-                                RenderTransformOrigin="0.5,0.5">
+                                RenderTransformOrigin="0,0">
                                 <Canvas.Children>
-                                    <Rectangle
+                                    <!--<Border
                                         x:Name="rect"
-                                        Width="10"
-                                        Height="10"
-                                        Fill="Red" />
+                                        Canvas.Top="100"
+                                        Width="15"
+                                        Height="13">
+                                        <Grid>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0" Grid.Column="0" />
+                                                <Grid Grid.Row="1" Grid.Column="0" />
+                                                <Grid Grid.Row="2" Grid.Column="0" />
+                                                <Grid Grid.Row="0" Grid.Column="1" />
+                                                <Grid Grid.Row="1" Grid.Column="1" />
+                                                <Grid Grid.Row="2" Grid.Column="1" />
+                                            </Grid>
+                                            <Grid>
+                                                <Label
+                                                    Padding="0"
+                                                    VerticalContentAlignment="Center"
+                                                    Background="Aqua"
+                                                    Content="ascasc"
+                                                    FontSize="3"
+                                                    Foreground="Black" />
+                                            </Grid>
+                                        </Grid>
+                                    </Border>-->
                                 </Canvas.Children>
                                 <Canvas.RenderTransform>
                                     <TransformGroup>
+                                        <RotateTransform x:Name="canvasRotateTransform" />
                                         <MatrixTransform x:Name="canvasMatrixTransform" Matrix="1,0,0,1,0,0" />
                                         <ScaleTransform x:Name="canvasScaleTransform" />
                                         <TranslateTransform x:Name="canvasTranslateTransform" />
