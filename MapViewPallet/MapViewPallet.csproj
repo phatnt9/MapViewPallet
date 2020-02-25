@@ -486,6 +486,8 @@
   <ItemGroup>
     <None Include="Resources\Map_aTan - Copy4 - Copy.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\mapPCLDuy.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

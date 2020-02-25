@@ -33,6 +33,7 @@ namespace MapViewPallet.Shape
         public dtBuffer buffer { get => pBuffer; set => pBuffer = value; }
 
         public string name = "";
+        StationShape stationShape;
         public Grid palletMainGrid;
         public Grid productDetailGrid;
         public Grid palletDataGrid;
@@ -57,8 +58,9 @@ namespace MapViewPallet.Shape
             DELETE
         }
 
-        public PalletShape(dtBuffer buffer, string name)
+        public PalletShape(StationShape stationShape, dtBuffer buffer, string name)
         {
+            this.stationShape = stationShape;
             this.buffer = buffer;
             pallet = new dtPallet();
             this.name = name;
@@ -151,7 +153,10 @@ namespace MapViewPallet.Shape
             lb_productDetailName.Padding = new Thickness(0);
             lb_productDetailName.Foreground = new SolidColorBrush(Colors.Transparent);
             lb_productDetailName.Background = new SolidColorBrush(Colors.Transparent);
-            lb_productDetailName.FontSize = 1.5;
+            lb_productDetailName.FontWeight = FontWeights.Bold;
+            lb_productDetailName.HorizontalContentAlignment = HorizontalAlignment.Center;
+            lb_productDetailName.VerticalContentAlignment = VerticalAlignment.Center;
+            lb_productDetailName.FontSize = 2;
             lb_productDetailName.Content = pallet.productDetailName == null ? "" : pallet.productDetailName;
             productDetailGrid.Children.Add(lb_productDetailName);
 
@@ -270,6 +275,7 @@ namespace MapViewPallet.Shape
             //MouseDown += PalletMouseDown;
             //MouseRightButtonDown += PalletShape_MouseRightButtonDown;
         }
+        
 
         public string RequestDataAPI(string jsonData, string apiUrl, RequestMethod method)
         {
@@ -695,6 +701,12 @@ namespace MapViewPallet.Shape
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
                 using (Stream responseStream = response.GetResponseStream())
                 {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+                    if (result == "1")
+                    {
+                        this.stationShape.UpdatePallet();
+                    }
                 }
             }
         }
@@ -727,6 +739,12 @@ namespace MapViewPallet.Shape
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
                 using (Stream responseStream = response.GetResponseStream())
                 {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+                    if (result == "1")
+                    {
+                        this.stationShape.UpdatePallet();
+                    }
                 }
             }
         }
@@ -759,6 +777,12 @@ namespace MapViewPallet.Shape
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
                 using (Stream responseStream = response.GetResponseStream())
                 {
+                    StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                    string result = reader.ReadToEnd();
+                    if (result == "1")
+                    {
+                        this.stationShape.UpdatePallet();
+                    }
                 }
             }
         }
@@ -1084,7 +1108,7 @@ namespace MapViewPallet.Shape
                                }
                                if (replaceStatus)
                                {
-                                   Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#808080"));
+                                   Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#02d464"));
                                }
                                break;
                            }

@@ -50,6 +50,28 @@ namespace MapViewPallet.Shape
                 {
                     pZoomScale = value;
                     pScaleTransform.ScaleX = pScaleTransform.ScaleY = pZoomScale;
+                    double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
+                    double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
+                    double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
+                    double ClipBorderHeight = (mainWindow.clipBorder.ActualHeight);
+                    double x = KhoangGioiHan(MapWidthScaled, ClipBorderWidth);
+                    double y = KhoangGioiHan(MapHeightScaled, ClipBorderHeight);
+
+                    double tempX = ((pScaleTransform.ScaleX - 1) * map.Width) / 2;
+                    double rightLimX = 0 + tempX;
+                    double leftLimX = -x + tempX;
+
+                    double tempY = ((pScaleTransform.ScaleY - 1) * map.Height) / 2;
+                    double upLimY = 0 + tempY;
+                    double downLimY = -y + tempY;
+                    if (ClipBorderWidth > MapWidthScaled)
+                    {
+                        translateTransform.X = rightLimX;
+                    }
+                    if (ClipBorderHeight > MapHeightScaled)
+                    {
+                        translateTransform.Y = upLimY;
+                    }
                     RaisePropertyChanged("zoomScale");
                 }
             }
@@ -220,10 +242,49 @@ namespace MapViewPallet.Shape
             }
         }
 
+        public double KhoangGioiHan(double a, double b)
+        {
+            return a - b;
+            //if (a > b)
+            //{ return a - b; }
+            //else
+            //{ return b - a; }
+        }
+
         private void Map_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             string elementName = (e.OriginalSource as FrameworkElement).Name;
             //selectedItemName = elementName;
+        }
+
+        public void ZoomBySlider(double scale)
+        {
+            if (scale < 3.5 && scale > 0.3)
+            {
+                pScaleTransform.ScaleX = pScaleTransform.ScaleY = scale;
+            }
+            double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
+            double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
+            double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
+            double ClipBorderHeight = (mainWindow.clipBorder.ActualHeight);
+            double x = KhoangGioiHan(MapWidthScaled, ClipBorderWidth);
+            double y = KhoangGioiHan(MapHeightScaled, ClipBorderHeight);
+
+            double tempX = ((pScaleTransform.ScaleX - 1) * map.Width) / 2;
+            double rightLimX = 0 + tempX;
+            double leftLimX = -x + tempX;
+
+            double tempY = ((pScaleTransform.ScaleY - 1) * map.Height) / 2;
+            double upLimY = 0 + tempY;
+            double downLimY = -y + tempY;
+            if (ClipBorderWidth > MapWidthScaled)
+            {
+                translateTransform.X = rightLimX;
+            }
+            if (ClipBorderHeight > MapHeightScaled)
+            {
+                translateTransform.Y = upLimY;
+            }
         }
 
         private void Map_Zoom(object sender, MouseWheelEventArgs e)
@@ -234,10 +295,42 @@ namespace MapViewPallet.Shape
             slidingScale = 0.1 * zoomDirection;
             double edgeW = (pScaleTransform.ScaleX + slidingScale) * map.Width;
             double edgeH = (pScaleTransform.ScaleY + slidingScale) * map.Height;
-            if (((edgeW > 1) || (edgeH > 1)) && ((edgeW < (map.Width * 10)) || (edgeH < (map.Height * 10))))
+            //if (((edgeW > 1) || (edgeH > 1)) && ((edgeW < (map.Width * 10)) || (edgeH < (map.Height * 10))))
+            zoomScale = pScaleTransform.ScaleX;
+            zoomScale += slidingScale;
+            if (zoomScale < 3.5 && zoomScale > 0.3)
             {
-                zoomScale = pScaleTransform.ScaleX = pScaleTransform.ScaleY += slidingScale;
+                pScaleTransform.ScaleX = pScaleTransform.ScaleY = zoomScale;
+                //Console.WriteLine(zoomScale);
             }
+            else
+            {
+                zoomScale -= slidingScale;
+            }
+            double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
+            double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
+            double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
+            double ClipBorderHeight = (mainWindow.clipBorder.ActualHeight);
+            double x = KhoangGioiHan(MapWidthScaled, ClipBorderWidth);
+            double y = KhoangGioiHan(MapHeightScaled, ClipBorderHeight);
+
+            double tempX = ((pScaleTransform.ScaleX - 1) * map.Width) / 2;
+            double rightLimX = 0 + tempX;
+            double leftLimX = -x + tempX;
+
+            double tempY = ((pScaleTransform.ScaleY - 1) * map.Height) / 2;
+            double upLimY = 0 + tempY;
+            double downLimY = -y + tempY;
+            if (ClipBorderWidth > MapWidthScaled)
+            {
+                translateTransform.X = rightLimX;
+            }
+            if (ClipBorderHeight > MapHeightScaled)
+            {
+                translateTransform.Y = upLimY;
+            }
+
+
 
             //Console.WriteLine((map.ActualWidth* pScaleTransform.ScaleX).ToString("0.00")+"-"+ (map.ActualHeight * pScaleTransform.ScaleX).ToString("0.00"));
 
@@ -267,13 +360,13 @@ namespace MapViewPallet.Shape
             double X = Global_Object.OriginPoint.X - backGroundTransform.X;
             double Y = Global_Object.OriginPoint.Y - backGroundTransform.Y;
             map.Background.Transform = new TranslateTransform(X, Y);
-            ReCenterMapCanvas();
+            //ReCenterMapCanvas();
         }
 
         private void Map_MouseMove(object sender, MouseEventArgs e)
         {
             //Get mouse props
-            //Point mousePos = e.GetPosition(map);
+            Point mousePos = e.GetPosition(map);
             //mainWindow.DP_PALLETINFO.RenderTransform = new TranslateTransform(mousePos.X+20, mousePos.Y+20);
             var mouseWasDownOn = (e.Source as FrameworkElement);
             //Console.WriteLine(mouseWasDownOn.GetType().ToString());
@@ -336,6 +429,151 @@ namespace MapViewPallet.Shape
             }
             //hoveringItemName = mouseWasDownOn.Name;
             //Console.WriteLine(hoveringItemName);
+            //if ((mainWindow.drag))
+            if (false)
+            {
+                if (!map.IsMouseCaptured)
+                {
+                    return;
+                }
+
+                Vector moveVector = startPoint - e.GetPosition(mainWindow.clipBorder);
+                double xCoor = originalPoint.X - moveVector.X;
+                double yCoor = originalPoint.Y - moveVector.Y;
+
+                double MapWidthScaled = (map.Width * pScaleTransform.ScaleX);
+                double MapHeightScaled = (map.Height * pScaleTransform.ScaleY);
+                double ClipBorderWidth = (mainWindow.clipBorder.ActualWidth);
+                double ClipBorderHeight = (mainWindow.clipBorder.ActualHeight);
+
+                translateTransform.X = xCoor;
+                translateTransform.Y = yCoor;
+                double x = KhoangGioiHan(MapWidthScaled, ClipBorderWidth);
+                double y = KhoangGioiHan(MapHeightScaled, ClipBorderHeight);
+
+                double tempX = ((pScaleTransform.ScaleX - 1) * map.Width) / 2;
+                double rightLimX = 0 + tempX;
+                double leftLimX = -x + tempX;
+
+                double tempY = ((pScaleTransform.ScaleY - 1) * map.Height) / 2;
+                double upLimY = 0 + tempY;
+                double downLimY = -y + tempY;
+
+                Console.WriteLine("xCoor: " + xCoor);
+                Console.WriteLine("yCoor: " + yCoor);
+                Console.WriteLine("MapWidthScaled: " + MapWidthScaled);
+                Console.WriteLine("MapHeightScaled: " + MapHeightScaled);
+                Console.WriteLine("ClipBorderWidth: " + ClipBorderWidth);
+                Console.WriteLine("ClipBorderHeight: " + ClipBorderHeight);
+                Console.WriteLine("Scale: " + pScaleTransform.ScaleX);
+                Console.WriteLine("x: " + x);
+                Console.WriteLine("y: " + y);
+                Console.WriteLine("tempX: " + tempX);
+                Console.WriteLine("rightLimX: " + rightLimX);
+                Console.WriteLine("leftLimX: " + leftLimX);
+                Console.WriteLine("tempY: " + tempY);
+                Console.WriteLine("upLimY: " + upLimY);
+                Console.WriteLine("downLimY: " + downLimY);
+                Console.WriteLine("=================");
+
+                //-650 => 0
+
+
+                if (xCoor <= rightLimX && xCoor >= leftLimX)
+                {
+                    translateTransform.X = xCoor;
+                    if (ClipBorderWidth > MapWidthScaled)
+                    {
+                        translateTransform.X = rightLimX;
+                    }
+                }
+                else
+                {
+                    //translateTransform.X = rightLimX;
+                }
+                if (yCoor <= upLimY && yCoor >= downLimY)
+                {
+                    translateTransform.Y = yCoor;
+                    if (ClipBorderHeight > MapHeightScaled)
+                    {
+                        translateTransform.Y = upLimY;
+                    }
+                }
+                else
+                {
+                    //translateTransform.Y = upLimY;
+                }
+
+
+                double xlim;
+                double ylim;
+                if (ClipBorderWidth < map.Width)
+                {
+                    xlim = (map.Width * (pScaleTransform.ScaleX - 1)) / 2;
+                }
+                else
+                {
+                    xlim = Math.Abs((MapWidthScaled - ClipBorderWidth) / 2);
+                }
+
+                if (ClipBorderHeight < map.Height)
+                {
+                    ylim = (map.Height * (pScaleTransform.ScaleY - 1)) / 2;
+                }
+                else
+                {
+                    ylim = Math.Abs((MapHeightScaled - ClipBorderHeight) / 2);
+                }
+
+                if (ClipBorderWidth > map.Width)
+                {
+                    if ((xCoor >= (-xlim)) && (xCoor <= (xlim)))
+                    {
+                        translateTransform.X = xCoor;
+                    }
+                }
+                else
+                {
+                    if (ClipBorderWidth < MapWidthScaled)
+                    {
+                        if ((xCoor <= (xlim)) && (xCoor >= -(MapWidthScaled - ClipBorderWidth - xlim)))
+                        {
+                            translateTransform.X = xCoor;
+                        }
+                    }
+                    else
+                    {
+                        if ((xCoor >= (xlim)) && (xCoor <= -(MapWidthScaled - ClipBorderWidth - xlim)))
+                        {
+                            translateTransform.X = xCoor;
+                        }
+                    }
+                }
+                if (ClipBorderHeight > map.Height)
+                {
+                    if ((yCoor >= (-ylim)) && (yCoor <= (ylim)))
+                    {
+                        translateTransform.Y = yCoor;
+                    }
+                }
+                else
+                {
+                    if (ClipBorderHeight < MapHeightScaled)
+                    {
+                        if ((yCoor <= (ylim)) && (yCoor >= -(MapHeightScaled - ClipBorderHeight - ylim)))
+                        {
+                            translateTransform.Y = yCoor;
+                        }
+                    }
+                    else
+                    {
+                        if ((yCoor >= (ylim)) && (yCoor <= -(MapHeightScaled - ClipBorderHeight - ylim)))
+                        {
+                            translateTransform.Y = yCoor;
+                        }
+                    }
+                }
+            }
             if (!mainWindow.drag)
             {
                 Statectrl_MouseMove(e);

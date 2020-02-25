@@ -39,9 +39,8 @@
                         Name="userNametb"
                         Width="150"
                         CharacterCasing="Upper"
-                        PreviewKeyDown="UserNametb_PreviewKeyDown">
-                        SELDATADMIN
-                    </TextBox>
+                        PreviewKeyDown="UserNametb_PreviewKeyDown"
+                        Text="SELDATADMIN" />
                 </StackPanel>
                 <StackPanel
                     Margin="0,0,0,10"
@@ -51,8 +50,8 @@
                     <iconPacks:PackIconMaterial Margin="5,0" Kind="Key" />
                     <PasswordBox
                         Name="passwordtb"
-                        Width="150"
                         Password="seldat"
+                        Width="150"
                         PreviewKeyDown="Passwordtb_PreviewKeyDown" />
                 </StackPanel>
             </StackPanel>

@@ -167,7 +167,7 @@ namespace MapViewPallet.Shape
                     {
                         dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
                         //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
-                        PalletShape palletTemp = new PalletShape(props.bufferDb,
+                        PalletShape palletTemp = new PalletShape(this,props.bufferDb,
                             "Pallet"
                             + "x" +
                             ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
@@ -282,7 +282,7 @@ namespace MapViewPallet.Shape
 
                                 dynamic bufferData = JsonConvert.DeserializeObject(props.bufferDb.bufferData);
                                 //PalletShape palletTemp = new PalletShape(Name + "x" + lineIndex + "x" + palletIndex);
-                                PalletShape palletTemp = new PalletShape(props.bufferDb,
+                                PalletShape palletTemp = new PalletShape(this,props.bufferDb,
                                     "Pallet"
                                     + "x" +
                                     ((bufferData.arrange == "littleEndian") ? (props.bufferDb.maxBay - bayIndex - 1) : bayIndex)
@@ -317,9 +317,20 @@ namespace MapViewPallet.Shape
             UpdateAllPalletStatus(props.bufferDb.pallets);
         }
 
+        public void UpdatePallet()
+        {
+            dynamic buffer = new JObject();
+            buffer.bufferId = this.props.bufferDb.bufferId;
+            string jsonData = JsonConvert.SerializeObject(buffer);
+            string contentJson = Global_Object.RequestDataAPI(jsonData, "pallet/getListPalletBufferId", Global_Object.RequestMethod.POST);
+            dynamic response = JsonConvert.DeserializeObject(contentJson);
+            List<dtPallet> listPallet = response.ToObject<List<dtPallet>>();
+            UpdateAllPalletStatus(listPallet);
+        }
+
         public void UpdateAllPalletStatus(List<dtPallet> listPallet)
         {
-            foreach (dtPallet dr in props.bufferDb.pallets)
+            foreach (dtPallet dr in listPallet)
             {
                 if (props._palletList.ContainsKey("Pallet" + "x" + dr.bay + "x" + dr.row))
                 {

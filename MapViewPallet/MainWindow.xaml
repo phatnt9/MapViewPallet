@@ -9,8 +9,6 @@
     Title="{DynamicResource MainWindow_Title}"
     Width="800"
     Height="450"
-    MinWidth="600"
-    MinHeight="400"
     Background="#f1f1f1"
     PreviewKeyDown="Window_PreviewKeyDown"
     mc:Ignorable="d">
@@ -19,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="35" />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -192,100 +191,65 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1" Background="#f1f1f1">
+        <Grid Grid.Row="1" Background="LawnGreen">
             <Border
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="1"
-                Grid.ColumnSpan="1">
-                <Grid>
-                    <Border
-                        Name="clipBorder"
-                        Background="#f1f1f1"
-                        BorderBrush="DimGray"
-                        BorderThickness="2"
-                        ClipToBounds="True"
-                        RenderTransformOrigin="0.5,0.5">
-                        <xctk:Zoombox MaxScale="100" MinScale="0.5">
-                            <Canvas
-                                Name="map"
-                                Width="Auto"
-                                Height="Auto"
-                                RenderTransformOrigin="0,0">
-                                <Canvas.Children>
-                                    <!--<Border
-                                        x:Name="rect"
-                                        Canvas.Top="100"
-                                        Width="15"
-                                        Height="13">
-                                        <Grid>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition />
-                                                    <RowDefinition />
-                                                    <RowDefinition />
-                                                </Grid.RowDefinitions>
-                                                <Grid Grid.Row="0" Grid.Column="0" />
-                                                <Grid Grid.Row="1" Grid.Column="0" />
-                                                <Grid Grid.Row="2" Grid.Column="0" />
-                                                <Grid Grid.Row="0" Grid.Column="1" />
-                                                <Grid Grid.Row="1" Grid.Column="1" />
-                                                <Grid Grid.Row="2" Grid.Column="1" />
-                                            </Grid>
-                                            <Grid>
-                                                <Label
-                                                    Padding="0"
-                                                    VerticalContentAlignment="Center"
-                                                    Background="Aqua"
-                                                    Content="ascasc"
-                                                    FontSize="3"
-                                                    Foreground="Black" />
-                                            </Grid>
-                                        </Grid>
-                                    </Border>-->
-                                </Canvas.Children>
-                                <Canvas.RenderTransform>
-                                    <TransformGroup>
-                                        <RotateTransform x:Name="canvasRotateTransform" />
-                                        <MatrixTransform x:Name="canvasMatrixTransform" Matrix="1,0,0,1,0,0" />
-                                        <ScaleTransform x:Name="canvasScaleTransform" />
-                                        <TranslateTransform x:Name="canvasTranslateTransform" />
-                                    </TransformGroup>
-                                </Canvas.RenderTransform>
-                            </Canvas>
-                            <!--</Grid>-->
-                        </xctk:Zoombox>
-                    </Border>
-                    <DockPanel
-                        Name="DP_PALLETINFO"
-                        Height="35"
-                        Margin="2,2,2,0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
-                        Background="#f1f1f1">
-                        <Grid>
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock
-                                    Name="palletInfoShow"
-                                    Padding="0"
-                                    FontSize="26"
-                                    FontWeight="Bold"
-                                    Foreground="OrangeRed"
-                                    Text="" />
-                            </StackPanel>
-
-                        </Grid>
-                    </DockPanel>
-                </Grid>
+                Name="clipBorder"
+                Background="LightGray"
+                BorderBrush="Black"
+                BorderThickness="1"
+                ClipToBounds="True"
+                RenderTransformOrigin="0.5,0.5">
+                <xctk:Zoombox MaxScale="100" MinScale="0.5">
+                    <Canvas Name="map" RenderTransformOrigin="0.5,0.5">
+                        <Canvas.Children />
+                        <Canvas.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform x:Name="canvasRotateTransform" />
+                                <MatrixTransform x:Name="canvasMatrixTransform" />
+                                <ScaleTransform x:Name="canvasScaleTransform" />
+                                <TranslateTransform x:Name="canvasTranslateTransform" />
+                            </TransformGroup>
+                        </Canvas.RenderTransform>
+                    </Canvas>
+                </xctk:Zoombox>
             </Border>
+
         </Grid>
         <Grid Grid.Row="2">
+            <DockPanel
+                Name="DP_PALLETINFO"
+                Height="35"
+                Margin="2,2,2,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Background="#f1f1f1"
+                Visibility="Visible">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <TextBlock
+                            Name="palletInfoShow"
+                            Padding="0"
+                            FontSize="26"
+                            FontWeight="Bold"
+                            Foreground="OrangeRed"
+                            Text="" />
+                    </StackPanel>
+
+                </Grid>
+            </DockPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <!--<Slider
+                    Name="zoomSlider"
+                    Width="300"
+                    Margin="20,0"
+                    Maximum="3.5"
+                    Minimum="0.3" 
+                  Value="{Binding zoomScale, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />-->
+
+            </StackPanel>
             <StackPanel
-                Height="20"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
@@ -293,30 +257,30 @@
                 <TextBox
                     Name="tb_refreshBufferInterval"
                     Width="100"
-                    Margin="5,0"
+                    Margin="5,2"
                     VerticalContentAlignment="Center" />
                 <Button
                     Name="btn_applyRefreshInterval"
                     Width="70"
-                    Margin="5,0"
+                    Margin="5,2"
                     Click="Btn_applyRefreshInterval_Click"
                     Content="Apply" />
                 <Button
                     Name="btn_stopRefreshInterval"
                     Width="70"
-                    Margin="5,0"
+                    Margin="5,2"
                     Click="Btn_stopRefreshInterval_Click"
                     Content="Stop Refresh" />
                 <Button
                     Name="btn_startRefreshInterval"
                     Width="70"
-                    Margin="5,0"
+                    Margin="5,2"
                     Click="Btn_startRefreshInterval_Click"
                     Content="Start Refresh" />
                 <Button
                     Name="btn_manualRefresh"
                     Width="70"
-                    Margin="5,0"
+                    Margin="5,2"
                     Click="Btn_manualRefresh_Click"
                     Content="Manual Refresh" />
             </StackPanel>

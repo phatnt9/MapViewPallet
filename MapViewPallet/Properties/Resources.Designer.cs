@@ -152,6 +152,16 @@ namespace MapViewPallet.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap mapPCLDuy {
+            get {
+                object obj = ResourceManager.GetObject("mapPCLDuy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap seldat_logo {
             get {
                 object obj = ResourceManager.GetObject("seldat_logo", resourceCulture);

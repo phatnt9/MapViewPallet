@@ -46,6 +46,8 @@ namespace MapViewPallet.MiniForm.MicsWpfForm
 
         private void Btn_login_Click(object sender, RoutedEventArgs e)
         {
+            //this.DialogResult = true;
+            //this.Close();
             if (string.IsNullOrEmpty(this.tb_userName.Text) || this.tb_userName.Text.Trim() == "")
             {
                 System.Windows.Forms.MessageBox.Show(String.Format(Global_Object.messageValidate, "User Name", "User Name"), Global_Object.messageTitileWarning, MessageBoxButtons.OK, MessageBoxIcon.Warning);

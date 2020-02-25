@@ -46,18 +46,16 @@ namespace MapViewPallet
             Closed += MainWindow_Closed;
             //==============TreeView=============
             //===================================
-            canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
+            //canvasMatrixTransform = new MatrixTransform(1, 0, 0, -1, 0, 0);
 
-            //ImageBrush img = LoadImage("Map_aTan___Copy3");
-            ImageBrush img = LoadImage("Map_aTan___Copy4___Copy");
+            //ImageBrush img = LoadImage("Map_aTan___Copy4___Copy");
+            ImageBrush img = LoadImage("mapPCLDuy");
             map.Width = img.ImageSource.Width;
             map.Height = img.ImageSource.Height;
             map.Background = img;
 
             canvasControlService = new CanvasControlService(this);
-
-            FocusableChanged += MainWindow_FocusableChanged;
-            GotFocus += MainWindow_GotFocus;
+            
 
             //===============DataGridView========
 
@@ -81,16 +79,6 @@ namespace MapViewPallet
             {
                 timer.Start();
             }
-        }
-
-        private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //Console.WriteLine("MainWindow_GotFocus: "+IsFocused);
-        }
-
-        private void MainWindow_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Console.WriteLine("MainWindow_FocusableChanged: " + IsFocused);
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
